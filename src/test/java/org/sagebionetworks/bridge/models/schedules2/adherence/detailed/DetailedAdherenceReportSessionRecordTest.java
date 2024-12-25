@@ -121,7 +121,7 @@ public class DetailedAdherenceReportSessionRecordTest {
                                        DetailedAdherenceReportAssessmentRecord rec2,
                                        DetailedAdherenceReportAssessmentRecord rec3) {
         List<DetailedAdherenceReportAssessmentRecord> records = record.getAssessmentRecords();
-        assertEquals(records.get(0), rec1);
+        assertEquals(records.getFirst(), rec1);
         assertEquals(records.get(1), rec2);
         assertEquals(records.get(2), rec3);
     }

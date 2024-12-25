@@ -212,11 +212,11 @@ public class StudyAdherenceReportGenerator {
                     continue;
                 }
                 String searchableLabel = (oneDay.getStudyBurstId() != null) ?
-                    String.format(":%s:%s %s:Week %s:%s:", oneDay.getStudyBurstId(), oneDay.getStudyBurstId(), oneDay.getStudyBurstNum(), oneWeek.getWeekInStudy(), oneDay.getSessionName()) :
-                    String.format(":%s:Week %s:", oneDay.getSessionName(), oneWeek.getWeekInStudy());
+                        ":%s:%s %s:Week %s:%s:".formatted(oneDay.getStudyBurstId(), oneDay.getStudyBurstId(), oneDay.getStudyBurstNum(), oneWeek.getWeekInStudy(), oneDay.getSessionName()) :
+                        ":%s:Week %s:".formatted(oneDay.getSessionName(), oneWeek.getWeekInStudy());
                 String displayLabel = (oneDay.getStudyBurstId() != null) ?
-                        String.format("%s %s / Week %s / %s", oneDay.getStudyBurstId(), oneDay.getStudyBurstNum(), oneWeek.getWeekInStudy(), oneDay.getSessionName()) :
-                        String.format("%s / Week %s", oneDay.getSessionName(), oneWeek.getWeekInStudy());
+                        "%s %s / Week %s / %s".formatted(oneDay.getStudyBurstId(), oneDay.getStudyBurstNum(), oneWeek.getWeekInStudy(), oneDay.getSessionName()) :
+                        "%s / Week %s".formatted(oneDay.getSessionName(), oneWeek.getWeekInStudy());
                 labels.add(searchableLabel);
                 
                 WeeklyAdherenceReportRow row = new WeeklyAdherenceReportRow(); 

@@ -293,10 +293,10 @@ public class DynamoSurvey implements Survey {
 
     @Override
     public String toString() {
-        return String.format(
+        return (
                 "DynamoSurvey [appId=%s, guid=%s, createdOn=%s, modifiedOn=%s, copyrightNotice=%s, moduleId=%s, " +
                         "moduleVersion=%d, version=%s, name=%s, identifier=%s, published=%s, deleted=%s, " +
-                        "schemaRevision=%s, elements=%s]", appId, guid, createdOn, modifiedOn, copyrightNotice,
+                        "schemaRevision=%s, elements=%s]").formatted(appId, guid, createdOn, modifiedOn, copyrightNotice,
                 moduleId, moduleVersion, version, name, identifier, published, deleted, schemaRevision, elements);
     }
 }

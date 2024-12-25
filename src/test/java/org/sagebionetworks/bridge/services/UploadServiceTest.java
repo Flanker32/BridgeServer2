@@ -41,6 +41,7 @@ import static org.testng.Assert.assertTrue;
 import static org.testng.Assert.fail;
 
 import java.io.IOException;
+import java.net.URI;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.Date;
@@ -295,7 +296,7 @@ public class UploadServiceTest {
         assertNull(status.getRecord());
 
         assertEquals(status.getMessageList().size(), 1);
-        assertEquals(status.getMessageList().get(0), "getStatus - message");
+        assertEquals(status.getMessageList().getFirst(), "getStatus - message");
     }
 
     @Test
@@ -321,7 +322,7 @@ public class UploadServiceTest {
         assertSame(status.getRecord(), dummyRecord);
 
         assertEquals(status.getMessageList().size(), 1);
-        assertEquals(status.getMessageList().get(0), "getStatusWithRecord - message");
+        assertEquals(status.getMessageList().getFirst(), "getStatusWithRecord - message");
     }
 
     // branch coverage
@@ -347,7 +348,7 @@ public class UploadServiceTest {
         assertNull(status.getRecord());
 
         assertEquals(status.getMessageList().size(), 1);
-        assertEquals(status.getMessageList().get(0), "getStatusRecordIdWithNoRecord - message");
+        assertEquals(status.getMessageList().getFirst(), "getStatusRecordIdWithNoRecord - message");
     }
     
     @Test
@@ -447,11 +448,11 @@ public class UploadServiceTest {
         assertEquals(returned.getNextPageOffsetKey(), expectedOffsetKey);
 
         // The two sources of information are combined in the view.
-        UploadView view = uploadList.get(0);
+        UploadView view = uploadList.getFirst();
         assertEquals(view.getUpload().getStatus(), UploadStatus.SUCCEEDED);
         assertEquals(view.getUpload().getRecordId(), "record-id");
         assertEquals(view.getSchemaId(), "schema-id");
-        assertEquals(view.getSchemaRevision(), new Integer(10));
+        assertEquals(view.getSchemaRevision(), Integer.valueOf(10));
         assertEquals(view.getHealthRecordExporterStatus(), HealthDataRecord.ExporterStatus.SUCCEEDED);
         assertNull(view.getHealthData());
 
@@ -546,7 +547,7 @@ public class UploadServiceTest {
         // Mock dependencies.
         when(mockUploadDao.getUpload(ORIGINAL_UPLOAD_ID)).thenReturn(upload);
         when(mockUploadDao.createUpload(uploadRequest, TEST_APP_ID, HEALTH_CODE, null)).thenReturn(upload);
-        when(mockS3UploadClient.generatePresignedUrl(any())).thenReturn(new URL("https://ws.com/some-link"));
+        when(mockS3UploadClient.generatePresignedUrl(any())).thenReturn(URI.create("https://ws.com/some-link").toURL());
 
         // Execute and verify.
         UploadSession session = svc.createUpload(TEST_APP_ID, PARTICIPANT, uploadRequest);
@@ -581,7 +582,7 @@ public class UploadServiceTest {
         upload.setUploadId(NEW_UPLOAD_ID);
         
         when(mockUploadDao.createUpload(uploadRequest, API_APP_ID, HEALTH_CODE, null)).thenReturn(upload);
-        when(mockS3UploadClient.generatePresignedUrl(any())).thenReturn(new URL("https://ws.com/some-link"));
+        when(mockS3UploadClient.generatePresignedUrl(any())).thenReturn(URI.create("https://ws.com/some-link").toURL());
         
         UploadSession session = svc.createUpload(API_APP_ID, PARTICIPANT, uploadRequest);
         assertEquals(session.getId(), NEW_UPLOAD_ID);
@@ -601,7 +602,7 @@ public class UploadServiceTest {
                 .thenReturn(ORIGINAL_UPLOAD_ID);
         when(mockUploadDao.getUpload(ORIGINAL_UPLOAD_ID)).thenReturn(upload);
         when(mockUploadDao.createUpload(uploadRequest, TEST_APP_ID, HEALTH_CODE, ORIGINAL_UPLOAD_ID)).thenReturn(upload);
-        when(mockS3UploadClient.generatePresignedUrl(any())).thenReturn(new URL("https://ws.com/some-link"));
+        when(mockS3UploadClient.generatePresignedUrl(any())).thenReturn(URI.create("https://ws.com/some-link").toURL());
         
         UploadSession session = svc.createUpload(TEST_APP_ID, PARTICIPANT, uploadRequest);
         assertEquals(session.getId(), ORIGINAL_UPLOAD_ID);
@@ -632,7 +633,7 @@ public class UploadServiceTest {
             
         ForwardCursorPagedResourceList<UploadView> result = svc.getUploads(HEALTH_CODE, startTime, endTime, 40,
                 "offsetKey");
-        assertEquals(result.getItems().get(0).getUpload(), upload);
+        assertEquals(result.getItems().getFirst().getUpload(), upload);
     }
     
     @Test
@@ -666,7 +667,7 @@ public class UploadServiceTest {
         assertEquals(result.getRecord(), mockRecord);
         assertEquals(result.getStatus(), SUCCEEDED);
         assertEquals(result.getMessageList().size(), 1);
-        assertEquals(result.getMessageList().get(0), "One validation error");
+        assertEquals(result.getMessageList().getFirst(), "One validation error");
     }
     
     @Test(expectedExceptions = BridgeServiceException.class, 
@@ -824,7 +825,7 @@ public class UploadServiceTest {
         assertNotNull(capturedRedriveList.getUploadIds());
         List<String> capturedUploadIdList = capturedRedriveList.getUploadIds();
         assertEquals(capturedUploadIdList.size(), 2);
-        assertEquals(capturedUploadIdList.get(0), UPLOAD_ID_1);
+        assertEquals(capturedUploadIdList.getFirst(), UPLOAD_ID_1);
         assertEquals(capturedUploadIdList.get(1), UPLOAD_ID_2);
 
         // Verify getUpload(): in redriveUpload() & in getUploadValidationStatus()
@@ -1105,7 +1106,7 @@ public class UploadServiceTest {
         assertNotNull(capturedAdherenceRecordList.getRecords());
         List<AdherenceRecord> capturedRecordList = capturedAdherenceRecordList.getRecords();
         assertEquals(capturedRecordList.size(), 1);
-        AdherenceRecord capturedRecord = capturedRecordList.get(0);
+        AdherenceRecord capturedRecord = capturedRecordList.getFirst();
         assertEquals(capturedRecord.getAppId(), TEST_APP_ID);
         assertEquals(capturedRecord.getStudyId(), TEST_STUDY_ID);
         assertEquals(capturedRecord.getUserId(), TEST_USER_ID);
@@ -1172,7 +1173,7 @@ public class UploadServiceTest {
         List<AdherenceRecord> capturedRecordList = capturedAdherenceRecordList.getRecords();
         assertEquals(capturedRecordList.size(), 1);
         
-        AdherenceRecord capturedRecord = capturedRecordList.get(0);
+        AdherenceRecord capturedRecord = capturedRecordList.getFirst();
         assertEquals(capturedRecord.getAppId(), TEST_APP_ID);
         assertEquals(capturedRecord.getStudyId(), TEST_STUDY_ID);
         assertEquals(capturedRecord.getUserId(), TEST_USER_ID);
@@ -1244,7 +1245,7 @@ public class UploadServiceTest {
         List<AdherenceRecord> capturedRecordList = capturedAdherenceRecordList.getRecords();
         assertEquals(capturedRecordList.size(), 1);
         
-        AdherenceRecord capturedRecord = capturedRecordList.get(0);
+        AdherenceRecord capturedRecord = capturedRecordList.getFirst();
         assertEquals(capturedRecord.getAppId(), TEST_APP_ID);
         assertEquals(capturedRecord.getStudyId(), TEST_STUDY_ID);
         assertEquals(capturedRecord.getUserId(), TEST_USER_ID);
@@ -1391,8 +1392,8 @@ public class UploadServiceTest {
         assertEquals(uploadView.getId(), UPLOAD_ID_1);
         assertEquals(uploadView.getHealthCode(), HEALTH_CODE);
         assertEquals(uploadView.getUserId(), TEST_USER_ID);
-        assertEquals(uploadView.getAdherenceRecordsForSchedule().get(0).getInstanceGuid(), INSTANCE_GUID);
-        assertEquals(uploadView.getAdherenceRecordsForUpload().get(0).getUploadIds(), ImmutableSet.of(UPLOAD_ID_1));
+        assertEquals(uploadView.getAdherenceRecordsForSchedule().getFirst().getInstanceGuid(), INSTANCE_GUID);
+        assertEquals(uploadView.getAdherenceRecordsForUpload().getFirst().getUploadIds(), ImmutableSet.of(UPLOAD_ID_1));
         assertSame(uploadView.getRecord(), record);
         assertNull(uploadView.getTimelineMetadata());
         assertSame(uploadView.getUpload(), upload);
@@ -1405,7 +1406,7 @@ public class UploadServiceTest {
                 searchCaptor.capture());
         List<AdherenceRecordsSearch> searchList = searchCaptor.getAllValues();
 
-        AdherenceRecordsSearch searchByInstanceGuid = searchList.get(0);
+        AdherenceRecordsSearch searchByInstanceGuid = searchList.getFirst();
         assertEquals(searchByInstanceGuid.getInstanceGuids(), ImmutableSet.of(INSTANCE_GUID));
         assertEquals(searchByInstanceGuid.getPageSize().intValue(), AdherenceRecordsSearchValidator.MAX_PAGE_SIZE);
         assertEquals(searchByInstanceGuid.getStudyId(), TEST_STUDY_ID);
@@ -1437,8 +1438,8 @@ public class UploadServiceTest {
         assertEquals(uploadView.getId(), UPLOAD_ID_1);
         assertEquals(uploadView.getHealthCode(), HEALTH_CODE);
         assertEquals(uploadView.getUserId(), TEST_USER_ID);
-        assertEquals(uploadView.getAdherenceRecordsForSchedule().get(0).getInstanceGuid(), INSTANCE_GUID);
-        assertEquals(uploadView.getAdherenceRecordsForUpload().get(0).getUploadIds(), ImmutableSet.of(UPLOAD_ID_1));
+        assertEquals(uploadView.getAdherenceRecordsForSchedule().getFirst().getInstanceGuid(), INSTANCE_GUID);
+        assertEquals(uploadView.getAdherenceRecordsForUpload().getFirst().getUploadIds(), ImmutableSet.of(UPLOAD_ID_1));
         assertSame(uploadView.getRecord(), record);
         assertEquals(uploadView.getTimelineMetadata().getMetadata().get("assessmentInstanceGuid"), INSTANCE_GUID);
         assertSame(uploadView.getUpload(), upload);
@@ -1464,8 +1465,8 @@ public class UploadServiceTest {
         assertEquals(uploadView.getId(), UPLOAD_ID_1);
         assertEquals(uploadView.getHealthCode(), HEALTH_CODE);
         assertEquals(uploadView.getUserId(), TEST_USER_ID);
-        assertEquals(uploadView.getAdherenceRecordsForSchedule().get(0).getInstanceGuid(), INSTANCE_GUID);
-        assertEquals(uploadView.getAdherenceRecordsForUpload().get(0).getUploadIds(), ImmutableSet.of(UPLOAD_ID_1));
+        assertEquals(uploadView.getAdherenceRecordsForSchedule().getFirst().getInstanceGuid(), INSTANCE_GUID);
+        assertEquals(uploadView.getAdherenceRecordsForUpload().getFirst().getUploadIds(), ImmutableSet.of(UPLOAD_ID_1));
         assertNotNull(uploadView.getTimelineMetadata());
         assertNull(uploadView.getRecord());
         assertSame(uploadView.getUpload(), upload);
@@ -1491,8 +1492,8 @@ public class UploadServiceTest {
         assertEquals(uploadView.getId(), UPLOAD_ID_1);
         assertEquals(uploadView.getHealthCode(), HEALTH_CODE);
         assertEquals(uploadView.getUserId(), TEST_USER_ID);
-        assertEquals(uploadView.getAdherenceRecordsForSchedule().get(0).getInstanceGuid(), INSTANCE_GUID);
-        assertEquals(uploadView.getAdherenceRecordsForUpload().get(0).getUploadIds(), ImmutableSet.of(UPLOAD_ID_1));
+        assertEquals(uploadView.getAdherenceRecordsForSchedule().getFirst().getInstanceGuid(), INSTANCE_GUID);
+        assertEquals(uploadView.getAdherenceRecordsForUpload().getFirst().getUploadIds(), ImmutableSet.of(UPLOAD_ID_1));
         assertSame(uploadView.getRecord(), record);
         assertNotNull(uploadView.getTimelineMetadata());
         assertNull(uploadView.getUpload());
@@ -1521,8 +1522,8 @@ public class UploadServiceTest {
         assertEquals(uploadView.getId(), UPLOAD_ID_1);
         assertEquals(uploadView.getHealthCode(), HEALTH_CODE);
         assertEquals(uploadView.getUserId(), TEST_USER_ID);
-        assertEquals(uploadView.getAdherenceRecordsForSchedule().get(0).getInstanceGuid(), INSTANCE_GUID);
-        assertEquals(uploadView.getAdherenceRecordsForUpload().get(0).getUploadIds(), ImmutableSet.of(UPLOAD_ID_1));
+        assertEquals(uploadView.getAdherenceRecordsForSchedule().getFirst().getInstanceGuid(), INSTANCE_GUID);
+        assertEquals(uploadView.getAdherenceRecordsForUpload().getFirst().getUploadIds(), ImmutableSet.of(UPLOAD_ID_1));
         assertSame(uploadView.getRecord(), record);
         assertNotNull(uploadView.getTimelineMetadata());
         assertSame(uploadView.getUpload(), upload);
@@ -1551,8 +1552,8 @@ public class UploadServiceTest {
         assertEquals(uploadView.getId(), UPLOAD_ID_1);
         assertEquals(uploadView.getHealthCode(), HEALTH_CODE);
         assertEquals(uploadView.getUserId(), TEST_USER_ID);
-        assertEquals(uploadView.getAdherenceRecordsForSchedule().get(0).getInstanceGuid(), INSTANCE_GUID);
-        assertEquals(uploadView.getAdherenceRecordsForUpload().get(0).getUploadIds(), ImmutableSet.of(UPLOAD_ID_1));
+        assertEquals(uploadView.getAdherenceRecordsForSchedule().getFirst().getInstanceGuid(), INSTANCE_GUID);
+        assertEquals(uploadView.getAdherenceRecordsForUpload().getFirst().getUploadIds(), ImmutableSet.of(UPLOAD_ID_1));
         assertSame(uploadView.getRecord(), record);
         assertNotNull(uploadView.getTimelineMetadata());
         assertSame(uploadView.getUpload(), upload);
@@ -1581,8 +1582,8 @@ public class UploadServiceTest {
         assertEquals(uploadView.getId(), UPLOAD_ID_1);
         assertEquals(uploadView.getHealthCode(), HEALTH_CODE);
         assertEquals(uploadView.getUserId(), TEST_USER_ID);
-        assertEquals(uploadView.getAdherenceRecordsForSchedule().get(0).getInstanceGuid(), INSTANCE_GUID);
-        assertEquals(uploadView.getAdherenceRecordsForUpload().get(0).getUploadIds(), ImmutableSet.of(UPLOAD_ID_1));
+        assertEquals(uploadView.getAdherenceRecordsForSchedule().getFirst().getInstanceGuid(), INSTANCE_GUID);
+        assertEquals(uploadView.getAdherenceRecordsForUpload().getFirst().getUploadIds(), ImmutableSet.of(UPLOAD_ID_1));
         assertSame(uploadView.getRecord(), record);
         assertNotNull(uploadView.getTimelineMetadata());
         assertSame(uploadView.getUpload(), upload);
@@ -1611,8 +1612,8 @@ public class UploadServiceTest {
         assertEquals(uploadView.getId(), UPLOAD_ID_1);
         assertEquals(uploadView.getHealthCode(), HEALTH_CODE);
         assertEquals(uploadView.getUserId(), TEST_USER_ID);
-        assertEquals(uploadView.getAdherenceRecordsForSchedule().get(0).getInstanceGuid(), INSTANCE_GUID);
-        assertEquals(uploadView.getAdherenceRecordsForUpload().get(0).getUploadIds(), ImmutableSet.of(UPLOAD_ID_1));
+        assertEquals(uploadView.getAdherenceRecordsForSchedule().getFirst().getInstanceGuid(), INSTANCE_GUID);
+        assertEquals(uploadView.getAdherenceRecordsForUpload().getFirst().getUploadIds(), ImmutableSet.of(UPLOAD_ID_1));
         assertSame(uploadView.getRecord(), record);
         assertNotNull(uploadView.getTimelineMetadata());
         assertSame(uploadView.getUpload(), upload);
@@ -1642,7 +1643,7 @@ public class UploadServiceTest {
         assertEquals(uploadView.getHealthCode(), HEALTH_CODE);
         assertEquals(uploadView.getUserId(), TEST_USER_ID);
         assertNull(uploadView.getAdherenceRecordsForSchedule());
-        assertEquals(uploadView.getAdherenceRecordsForUpload().get(0).getUploadIds(), ImmutableSet.of(UPLOAD_ID_1));
+        assertEquals(uploadView.getAdherenceRecordsForUpload().getFirst().getUploadIds(), ImmutableSet.of(UPLOAD_ID_1));
         assertSame(uploadView.getRecord(), record);
         assertNull(uploadView.getTimelineMetadata());
         assertSame(uploadView.getUpload(), upload);
@@ -1672,7 +1673,7 @@ public class UploadServiceTest {
         assertEquals(uploadView.getHealthCode(), HEALTH_CODE);
         assertEquals(uploadView.getUserId(), TEST_USER_ID);
         assertNull(uploadView.getAdherenceRecordsForSchedule());
-        assertEquals(uploadView.getAdherenceRecordsForUpload().get(0).getUploadIds(), ImmutableSet.of(UPLOAD_ID_1));
+        assertEquals(uploadView.getAdherenceRecordsForUpload().getFirst().getUploadIds(), ImmutableSet.of(UPLOAD_ID_1));
         assertSame(uploadView.getRecord(), record);
         assertNull(uploadView.getTimelineMetadata());
         assertSame(uploadView.getUpload(), upload);

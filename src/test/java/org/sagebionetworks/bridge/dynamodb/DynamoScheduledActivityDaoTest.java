@@ -185,7 +185,7 @@ public class DynamoScheduledActivityDaoTest {
 
         // Activities are sorted first by date, then by label ("Activity1", "Activity2" & "Activity3")
         // Expired activities are not returned, so this starts on the 12th
-        assertScheduledActivity(activities2.get(0), ACTIVITY_2_REF, "2015-04-12T13:00:00-07:00");
+        assertScheduledActivity(activities2.getFirst(), ACTIVITY_2_REF, "2015-04-12T13:00:00-07:00");
         assertScheduledActivity(activities2.get(1), ACTIVITY_2_REF, "2015-04-13T13:00:00-07:00");
         assertScheduledActivity(activities2.get(2), ACTIVITY_3_REF, "2015-04-13T13:00:00-07:00");
         assertScheduledActivity(activities2.get(3), ACTIVITY_1_REF, "2015-04-14T13:00:00-07:00");
@@ -211,13 +211,13 @@ public class DynamoScheduledActivityDaoTest {
 
         List<ScheduledActivity> activities = TestUtils.runSchedulerForActivities(context);
         // Only mock the return of one of these activities
-        mockMapperResults(Lists.newArrayList(activities.get(0)));
+        mockMapperResults(Lists.newArrayList(activities.getFirst()));
         
         List<ScheduledActivity> activities2 = activityDao.getActivities(context.getInitialTimeZone(), activities);
 
         // Regardless of the requested activities, only the ones in the db are returned (in this case, there's 1).
         assertEquals(activities2.size(), 1);
-        assertScheduledActivity(activities2.get(0), ACTIVITY_2_REF, "2015-04-12T13:00:00-07:00");
+        assertScheduledActivity(activities2.getFirst(), ACTIVITY_2_REF, "2015-04-12T13:00:00-07:00");
 
         verify(mapper).batchLoad((List<Object>)any());
         verifyNoMoreInteractions(mapper);
@@ -315,7 +315,7 @@ public class DynamoScheduledActivityDaoTest {
         assertEquals(query.getExclusiveStartKey().get("healthCode").getS(), HEALTH_CODE);
         Condition condition = query.getRangeKeyConditions().get("guid");
 
-        assertEquals(condition.getAttributeValueList().get(0).getS(),
+        assertEquals(condition.getAttributeValueList().getFirst().getS(),
                 ACTIVITY_GUID + ":" + SCHEDULED_ON_START.toLocalDateTime().toString());
         assertEquals(condition.getAttributeValueList().get(1).getS(),
                 ACTIVITY_GUID + ":" + SCHEDULED_ON_END.toLocalDateTime().toString());
@@ -480,7 +480,7 @@ public class DynamoScheduledActivityDaoTest {
         // Presence of a last evaluated key will cause delete to loop once.
         verify(mapper, times(2)).queryPage(eq(DynamoScheduledActivity.class), any(DynamoDBQueryExpression.class));
         verify(mapper, times(2)).batchDelete(argument.capture());
-        assertEquals(argument.getAllValues().get(0).size(), 2);
+        assertEquals(argument.getAllValues().getFirst().size(), 2);
         assertEquals(argument.getAllValues().get(1).size(), 1);
     }
 
@@ -597,7 +597,7 @@ public class DynamoScheduledActivityDaoTest {
         List<DynamoScheduledActivity> capturedActivities = (List<DynamoScheduledActivity>)iterableCaptor.getValue();
         
         assertEquals(capturedActivities.size(), 5);
-        assertEquals(capturedActivities.get(0).getGuid(), "CCC:foo");
+        assertEquals(capturedActivities.getFirst().getGuid(), "CCC:foo");
         assertEquals(capturedActivities.get(4).getGuid(), "GGG:foo");
     }
 }

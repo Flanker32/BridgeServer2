@@ -26,7 +26,7 @@ import static org.sagebionetworks.bridge.validators.EnrollmentValidator.INSTANCE
 import java.util.List;
 import java.util.Set;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;

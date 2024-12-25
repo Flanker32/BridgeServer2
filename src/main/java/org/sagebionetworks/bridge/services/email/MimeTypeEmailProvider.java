@@ -2,7 +2,7 @@ package org.sagebionetworks.bridge.services.email;
 
 import java.util.Set;
 
-import javax.mail.MessagingException;
+import jakarta.mail.MessagingException;
 
 import org.sagebionetworks.bridge.BridgeUtils;
 import org.sagebionetworks.bridge.models.apps.App;
@@ -33,7 +33,7 @@ public abstract class MimeTypeEmailProvider {
      */
     public String getFormattedSenderEmail() {
         String senderEmail = getPlainSenderEmail();
-        return String.format("%s <%s>", getApp().getName(), senderEmail);
+        return "%s <%s>".formatted(getApp().getName(), senderEmail);
     }
     public App getApp() {
         return app;

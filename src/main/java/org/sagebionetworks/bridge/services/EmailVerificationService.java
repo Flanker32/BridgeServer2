@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 
 import com.amazonaws.AmazonServiceException;
 import com.amazonaws.services.simpleemail.model.GetIdentityNotificationAttributesRequest;

@@ -284,7 +284,7 @@ public class SurveyServiceTest {
     public void successfulDelete() {
         List<SchedulePlan> plans = createSchedulePlanListWithSurveyReference(false);
         
-        Activity oldActivity = getActivityList(plans).get(0);
+        Activity oldActivity = getActivityList(plans).getFirst();
         Activity activity = new Activity.Builder().withActivity(oldActivity)
                 .withSurvey("Survey", "otherGuid", SURVEY_CREATED_ON).build();
         getActivityList(plans).set(0, activity);
@@ -312,7 +312,7 @@ public class SurveyServiceTest {
     public void successfulDeletePermanently() {
         List<SchedulePlan> plans = createSchedulePlanListWithSurveyReference(false);
         
-        Activity oldActivity = getActivityList(plans).get(0);
+        Activity oldActivity = getActivityList(plans).getFirst();
         Activity activity = new Activity.Builder().withActivity(oldActivity)
                 .withSurvey("Survey", "otherGuid", SURVEY_CREATED_ON).build();
         getActivityList(plans).set(0, activity);
@@ -491,8 +491,8 @@ public class SurveyServiceTest {
     @Test
     public void deleteSurveyPermanentlyNotConstrainedByScheduleWithMultiplePublishedSurveys() {
         // Two published surveys in the list, no exception thrown
-        List<SchedulePlan> plans = ImmutableList.of(createSchedulePlanListWithSurveyReference(true).get(0),
-                createSchedulePlanListWithSurveyReference(true).get(0));
+        List<SchedulePlan> plans = ImmutableList.of(createSchedulePlanListWithSurveyReference(true).getFirst(),
+                createSchedulePlanListWithSurveyReference(true).getFirst());
         doReturn(plans).when(mockSchedulePlanService).getSchedulePlans(ClientInfo.UNKNOWN_CLIENT, TEST_APP_ID, true);
         
         Survey survey = createSurvey();
@@ -657,7 +657,7 @@ public class SurveyServiceTest {
             service.updateSurvey(TEST_APP_ID, update);    
             fail("Should have thrown an exception");
         } catch(InvalidEntityException e) {
-            assertEquals(e.getErrors().get("elements[0].afterRules[0].dataGroups").get(0),
+            assertEquals(e.getErrors().get("elements[0].afterRules[0].dataGroups").getFirst(),
                     "elements[0].afterRules[0].dataGroups contains data groups 'groupB, groupdD' "+
                     "that are not valid data groups: groupA, groupB, groupC");
         }
@@ -903,7 +903,7 @@ public class SurveyServiceTest {
     }
     
     private List<Activity> getActivityList(List<SchedulePlan> plans) {
-        return ((SimpleScheduleStrategy) plans.get(0).getStrategy()).getSchedule().getActivities();
+        return ((SimpleScheduleStrategy) plans.getFirst().getStrategy()).getSchedule().getActivities();
     }
 
     private Survey createSurvey() {

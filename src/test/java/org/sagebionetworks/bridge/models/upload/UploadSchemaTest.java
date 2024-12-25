@@ -51,7 +51,7 @@ public class UploadSchemaTest {
         {
             List<UploadFieldDefinition> gettedFieldDefList = schema.getFieldDefinitions();
             assertEquals(gettedFieldDefList.size(), 1);
-            assertEquals(gettedFieldDefList.get(0), fieldDef1);
+            assertEquals(gettedFieldDefList.getFirst(), fieldDef1);
         }
 
         // Modify the original list. getFieldDefinitions() shouldn't reflect this change.
@@ -59,7 +59,7 @@ public class UploadSchemaTest {
         {
             List<UploadFieldDefinition> gettedFieldDefList = schema.getFieldDefinitions();
             assertEquals(gettedFieldDefList.size(), 1);
-            assertEquals(gettedFieldDefList.get(0), fieldDef1);
+            assertEquals(gettedFieldDefList.getFirst(), fieldDef1);
         }
 
         // Set field def list to null. It'll come back as empty.
@@ -269,7 +269,7 @@ public class UploadSchemaTest {
         assertEquals(uploadSchema.getMinAppVersion("Android").intValue(), 23);
         assertEquals(uploadSchema.getMaxAppVersion("Android").intValue(), 42);
 
-        UploadFieldDefinition fooFieldDef = uploadSchema.getFieldDefinitions().get(0);
+        UploadFieldDefinition fooFieldDef = uploadSchema.getFieldDefinitions().getFirst();
         assertEquals(fooFieldDef.getName(), "foo");
         assertTrue(fooFieldDef.isRequired());
         assertEquals(fooFieldDef.getType(), UploadFieldType.INT);
@@ -349,18 +349,20 @@ public class UploadSchemaTest {
                 new DynamoUploadSchema.FieldDefinitionListMarshaller();
 
         // start with JSON
-        String jsonText = "[\n" +
-                "   {\n" +
-                "       \"name\":\"foo\",\n" +
-                "       \"required\":true,\n" +
-                "       \"type\":\"INT\"\n" +
-                "   },\n" +
-                "   {\n" +
-                "       \"name\":\"bar\",\n" +
-                "       \"required\":false,\n" +
-                "       \"type\":\"STRING\"\n" +
-                "   }\n" +
-                "]";
+        String jsonText = """
+                [
+                   {
+                       "name":"foo",
+                       "required":true,
+                       "type":"INT"
+                   },
+                   {
+                       "name":"bar",
+                       "required":false,
+                       "type":"STRING"
+                   }
+                ]\
+                """;
 
         // unmarshal and validate
         // Note that the first argument is supposed to be of type Class<List<UploadFileDefinition>>. Unfortunately,
@@ -369,7 +371,7 @@ public class UploadSchemaTest {
         List<UploadFieldDefinition> fieldDefList = fieldDefListMarshaller.unconvert(jsonText);
         assertEquals(fieldDefList.size(), 2);
 
-        UploadFieldDefinition fooFieldDef = fieldDefList.get(0);
+        UploadFieldDefinition fooFieldDef = fieldDefList.getFirst();
         assertEquals(fooFieldDef.getName(), "foo");
         assertTrue(fooFieldDef.isRequired());
         assertEquals(fooFieldDef.getType(), UploadFieldType.INT);
@@ -387,7 +389,7 @@ public class UploadSchemaTest {
                 List.class);
         assertEquals(fieldDefJsonList.size(), 2);
 
-        Map<String, Object> fooJsonMap = fieldDefJsonList.get(0);
+        Map<String, Object> fooJsonMap = fieldDefJsonList.getFirst();
         assertEquals(fooJsonMap.get("name"), "foo");
         assertTrue((boolean) fooJsonMap.get("required"));
         assertEquals(fooJsonMap.get("type"), "int");

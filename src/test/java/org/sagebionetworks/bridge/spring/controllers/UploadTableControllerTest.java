@@ -14,7 +14,7 @@ import static org.testng.Assert.assertNotNull;
 import static org.testng.Assert.assertSame;
 
 import java.util.List;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 import com.google.common.collect.ImmutableList;
 import org.mockito.ArgumentCaptor;

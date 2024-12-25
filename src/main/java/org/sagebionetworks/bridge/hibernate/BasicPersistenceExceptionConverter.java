@@ -1,7 +1,7 @@
 package org.sagebionetworks.bridge.hibernate;
 
-import javax.persistence.OptimisticLockException;
-import javax.persistence.PersistenceException;
+import jakarta.persistence.OptimisticLockException;
+import jakarta.persistence.PersistenceException;
 
 import org.springframework.stereotype.Component;
 

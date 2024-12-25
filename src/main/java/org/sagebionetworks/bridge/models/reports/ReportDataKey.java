@@ -47,13 +47,13 @@ public final class ReportDataKey implements BridgeEntity {
     @JsonIgnore
     public String getKeyString() {
         return (healthCode != null) ?
-                String.format("%s:%s:%s", healthCode, identifier, appId) :
-                String.format("%s:%s", identifier, appId);
+                "%s:%s:%s".formatted(healthCode, identifier, appId) :
+                "%s:%s".formatted(identifier, appId);
     }
     
     @JsonIgnore
     public String getIndexKeyString() {
-        return String.format("%s:%s", appId, reportType.name());
+        return "%s:%s".formatted(appId, reportType.name());
     }
     
     @Override

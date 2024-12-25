@@ -8,15 +8,14 @@ import static org.hibernate.event.spi.EventType.SAVE_UPDATE;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import javax.annotation.Resource;
-import javax.servlet.Filter;
+import jakarta.annotation.Resource;
+import jakarta.servlet.Filter;
 import javax.sql.DataSource;
 
 import com.amazonaws.ClientConfiguration;
@@ -615,7 +614,7 @@ public class SpringConfig {
         // https://stackoverflow.com/questions/27536380/how-to-connect-to-a-remote-mysql-database-via-ssl-using-play-framework/27536391
         Path trustStorePath = null;
         try {
-            trustStorePath = Paths.get(classLoader.getResource("truststore.jks").toURI());
+            trustStorePath = Path.of(classLoader.getResource("truststore.jks").toURI());
         } catch (URISyntaxException ex/*IOException ex*/) {
             throw new RuntimeException("Error loading truststore from classpath: " + ex.getMessage(), ex);
         }

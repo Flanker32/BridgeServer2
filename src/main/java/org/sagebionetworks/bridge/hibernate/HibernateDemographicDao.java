@@ -3,7 +3,7 @@ package org.sagebionetworks.bridge.hibernate;
 import java.util.List;
 import java.util.Optional;
 
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 
 import org.sagebionetworks.bridge.dao.DemographicDao;
 import org.sagebionetworks.bridge.hibernate.QueryBuilder.WhereClauseBuilder;

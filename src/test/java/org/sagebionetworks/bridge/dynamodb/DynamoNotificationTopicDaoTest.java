@@ -181,7 +181,7 @@ public class DynamoNotificationTopicDaoTest {
         dao.deleteAllTopics(TEST_APP_ID);
         
         verify(mockMapper, times(2)).delete(topicCaptor.capture());
-        NotificationTopic captured = topicCaptor.getAllValues().get(0);
+        NotificationTopic captured = topicCaptor.getAllValues().getFirst();
         assertEquals(captured.getAppId(), topic1.getAppId());
         assertEquals(captured.getGuid(), topic1.getGuid());
         
@@ -190,7 +190,7 @@ public class DynamoNotificationTopicDaoTest {
         assertEquals(captured.getGuid(), topic2.getGuid());
         
         verify(mockSnsClient, times(2)).deleteTopic(deleteTopicRequestCaptor.capture());
-        DeleteTopicRequest request = deleteTopicRequestCaptor.getAllValues().get(0);
+        DeleteTopicRequest request = deleteTopicRequestCaptor.getAllValues().getFirst();
         assertEquals(request.getTopicArn(), topic1.getTopicARN());
         
         request = deleteTopicRequestCaptor.getAllValues().get(1);
@@ -330,8 +330,8 @@ public class DynamoNotificationTopicDaoTest {
         List<NotificationTopic> topics = dao.listTopics(TEST_APP_ID, true);
         assertEquals(topics.size(), 2);
 
-        assertEquals(topics.get(0).getGuid(), GUID_WITHOUT_CRITERIA);
-        assertNull(topics.get(0).getCriteria());
+        assertEquals(topics.getFirst().getGuid(), GUID_WITHOUT_CRITERIA);
+        assertNull(topics.getFirst().getCriteria());
 
         assertEquals(topics.get(1).getGuid(), GUID_WITH_CRITERIA);
         assertCriteria(GUID_WITH_CRITERIA, topics.get(1).getCriteria());

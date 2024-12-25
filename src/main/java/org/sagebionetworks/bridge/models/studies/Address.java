@@ -1,6 +1,6 @@
 package org.sagebionetworks.bridge.models.studies;
 
-import javax.persistence.Embeddable;
+import jakarta.persistence.Embeddable;
 
 /**
  * This is suitable for displaying many addresses to end users (even something 

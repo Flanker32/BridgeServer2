@@ -92,7 +92,7 @@ public class HibernateAssessmentConfigDaoTest extends Mockito {
         
         verify(mockSession, times(2)).merge(argCaptor.capture());
         
-        HibernateAssessment hibAssessment = (HibernateAssessment)argCaptor.getAllValues().get(0);
+        HibernateAssessment hibAssessment = (HibernateAssessment)argCaptor.getAllValues().getFirst();
         assertEquals(hibAssessment.getGuid(), GUID);
     }
 
@@ -110,7 +110,7 @@ public class HibernateAssessmentConfigDaoTest extends Mockito {
 
         verify(mockSession).merge(configCaptor.capture());
         
-        HibernateAssessmentConfig hibConfig = configCaptor.getAllValues().get(0);
+        HibernateAssessmentConfig hibConfig = configCaptor.getAllValues().getFirst();
         assertEquals(hibConfig.getVersion(), 3L);
     }
     
@@ -123,7 +123,7 @@ public class HibernateAssessmentConfigDaoTest extends Mockito {
         
         verify(mockSession).remove(configCaptor.capture());
         
-        HibernateAssessmentConfig hibConfig = configCaptor.getAllValues().get(0);
+        HibernateAssessmentConfig hibConfig = configCaptor.getAllValues().getFirst();
         assertEquals(hibConfig.getVersion(), 3L);
     }
 }

@@ -102,8 +102,8 @@ public class DynamoSubpopulationTest {
         assertEquals(newSubpop.getConsentPDF(), pdfURL);
         
         Criteria critObject = newSubpop.getCriteria();
-        assertEquals(critObject.getMinAppVersion(IOS), new Integer(2));
-        assertEquals(critObject.getMaxAppVersion(IOS), new Integer(10));
+        assertEquals(critObject.getMinAppVersion(IOS), Integer.valueOf(2));
+        assertEquals(critObject.getMaxAppVersion(IOS), Integer.valueOf(10));
         assertEquals(critObject.getAllOfGroups(), ALL_OF_GROUPS);
         assertEquals(critObject.getNoneOfGroups(), NONE_OF_GROUPS);
     }

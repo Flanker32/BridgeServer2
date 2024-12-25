@@ -516,10 +516,10 @@ public class HibernateAccountDaoTest extends Mockito {
         List<AccountSummary> accountSummaryList = accountSummaryResourceList.getItems();
         assertEquals(accountSummaryList.size(), 2);
 
-        assertEquals(accountSummaryList.get(0).getId(), "account-1");
-        assertEquals(accountSummaryList.get(0).getAppId(), TEST_APP_ID);
-        assertEquals(accountSummaryList.get(0).getEmail(), "email1@example.com");
-        assertEquals(accountSummaryList.get(0).getStudyIds(), ImmutableSet.of(STUDY_A, STUDY_B));
+        assertEquals(accountSummaryList.getFirst().getId(), "account-1");
+        assertEquals(accountSummaryList.getFirst().getAppId(), TEST_APP_ID);
+        assertEquals(accountSummaryList.getFirst().getEmail(), "email1@example.com");
+        assertEquals(accountSummaryList.getFirst().getStudyIds(), ImmutableSet.of(STUDY_A, STUDY_B));
 
         assertEquals(accountSummaryList.get(1).getId(), "account-2");
         assertEquals(accountSummaryList.get(1).getAppId(), TEST_APP_ID);
@@ -604,7 +604,7 @@ public class HibernateAccountDaoTest extends Mockito {
         List<AccountSummary> accountSummaryList = accountSummaryResourceList.getItems();
 
         // study B is not there
-        assertEquals(accountSummaryList.get(0).getStudyIds(), ImmutableSet.of(STUDY_A));
+        assertEquals(accountSummaryList.getFirst().getStudyIds(), ImmutableSet.of(STUDY_A));
         assertEquals(accountSummaryList.get(1).getStudyIds(), ImmutableSet.of(STUDY_A));
     }
 
@@ -679,7 +679,7 @@ public class HibernateAccountDaoTest extends Mockito {
         verify(mockHibernateHelper).getById(HibernateAccount.class, ACCOUNT_ID);
         verify(mockHibernateHelper).queryCount(eq(expCountQuery), paramCaptor.capture());
 
-        Map<String, Object> capturedParams = paramCaptor.getAllValues().get(0);
+        Map<String, Object> capturedParams = paramCaptor.getAllValues().getFirst();
         assertEquals(capturedParams.get("appId"), TEST_APP_ID);
         assertEquals(capturedParams.get("email"), "%" + EMAIL + "%");
         assertEquals(capturedParams.get("number"), "%" + phoneString + "%");
@@ -789,7 +789,7 @@ public class HibernateAccountDaoTest extends Mockito {
         verify(mockHibernateHelper).getById(HibernateAccount.class, ACCOUNT_ID);
         verify(mockHibernateHelper).queryCount(eq(expCountQuery), paramCaptor.capture());
 
-        Map<String, Object> capturedParams = paramCaptor.getAllValues().get(0);
+        Map<String, Object> capturedParams = paramCaptor.getAllValues().getFirst();
         assertEquals(capturedParams.get("appId"), TEST_APP_ID);
         assertEquals(capturedParams.get("email"), "%" + EMAIL + "%");
         assertEquals(capturedParams.get("number"), "%" + phoneString + "%");
@@ -1288,9 +1288,9 @@ public class HibernateAccountDaoTest extends Mockito {
         when(mockHibernateHelper.queryCount(any(), any())).thenReturn(100);
         
         PagedResourceList<ExternalIdentifierInfo> retValue = dao.getPagedExternalIds(TEST_APP_ID, TEST_STUDY_ID, "idFilter", 100, 50);
-        assertEquals(retValue.getTotal(), new Integer(100));
+        assertEquals(retValue.getTotal(), Integer.valueOf(100));
         
-        ExternalIdentifierInfo info1 = retValue.getItems().get(0);
+        ExternalIdentifierInfo info1 = retValue.getItems().getFirst();
         assertEquals(info1.getIdentifier(), "extId1");
         assertEquals(info1.getStudyId(), TEST_STUDY_ID);
         assertTrue(info1.isAssigned());
@@ -1303,7 +1303,7 @@ public class HibernateAccountDaoTest extends Mockito {
         verify(mockHibernateHelper).queryGet(eq(EXTID_FULL_QUERY), paramCaptor.capture(), eq(100), eq(50), eq(HibernateEnrollment.class));
         verify(mockHibernateHelper).queryCount(eq(EXTID_FULL_COUNT_QUERY), paramCaptor.capture());
         
-        Map<String,Object> params1 = paramCaptor.getAllValues().get(0);
+        Map<String,Object> params1 = paramCaptor.getAllValues().getFirst();
         assertEquals(params1.get("appId"), TEST_APP_ID);
         assertEquals(params1.get("studyId"), TEST_STUDY_ID);
         assertEquals(params1.get("idFilter"), "idFilter%");
@@ -1326,7 +1326,7 @@ public class HibernateAccountDaoTest extends Mockito {
         verify(mockHibernateHelper).queryGet(eq(EXTID_QUERY), paramCaptor.capture(), eq(100), eq(50), eq(HibernateEnrollment.class));
         verify(mockHibernateHelper).queryCount(eq(EXTID_COUNT_QUERY), paramCaptor.capture());
         
-        Map<String,Object> params1 = paramCaptor.getAllValues().get(0);
+        Map<String,Object> params1 = paramCaptor.getAllValues().getFirst();
         assertEquals(params1.get("appId"), TEST_APP_ID);
         assertEquals(params1.get("studyId"), TEST_STUDY_ID);
         assertNull(params1.get("idFilter"));

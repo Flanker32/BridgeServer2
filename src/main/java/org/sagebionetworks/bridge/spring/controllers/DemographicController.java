@@ -102,7 +102,7 @@ public class DemographicController extends BaseController {
             // posted on the user's behalf at a study level
             session = getAuthenticatedSession(Roles.RESEARCHER, Roles.STUDY_COORDINATOR);
             userIdUnwrapped = userId.get();
-        } else if (userId.isPresent() && !studyId.isPresent()) {
+        } else if (userId.isPresent() && studyId.isEmpty()) {
             // posted on the user's behalf at an app level
             session = getAuthenticatedSession(Roles.ADMIN);
             userIdUnwrapped = userId.get();
@@ -167,7 +167,7 @@ public class DemographicController extends BaseController {
             // posted on the user's behalf at a study level
             session = getAuthenticatedSession(Roles.RESEARCHER, Roles.STUDY_COORDINATOR);
             userIdUnwrapped = userId.get();
-        } else if (userId.isPresent() && !studyId.isPresent()) {
+        } else if (userId.isPresent() && studyId.isEmpty()) {
             // posted on the user's behalf at an app level
             session = getAuthenticatedSession(Roles.ADMIN);
             userIdUnwrapped = userId.get();

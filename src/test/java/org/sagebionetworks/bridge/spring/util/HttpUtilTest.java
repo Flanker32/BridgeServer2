@@ -13,7 +13,7 @@ import org.testng.annotations.Test;
 
 import org.sagebionetworks.bridge.json.DefaultObjectMapper;
 
-import javax.servlet.http.Cookie;
+import jakarta.servlet.http.Cookie;
 
 @SuppressWarnings("ConstantConditions")
 public class HttpUtilTest {
@@ -40,7 +40,7 @@ public class HttpUtilTest {
     public static void assertErrorResponse(ResponseEntity<String> actualResponse, HttpStatus expectedStatus,
                                            String expectedType, String expectedMessage) throws IOException {
         assertEquals(actualResponse.getStatusCode(), expectedStatus);
-        assertEquals(actualResponse.getHeaders().get(HttpUtil.CONTENT_TYPE_HEADER).get(0), HttpUtil.CONTENT_TYPE_JSON);
+        assertEquals(actualResponse.getHeaders().get(HttpUtil.CONTENT_TYPE_HEADER).getFirst(), HttpUtil.CONTENT_TYPE_JSON);
 
         JsonNode responseNode = DefaultObjectMapper.INSTANCE.readTree(actualResponse.getBody());
         assertEquals(responseNode.get(HttpUtil.KEY_STATUS_CODE).intValue(), expectedStatus.value());

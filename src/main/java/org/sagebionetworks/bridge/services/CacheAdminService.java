@@ -5,7 +5,7 @@ import static org.apache.commons.lang3.StringUtils.isNotBlank;
 
 import java.util.Set;
 
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 
 import org.sagebionetworks.bridge.cache.CacheKey;
 import org.sagebionetworks.bridge.exceptions.BridgeServiceException;

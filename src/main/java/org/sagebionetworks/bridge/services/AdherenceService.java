@@ -171,8 +171,8 @@ public class AdherenceService {
         // The only caller of this method sets all the userId and studyId fields, 
         // so this only needs to be called once.
         CAN_ACCESS_ADHERENCE_DATA.checkAndThrow(
-                AuthEvaluatorField.STUDY_ID, recordList.getRecords().get(0).getStudyId(), 
-                AuthEvaluatorField.USER_ID, recordList.getRecords().get(0).getUserId());
+                AuthEvaluatorField.STUDY_ID, recordList.getRecords().getFirst().getStudyId(), 
+                AuthEvaluatorField.USER_ID, recordList.getRecords().getFirst().getUserId());
         
         MetadataContainer container = new MetadataContainer(scheduleService, recordList.getRecords());
         
@@ -429,7 +429,7 @@ public class AdherenceService {
             record.setEventTimestamp(eventTimestamp);
         } else {
             // Otherwise, update the existing record. There should only be one record.
-            record = adherenceRecordList.get(0);
+            record = adherenceRecordList.getFirst();
         }
 
         // Update the record.

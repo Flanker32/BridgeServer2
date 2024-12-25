@@ -116,8 +116,8 @@ public class SchedulerTest extends Mockito {
         // will yield the same results, even if mixed. So this timeline could be
         // cached under a key including this language combination.
         assertEquals(timeline.getLang(), "ja,es");
-        assertEquals(timeline.getAssessments().get(0).getLabel(), "Spanish");
-        assertEquals(timeline.getSessions().get(0).getLabel(), "Spanish");
+        assertEquals(timeline.getAssessments().getFirst().getLabel(), "Spanish");
+        assertEquals(timeline.getSessions().getFirst().getLabel(), "Spanish");
     }
     
     @Test
@@ -140,8 +140,8 @@ public class SchedulerTest extends Mockito {
         // Three different languages, but each the best option available for this user.
         // (In reality, consistent localization would lead to consistent results.)
         assertEquals(timeline.getLang(), "ja,es");
-        assertEquals(timeline.getAssessments().get(0).getLabel(), "Japanese");
-        assertEquals(timeline.getSessions().get(0).getLabel(), "Spanish");
+        assertEquals(timeline.getAssessments().getFirst().getLabel(), "Japanese");
+        assertEquals(timeline.getSessions().getFirst().getLabel(), "Spanish");
     }
     
     @Test
@@ -161,8 +161,8 @@ public class SchedulerTest extends Mockito {
         // Here we fall back to the assessment title, the required English-language message and the 
         // session name, since Chinese values don’t exist.
         assertEquals(timeline.getLang(), "en");
-        assertEquals(timeline.getAssessments().get(0).getLabel(), "English");
-        assertEquals(timeline.getSessions().get(0).getLabel(), "English");
+        assertEquals(timeline.getAssessments().getFirst().getLabel(), "English");
+        assertEquals(timeline.getSessions().getFirst().getLabel(), "English");
     }
     
     @Test
@@ -185,8 +185,8 @@ public class SchedulerTest extends Mockito {
         // Similar to above test of mixed values, but note that nothing breaks if there
         // is no suitable message (validators prevent this from happening however).
         assertEquals(timeline.getLang(), "zh");
-        assertEquals(timeline.getAssessments().get(0).getLabel(), "Assessment 1");
-        assertEquals(timeline.getSessions().get(0).getLabel(), "One Time Session");
+        assertEquals(timeline.getAssessments().getFirst().getLabel(), "Assessment 1");
+        assertEquals(timeline.getSessions().getFirst().getLabel(), "One Time Session");
     }
     
     @Test
@@ -240,7 +240,7 @@ public class SchedulerTest extends Mockito {
         assertEquals(timeline.getAssessments().size(), 1);
         
         // The schedule proper with the instance GUIDs
-        ScheduledSession schSession = timeline.getSchedule().get(0);
+        ScheduledSession schSession = timeline.getSchedule().getFirst();
         assertEquals(schSession.getRefGuid(), SESSION_GUID_3);
         // instance guid
         assertEquals(schSession.getStartDay(), Integer.valueOf(0));
@@ -250,16 +250,16 @@ public class SchedulerTest extends Mockito {
         assertNull(schSession.isPersistent());
         
         assertEquals(schSession.getAssessments().size(), 1);
-        ScheduledAssessment schAsmt = schSession.getAssessments().get(0);
-        assertEquals(schAsmt.getRefKey(), String.valueOf(schSession.getAssessments().get(0).getRefKey()));
+        ScheduledAssessment schAsmt = schSession.getAssessments().getFirst();
+        assertEquals(schAsmt.getRefKey(), String.valueOf(schSession.getAssessments().getFirst().getRefKey()));
         // instance guid
         
-        SessionInfo sessionInfo = timeline.getSessions().get(0);
+        SessionInfo sessionInfo = timeline.getSessions().getFirst();
         assertEquals(sessionInfo.getGuid(), SESSION_GUID_3);
         assertEquals(sessionInfo.getLabel(), "One Time Session");
         assertEquals(sessionInfo.getMinutesToComplete(), Integer.valueOf(10));
         
-        AssessmentInfo asmtInfo = timeline.getAssessments().get(0);
+        AssessmentInfo asmtInfo = timeline.getAssessments().getFirst();
         assertEquals(asmtInfo.getGuid(), ASSESSMENT_1_GUID);
         assertEquals(asmtInfo.getAppId(), TEST_APP_ID);
         assertEquals(asmtInfo.getIdentifier(), "assessment-1");
@@ -274,17 +274,17 @@ public class SchedulerTest extends Mockito {
         
         Timeline timeline = INSTANCE.calculateTimeline(schedule);
         
-        AssessmentInfo info = timeline.getAssessments().get(0);
+        AssessmentInfo info = timeline.getAssessments().getFirst();
         
         assertEquals(timeline.getDuration(), Period.parse("P7W"));
         assertEquals(timeline.getSchedule().size(), 7);
         
-        ScheduledSession schSession = timeline.getSchedule().get(0);
+        ScheduledSession schSession = timeline.getSchedule().getFirst();
         assertEquals(schSession.getRefGuid(), SESSION_GUID_1);
         assertEquals(schSession.getStartTime(), LocalTime.parse("08:00"));
         assertEquals(schSession.getExpiration(), Period.parse("PT8H"));
         
-        ScheduledAssessment schAsmt = schSession.getAssessments().get(0);
+        ScheduledAssessment schAsmt = schSession.getAssessments().getFirst();
         assertEquals(schAsmt.getRefKey(), info.getKey());
         
         assertDayRange(timeline, 0, 0, 0);
@@ -301,7 +301,7 @@ public class SchedulerTest extends Mockito {
         Schedule2 schedule = createSchedule("P1W");
         
         Session session = createRepeatingSession(null, "P3D");
-        session.getTimeWindows().get(0).setExpiration(Period.parse("P2D"));
+        session.getTimeWindows().getFirst().setExpiration(Period.parse("P2D"));
         schedule.getSessions().add(session);
         
         Timeline timeline = INSTANCE.calculateTimeline(schedule);
@@ -338,7 +338,7 @@ public class SchedulerTest extends Mockito {
         
         Timeline timeline = INSTANCE.calculateTimeline(schedule);
         
-        assertEquals(timeline.getSchedule().get(0).getRefGuid(), SESSION_GUID_3);
+        assertEquals(timeline.getSchedule().getFirst().getRefGuid(), SESSION_GUID_3);
         assertEquals(timeline.getSchedule().get(1).getRefGuid(), SESSION_GUID_1);
         
         assertEquals(timeline.getSchedule().size(), 8);
@@ -477,7 +477,7 @@ public class SchedulerTest extends Mockito {
         Timeline timeline = INSTANCE.calculateTimeline(schedule);
         assertEquals(timeline.getSchedule().size(), 2);
         
-        assertEquals(timeline.getSchedule().get(0).getStartTime(), LocalTime.parse("08:00"));
+        assertEquals(timeline.getSchedule().getFirst().getStartTime(), LocalTime.parse("08:00"));
         assertEquals(timeline.getSchedule().get(1).getStartTime(), LocalTime.parse("14:00"));
         assertEquals(timeline.getSessions().size(), 1);
         assertEquals(timeline.getAssessments().size(), 1);
@@ -503,8 +503,8 @@ public class SchedulerTest extends Mockito {
         Timeline timeline = INSTANCE.calculateTimeline(schedule);
         assertEquals(timeline.getSchedule().size(), 1);
         assertDayRange(timeline, 0, 0, 0);
-        assertEquals(timeline.getSchedule().get(0).getStartTime(), LocalTime.parse("08:00"));
-        assertEquals(timeline.getSchedule().get(0).getDelayTime(), Period.parse("PT6H"));
+        assertEquals(timeline.getSchedule().getFirst().getStartTime(), LocalTime.parse("08:00"));
+        assertEquals(timeline.getSchedule().getFirst().getDelayTime(), Period.parse("PT6H"));
     }
     
     @Test
@@ -524,7 +524,7 @@ public class SchedulerTest extends Mockito {
     public void delayAndExpirationLongerThanDurationReturnsNoScheduledSession() { 
         Schedule2 schedule = createSchedule("P2W");
         Session session = createRepeatingSession("P1W", "P1W");
-        session.getTimeWindows().get(0).setExpiration(Period.parse("P1W1D"));
+        session.getTimeWindows().getFirst().setExpiration(Period.parse("P1W1D"));
         schedule.getSessions().add(session);
         
         // Although it starts in the window and there’s plenty of time left in
@@ -632,7 +632,7 @@ public class SchedulerTest extends Mockito {
         Timeline timeline = INSTANCE.calculateTimeline(schedule);
         assertEquals(timeline.getSchedule().size(), 1);
         
-        ScheduledSession schSession = timeline.getSchedule().get(0);
+        ScheduledSession schSession = timeline.getSchedule().getFirst();
         assertEquals(schSession.getStartDay(), Integer.valueOf(0));
         assertEquals(schSession.getEndDay(), Integer.valueOf(0));
         assertEquals(schSession.getStartTime(), LocalTime.parse("08:00"));
@@ -645,13 +645,13 @@ public class SchedulerTest extends Mockito {
         Session session = createOneTimeSession(null);
         // starts at 8:00, add 16 hours + 1 minute to the expiration, it 
         // goes into the next day (16 hours does not).
-        session.getTimeWindows().get(0).setExpiration(Period.parse("PT961M"));
+        session.getTimeWindows().getFirst().setExpiration(Period.parse("PT961M"));
         schedule.setSessions(ImmutableList.of(session));
 
         Timeline timeline = INSTANCE.calculateTimeline(schedule);
         assertEquals(timeline.getSchedule().size(), 1);
         
-        ScheduledSession schSession = timeline.getSchedule().get(0);
+        ScheduledSession schSession = timeline.getSchedule().getFirst();
         assertEquals(schSession.getStartDay(), Integer.valueOf(0));
         assertEquals(schSession.getEndDay(), Integer.valueOf(1));
         assertEquals(schSession.getStartTime(), LocalTime.parse("08:00"));
@@ -663,13 +663,13 @@ public class SchedulerTest extends Mockito {
         Schedule2 schedule = createSchedule("P2D");
         Session session = createOneTimeSession(null);
         // starts at 8:00, add 17 hours
-        session.getTimeWindows().get(0).setExpiration(Period.parse("PT17H"));
+        session.getTimeWindows().getFirst().setExpiration(Period.parse("PT17H"));
         schedule.setSessions(ImmutableList.of(session));
 
         Timeline timeline = INSTANCE.calculateTimeline(schedule);
         assertEquals(timeline.getSchedule().size(), 1);
         
-        ScheduledSession schSession = timeline.getSchedule().get(0);
+        ScheduledSession schSession = timeline.getSchedule().getFirst();
         assertEquals(schSession.getStartDay(), Integer.valueOf(0));
         assertEquals(schSession.getEndDay(), Integer.valueOf(1));
         assertEquals(schSession.getStartTime(), LocalTime.parse("08:00"));
@@ -680,13 +680,13 @@ public class SchedulerTest extends Mockito {
     public void timeWindowStartExpiresAfterDayUsingDays() {
         Schedule2 schedule = createSchedule("P5D");
         Session session = createOneTimeSession(null);
-        session.getTimeWindows().get(0).setExpiration(Period.parse("P4D"));
+        session.getTimeWindows().getFirst().setExpiration(Period.parse("P4D"));
         schedule.setSessions(ImmutableList.of(session));
 
         Timeline timeline = INSTANCE.calculateTimeline(schedule);
         assertEquals(timeline.getSchedule().size(), 1);
         
-        ScheduledSession schSession = timeline.getSchedule().get(0);
+        ScheduledSession schSession = timeline.getSchedule().getFirst();
         assertEquals(schSession.getStartDay(), Integer.valueOf(0));
         assertEquals(schSession.getEndDay(), Integer.valueOf(4));
         assertEquals(schSession.getStartTime(), LocalTime.parse("08:00"));
@@ -697,13 +697,13 @@ public class SchedulerTest extends Mockito {
     public void timeWindowStartExpiresAfterDayUsingWeeks() {
         Schedule2 schedule = createSchedule("P2W");
         Session session = createOneTimeSession(null);
-        session.getTimeWindows().get(0).setExpiration(Period.parse("P1W"));
+        session.getTimeWindows().getFirst().setExpiration(Period.parse("P1W"));
         schedule.setSessions(ImmutableList.of(session));
 
         Timeline timeline = INSTANCE.calculateTimeline(schedule);
         assertEquals(timeline.getSchedule().size(), 1);
         
-        ScheduledSession schSession = timeline.getSchedule().get(0);
+        ScheduledSession schSession = timeline.getSchedule().getFirst();
         assertEquals(schSession.getStartDay(), Integer.valueOf(0));
         assertEquals(schSession.getEndDay(), Integer.valueOf(7));
         assertEquals(schSession.getStartTime(), LocalTime.parse("08:00"));
@@ -849,7 +849,7 @@ public class SchedulerTest extends Mockito {
                 .filter(m -> m.getAssessmentGuid() == null).collect(toList());
         assertEquals(sessionMetadata.size(), 1274);
         
-        TimelineMetadata sm = sessionMetadata.get(0);
+        TimelineMetadata sm = sessionMetadata.getFirst();
         assertEquals(sm.getGuid(), sm.getSessionInstanceGuid());
         assertNull(sm.getAssessmentInstanceGuid());
         assertNull(sm.getAssessmentGuid());
@@ -864,7 +864,7 @@ public class SchedulerTest extends Mockito {
                 .filter(m -> m.getAssessmentGuid() != null).collect(toList());
         assertEquals(asmtMetadata.size(), 2366);
         
-        TimelineMetadata am = asmtMetadata.get(0);
+        TimelineMetadata am = asmtMetadata.getFirst();
         assertEquals(am.getGuid(), am.getAssessmentInstanceGuid());
         assertNotNull(am.getAssessmentInstanceGuid());
         assertEquals(am.getAssessmentGuid(), ASSESSMENT_1_GUID);
@@ -1007,13 +1007,13 @@ public class SchedulerTest extends Mockito {
         
         Schedule2 schedule = createSchedule("P21D");
         Session session = createOneTimeSession("P2D");
-        session.getTimeWindows().get(0).setExpiration(null); // no expiration
+        session.getTimeWindows().getFirst().setExpiration(null); // no expiration
         schedule.setSessions(ImmutableList.of(session));
         
         Timeline timeline = INSTANCE.calculateTimeline(schedule);
         assertEquals(timeline.getSchedule().size(), 1);
         
-        ScheduledSession schSession = timeline.getSchedule().get(0);
+        ScheduledSession schSession = timeline.getSchedule().getFirst();
         assertEquals(schSession.getEndDay(), Integer.valueOf(20));
         assertEquals(schSession.getExpiration(), Period.parse("P19D"));
     }
@@ -1076,7 +1076,7 @@ public class SchedulerTest extends Mockito {
         assertEquals(timeline.getSchedule().stream()
                 .map(ScheduledSession::getInstanceGuid).collect(toSet()).size(), 4);
         
-        ScheduledSession schSession = timeline.getSchedule().get(0); 
+        ScheduledSession schSession = timeline.getSchedule().getFirst(); 
         assertEquals(schSession.getStartEventId(), "enrollment");
         assertEquals(schSession.getRefGuid(), SESSION_GUID_1);
         assertEquals(schSession.getStartDay(), Integer.valueOf(0));
@@ -1150,7 +1150,7 @@ public class SchedulerTest extends Mockito {
         
         // Let's verify that the original schedule does not contain alterations to its
         // start event IDs or study burst IDs
-        Session updatedSession = schedule.getSessions().get(0);
+        Session updatedSession = schedule.getSessions().getFirst();
         assertEquals(updatedSession.getStartEventIds(), ImmutableList.of("enrollment"));
         assertEquals(updatedSession.getStudyBurstIds(), ImmutableList.of("burst1", "burst2"));
     }

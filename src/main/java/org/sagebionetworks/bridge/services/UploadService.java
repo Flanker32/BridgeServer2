@@ -23,9 +23,9 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.Resource;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
+import jakarta.annotation.Resource;
 
 import com.amazonaws.HttpMethod;
 import com.amazonaws.services.s3.AmazonS3;
@@ -350,14 +350,14 @@ public class UploadService {
      */
     public Upload getUpload(@Nonnull String uploadId) {
         if (Strings.isNullOrEmpty(uploadId)) {
-            throw new BadRequestException(String.format(CANNOT_BE_BLANK, "uploadId"));
+            throw new BadRequestException(CANNOT_BE_BLANK.formatted("uploadId"));
         }
         return uploadDao.getUpload(uploadId);
     }
     
     public UploadView getUploadView(String uploadId) {
         if (Strings.isNullOrEmpty(uploadId)) {
-            throw new BadRequestException(String.format(CANNOT_BE_BLANK, "uploadId"));
+            throw new BadRequestException(CANNOT_BE_BLANK.formatted("uploadId"));
         }
         Upload upload = uploadDao.getUpload(uploadId);
         return uploadToUploadView(upload, true);
@@ -515,7 +515,7 @@ public class UploadService {
 
         // We don't want to kick off upload validation on an upload that already has upload validation.
         if (!upload.canBeValidated() && !redrive) {
-            logger.info(String.format("uploadComplete called for upload %s, which is already complete", uploadId));
+            logger.info("uploadComplete called for upload %s, which is already complete".formatted(uploadId));
             return;
         }
 
@@ -850,7 +850,7 @@ public class UploadService {
                     List<String> studyIds = studyService.getStudyIdsUsingSchedule(appId, scheduleGuid);
                     
                     if (studyIds.size() == 1) {
-                        String studyId = studyIds.get(0);
+                        String studyId = studyIds.getFirst();
                         
                         // If adherence record already exists, update it. Otherwise, create a new one.
                         AdherenceRecordsSearch.Builder search = new AdherenceRecordsSearch.Builder()

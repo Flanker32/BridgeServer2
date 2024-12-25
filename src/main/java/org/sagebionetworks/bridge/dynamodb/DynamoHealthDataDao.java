@@ -1,7 +1,7 @@
 package org.sagebionetworks.bridge.dynamodb;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Resource;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Resource;
 import java.util.List;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBQueryExpression;

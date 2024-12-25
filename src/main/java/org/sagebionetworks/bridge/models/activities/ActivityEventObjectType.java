@@ -36,7 +36,7 @@ public enum ActivityEventObjectType {
             if(isBlank(objectId) || eventType == null || isBlank(answerValue)) {
                 return null;
             }
-            return String.format("%s:%s:%s=%s", this.name().toLowerCase(),
+            return "%s:%s:%s=%s".formatted(this.name().toLowerCase(),
                     objectId, eventType.name().toLowerCase(), answerValue);
         }
     },
@@ -53,7 +53,7 @@ public enum ActivityEventObjectType {
             if(isBlank(objectId) || eventType == null) {
                 return null;
             }
-            return String.format("%s:%s:%s", this.name().toLowerCase(),
+            return "%s:%s:%s".formatted(this.name().toLowerCase(),
                     objectId, eventType.name().toLowerCase());
         }
     },
@@ -69,7 +69,7 @@ public enum ActivityEventObjectType {
             if (isBlank(objectId) || eventType == null) {
                 return null;
             }
-            return String.format("%s:%s:%s", this.name().toLowerCase(),
+            return "%s:%s:%s".formatted(this.name().toLowerCase(),
                     objectId, eventType.name().toLowerCase());
         }
     },
@@ -93,7 +93,7 @@ public enum ActivityEventObjectType {
             if (isBlank(objectId) || eventType == null) {
                 return null;
             }
-            return String.format("%s:%s:%s", this.name().toLowerCase(),
+            return "%s:%s:%s".formatted(this.name().toLowerCase(),
                     objectId, eventType.name().toLowerCase());
         }
     },
@@ -107,7 +107,7 @@ public enum ActivityEventObjectType {
             if (isBlank(objectId) || eventType == null) {
                 return null;
             }
-            return String.format("%s:%s:%s", this.name().toLowerCase(),
+            return "%s:%s:%s".formatted(this.name().toLowerCase(),
                     objectId, eventType.name().toLowerCase());
         }
     },

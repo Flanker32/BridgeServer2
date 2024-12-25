@@ -237,8 +237,8 @@ public class ReferenceResolverTest {
         resolver.resolve(scheduledActivity);
         
         CompoundActivity compoundActivity = scheduledActivity.getActivity().getCompoundActivity();
-        assertEquals(RESOLVED_SCHEMA_REF, compoundActivity.getSchemaList().get(0));
-        assertEquals(RESOLVED_SURVEY_REF, compoundActivity.getSurveyList().get(0));
+        assertEquals(RESOLVED_SCHEMA_REF, compoundActivity.getSchemaList().getFirst());
+        assertEquals(RESOLVED_SURVEY_REF, compoundActivity.getSurveyList().getFirst());
         
         resolver.resolve(scheduledActivity);
         
@@ -258,8 +258,8 @@ public class ReferenceResolverTest {
         resolver.resolve(scheduledActivity);
         
         CompoundActivity compoundActivity = scheduledActivity.getActivity().getCompoundActivity();
-        assertEquals(RESOLVED_SCHEMA_REF, compoundActivity.getSchemaList().get(0));
-        assertEquals(RESOLVED_SURVEY_REF, compoundActivity.getSurveyList().get(0));
+        assertEquals(RESOLVED_SCHEMA_REF, compoundActivity.getSchemaList().getFirst());
+        assertEquals(RESOLVED_SURVEY_REF, compoundActivity.getSurveyList().getFirst());
         
         resolver.resolve(scheduledActivity);
         
@@ -275,8 +275,8 @@ public class ReferenceResolverTest {
         resolver.resolve(scheduledActivity);
         
         CompoundActivity compoundActivity = scheduledActivity.getActivity().getCompoundActivity();
-        assertEquals(RESOLVED_SCHEMA_REF, compoundActivity.getSchemaList().get(0));
-        assertEquals(RESOLVED_SURVEY_REF, compoundActivity.getSurveyList().get(0));
+        assertEquals(RESOLVED_SCHEMA_REF, compoundActivity.getSchemaList().getFirst());
+        assertEquals(RESOLVED_SURVEY_REF, compoundActivity.getSurveyList().getFirst());
         
         verifyNoMoreInteractions(surveyService);
         verifyNoMoreInteractions(schemaService);
@@ -295,8 +295,8 @@ public class ReferenceResolverTest {
         resolver.resolve(scheduledActivity);
         
         CompoundActivity compoundActivity = scheduledActivity.getActivity().getCompoundActivity();
-        assertEquals(RESOLVED_SCHEMA_REF, compoundActivity.getSchemaList().get(0));
-        assertEquals(RESOLVED_SURVEY_REF, compoundActivity.getSurveyList().get(0));
+        assertEquals(RESOLVED_SCHEMA_REF, compoundActivity.getSchemaList().getFirst());
+        assertEquals(RESOLVED_SURVEY_REF, compoundActivity.getSurveyList().getFirst());
         
         verify(surveyService).getSurveyMostRecentlyPublishedVersion(TEST_APP_ID, SURVEY_GUID, false);
         verifyNoMoreInteractions(schemaService);
@@ -315,8 +315,8 @@ public class ReferenceResolverTest {
         resolver.resolve(scheduledActivity);
         
         CompoundActivity compoundActivity = scheduledActivity.getActivity().getCompoundActivity();
-        assertEquals(RESOLVED_SCHEMA_REF, compoundActivity.getSchemaList().get(0));
-        assertEquals(RESOLVED_SURVEY_REF, compoundActivity.getSurveyList().get(0));
+        assertEquals(RESOLVED_SCHEMA_REF, compoundActivity.getSchemaList().getFirst());
+        assertEquals(RESOLVED_SURVEY_REF, compoundActivity.getSurveyList().getFirst());
         
         verifyNoMoreInteractions(surveyService);
         verify(schemaService).getLatestUploadSchemaRevisionForAppVersion(TEST_APP_ID, SCHEMA_ID, CLIENT_INFO);
@@ -333,8 +333,8 @@ public class ReferenceResolverTest {
         resolver.resolve(scheduledActivity);
         
         CompoundActivity compoundActivity = scheduledActivity.getActivity().getCompoundActivity();
-        assertEquals(RESOLVED_SCHEMA_REF, compoundActivity.getSchemaList().get(0));
-        assertEquals(RESOLVED_SURVEY_REF, compoundActivity.getSurveyList().get(0));
+        assertEquals(RESOLVED_SCHEMA_REF, compoundActivity.getSchemaList().getFirst());
+        assertEquals(RESOLVED_SURVEY_REF, compoundActivity.getSurveyList().getFirst());
         
         resolver.resolve(scheduledActivity);
         

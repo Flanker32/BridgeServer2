@@ -1,9 +1,9 @@
 package org.sagebionetworks.bridge.hibernate;
 
 import java.util.Objects;
-import javax.persistence.Access;
-import javax.persistence.AccessType;
-import javax.persistence.Embeddable;
+import jakarta.persistence.Access;
+import jakarta.persistence.AccessType;
+import jakarta.persistence.Embeddable;
 
 /**
  * Consent key encapsulating subpopulation GUID and signedOn. This is part of the primary key of the Consents table.

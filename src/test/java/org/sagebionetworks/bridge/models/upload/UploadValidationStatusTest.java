@@ -48,7 +48,7 @@ public class UploadValidationStatusTest {
 
         List<String> messageList = status.getMessageList();
         assertEquals(messageList.size(), 3);
-        assertEquals(messageList.get(0), "foo");
+        assertEquals(messageList.getFirst(), "foo");
         assertEquals(messageList.get(1), "bar");
         assertEquals(messageList.get(2), "baz");
     }
@@ -68,7 +68,7 @@ public class UploadValidationStatusTest {
         assertNull(status.getRecord());
 
         assertEquals(status.getMessageList().size(), 1);
-        assertEquals(status.getMessageList().get(0), "foo");
+        assertEquals(status.getMessageList().getFirst(), "foo");
     }
 
     @Test
@@ -88,7 +88,7 @@ public class UploadValidationStatusTest {
         assertSame(status.getRecord(), dummyRecord);
 
         assertEquals(status.getMessageList().size(), 1);
-        assertEquals(status.getMessageList().get(0), "hasRecord");
+        assertEquals(status.getMessageList().getFirst(), "hasRecord");
     }
 
     @Test(expectedExceptions = InvalidEntityException.class)
@@ -171,15 +171,17 @@ public class UploadValidationStatusTest {
     @Test
     public void serialization() throws Exception {
         // start with JSON
-        String jsonText = "{\n" +
-                "   \"id\":\"json-upload\",\n" +
-                "   \"status\":\"SUCCEEDED\",\n" +
-                "   \"messageList\":[\n" +
-                "       \"foo\",\n" +
-                "       \"bar\",\n" +
-                "       \"baz\"\n" +
-                "   ]\n" +
-                "}";
+        String jsonText = """
+                {
+                   "id":"json-upload",
+                   "status":"SUCCEEDED",
+                   "messageList":[
+                       "foo",
+                       "bar",
+                       "baz"
+                   ]
+                }\
+                """;
 
         // convert to POJO
         UploadValidationStatus status = BridgeObjectMapper.get().readValue(jsonText, UploadValidationStatus.class);
@@ -188,7 +190,7 @@ public class UploadValidationStatusTest {
 
         List<String> messageList = status.getMessageList();
         assertEquals(messageList.size(), 3);
-        assertEquals(messageList.get(0), "foo");
+        assertEquals(messageList.getFirst(), "foo");
         assertEquals(messageList.get(1), "bar");
         assertEquals(messageList.get(2), "baz");
 
@@ -204,7 +206,7 @@ public class UploadValidationStatusTest {
 
         List<String> messageJsonList = (List<String>) jsonMap.get("messageList");
         assertEquals(messageJsonList.size(), 3);
-        assertEquals(messageJsonList.get(0), "foo");
+        assertEquals(messageJsonList.getFirst(), "foo");
         assertEquals(messageJsonList.get(1), "bar");
         assertEquals(messageJsonList.get(2), "baz");
     }

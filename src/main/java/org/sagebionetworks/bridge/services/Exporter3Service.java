@@ -11,7 +11,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.PutObjectRequest;
@@ -610,7 +610,7 @@ public class Exporter3Service {
         // Create joined materialized view with participant versions and demographics
         String participantVersionDemographicsViewId = ex3Config.getParticipantVersionDemographicsViewId();
         if (participantVersionDemographicsViewId == null) {
-            String sql = String.format(VIEW_DEFINING_SQL, participantVersionTableId, participantVersionDemographicsTableId);
+            String sql = VIEW_DEFINING_SQL.formatted(participantVersionTableId, participantVersionDemographicsTableId);
             MaterializedView view = new MaterializedView().setName(VIEW_NAME_PARTICIPANT_VERSIONS_DEMOGRAPHICS)
                     .setParentId(projectId).setDefiningSQL(sql);
             MaterializedView createdView = synapseHelper.createEntityWithRetry(view);

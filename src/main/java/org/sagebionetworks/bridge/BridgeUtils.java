@@ -39,7 +39,7 @@ import java.util.Set;
 import java.util.function.BiConsumer;
 import java.util.stream.Collectors;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 import org.apache.commons.lang3.StringUtils;
 import org.joda.time.DateTime;
@@ -648,7 +648,7 @@ public class BridgeUtils {
         checkNotNull(type);
         checkNotNull(guid);
         checkNotNull(localDateTime);
-        return String.format("%s:%s:%s", guid , type.name().toLowerCase(), localDateTime);
+        return "%s:%s:%s".formatted(guid, type.name().toLowerCase(), localDateTime);
     }
     
     public static String createReferentGuidIndex(Activity activity, LocalDateTime localDateTime) {
@@ -681,12 +681,12 @@ public class BridgeUtils {
     public static String templateTypeToLabel(TemplateType type) {
         List<String> words = Arrays.asList(type.name().toLowerCase().split("_"));
         List<String> capitalized = words.stream().map(StringUtils::capitalize).collect(toList());
-        if (capitalized.get(0).equals("Sms")) {
-            capitalized.remove(0);
+        if (capitalized.getFirst().equals("Sms")) {
+            capitalized.removeFirst();
             capitalized.add("Default (SMS)");
         }
-        if (capitalized.get(0).equals("Email")) {
-            capitalized.remove(0);
+        if (capitalized.getFirst().equals("Email")) {
+            capitalized.removeFirst();
             capitalized.add("Default (Email)");
         }
         return Joiner.on(" ").join(capitalized);
@@ -775,8 +775,7 @@ public class BridgeUtils {
     public static InvalidEntityException convertParsingError(Throwable throwable) {
         if (Throwables.getRootCause(throwable) instanceof InvalidEntityException) {
             return (InvalidEntityException)Throwables.getRootCause(throwable);
-        } else if (throwable instanceof JsonMappingException) {
-            JsonMappingException jme = (JsonMappingException)throwable;
+        } else if (throwable instanceof JsonMappingException jme) {
             List<String> fields = jme.getPath().stream().map(Reference::getFieldName).collect(toList());
             String msg = "Error parsing JSON in request body, fields: " + COMMA_SPACE_JOINER.skipNulls().join(fields);
             return new InvalidEntityException(msg);

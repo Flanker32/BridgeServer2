@@ -34,15 +34,17 @@ public class ListMarshallerTest {
     @Test
     public void testConvert() throws Exception {
         // start with JSON
-        String jsonText = "[\n" +
-                "   {\"value\":\"foo\"},\n" +
-                "   {\"value\":\"bar\"}\n" +
-                "]";
+        String jsonText = """
+                [
+                   {"value":"foo"},
+                   {"value":"bar"}
+                ]\
+                """;
 
         // unconvert from JSON to list
         List<TestObject> list = MARSHALLER.unconvert(jsonText);
         assertEquals(list.size(), 2);
-        assertEquals(list.get(0).getValue(), "foo");
+        assertEquals(list.getFirst().getValue(), "foo");
         assertEquals(list.get(1).getValue(), "bar");
 
         // convert from list to JSON

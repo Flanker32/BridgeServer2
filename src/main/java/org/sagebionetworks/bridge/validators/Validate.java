@@ -150,14 +150,14 @@ public class Validate {
         for (FieldError error : errors.getFieldErrors()) {
             messages.add(errorToString(error.getField(), error));
         }
-        return String.format("%s is invalid: %s", errors.getObjectName(), Joiner.on("; ").join(messages));
+        return "%s is invalid: %s".formatted(errors.getObjectName(), Joiner.on("; ").join(messages));
     }
     private static String errorToString(String name, ObjectError error) {
         String errorCode = error.getCode();
         String defMessage = error.getDefaultMessage();
         if (error.getArguments() != null) {
             String base = (error.getCode() != null) ? error.getCode() : error.getDefaultMessage();
-            String message = (base == null) ? "" : String.format(base, error.getArguments());
+            String message = (base == null) ? "" : base.formatted(error.getArguments());
             return formatIfNecessary(name, message);
         } else if (errorCode != null){
             return formatIfNecessary(name, errorCode);
@@ -168,7 +168,7 @@ public class Validate {
     }
     private static String formatIfNecessary(String name, String errorMessage) {
         if (errorMessage.contains("%s")) {
-            return String.format(errorMessage, name).trim();
+            return errorMessage.formatted(name).trim();
         } else if (errorMessage.startsWith(" ")) {
             return (name + errorMessage).trim();    
         }

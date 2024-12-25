@@ -42,17 +42,17 @@ public class EmailSignInEmailProviderTest {
                 .withToken("email", BridgeUtils.encodeURIComponent(RECIPIENT_EMAIL))
                 .withToken("token", "ABC").build();
         
-        String url = String.format("https://%s/mobile/startSession.html?email=%s&appId=foo&token=ABC", 
+        String url = "https://%s/mobile/startSession.html?email=%s&appId=foo&token=ABC".formatted(
                 BridgeConfigFactory.getConfig().getHostnameWithPostfix("ws"),
                 URLEncoder.encode(RECIPIENT_EMAIL, "UTF-8"));
         
-        String finalBody = String.format("Click here to sign in: <a href=\"%s\">%s</a>", url, url);
+        String finalBody = "Click here to sign in: <a href=\"%s\">%s</a>".formatted(url, url);
         
         MimeTypeEmail email = provider.getMimeTypeEmail();
         assertEquals(email.getSenderAddress(), "\"App name\" <support@email.com>");
-        assertEquals(email.getRecipientAddresses().get(0), RECIPIENT_EMAIL);
+        assertEquals(email.getRecipientAddresses().getFirst(), RECIPIENT_EMAIL);
         assertEquals(email.getSubject(), "App name sign in link");
-        assertEquals(email.getMessageParts().get(0).getContent(), finalBody);
+        assertEquals(email.getMessageParts().getFirst().getContent(), finalBody);
     }
     
 }

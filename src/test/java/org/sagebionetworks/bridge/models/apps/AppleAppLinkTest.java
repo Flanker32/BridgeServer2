@@ -35,7 +35,7 @@ public class AppleAppLinkTest {
         
         AppleAppLink deser = MAPPER.readValue(node.toString(), AppleAppLink.class);
         assertEquals(deser.getAppId(), "appId");
-        assertEquals(deser.getPaths().get(0), "/appId/");
+        assertEquals(deser.getPaths().getFirst(), "/appId/");
         assertEquals(deser.getPaths().get(1), "/appId/*");
     }
 }

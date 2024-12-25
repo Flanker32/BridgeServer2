@@ -85,7 +85,7 @@ public final class PasswordPolicy {
 
     @Override
     public String toString() {
-        return String.format("PasswordPolicy [minLength=%s, numericRequired=%s, symbolRequired=%s, lowerCaseRequired=%s, upperCaseRequired=%s]",
-            minLength, numericRequired, symbolRequired, lowerCaseRequired, upperCaseRequired);
+        return "PasswordPolicy [minLength=%s, numericRequired=%s, symbolRequired=%s, lowerCaseRequired=%s, upperCaseRequired=%s]".formatted(
+                minLength, numericRequired, symbolRequired, lowerCaseRequired, upperCaseRequired);
     }
 }

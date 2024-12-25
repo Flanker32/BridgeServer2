@@ -163,7 +163,7 @@ public class HibernateDemographicDaoTest {
                 "SELECT du.id FROM DemographicUser du WHERE du.appId = :appId AND du.studyId = :studyId AND du.userId = :userId",
                 ImmutableMap.of("studyId", TEST_STUDY_ID, "userId", TEST_USER_ID, "appId", TEST_APP_ID),
                 String.class);
-        assertTrue(!returnedDemographicUserId.isPresent());
+        assertTrue(returnedDemographicUserId.isEmpty());
     }
 
     /**
@@ -196,7 +196,7 @@ public class HibernateDemographicDaoTest {
         verify(hibernateHelper).queryGetOne("FROM Demographic d WHERE d.id = :demographicId",
                 ImmutableMap.of("demographicId", DEMOGRAPHIC_ID),
                 Demographic.class);
-        assertTrue(!returnedDemographic.isPresent());
+        assertTrue(returnedDemographic.isEmpty());
     }
 
     /**
@@ -253,7 +253,7 @@ public class HibernateDemographicDaoTest {
                 "FROM DemographicUser du WHERE du.appId = :appId AND du.studyId = :studyId AND du.userId = :userId",
                 ImmutableMap.of("studyId", TEST_STUDY_ID, "userId", TEST_USER_ID, "appId", TEST_APP_ID),
                 DemographicUser.class);
-        assertTrue(!returnedDemographicUser.isPresent());
+        assertTrue(returnedDemographicUser.isEmpty());
     }
 
     /**

@@ -617,7 +617,7 @@ public class AccountWorkflowService {
         for (int i=0; i < strings.length; i++) {
             strings[i] = BridgeUtils.encodeURIComponent(strings[i]);
         }
-        return BASE_URL + String.format(formatString, (Object[])strings);
+        return BASE_URL + formatString.formatted((Object[])strings);
     }
 
     // Check if the request is throttled. Key is either email address or phone, depending on the type.

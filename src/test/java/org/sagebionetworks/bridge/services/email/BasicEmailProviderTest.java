@@ -1,7 +1,7 @@
 package org.sagebionetworks.bridge.services.email;
 
 import static com.google.common.base.Charsets.UTF_8;
-import static javax.mail.Part.ATTACHMENT;
+import static jakarta.mail.Part.ATTACHMENT;
 import static org.sagebionetworks.bridge.TestConstants.PHONE;
 import static org.sagebionetworks.bridge.models.apps.MimeType.HTML;
 import static org.sagebionetworks.bridge.models.apps.MimeType.PDF;
@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import javax.mail.internet.MimeBodyPart;
+import jakarta.mail.internet.MimeBodyPart;
 
 import org.apache.commons.io.IOUtils;
 import org.testng.annotations.Test;
@@ -88,7 +88,7 @@ public class BasicEmailProviderTest {
                 Sets.newHashSet("recipient@recipient.com", "recipient2@recipient.com"));
         assertEquals(email.getType(), EMAIL_SIGN_IN);
 
-        MimeBodyPart body = email.getMessageParts().get(0);
+        MimeBodyPart body = email.getMessageParts().getFirst();
         String bodyString = (String)body.getContent();
         
         String[] elements = bodyString.split("~");

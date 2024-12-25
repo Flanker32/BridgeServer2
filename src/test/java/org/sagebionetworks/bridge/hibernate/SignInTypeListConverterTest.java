@@ -37,7 +37,7 @@ public class SignInTypeListConverterTest {
         String json = "[\"email_message\",\"phone_password\"]";
         
         List<SignInType> types = converter.convertToEntityAttribute(json);
-        assertEquals(types.get(0), EMAIL_MESSAGE);
+        assertEquals(types.getFirst(), EMAIL_MESSAGE);
         assertEquals(types.get(1), PHONE_PASSWORD);
     }
     

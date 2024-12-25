@@ -1,6 +1,6 @@
 package org.sagebionetworks.bridge.upload;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
@@ -100,21 +100,21 @@ public class UploadValidationTask implements Runnable {
                 oneHandler.handle(context);
             } catch (Throwable ex) {
                 context.setSuccess(false);
-                context.addMessage(String.format("Exception thrown from upload validation handler %s: %s: %s",
+                context.addMessage("Exception thrown from upload validation handler %s: %s: %s".formatted(
                         handlerName, ex.getClass().getName(), ex.getMessage()));
 
                 if (ex instanceof Error) {
                     // Something really bad happened, like an OutOfMemoryError. Log this at the error level.
-                    logger.error(String.format("Critical error in upload validation handler %s for app %s, " +
-                            "upload %s, filename %s: %s: %s", handlerName, context.getAppId(),
+                    logger.error(("Critical error in upload validation handler %s for app %s, " +
+                            "upload %s, filename %s: %s: %s").formatted(handlerName, context.getAppId(),
                             context.getUpload().getUploadId(), context.getUpload().getFilename(),
                             ex.getClass().getName(), ex.getMessage()), ex);
                 } else {
                     // Upload validation failed. Since there are a lot of garbage uploads, log this at the info level
                     // so it doesn't set off our alarms. Once the garbage uploads are cleaned up, we can bump this back
                     // up to warning.
-                    logger.info(String.format("Exception thrown from upload validation handler %s for app %s, " +
-                            "upload %s, filename %s: %s: %s", handlerName, context.getAppId(),
+                    logger.info(("Exception thrown from upload validation handler %s for app %s, " +
+                            "upload %s, filename %s: %s: %s").formatted(handlerName, context.getAppId(),
                             context.getUpload().getUploadId(), context.getUpload().getFilename(),
                             ex.getClass().getName(), ex.getMessage()), ex);
                 }
@@ -123,7 +123,7 @@ public class UploadValidationTask implements Runnable {
                 long elapsedMillis = stopwatch.elapsed(TimeUnit.MILLISECONDS);
                 stopwatch.reset();
                 // TODO: send this to somewhere other than the logs
-                logger.info(String.format("Upload validation handler %s took %d ms", handlerName, elapsedMillis));
+                logger.info("Upload validation handler %s took %d ms".formatted(handlerName, elapsedMillis));
             }
         }
 
@@ -132,7 +132,7 @@ public class UploadValidationTask implements Runnable {
         try {
             uploadDao.writeValidationStatus(context.getUpload(), status, context.getMessageList(),
                     context.getRecordId());
-            logger.info(String.format("Upload validation for app %s, upload %s, record %s, with status %s",
+            logger.info("Upload validation for app %s, upload %s, record %s, with status %s".formatted(
                     context.getAppId(), context.getUpload().getUploadId(), context.getRecordId(),
                     status));
         } catch (RuntimeException ex) {

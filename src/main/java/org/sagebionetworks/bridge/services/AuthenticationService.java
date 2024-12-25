@@ -467,9 +467,9 @@ public class AuthenticationService {
                 .orElseThrow(() -> new EntityNotFoundException(Account.class));
         
         if (type == ChannelType.EMAIL && TRUE.equals(account.getEmailVerified())) {
-            throw new BadRequestException(String.format(ALREADY_VERIFIED, "email address"));
+            throw new BadRequestException(ALREADY_VERIFIED.formatted("email address"));
         } else if (type == ChannelType.PHONE && TRUE.equals(account.getPhoneVerified())) {
-            throw new BadRequestException(String.format(ALREADY_VERIFIED, "phone number"));
+            throw new BadRequestException(ALREADY_VERIFIED.formatted("phone number"));
         }
         if (data.getExpiresOn() < getDateTime().getMillis()) {
             throw new BadRequestException(VERIFY_TOKEN_EXPIRED);

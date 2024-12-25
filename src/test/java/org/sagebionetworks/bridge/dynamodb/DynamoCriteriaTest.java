@@ -70,8 +70,8 @@ public class DynamoCriteriaTest {
         "'noneOfGroups':['c','d'],'allOfStudyIds':['a','b'],'noneOfStudyIds':['c','d']}");
         
         Criteria crit = BridgeObjectMapper.get().readValue(json, Criteria.class);
-        assertEquals(crit.getMinAppVersion(IOS), new Integer(2));
-        assertEquals(crit.getMaxAppVersion(IOS), new Integer(8));
+        assertEquals(crit.getMinAppVersion(IOS), Integer.valueOf(2));
+        assertEquals(crit.getMaxAppVersion(IOS), Integer.valueOf(8));
         assertEquals(crit.getLanguage(), "de");
         assertEquals(crit.getAllOfGroups(), SET_A);
         assertEquals(crit.getNoneOfGroups(), SET_B);
@@ -106,11 +106,11 @@ public class DynamoCriteriaTest {
         criteria.setMinAppVersion(IOS, 8);
         criteria.setMinAppVersion(4);
         // Using legacy setter does not set value if it already exists in the map
-        assertEquals(criteria.getMinAppVersion(IOS), new Integer(8));
+        assertEquals(criteria.getMinAppVersion(IOS), Integer.valueOf(8));
         
         // But of course you can update the value in the map
         criteria.setMinAppVersion(IOS, 10);
-        assertEquals(criteria.getMinAppVersion(IOS), new Integer(10));
+        assertEquals(criteria.getMinAppVersion(IOS), Integer.valueOf(10));
     }
 
     @Test
@@ -156,8 +156,8 @@ public class DynamoCriteriaTest {
         criteria.setMinAppVersion(1);
         criteria.setMaxAppVersion(4);
         
-        assertEquals(new Integer(1), criteria.getMinAppVersion(IOS));
-        assertEquals(new Integer(4), criteria.getMaxAppVersion(IOS));
+        assertEquals(Integer.valueOf(1), criteria.getMinAppVersion(IOS));
+        assertEquals(Integer.valueOf(4), criteria.getMaxAppVersion(IOS));
     }
     
     private String makeJson(String string) {

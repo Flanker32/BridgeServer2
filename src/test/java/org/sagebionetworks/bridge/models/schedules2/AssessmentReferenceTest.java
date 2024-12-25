@@ -52,8 +52,8 @@ public class AssessmentReferenceTest {
 
         assertEquals(node.get("imageResource").get("name").textValue(), "default");
         assertEquals(node.get("imageResource").get("module").textValue(), "sage_survey");
-        assertEquals(node.get("imageResource").get("labels").get(0).get("lang").textValue(), LABELS.get(0).getLang());
-        assertEquals(node.get("imageResource").get("labels").get(0).get("value").textValue(), LABELS.get(0).getValue());
+        assertEquals(node.get("imageResource").get("labels").get(0).get("lang").textValue(), LABELS.getFirst().getLang());
+        assertEquals(node.get("imageResource").get("labels").get(0).get("value").textValue(), LABELS.getFirst().getValue());
         assertEquals(node.get("imageResource").get("labels").get(1).get("lang").textValue(), LABELS.get(1).getLang());
         assertEquals(node.get("imageResource").get("labels").get(1).get("value").textValue(), LABELS.get(1).getValue());
         assertEquals(node.get("imageResource").get("type").textValue(), "ImageResource");
@@ -72,12 +72,12 @@ public class AssessmentReferenceTest {
         assertEquals(deser.getTitle(), "Title");
         assertEquals(deser.getMinutesToComplete(), Integer.valueOf(10));
         assertEquals(deser.getColorScheme(), scheme);
-        assertEquals(deser.getLabels().get(0).getValue(), LABELS.get(0).getValue());
+        assertEquals(deser.getLabels().getFirst().getValue(), LABELS.getFirst().getValue());
         assertEquals(deser.getLabels().get(1).getValue(), LABELS.get(1).getValue());
         assertEquals(deser.getImageResource().getName(), "default");
         assertEquals(deser.getImageResource().getModule(), "sage_survey");
-        assertEquals(deser.getImageResource().getLabels().get(0).getLang(), LABELS.get(0).getLang());
-        assertEquals(deser.getImageResource().getLabels().get(0).getValue(), LABELS.get(0).getValue());
+        assertEquals(deser.getImageResource().getLabels().getFirst().getLang(), LABELS.getFirst().getLang());
+        assertEquals(deser.getImageResource().getLabels().getFirst().getValue(), LABELS.getFirst().getValue());
         assertEquals(deser.getImageResource().getLabels().get(1).getLang(), LABELS.get(1).getLang());
         assertEquals(deser.getImageResource().getLabels().get(1).getValue(), LABELS.get(1).getValue());
     }

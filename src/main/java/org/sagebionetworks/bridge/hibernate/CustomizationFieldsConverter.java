@@ -3,7 +3,7 @@ package org.sagebionetworks.bridge.hibernate;
 import java.util.Map;
 import java.util.Set;
 
-import javax.persistence.Converter;
+import jakarta.persistence.Converter;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 

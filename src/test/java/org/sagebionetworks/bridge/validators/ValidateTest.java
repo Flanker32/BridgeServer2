@@ -24,10 +24,10 @@ public class ValidateTest extends Mockito {
         
         Map<String,List<String>> map = Validate.convertErrorsToSimpleMap(errors);
         
-        assertEquals(map.get("myField").get(0), "myField is a mess");
-        assertEquals(map.get("myField2").get(0), "myField2 is a mess");
-        assertEquals(map.get("myField3").get(0), "myField3 is a mess");
-        assertEquals(map.get("myField4").get(0), "myField4 is a mess");
+        assertEquals(map.get("myField").getFirst(), "myField is a mess");
+        assertEquals(map.get("myField2").getFirst(), "myField2 is a mess");
+        assertEquals(map.get("myField3").getFirst(), "myField3 is a mess");
+        assertEquals(map.get("myField4").getFirst(), "myField4 is a mess");
     }
     
     private Errors getErrors() { 

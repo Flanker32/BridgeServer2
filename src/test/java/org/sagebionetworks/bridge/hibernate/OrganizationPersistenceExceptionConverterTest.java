@@ -6,7 +6,7 @@ import static org.testng.Assert.assertSame;
 
 import java.sql.SQLIntegrityConstraintViolationException;
 
-import javax.persistence.PersistenceException;
+import jakarta.persistence.PersistenceException;
 
 import org.hibernate.exception.ConstraintViolationException;
 import org.mockito.Mock;

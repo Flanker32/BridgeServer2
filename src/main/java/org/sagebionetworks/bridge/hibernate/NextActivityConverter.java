@@ -1,6 +1,6 @@
 package org.sagebionetworks.bridge.hibernate;
 
-import javax.persistence.Converter;
+import jakarta.persistence.Converter;
 
 import org.sagebionetworks.bridge.models.schedules2.adherence.weekly.NextActivity;
 

@@ -112,8 +112,8 @@ public class AssessmentResourceServiceTest extends Mockito {
         PagedResourceList<AssessmentResource> retValue = service.getResources(
                 TEST_APP_ID, TEST_ORG_ID, ASSESSMENT_ID, 10, 40, RESOURCE_CATEGORIES, 1, 100, true);
         assertEquals(retValue.getItems().size(), 1);
-        assertTrue(retValue.getItems().get(0).isUpToDate());
-        assertSame(retValue.getItems().get(0), resource);
+        assertTrue(retValue.getItems().getFirst().isUpToDate());
+        assertSame(retValue.getItems().getFirst(), resource);
         assertEquals(retValue.getRequestParams().get(OFFSET_BY), 10);
         assertEquals(retValue.getRequestParams().get(PAGE_SIZE), 40);
         assertEquals(retValue.getRequestParams().get(CATEGORIES), RESOURCE_CATEGORIES);
@@ -138,8 +138,8 @@ public class AssessmentResourceServiceTest extends Mockito {
         PagedResourceList<AssessmentResource> retValue = service.getResources(
                 TEST_APP_ID, TEST_ORG_ID, ASSESSMENT_ID, null, null, null, null, null, false);
         assertEquals(retValue.getItems().size(), 1);
-        assertFalse(retValue.getItems().get(0).isUpToDate());
-        assertSame(retValue.getItems().get(0), resource);
+        assertFalse(retValue.getItems().getFirst().isUpToDate());
+        assertSame(retValue.getItems().getFirst(), resource);
         
         verify(mockAssessmentService).getLatestAssessment(TEST_APP_ID, TEST_ORG_ID, ASSESSMENT_ID);
         verify(mockDao).getResources(TEST_APP_ID, ASSESSMENT_ID, null, null, null, null, null, false);
@@ -234,9 +234,9 @@ public class AssessmentResourceServiceTest extends Mockito {
         assertEquals(retValue.getFormat(), SANITIZED_STRING);
         assertEquals(retValue.getDate(), SANITIZED_STRING);
         assertEquals(retValue.getDescription(), SANITIZED_STRING);
-        assertEquals(retValue.getContributors().get(0), SANITIZED_STRING);
-        assertEquals(retValue.getCreators().get(0), SANITIZED_STRING);
-        assertEquals(retValue.getPublishers().get(0), SANITIZED_STRING);
+        assertEquals(retValue.getContributors().getFirst(), SANITIZED_STRING);
+        assertEquals(retValue.getCreators().getFirst(), SANITIZED_STRING);
+        assertEquals(retValue.getPublishers().getFirst(), SANITIZED_STRING);
         assertEquals(retValue.getLanguage(), SANITIZED_STRING);
     }
     
@@ -283,9 +283,9 @@ public class AssessmentResourceServiceTest extends Mockito {
         assertEquals(retValue.getFormat(), SANITIZED_STRING);
         assertEquals(retValue.getDate(), SANITIZED_STRING);
         assertEquals(retValue.getDescription(), SANITIZED_STRING);
-        assertEquals(retValue.getContributors().get(0), SANITIZED_STRING);
-        assertEquals(retValue.getCreators().get(0), SANITIZED_STRING);
-        assertEquals(retValue.getPublishers().get(0), SANITIZED_STRING);
+        assertEquals(retValue.getContributors().getFirst(), SANITIZED_STRING);
+        assertEquals(retValue.getCreators().getFirst(), SANITIZED_STRING);
+        assertEquals(retValue.getPublishers().getFirst(), SANITIZED_STRING);
         assertEquals(retValue.getLanguage(), SANITIZED_STRING);
     }
     
@@ -470,7 +470,7 @@ public class AssessmentResourceServiceTest extends Mockito {
         
         verify(mockDao).saveResources(eq("targetId"), eq(IDENTIFIER), resourceListCaptor.capture());
         
-        AssessmentResource ar1 = resourceListCaptor.getValue().get(0);
+        AssessmentResource ar1 = resourceListCaptor.getValue().getFirst();
         assertEquals(ar1.getCreatedOn().toString(), TIMESTAMP.toString());
         assertEquals(ar1.getModifiedOn().toString(), TIMESTAMP.toString());
         assertEquals(ar1.getGuid(), "guid1");
@@ -519,7 +519,7 @@ public class AssessmentResourceServiceTest extends Mockito {
         
         verify(mockDao).saveResources(eq("targetId"), eq(IDENTIFIER), resourceListCaptor.capture());
         
-        AssessmentResource ar1 = resourceListCaptor.getValue().get(0);
+        AssessmentResource ar1 = resourceListCaptor.getValue().getFirst();
         assertEquals(ar1.getCreatedOn().toString(), CREATED_ON.toString());
         assertEquals(ar1.getModifiedOn().toString(), TIMESTAMP.toString());
         assertEquals(ar1.getCreatedAtRevision(), 100);

@@ -898,7 +898,7 @@ public class AccountServiceTest extends Mockito {
         
         verify(mockAccountDao, times(3)).getPagedAccountSummaries(eq(TEST_APP_ID), searchCaptor.capture());
         
-        AccountSummarySearch capturedSearch = searchCaptor.getAllValues().get(0);
+        AccountSummarySearch capturedSearch = searchCaptor.getAllValues().getFirst();
         assertEquals(capturedSearch.getPageSize(), API_MAXIMUM_PAGE_SIZE);
         assertEquals(capturedSearch.getAllOfGroups(), ImmutableSet.of(PREVIEW_USER_GROUP));
         assertEquals(capturedSearch.getEnrolledInStudyId(), TEST_STUDY_ID);

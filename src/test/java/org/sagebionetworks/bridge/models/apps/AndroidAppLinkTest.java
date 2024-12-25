@@ -33,7 +33,7 @@ public class AndroidAppLinkTest {
         assertEquals(deser.getNamespace(), "namespace");
         assertEquals(deser.getPackageName(), "packageName");
         assertEquals(deser.getFingerprints().size(), 1);
-        assertEquals(deser.getFingerprints().get(0), "fingerprint");
+        assertEquals(deser.getFingerprints().getFirst(), "fingerprint");
     }
     
 }

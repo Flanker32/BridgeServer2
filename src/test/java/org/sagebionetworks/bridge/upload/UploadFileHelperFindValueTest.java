@@ -269,10 +269,12 @@ public class UploadFileHelperFindValueTest {
                 .withType(UploadFieldType.STRING).build();
 
         // Make file map.
-        String recordJsonText = "{\n" +
-                "   \"sanitize!@#$foo\":\"foo-value\",\n" +
-                "   \"sanitize!@#$bar\":\"bar-value\"\n" +
-                "}";
+        String recordJsonText = """
+                {
+                   "sanitize!@#$foo":"foo-value",
+                   "sanitize!@#$bar":"bar-value"
+                }\
+                """;
         File recordJsonFile = makeFileWithContent(FIELD_NAME_FILE, recordJsonText);
         Map<String, File> fileMap = ImmutableMap.of(FIELD_NAME_FILE, recordJsonFile);
 

@@ -1,6 +1,6 @@
 package org.sagebionetworks.bridge.hibernate;
 
-import javax.persistence.Embeddable;
+import jakarta.persistence.Embeddable;
 
 /**
  * Consent, as represented by Hibernate. Note that this is different from the ConsentSignature class because of how

@@ -43,7 +43,7 @@ public final class CriteriaScheduleStrategy implements ScheduleStrategy {
     @Override
     public Schedule getScheduleForUser(SchedulePlan plan, ScheduleContext context) {
         List<ScheduleCriteria> found = CriteriaUtils.filterByCriteria(context.getCriteriaContext(), scheduleCriteria, null);
-        return (found.isEmpty()) ? null : found.get(0).getSchedule();
+        return (found.isEmpty()) ? null : found.getFirst().getSchedule();
     }
 
     @Override

@@ -1,7 +1,7 @@
 package org.sagebionetworks.bridge.dynamodb;
 
 import java.util.List;
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBQueryExpression;
@@ -36,7 +36,7 @@ public class DynamoSmsMessageDao implements SmsMessageDao {
         if (messageList.isEmpty()) {
             return null;
         } else {
-            return messageList.get(0);
+            return messageList.getFirst();
         }
     }
 

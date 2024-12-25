@@ -1,13 +1,13 @@
 package org.sagebionetworks.bridge.spring.handlers;
 
-import static org.apache.http.HttpStatus.SC_BAD_REQUEST;
+import static org.apache.hc.core5.http.HttpStatus.SC_BAD_REQUEST;
 import static org.sagebionetworks.bridge.BridgeConstants.X_REQUEST_ID_HEADER;
 import static org.sagebionetworks.bridge.spring.util.HttpUtil.CONTENT_TYPE_HEADER;
 import static org.sagebionetworks.bridge.spring.util.HttpUtil.CONTENT_TYPE_JSON;
 
 import java.util.Set;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 import com.amazonaws.AmazonServiceException;
 import com.amazonaws.services.dynamodbv2.model.ProvisionedThroughputExceededException;
@@ -61,9 +61,8 @@ public class BridgeExceptionHandler {
             return;
         }
 
-        if (throwable instanceof AmazonServiceException &&
+        if (throwable instanceof AmazonServiceException ase &&
                 !(throwable instanceof ProvisionedThroughputExceededException)) {
-            AmazonServiceException ase = (AmazonServiceException)throwable;
             if (ase.getStatusCode() >= 400 && ase.getStatusCode() < 500) {
                 log.warn(msg, throwable);
                 return;
@@ -83,18 +82,17 @@ public class BridgeExceptionHandler {
     private ResponseEntity<String> getResult(Throwable throwable) throws JsonProcessingException {
         // Consent exceptions return a session payload (you are signed in),
         // but a 412 error status code.
-        if (throwable instanceof ConsentRequiredException) {
-            ConsentRequiredException cre = (ConsentRequiredException)throwable;
+        if (throwable instanceof ConsentRequiredException cre) {
             
             JsonNode info = UserSessionInfo.toJSON(cre.getUserSession());
             return ResponseEntity.status(cre.getStatusCode())
                     .header(CONTENT_TYPE_HEADER, CONTENT_TYPE_JSON)
                     .body(info.toString());
-        } else if (throwable instanceof MissingServletRequestParameterException) {
+        } else if (throwable instanceof MissingServletRequestParameterException exception) {
             // This otherwise returns a 500 exception, which we don't consider to be correct
-            String paramName = ((MissingServletRequestParameterException)throwable).getParameterName();
-            String payload = String.format("{\"statusCode\":400,\"message\":\"Required request parameter "+
-                    "'%s' is missing\",\"type\":\"BadRequestException\"}", paramName);
+            String paramName = exception.getParameterName();
+            String payload = ("{\"statusCode\":400,\"message\":\"Required request parameter " +
+                    "'%s' is missing\",\"type\":\"BadRequestException\"}").formatted(paramName);
             return ResponseEntity.status(SC_BAD_REQUEST).header(CONTENT_TYPE_HEADER, CONTENT_TYPE_JSON).body(payload);
         }
         ObjectNode node = BridgeObjectMapper.get().valueToTree(throwable);
@@ -118,8 +116,7 @@ public class BridgeExceptionHandler {
             // DDB Throughput exception is a 400 from Amazon's side. But from our side, we should report this as a 500
             // for monitoring purposes and to inform our callers properly.
             type = "BridgeServiceException";
-        } else if (throwable instanceof AmazonServiceException) {
-            AmazonServiceException ase = (AmazonServiceException)throwable;
+        } else if (throwable instanceof AmazonServiceException ase) {
             if (ase.getStatusCode() >= 400 && ase.getStatusCode() < 500) {
                 type = "BadRequestException";
             }
@@ -129,23 +126,23 @@ public class BridgeExceptionHandler {
 
     private int getStatusCode(final Throwable throwable) {
         int status = 500;
-        if (throwable instanceof BridgeServiceException) {
-            status = ((BridgeServiceException)throwable).getStatusCode();
+        if (throwable instanceof BridgeServiceException exception) {
+            status = exception.getStatusCode();
         } else if (throwable instanceof ProvisionedThroughputExceededException) {
             // Similarly, DDB Throughput exception should be a 500.
             status = 500;
-        } else if (throwable instanceof AmazonServiceException) {
-            status = ((AmazonServiceException)throwable).getStatusCode();
+        } else if (throwable instanceof AmazonServiceException exception) {
+            status = exception.getStatusCode();
         }
         return status;
     }
 
     private String getMessage(final Throwable throwable, final int status) {
         String message = throwable.getMessage();
-        if (throwable instanceof AmazonServiceException) {
+        if (throwable instanceof AmazonServiceException exception) {
             // This is a more appropriately formatted error message for end users than
             // amazonServiceException.getMessage()
-            message = ((AmazonServiceException)throwable).getErrorMessage();
+            message = exception.getErrorMessage();
         }
         if (StringUtils.isBlank(message)) {
             message = Integer.toString(status);

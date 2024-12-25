@@ -91,19 +91,19 @@ public class EventStreamAdherenceReportGeneratorTest {
         assertEquals(report.getAdherencePercent(), 100);
         assertEquals(report.getStreams().size(), 1);
         
-        EventStream stream = report.getStreams().get(0);
+        EventStream stream = report.getStreams().getFirst();
         assertEquals(stream.getStartEventId(), "sessionStartEventId");
         assertEquals(stream.getStudyBurstId(), "studyBurstId");
         assertEquals(stream.getStudyBurstNum(), Integer.valueOf(1));
         assertEquals(stream.getByDayEntries().size(), 1);
         assertEquals(stream.getByDayEntries().get(Integer.valueOf(13)).size(), 1); 
         
-        EventStreamDay day = stream.getByDayEntries().get(Integer.valueOf(13)).get(0);
+        EventStreamDay day = stream.getByDayEntries().get(Integer.valueOf(13)).getFirst();
         assertEquals(day.getSessionGuid(), "sessionGuid");
         assertEquals(day.getSessionName(), "sessionName");
         assertEquals(day.getStartDay(), (Integer)13);
         
-        EventStreamWindow window = day.getTimeWindows().get(0);
+        EventStreamWindow window = day.getTimeWindows().getFirst();
         assertEquals(window.getSessionInstanceGuid(), "sessionInstanceGuid");
         assertEquals(window.getTimeWindowGuid(), "timeWindowGuid");
         assertEquals(window.getEndDay(), (Integer)15);
@@ -328,8 +328,8 @@ public class EventStreamAdherenceReportGeneratorTest {
         AdherenceState state = createState(NOW, META2_A, META2_B, event, adherenceRecord, false);
 
         EventStreamAdherenceReport report = INSTANCE.generate(state, SCHEDULE);
-        assertNotNull(report.getStreams().get(0).getByDayEntries().get(2));
-        assertNotNull(report.getStreams().get(0).getByDayEntries().get(4));
+        assertNotNull(report.getStreams().getFirst().getByDayEntries().get(2));
+        assertNotNull(report.getStreams().getFirst().getByDayEntries().get(4));
         assertEquals(getReportStates(report), ImmutableList.of(COMPLETED, NOT_YET_AVAILABLE));
     }
     
@@ -383,15 +383,15 @@ public class EventStreamAdherenceReportGeneratorTest {
         assertEquals(report.getAdherencePercent(), 0);
         assertEquals(report.getStreams().size(), 1);
     
-        EventStream stream = report.getStreams().get(0);
+        EventStream stream = report.getStreams().getFirst();
         assertEquals(stream.getStartEventId(), "sessionStartEventId");
         assertEquals(stream.getByDayEntries().size(), 1);
         assertEquals(stream.getByDayEntries().get(13).size(), 1);
     
-        EventStreamDay day = stream.getByDayEntries().get(13).get(0);
+        EventStreamDay day = stream.getByDayEntries().get(13).getFirst();
         assertEquals(day.getStartDay(), (Integer)13);
     
-        EventStreamWindow window = day.getTimeWindows().get(0);
+        EventStreamWindow window = day.getTimeWindows().getFirst();
         assertEquals(window.getSessionInstanceGuid(), "sessionInstanceGuid");
         assertEquals(window.getTimeWindowGuid(), "timeWindowGuid");
         assertEquals(window.getEndDay(), (Integer)15);
@@ -417,15 +417,15 @@ public class EventStreamAdherenceReportGeneratorTest {
         assertEquals(report.getAdherencePercent(), 0);
         assertEquals(report.getStreams().size(), 1);
     
-        EventStream stream = report.getStreams().get(0);
+        EventStream stream = report.getStreams().getFirst();
         assertEquals(stream.getStartEventId(), "sessionStartEventId");
         assertEquals(stream.getByDayEntries().size(), 1);
         assertEquals(stream.getByDayEntries().get(14).size(), 1);
     
-        EventStreamDay day = stream.getByDayEntries().get(14).get(0);
+        EventStreamDay day = stream.getByDayEntries().get(14).getFirst();
         assertEquals(day.getStartDay(), (Integer)14);
     
-        EventStreamWindow window = day.getTimeWindows().get(0);
+        EventStreamWindow window = day.getTimeWindows().getFirst();
         assertEquals(window.getSessionInstanceGuid(), "sessionInstanceGuid");
         assertEquals(window.getTimeWindowGuid(), "timeWindowGuid");
         assertEquals(window.getEndDay(), (Integer)14);
@@ -451,15 +451,15 @@ public class EventStreamAdherenceReportGeneratorTest {
         assertEquals(report.getAdherencePercent(), 0);
         assertEquals(report.getStreams().size(), 1);
         
-        EventStream stream = report.getStreams().get(0);
+        EventStream stream = report.getStreams().getFirst();
         assertEquals(stream.getStartEventId(), "sessionStartEventId");
         assertEquals(stream.getByDayEntries().size(), 1);
         assertEquals(stream.getByDayEntries().get(13).size(), 1);
         
-        EventStreamDay day = stream.getByDayEntries().get(13).get(0);
+        EventStreamDay day = stream.getByDayEntries().get(13).getFirst();
         assertEquals(day.getStartDay(), (Integer)13);
         
-        EventStreamWindow window = day.getTimeWindows().get(0);
+        EventStreamWindow window = day.getTimeWindows().getFirst();
         assertEquals(window.getSessionInstanceGuid(), "sessionInstanceGuid");
         assertEquals(window.getTimeWindowGuid(), "timeWindowGuid");
         assertEquals(window.getEndDay(), (Integer)14);
@@ -475,15 +475,15 @@ public class EventStreamAdherenceReportGeneratorTest {
         StudyActivityEvent event = createEvent("sessionStartEventId", NOW.minusDays(14));
         
         Schedule2 schedule = createSchedule();
-        schedule.getSessions().get(0).getTimeWindows().get(0).setExpiration(null);
+        schedule.getSessions().getFirst().getTimeWindows().getFirst().setExpiration(null);
         
         AdherenceState state = createState(NOW, META1, event, null);
         EventStreamAdherenceReport report = INSTANCE.generate(state, schedule);
         
-        EventStream stream = report.getStreams().get(0);
-        EventStreamDay day = stream.getByDayEntries().get(Integer.valueOf(13)).get(0);
+        EventStream stream = report.getStreams().getFirst();
+        EventStreamDay day = stream.getByDayEntries().get(Integer.valueOf(13)).getFirst();
         
-        EventStreamWindow window = day.getTimeWindows().get(0);
+        EventStreamWindow window = day.getTimeWindows().getFirst();
         assertEquals(window.getSessionInstanceGuid(), "sessionInstanceGuid");
         assertEquals(window.getTimeWindowGuid(), "timeWindowGuid");
         assertEquals(window.getEndDay(), (Integer)15);

@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 
 import org.sagebionetworks.bridge.json.DefaultObjectMapper;
 
-import javax.servlet.http.Cookie;
+import jakarta.servlet.http.Cookie;
 
 import static org.sagebionetworks.bridge.BridgeConstants.SESSION_TOKEN_HEADER;
 

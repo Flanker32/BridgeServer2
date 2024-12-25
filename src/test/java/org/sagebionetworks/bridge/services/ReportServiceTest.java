@@ -243,7 +243,7 @@ public class ReportServiceTest extends Mockito {
             
             verify(mockReportDataDao).getReportData(eq(STUDY_REPORT_DATA_KEY), localDateCaptor.capture(),
                     localDateCaptor.capture());
-            assertEquals(localDateCaptor.getAllValues().get(0), yesterday);
+            assertEquals(localDateCaptor.getAllValues().getFirst(), yesterday);
             assertEquals(localDateCaptor.getAllValues().get(1), today);
             assertEquals(retrieved, results);
         } finally {
@@ -276,7 +276,7 @@ public class ReportServiceTest extends Mockito {
             
             verify(mockReportDataDao).getReportData(eq(PARTICIPANT_REPORT_DATA_KEY), localDateCaptor.capture(),
                     localDateCaptor.capture());
-            assertEquals(localDateCaptor.getAllValues().get(0), yesterday);
+            assertEquals(localDateCaptor.getAllValues().getFirst(), yesterday);
             assertEquals(localDateCaptor.getAllValues().get(1), today);
             assertEquals(retrieved, results);
         } finally {
@@ -593,7 +593,7 @@ public class ReportServiceTest extends Mockito {
 
         ReportTypeResourceList<? extends ReportIndex> indices = service.getReportIndices(TEST_APP_ID, ReportType.STUDY);
         
-        assertEquals(indices.getItems().get(0).getIdentifier(), IDENTIFIER);
+        assertEquals(indices.getItems().getFirst().getIdentifier(), IDENTIFIER);
         assertEquals(indices.getRequestParams().get("reportType"), ReportType.STUDY);
         verify(mockReportIndexDao).getIndices(TEST_APP_ID, ReportType.STUDY);
     }
@@ -609,7 +609,7 @@ public class ReportServiceTest extends Mockito {
 
         ReportTypeResourceList<? extends ReportIndex> indices = service.getReportIndices(TEST_APP_ID, ReportType.PARTICIPANT);
         
-        assertEquals(indices.getItems().get(0).getIdentifier(), IDENTIFIER);
+        assertEquals(indices.getItems().getFirst().getIdentifier(), IDENTIFIER);
         assertEquals(indices.getRequestParams().get("reportType"), ReportType.PARTICIPANT);
         verify(mockReportIndexDao).getIndices(TEST_APP_ID, ReportType.PARTICIPANT);
     }
@@ -950,7 +950,7 @@ public class ReportServiceTest extends Mockito {
             runnable.run();
         } catch(InvalidEntityException e) {
             verifyNoMoreInteractions(mockReportDataDao);
-            String errorMsg = e.getErrors().get(fieldName).get(0);
+            String errorMsg = e.getErrors().get(fieldName).getFirst();
             assertEquals(errorMsg, fieldName + " " + message);
             // Also verify that we didn't call the DAO
             verifyNoMoreInteractions(mockReportDataDao);

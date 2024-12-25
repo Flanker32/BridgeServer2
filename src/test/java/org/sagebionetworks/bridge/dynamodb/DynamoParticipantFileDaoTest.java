@@ -94,7 +94,7 @@ public class DynamoParticipantFileDaoTest {
         assertNotNull(result);
         List<ParticipantFile> resultList = result.getItems();
         assertEquals(resultList.size(), 1);
-        ParticipantFile resultFile = resultList.get(0);
+        ParticipantFile resultFile = resultList.getFirst();
         assertEquals(resultFile, RESULT);
 
         verify(mapper).query(any(), expressionCaptor.capture());
@@ -201,7 +201,7 @@ public class DynamoParticipantFileDaoTest {
         List<ParticipantFile> resultList = dao.getAllFilesForParticipant(KEY.getUserId());
         assertNotNull(resultList);
         assertEquals(resultList.size(), 1);
-        ParticipantFile resultFile = resultList.get(0);
+        ParticipantFile resultFile = resultList.getFirst();
         assertSame(resultFile, RESULT);
 
         // Verify query.

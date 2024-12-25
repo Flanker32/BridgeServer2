@@ -8,7 +8,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 
 import org.sagebionetworks.bridge.BridgeUtils;
 import org.sagebionetworks.bridge.dao.SurveyDao;
@@ -100,9 +100,9 @@ public class DynamoSurveyDao implements SurveyDao {
             List<Survey> surveys = getAll();
             if (!surveys.isEmpty()) {
                 if (!skipElements) {
-                    attachSurveyElements(surveys.get(0));    
+                    attachSurveyElements(surveys.getFirst());    
                 }
-                return surveys.get(0);
+                return surveys.getFirst();
             }
             return null;
         }
@@ -215,8 +215,7 @@ public class DynamoSurveyDao implements SurveyDao {
      * set in the constraints going forward.
      */
     private void reconcileRules(SurveyElement element) {
-        if (element instanceof SurveyQuestion) {
-            SurveyQuestion question = (SurveyQuestion)element;
+        if (element instanceof SurveyQuestion question) {
             
             // If the constraints have rules but the element does not, copy them over. Always do 
             // this: the constraints rules will always take precedence until they are removed. At
@@ -419,7 +418,7 @@ public class DynamoSurveyDao implements SurveyDao {
             return null;
         }
 
-        return surveyList.get(0).getGuid();
+        return surveyList.getFirst().getGuid();
     }
 
     /**

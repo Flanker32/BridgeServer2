@@ -31,12 +31,15 @@ public class ActivityTest {
     public void canSerializeCompoundActivity() throws Exception {
         // Start with JSON. For simplicity, only have the taskIdentifier in the CompoundActivity, so we aren't
         // sensitive to changes in that class.
-        String jsonText = "{\n" +
-                "   \"label\":\"My Activity\",\n" +
-                "   \"labelDetail\":\"Description of activity\",\n" +
-                "   \"guid\":\"test-guid\"\n," +
-                "   \"compoundActivity\":{\"taskIdentifier\":\"combo-activity\"}\n" +
-                "}";
+        String jsonText = """
+                {
+                   "label":"My Activity",
+                   "labelDetail":"Description of activity",
+                   "guid":"test-guid"
+                ,\
+                   "compoundActivity":{"taskIdentifier":"combo-activity"}
+                }\
+                """;
 
         // convert to POJO
         Activity activity = BridgeObjectMapper.get().readValue(jsonText, Activity.class);
@@ -207,23 +210,23 @@ public class ActivityTest {
     public void activityKnowsWhenItIsPersistentlyScheduled() throws Exception {
         // This is persistently scheduled due to an activity
         Schedule schedule = BridgeObjectMapper.get().readValue("{\"scheduleType\":\"once\",\"eventId\":\"activity:HHH:finished\",\"activities\":[{\"label\":\"Label\",\"labelDetail\":\"Label Detail\",\"guid\":\"HHH\",\"task\":{\"identifier\":\"foo\"},\"activityType\":\"task\"}]}", Schedule.class);
-        assertTrue(schedule.getActivities().get(0).isPersistentlyRescheduledBy(schedule));
+        assertTrue(schedule.getActivities().getFirst().isPersistentlyRescheduledBy(schedule));
         
         // This is persistently schedule due to an activity completion. We actually never generate this event, and it will go away.
         schedule = BridgeObjectMapper.get().readValue("{\"scheduleType\":\"once\",\"eventId\":\"task:foo:finished\",\"activities\":[{\"label\":\"Label\",\"labelDetail\":\"Label Detail\",\"guid\":\"HHH\",\"task\":{\"identifier\":\"foo\"},\"activityType\":\"task\"}]}", Schedule.class);
-        assertTrue(schedule.getActivities().get(0).isPersistentlyRescheduledBy(schedule));
+        assertTrue(schedule.getActivities().getFirst().isPersistentlyRescheduledBy(schedule));
         
         // This is persistently schedule due to a survey completion. This should not match (it's not a survey)
         schedule = BridgeObjectMapper.get().readValue("{\"scheduleType\":\"once\",\"eventId\":\"survey:HHH:finished\",\"activities\":[{\"label\":\"Label\",\"labelDetail\":\"Label Detail\",\"guid\":\"HHH\",\"task\":{\"identifier\":\"foo\"},\"activityType\":\"task\"}]}", Schedule.class);
-        assertFalse(schedule.getActivities().get(0).isPersistentlyRescheduledBy(schedule));
+        assertFalse(schedule.getActivities().getFirst().isPersistentlyRescheduledBy(schedule));
         
         // Wrong activity, not persistent
         schedule = BridgeObjectMapper.get().readValue("{\"scheduleType\":\"once\",\"eventId\":\"survey:HHH:finished\",\"activities\":[{\"label\":\"Label\",\"labelDetail\":\"Label Detail\",\"guid\":\"III\",\"task\":{\"identifier\":\"foo\"},\"activityType\":\"task\"}]}", Schedule.class);
-        assertFalse(schedule.getActivities().get(0).isPersistentlyRescheduledBy(schedule));
+        assertFalse(schedule.getActivities().getFirst().isPersistentlyRescheduledBy(schedule));
         
         // Persistent schedule type, creates persistent activities
         schedule = BridgeObjectMapper.get().readValue("{\"scheduleType\":\"persistent\",\"activities\":[{\"label\":\"Label\",\"labelDetail\":\"Label Detail\",\"guid\":\"III\",\"task\":{\"identifier\":\"foo\"},\"activityType\":\"task\"}]}", Schedule.class);
-        assertTrue(schedule.getActivities().get(0).isPersistentlyRescheduledBy(schedule));
+        assertTrue(schedule.getActivities().getFirst().isPersistentlyRescheduledBy(schedule));
     }
 
     @Test

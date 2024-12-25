@@ -3,7 +3,7 @@ package org.sagebionetworks.bridge.models.schedules2.adherence.weekly;
 import java.io.Serializable;
 import java.util.Objects;
 
-import javax.persistence.Embeddable;
+import jakarta.persistence.Embeddable;
 
 @SuppressWarnings("serial")
 @Embeddable

@@ -105,7 +105,7 @@ public class HibernateUploadTableRowDaoTest {
 
         PagedResourceList<UploadTableRow> resourceList = dao.queryUploadTableRows(query);
         assertEquals(resourceList.getItems().size(), 1);
-        assertSame(resourceList.getItems().get(0), row);
+        assertSame(resourceList.getItems().getFirst(), row);
         assertEquals(resourceList.getTotal().intValue(), 1);
 
         Map<String, Object> queryParamMap = resourceList.getRequestParams();
@@ -150,7 +150,7 @@ public class HibernateUploadTableRowDaoTest {
 
         PagedResourceList<UploadTableRow> resourceList = dao.queryUploadTableRows(query);
         assertEquals(resourceList.getItems().size(), 1);
-        assertSame(resourceList.getItems().get(0), row);
+        assertSame(resourceList.getItems().getFirst(), row);
         assertEquals(resourceList.getTotal().intValue(), 1);
 
         Map<String, Object> queryParamMap = resourceList.getRequestParams();

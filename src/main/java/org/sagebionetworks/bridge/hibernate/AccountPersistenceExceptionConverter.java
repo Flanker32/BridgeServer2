@@ -1,7 +1,7 @@
 package org.sagebionetworks.bridge.hibernate;
 
-import javax.persistence.OptimisticLockException;
-import javax.persistence.PersistenceException;
+import jakarta.persistence.OptimisticLockException;
+import jakarta.persistence.PersistenceException;
 
 import org.hibernate.NonUniqueObjectException;
 import org.sagebionetworks.bridge.BridgeUtils;
@@ -16,7 +16,6 @@ import org.sagebionetworks.bridge.models.organizations.Organization;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.google.common.base.Throwables;
@@ -31,7 +30,6 @@ public class AccountPersistenceExceptionConverter implements PersistenceExceptio
     
     private final AccountDao accountDao;
 
-    @Autowired
     public AccountPersistenceExceptionConverter(AccountDao accountDao) {
         this.accountDao = accountDao;
     }

@@ -36,8 +36,8 @@ import org.sagebionetworks.bridge.services.PermissionService;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 public class PermissionControllerTest extends Mockito {
     

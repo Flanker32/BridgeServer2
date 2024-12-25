@@ -110,7 +110,7 @@ public class DynamoReportDataDaoTest extends Mockito {
         assertEquals(query.getHashKeyValues().getKey(), STUDY_REPORT_KEY.getKeyString());
         Condition dateCondition = query.getRangeKeyConditions().get("date");
         assertEquals(dateCondition.getComparisonOperator(), BETWEEN.name());
-        assertEquals(dateCondition.getAttributeValueList().get(0).getS(), START_DATE.toString());
+        assertEquals(dateCondition.getAttributeValueList().getFirst().getS(), START_DATE.toString());
         assertEquals(dateCondition.getAttributeValueList().get(1).getS(), END_DATE.toString());
     }
 
@@ -140,13 +140,13 @@ public class DynamoReportDataDaoTest extends Mockito {
         verify(mockMapper).queryPage(eq(DynamoReportData.class), queryCaptor.capture());
         DynamoDBQueryExpression<DynamoReportData> query = queryCaptor.getValue();
         assertEquals(query.getHashKeyValues().getKey(), STUDY_REPORT_KEY.getKeyString());
-        assertEquals(query.getLimit(), new Integer(6));
+        assertEquals(query.getLimit(), Integer.valueOf(6));
         // When an offsetKey is provided, it's the starting timestamp for the next page of records.
         // In test offsetKey would fail because it's not a timestamp, but it demonstrates that
         // this is working.
         Condition dateCondition = query.getRangeKeyConditions().get("date");
         assertEquals(dateCondition.getComparisonOperator(), BETWEEN.name());
-        assertEquals(dateCondition.getAttributeValueList().get(0).getS(), OFFSET_KEY);
+        assertEquals(dateCondition.getAttributeValueList().getFirst().getS(), OFFSET_KEY);
         assertEquals(dateCondition.getAttributeValueList().get(1).getS(),
                 END_TIME.withZone(DateTimeZone.UTC).toString());
     }
@@ -164,7 +164,7 @@ public class DynamoReportDataDaoTest extends Mockito {
         verify(mockMapper).queryPage(eq(DynamoReportData.class), queryCaptor.capture());
         DynamoDBQueryExpression<DynamoReportData> query = queryCaptor.getValue();
         Condition dateCondition = query.getRangeKeyConditions().get("date");
-        assertEquals(dateCondition.getAttributeValueList().get(0).getS(),
+        assertEquals(dateCondition.getAttributeValueList().getFirst().getS(),
                 START_TIME.withZone(DateTimeZone.UTC).toString());
     }
     

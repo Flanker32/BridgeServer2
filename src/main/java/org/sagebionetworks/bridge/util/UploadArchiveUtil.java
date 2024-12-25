@@ -44,7 +44,7 @@ public class UploadArchiveUtil {
                 outData = uploadArchiveService.decrypt(appId, inData);
                 break;
             default:
-                throw new IllegalArgumentException(String.format("Invalid method %s", method));
+                throw new IllegalArgumentException("Invalid method %s".formatted(method));
         }
 
         // write output file

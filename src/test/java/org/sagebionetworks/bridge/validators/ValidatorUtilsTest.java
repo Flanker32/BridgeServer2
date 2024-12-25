@@ -50,7 +50,7 @@ public class ValidatorUtilsTest extends Mockito {
     }
     
     static String getInvalidStringLengthMessage(int maxLength) {
-        return String.format(INVALID_STRING_LENGTH, maxLength);
+        return INVALID_STRING_LENGTH.formatted(maxLength);
     }
     
     static JsonNode getExcessivelyLargeClientData() {

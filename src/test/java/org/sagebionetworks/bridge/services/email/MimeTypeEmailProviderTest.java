@@ -2,7 +2,7 @@ package org.sagebionetworks.bridge.services.email;
 
 import static org.testng.Assert.assertEquals;
 
-import javax.mail.MessagingException;
+import jakarta.mail.MessagingException;
 
 import org.testng.annotations.Test;
 

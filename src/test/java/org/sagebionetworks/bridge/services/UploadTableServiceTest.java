@@ -19,6 +19,7 @@ import static org.testng.Assert.assertTrue;
 import static org.testng.Assert.fail;
 
 import java.net.MalformedURLException;
+import java.net.URI;
 import java.net.URL;
 import java.util.List;
 import java.util.Optional;
@@ -187,7 +188,7 @@ public class UploadTableServiceTest {
         // Set up mocks.
         setRequestContextWithRole(DEVELOPER);
 
-        when(mockS3Client.generatePresignedUrl(any())).thenReturn(new URL(S3_URL));
+        when(mockS3Client.generatePresignedUrl(any())).thenReturn(URI.create(S3_URL).toURL());
 
         UploadTableJob job = makeValidJob();
         job.setStatus(UploadTableJob.Status.SUCCEEDED);
@@ -258,7 +259,7 @@ public class UploadTableServiceTest {
         List<UploadTableJob> result = service.listUploadTableJobsForStudy(TestConstants.TEST_APP_ID,
                 TestConstants.TEST_STUDY_ID, 10, 20).getItems();
         assertEquals(result.size(), 1);
-        assertSame(result.get(0), job);
+        assertSame(result.getFirst(), job);
     }
 
     @Test(expectedExceptions = UnauthorizedException.class)

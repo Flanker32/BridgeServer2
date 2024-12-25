@@ -149,9 +149,9 @@ public class SessionTest {
         assertEquals(deser.getGuid(), SESSION_GUID_1);
         assertEquals(deser.getName(), "Do weekly survey");
         assertEquals(deser.getSymbol(), "✯");
-        assertEquals(deser.getStartEventIds().get(0), "activities_retrieved");
+        assertEquals(deser.getStartEventIds().getFirst(), "activities_retrieved");
         assertEquals(deser.getStartEventIds().get(1), "timeline_retrieved");
-        assertEquals(deser.getStudyBurstIds().get(0), "burst1");
+        assertEquals(deser.getStudyBurstIds().getFirst(), "burst1");
         assertEquals(deser.getDelay(), Period.parse("P1W"));
         assertEquals(deser.getOccurrences(), Integer.valueOf(19));
         assertEquals(deser.getInterval(), Period.parse("P7D"));
@@ -159,22 +159,22 @@ public class SessionTest {
         
         assertEquals(deser.getLabels().size(), 2);
         List<Label> labels = deser.getLabels();
-        assertEquals(labels.get(0).getLang(), "en");
-        assertEquals(labels.get(0).getValue(), "English");
+        assertEquals(labels.getFirst().getLang(), "en");
+        assertEquals(labels.getFirst().getValue(), "English");
    
         assertEquals(deser.getAssessments().size(), 2);
         List<AssessmentReference> assessments = deser.getAssessments();
-        assertEquals(assessments.get(0).getGuid(), ASSESSMENT_1_GUID);
-        assertEquals(assessments.get(0).getTitle(), "Assessment 1");
-        assertEquals(assessments.get(0).getMinutesToComplete(), Integer.valueOf(3));
-        assertEquals(assessments.get(0).getAppId(), "local");
+        assertEquals(assessments.getFirst().getGuid(), ASSESSMENT_1_GUID);
+        assertEquals(assessments.getFirst().getTitle(), "Assessment 1");
+        assertEquals(assessments.getFirst().getMinutesToComplete(), Integer.valueOf(3));
+        assertEquals(assessments.getFirst().getAppId(), "local");
         
         assertEquals(deser.getTimeWindows().size(), 1);
         List<TimeWindow> windows = deser.getTimeWindows();
-        assertEquals(windows.get(0).getGuid(), SESSION_WINDOW_GUID_1);
-        assertEquals(windows.get(0).getStartTime(), LocalTime.parse("08:00"));
-        assertEquals(windows.get(0).getExpiration(), Period.parse("PT6H"));
-        assertTrue(windows.get(0).isPersistent());
+        assertEquals(windows.getFirst().getGuid(), SESSION_WINDOW_GUID_1);
+        assertEquals(windows.getFirst().getStartTime(), LocalTime.parse("08:00"));
+        assertEquals(windows.getFirst().getExpiration(), Period.parse("PT6H"));
+        assertTrue(windows.getFirst().isPersistent());
     }
     
     @Test

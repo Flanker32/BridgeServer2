@@ -12,8 +12,8 @@ import static org.testng.Assert.assertNull;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.common.collect.ImmutableList;
@@ -139,7 +139,7 @@ public class CompoundActivityDefinitionControllerTest extends Mockito {
         List<CompoundActivityDefinition> controllerOutputList = controllerOutputResourceList.getItems();
         assertEquals(controllerOutputList.size(), 1);
 
-        CompoundActivityDefinition controllerOutput = controllerOutputList.get(0);
+        CompoundActivityDefinition controllerOutput = controllerOutputList.getFirst();
         assertEquals(controllerOutput.getTaskId(), TASK_ID);
         assertNull(controllerOutput.getAppId());
         verify(controller).getAuthenticatedSession(Roles.DEVELOPER);

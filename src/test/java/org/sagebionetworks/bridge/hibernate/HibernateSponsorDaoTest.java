@@ -66,7 +66,7 @@ public class HibernateSponsorDaoTest extends Mockito {
         assertEquals(params.get("appId"), TEST_APP_ID);
         assertEquals(params.get("studyId"), TEST_STUDY_ID);
         
-        assertEquals(queryCaptor.getAllValues().get(0), "SELECT count(*) FROM Organizations o " 
+        assertEquals(queryCaptor.getAllValues().getFirst(), "SELECT count(*) FROM Organizations o " 
                 + "INNER JOIN OrganizationsStudies os ON o.identifier = os.orgId AND  o.appId = " 
                 + ":appId AND os.appId = :appId  AND os.studyId = :studyId");
         assertEquals(queryCaptor.getAllValues().get(1), "SELECT * FROM Organizations o INNER " 
@@ -87,7 +87,7 @@ public class HibernateSponsorDaoTest extends Mockito {
         assertEquals(retValue.getItems().size(), 2);
         assertEquals(retValue.getTotal(), (Integer)100);
         
-        assertEquals(queryCaptor.getAllValues().get(0), "SELECT count(*) FROM Substudies s INNER JOIN " 
+        assertEquals(queryCaptor.getAllValues().getFirst(), "SELECT count(*) FROM Substudies s INNER JOIN " 
                 + "OrganizationsStudies os ON s.id = os.studyId AND  s.studyId = :appId AND os.appId = " 
                 + ":appId  AND os.orgId = :orgId AND s.deleted != 1");
         assertEquals(queryCaptor.getAllValues().get(1), "SELECT * FROM Substudies s INNER JOIN " 

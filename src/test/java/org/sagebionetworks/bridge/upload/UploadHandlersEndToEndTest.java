@@ -477,32 +477,38 @@ public class UploadHandlersEndToEndTest {
                 "   \"phoneInfo\":\"" + PHONE_INFO + "\"\n" +
                 "}";
 
-        String aaaJsonText = "{\n" +
-                "   \"questionType\":0,\n" +
-                "   \"choiceAnswers\":[\"Yes\"],\n" +
-                "   \"startDate\":\"2015-04-02T03:26:57-07:00\",\n" +
-                "   \"questionTypeName\":\"SingleChoice\",\n" +
-                "   \"item\":\"AAA\",\n" +
-                "   \"endDate\":\"2015-04-02T03:26:59-07:00\"\n" +
-                "}";
+        String aaaJsonText = """
+                {
+                   "questionType":0,
+                   "choiceAnswers":["Yes"],
+                   "startDate":"2015-04-02T03:26:57-07:00",
+                   "questionTypeName":"SingleChoice",
+                   "item":"AAA",
+                   "endDate":"2015-04-02T03:26:59-07:00"
+                }\
+                """;
 
-        String bbbJsonText = "{\n" +
-                "   \"questionType\":0,\n" +
-                "   \"choiceAnswers\":[\"fencing\", \"running\", 3],\n" +
-                "   \"startDate\":\"2015-04-02T03:27:05-07:00\",\n" +
-                "   \"questionTypeName\":\"MultipleChoice\",\n" +
-                "   \"item\":\"BBB\",\n" +
-                "   \"endDate\":\"2015-04-02T03:27:09-07:00\"\n" +
-                "}";
+        String bbbJsonText = """
+                {
+                   "questionType":0,
+                   "choiceAnswers":["fencing", "running", 3],
+                   "startDate":"2015-04-02T03:27:05-07:00",
+                   "questionTypeName":"MultipleChoice",
+                   "item":"BBB",
+                   "endDate":"2015-04-02T03:27:09-07:00"
+                }\
+                """;
 
-        String deliciousJsonText = "{\n" +
-                "   \"questionType\":0,\n" +
-                "   \"choiceAnswers\":[\"Yes\", \"Maybe\"],\n" +
-                "   \"startDate\":\"2015-04-02T03:27:05-07:00\",\n" +
-                "   \"questionTypeName\":\"MultipleChoice\",\n" +
-                "   \"item\":\"delicious\",\n" +
-                "   \"endDate\":\"2015-04-02T03:27:09-07:00\"\n" +
-                "}";
+        String deliciousJsonText = """
+                {
+                   "questionType":0,
+                   "choiceAnswers":["Yes", "Maybe"],
+                   "startDate":"2015-04-02T03:27:05-07:00",
+                   "questionTypeName":"MultipleChoice",
+                   "item":"delicious",
+                   "endDate":"2015-04-02T03:27:09-07:00"
+                }\
+                """;
 
         Map<String, String> fileMap = ImmutableMap.<String, String>builder().put("info.json", infoJsonText)
                 .put("AAA.json", aaaJsonText).put("BBB.json", bbbJsonText).put("delicious.json", deliciousJsonText)
@@ -525,11 +531,13 @@ public class UploadHandlersEndToEndTest {
                 "   \"phoneInfo\":\"" + PHONE_INFO + "\"\n" +
                 "}";
 
-        String answersJsonText = "{\n" +
-                "   \"AAA\":[\"Yes\"],\n" +
-                "   \"BBB\":[\"fencing\", \"running\", 3],\n" +
-                "   \"delicious\":[\"Yes\", \"Maybe\"]\n" +
-                "}";
+        String answersJsonText = """
+                {
+                   "AAA":["Yes"],
+                   "BBB":["fencing", "running", 3],
+                   "delicious":["Yes", "Maybe"]
+                }\
+                """;
 
         Map<String, String> fileMap = ImmutableMap.<String, String>builder().put("info.json", infoJsonText)
                 .put("answers.json", answersJsonText).build();
@@ -595,18 +603,20 @@ public class UploadHandlersEndToEndTest {
 
         // Note that a lot of these have the wrong type, but are convertible to the correct type. This is to test that
         // values can be canonicalized.
-        String recordJsonContent = "{\n" +
-                "   \"HHH\":[\"attachment\", \"inside\", \"file\"],\n" +
-                "   \"III\":1,\n" +
-                "   \"JJJ\":\"2016-06-03T17:03-0700\",\n" +
-                "   \"LLL\":\"PT1H\",\n" +
-                "   \"MMM\":\"3.14\",\n" +
-                "   \"NNN\":[\"inline\", \"json\"],\n" +
-                "   \"OOO\":\"2.718\",\n" +
-                "   \"PPP\":1337,\n" +
-                "   \"QQQ\":\"2016-06-03T19:21:35.378-0700\",\n" +
-                "   \"arrr\":\"2016-06-03T18:12:34.567+0900\"\n" +
-                "}";
+        String recordJsonContent = """
+                {
+                   "HHH":["attachment", "inside", "file"],
+                   "III":1,
+                   "JJJ":"2016-06-03T17:03-0700",
+                   "LLL":"PT1H",
+                   "MMM":"3.14",
+                   "NNN":["inline", "json"],
+                   "OOO":"2.718",
+                   "PPP":1337,
+                   "QQQ":"2016-06-03T19:21:35.378-0700",
+                   "arrr":"2016-06-03T18:12:34.567+0900"
+                }\
+                """;
 
         Map<String, String> fileMap = ImmutableMap.<String, String>builder().put("info.json", infoJsonText)
                 .put("CCC.txt", cccTxtContent).put("DDD.csv", dddCsvContent).put("EEE.json", eeeJsonContent)

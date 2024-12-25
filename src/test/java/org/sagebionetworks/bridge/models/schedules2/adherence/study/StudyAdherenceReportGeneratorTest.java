@@ -290,13 +290,13 @@ public class StudyAdherenceReportGeneratorTest extends Mockito {
         assertNull(report.getEventTimestamps().get("custom:event2"));
 
         assertEquals(report.getWeeks().size(), 4);
-        StudyReportWeek week1 = report.getWeeks().get(0);
+        StudyReportWeek week1 = report.getWeeks().getFirst();
         assertEquals(week1.getStartDate(), LocalDate.parse("2022-03-01"));
         assertEquals(week1.getWeekInStudy(), 1);
         assertEquals(week1.getAdherencePercent(), Integer.valueOf(100));
         assertEquals(week1.getRows().size(), 2);
         
-        WeeklyAdherenceReportRow week1Row1 = week1.getRows().get(0);
+        WeeklyAdherenceReportRow week1Row1 = week1.getRows().getFirst();
         assertEquals(week1Row1.getLabel(), "Baseline Tapping Test / Week 1");
         assertEquals(week1Row1.getSearchableLabel(), ":Baseline Tapping Test:Week 1:");
         assertEquals(week1Row1.getSessionGuid(), "baselineGuid");
@@ -314,48 +314,48 @@ public class StudyAdherenceReportGeneratorTest extends Mockito {
         
         List<EventStreamDay> week1Day0 = week1.getByDayEntries().get(0);
         assertEquals(week1Day0.size(), 2);
-        assertDay(week1Day0.get(0), "2022-03-01", 0, false);
+        assertDay(week1Day0.getFirst(), "2022-03-01", 0, false);
         assertDay(week1Day0.get(1), "2022-03-01", 0, false);
         
         List<EventStreamDay> week1Day1 = week1.getByDayEntries().get(1);
         assertEquals(week1Day1.size(), 2);
-        assertDay(week1Day1.get(0), "2022-03-02", 0, false);
+        assertDay(week1Day1.getFirst(), "2022-03-02", 0, false);
         assertDay(week1Day1.get(1), "2022-03-02", 1, false);
         
         assertEquals(week1Day1.get(1).getSessionGuid(), "initialSurveyGuid");
         assertEquals(week1Day1.get(1).getStartEventId(), "timeline_retrieved");
-        assertTimeWindow(week1Day1.get(1).getTimeWindows().get(0), "pqVRM8cV-buumqQvUGwRsQ", 
+        assertTimeWindow(week1Day1.get(1).getTimeWindows().getFirst(), "pqVRM8cV-buumqQvUGwRsQ", 
                 "win1", COMPLETED, "2022-03-02");
         
         List<EventStreamDay> week1Day2 = week1.getByDayEntries().get(2);
         assertEquals(week1Day2.size(), 2);
-        assertDay(week1Day2.get(0), "2022-03-03", 1, false);
+        assertDay(week1Day2.getFirst(), "2022-03-03", 1, false);
         assertDay(week1Day2.get(1), "2022-03-03", 0, false);
         
-        assertEquals(week1Day2.get(0).getSessionGuid(), "baselineGuid");
-        assertEquals(week1Day2.get(0).getStartEventId(), "timeline_retrieved");
-        assertEquals(week1Day2.get(0).getStartDate(), LocalDate.parse("2022-03-03"));
-        assertTimeWindow(week1Day2.get(0).getTimeWindows().get(0), "xyvAcmEYAVAzCMfGhf187g", 
+        assertEquals(week1Day2.getFirst().getSessionGuid(), "baselineGuid");
+        assertEquals(week1Day2.getFirst().getStartEventId(), "timeline_retrieved");
+        assertEquals(week1Day2.getFirst().getStartDate(), LocalDate.parse("2022-03-03"));
+        assertTimeWindow(week1Day2.getFirst().getTimeWindows().getFirst(), "xyvAcmEYAVAzCMfGhf187g", 
                 "win2", COMPLETED, "2022-03-03");
         
         List<EventStreamDay> week1Day3 = week1.getByDayEntries().get(3);
         assertEquals(week1Day3.size(), 2);
-        assertDay(week1Day3.get(0), "2022-03-04", 0, false);
+        assertDay(week1Day3.getFirst(), "2022-03-04", 0, false);
         assertDay(week1Day3.get(1), "2022-03-04", 0, false);
         
         List<EventStreamDay> week1Day4 = week1.getByDayEntries().get(4);
         assertEquals(week1Day4.size(), 2);
-        assertDay(week1Day4.get(0), "2022-03-05", 0, false);
+        assertDay(week1Day4.getFirst(), "2022-03-05", 0, false);
         assertDay(week1Day4.get(1), "2022-03-05", 0, false);
         
         List<EventStreamDay> week1Day5 = week1.getByDayEntries().get(5);
         assertEquals(week1Day5.size(), 2);
-        assertDay(week1Day5.get(0), "2022-03-06", 0, false);
+        assertDay(week1Day5.getFirst(), "2022-03-06", 0, false);
         assertDay(week1Day5.get(1), "2022-03-06", 0, false);
         
         List<EventStreamDay> week1Day6 = week1.getByDayEntries().get(6);
         assertEquals(week1Day6.size(), 2);
-        assertDay(week1Day6.get(0), "2022-03-07", 0, false);
+        assertDay(week1Day6.getFirst(), "2022-03-07", 0, false);
         assertDay(week1Day6.get(1), "2022-03-07", 0, false);
         
         StudyReportWeek week2 = report.getWeeks().get(1);
@@ -364,7 +364,7 @@ public class StudyAdherenceReportGeneratorTest extends Mockito {
         assertEquals(week2.getAdherencePercent(), Integer.valueOf(0));
         assertEquals(week2.getRows().size(), 1);
         
-        WeeklyAdherenceReportRow week2Row1 = week2.getRows().get(0);
+        WeeklyAdherenceReportRow week2Row1 = week2.getRows().getFirst();
         assertEquals(week2Row1.getLabel(), "Study Burst 1 / Week 2 / Study Burst Tapping Test");
         assertEquals(week2Row1.getSearchableLabel(), 
                 ":Study Burst:Study Burst 1:Week 2:Study Burst Tapping Test:");
@@ -377,49 +377,49 @@ public class StudyAdherenceReportGeneratorTest extends Mockito {
         
         List<EventStreamDay> week2Day1 = week2.getByDayEntries().get(0);
         assertEquals(week2Day1.size(), 1);
-        assertDay(week2Day1.get(0), "2022-03-08", 1, false);
-        assertEquals(week2Day1.get(0).getSessionGuid(), "burstTappingGuid");
-        assertEquals(week2Day1.get(0).getStartEventId(), "study_burst:Study Burst:01");
-        assertEquals(week2Day1.get(0).getTimeWindows().size(), 1);
-        assertTimeWindow(week2Day1.get(0).getTimeWindows().get(0), "freUhgN8OBMQOuUJBY_b4Q", "win3",
+        assertDay(week2Day1.getFirst(), "2022-03-08", 1, false);
+        assertEquals(week2Day1.getFirst().getSessionGuid(), "burstTappingGuid");
+        assertEquals(week2Day1.getFirst().getStartEventId(), "study_burst:Study Burst:01");
+        assertEquals(week2Day1.getFirst().getTimeWindows().size(), 1);
+        assertTimeWindow(week2Day1.getFirst().getTimeWindows().getFirst(), "freUhgN8OBMQOuUJBY_b4Q", "win3",
                 SessionCompletionState.DECLINED, "2022-03-08");
         
         List<EventStreamDay> week2Day2 = week2.getByDayEntries().get(1);
         assertEquals(week2Day2.size(), 1);
-        assertEquals(week2Day2.get(0).getStartDate(), LocalDate.parse("2022-03-09"));
-        assertTrue(week2Day2.get(0).getTimeWindows().isEmpty());
+        assertEquals(week2Day2.getFirst().getStartDate(), LocalDate.parse("2022-03-09"));
+        assertTrue(week2Day2.getFirst().getTimeWindows().isEmpty());
         
         List<EventStreamDay> week2Day3 = week2.getByDayEntries().get(2);
         assertEquals(week2Day3.size(), 1);
-        assertEquals(week2Day3.get(0).getStartDate(), LocalDate.parse("2022-03-10"));
-        assertTrue(week2Day3.get(0).getTimeWindows().isEmpty());
+        assertEquals(week2Day3.getFirst().getStartDate(), LocalDate.parse("2022-03-10"));
+        assertTrue(week2Day3.getFirst().getTimeWindows().isEmpty());
         
         List<EventStreamDay> week2Day4 = week2.getByDayEntries().get(3);
         assertEquals(week2Day4.size(), 1);
-        assertEquals(week2Day4.get(0).getStartDate(), LocalDate.parse("2022-03-11"));
-        assertTrue(week2Day4.get(0).getTimeWindows().isEmpty());
+        assertEquals(week2Day4.getFirst().getStartDate(), LocalDate.parse("2022-03-11"));
+        assertTrue(week2Day4.getFirst().getTimeWindows().isEmpty());
         
         List<EventStreamDay> week2Day5 = week2.getByDayEntries().get(4);
         assertEquals(week2Day5.size(), 1);
-        assertEquals(week2Day5.get(0).getStartDate(), LocalDate.parse("2022-03-12"));
-        assertTrue(week2Day5.get(0).getTimeWindows().isEmpty());
+        assertEquals(week2Day5.getFirst().getStartDate(), LocalDate.parse("2022-03-12"));
+        assertTrue(week2Day5.getFirst().getTimeWindows().isEmpty());
         
         List<EventStreamDay> week2Day6 = week2.getByDayEntries().get(5);
         assertEquals(week2Day6.size(), 1);
-        assertEquals(week2Day6.get(0).getStartDate(), LocalDate.parse("2022-03-13"));
-        assertTrue(week2Day6.get(0).getTimeWindows().isEmpty());
+        assertEquals(week2Day6.getFirst().getStartDate(), LocalDate.parse("2022-03-13"));
+        assertTrue(week2Day6.getFirst().getTimeWindows().isEmpty());
 
         List<EventStreamDay> week2Day7 = week2.getByDayEntries().get(6);
         assertEquals(week2Day7.size(), 1);
-        assertEquals(week2Day7.get(0).getStartDate(), LocalDate.parse("2022-03-14"));
-        assertTrue(week2Day7.get(0).getTimeWindows().isEmpty());
+        assertEquals(week2Day7.getFirst().getStartDate(), LocalDate.parse("2022-03-14"));
+        assertTrue(week2Day7.getFirst().getTimeWindows().isEmpty());
 
         StudyReportWeek week3 = report.getWeeks().get(2);
         assertEquals(week3.getStartDate(), LocalDate.parse("2022-03-15"));
         assertEquals(week3.getWeekInStudy(), 3);
         assertEquals(week3.getAdherencePercent(), Integer.valueOf(0));
         
-        WeeklyAdherenceReportRow week3Row1 = week3.getRows().get(0);
+        WeeklyAdherenceReportRow week3Row1 = week3.getRows().getFirst();
         assertEquals(week3Row1.getLabel(), "Study Burst 2 / Week 3 / Study Burst Tapping Test");
         assertEquals(week3Row1.getSearchableLabel(), 
                 ":Study Burst:Study Burst 2:Week 3:Study Burst Tapping Test:");
@@ -431,49 +431,49 @@ public class StudyAdherenceReportGeneratorTest extends Mockito {
         assertEquals(week3Row1.getStudyBurstNum(), Integer.valueOf(2));
         
         List<EventStreamDay> week3Day1 = week3.getByDayEntries().get(0);
-        assertTrue(week3Day1.get(0).isToday());
-        assertEquals(week3Day1.get(0).getSessionGuid(), "burstTappingGuid");
-        assertEquals(week3Day1.get(0).getStartEventId(), "study_burst:Study Burst:02");
-        assertEquals(week3Day1.get(0).getStartDate(), LocalDate.parse("2022-03-15"));
-        assertEquals(week3Day1.get(0).getTimeWindows().size(), 1);
-        assertTimeWindow(week3Day1.get(0).getTimeWindows().get(0), "B01W5ru8Cjr8DAbODKcMKA", "win3",
+        assertTrue(week3Day1.getFirst().isToday());
+        assertEquals(week3Day1.getFirst().getSessionGuid(), "burstTappingGuid");
+        assertEquals(week3Day1.getFirst().getStartEventId(), "study_burst:Study Burst:02");
+        assertEquals(week3Day1.getFirst().getStartDate(), LocalDate.parse("2022-03-15"));
+        assertEquals(week3Day1.getFirst().getTimeWindows().size(), 1);
+        assertTimeWindow(week3Day1.getFirst().getTimeWindows().getFirst(), "B01W5ru8Cjr8DAbODKcMKA", "win3",
                 SessionCompletionState.STARTED, "2022-03-15");
         
         List<EventStreamDay> week3Day2 = week3.getByDayEntries().get(1);
         assertEquals(week3Day2.size(), 1);
-        assertEquals(week3Day2.get(0).getStartDate(), LocalDate.parse("2022-03-16"));
-        assertTrue(week3Day2.get(0).getTimeWindows().isEmpty());
+        assertEquals(week3Day2.getFirst().getStartDate(), LocalDate.parse("2022-03-16"));
+        assertTrue(week3Day2.getFirst().getTimeWindows().isEmpty());
         
         List<EventStreamDay> week3Day3 = week3.getByDayEntries().get(2);
         assertEquals(week3Day3.size(), 1);
-        assertEquals(week3Day3.get(0).getStartDate(), LocalDate.parse("2022-03-17"));
-        assertTrue(week3Day3.get(0).getTimeWindows().isEmpty());
+        assertEquals(week3Day3.getFirst().getStartDate(), LocalDate.parse("2022-03-17"));
+        assertTrue(week3Day3.getFirst().getTimeWindows().isEmpty());
         
         List<EventStreamDay> week3Day4 = week3.getByDayEntries().get(3);
         assertEquals(week3Day4.size(), 1);
-        assertEquals(week3Day4.get(0).getStartDate(), LocalDate.parse("2022-03-18"));
-        assertTrue(week3Day4.get(0).getTimeWindows().isEmpty());
+        assertEquals(week3Day4.getFirst().getStartDate(), LocalDate.parse("2022-03-18"));
+        assertTrue(week3Day4.getFirst().getTimeWindows().isEmpty());
         
         List<EventStreamDay> week3Day5 = week3.getByDayEntries().get(4);
         assertEquals(week3Day5.size(), 1);
-        assertEquals(week3Day5.get(0).getStartDate(), LocalDate.parse("2022-03-19"));
-        assertTrue(week3Day5.get(0).getTimeWindows().isEmpty());
+        assertEquals(week3Day5.getFirst().getStartDate(), LocalDate.parse("2022-03-19"));
+        assertTrue(week3Day5.getFirst().getTimeWindows().isEmpty());
         
         List<EventStreamDay> week3Day6 = week3.getByDayEntries().get(5);
         assertEquals(week3Day6.size(), 1);
-        assertEquals(week3Day6.get(0).getStartDate(), LocalDate.parse("2022-03-20"));
-        assertTrue(week3Day6.get(0).getTimeWindows().isEmpty());
+        assertEquals(week3Day6.getFirst().getStartDate(), LocalDate.parse("2022-03-20"));
+        assertTrue(week3Day6.getFirst().getTimeWindows().isEmpty());
         
         List<EventStreamDay> week3Day7 = week3.getByDayEntries().get(6);
         assertEquals(week3Day7.size(), 1);
-        assertEquals(week3Day7.get(0).getStartDate(), LocalDate.parse("2022-03-21"));
-        assertTrue(week3Day7.get(0).getTimeWindows().isEmpty());
+        assertEquals(week3Day7.getFirst().getStartDate(), LocalDate.parse("2022-03-21"));
+        assertTrue(week3Day7.getFirst().getTimeWindows().isEmpty());
         
         StudyReportWeek week4 = report.getWeeks().get(3);
         assertEquals(week4.getStartDate(), LocalDate.parse("2022-03-22"));
         assertEquals(week4.getWeekInStudy(), 4);
         
-        WeeklyAdherenceReportRow week4Row1 = week4.getRows().get(0);
+        WeeklyAdherenceReportRow week4Row1 = week4.getRows().getFirst();
         assertEquals(week4Row1.getLabel(), "Study Burst 3 / Week 4 / Study Burst Tapping Test");
         assertEquals(week4Row1.getSearchableLabel(), 
                 ":Study Burst:Study Burst 3:Week 4:Study Burst Tapping Test:");
@@ -496,22 +496,22 @@ public class StudyAdherenceReportGeneratorTest extends Mockito {
         
         List<EventStreamDay> week4Day1 = week4.getByDayEntries().get(0);
         assertEquals(week4Day1.size(), 2);
-        assertFalse(week4Day1.get(0).isToday());
-        assertEquals(week4Day1.get(0).getSessionGuid(), "burstTappingGuid");
-        assertEquals(week4Day1.get(0).getStartEventId(), "study_burst:Study Burst:03");
-        assertEquals(week4Day1.get(0).getStartDate(), LocalDate.parse("2022-03-22"));
-        assertTimeWindow(week4Day1.get(0).getTimeWindows().get(0), "sdOEXR4pJ-EyQQF8YmjwFw", "win3",
+        assertFalse(week4Day1.getFirst().isToday());
+        assertEquals(week4Day1.getFirst().getSessionGuid(), "burstTappingGuid");
+        assertEquals(week4Day1.getFirst().getStartEventId(), "study_burst:Study Burst:03");
+        assertEquals(week4Day1.getFirst().getStartDate(), LocalDate.parse("2022-03-22"));
+        assertTimeWindow(week4Day1.getFirst().getTimeWindows().getFirst(), "sdOEXR4pJ-EyQQF8YmjwFw", "win3",
             SessionCompletionState.NOT_YET_AVAILABLE, "2022-03-22");
         assertTrue(week4Day1.get(1).getTimeWindows().isEmpty());
         
         List<EventStreamDay> week4Day2 = week4.getByDayEntries().get(1);
         assertEquals(week4Day2.size(), 2);
-        assertTrue(week4Day2.get(0).getTimeWindows().isEmpty());
+        assertTrue(week4Day2.getFirst().getTimeWindows().isEmpty());
         assertTrue(week4Day2.get(1).getTimeWindows().isEmpty());
         
         List<EventStreamDay> week4Day3 = week4.getByDayEntries().get(2);
         assertEquals(week4Day3.size(), 2);
-        assertTrue(week4Day3.get(0).getTimeWindows().isEmpty());
+        assertTrue(week4Day3.getFirst().getTimeWindows().isEmpty());
         assertTrue(week4Day3.get(1).getTimeWindows().isEmpty());
         
         List<EventStreamDay> week4Day4 = week4.getByDayEntries().get(3);
@@ -520,22 +520,22 @@ public class StudyAdherenceReportGeneratorTest extends Mockito {
         assertEquals(week4Day4.get(1).getSessionGuid(), "finalSurveyGuid");
         assertEquals(week4Day4.get(1).getStartEventId(), "timeline_retrieved");
         assertEquals(week4Day4.get(1).getStartDate(), LocalDate.parse("2022-03-25"));
-        assertTimeWindow(week4Day4.get(1).getTimeWindows().get(0), "7aD28QS4xd0GLZELfIh0-Q", "win4",
+        assertTimeWindow(week4Day4.get(1).getTimeWindows().getFirst(), "7aD28QS4xd0GLZELfIh0-Q", "win4",
                 SessionCompletionState.NOT_YET_AVAILABLE, "2022-03-27");
         
         List<EventStreamDay> week4Day5 = week4.getByDayEntries().get(4);
         assertEquals(week4Day5.size(), 2);
-        assertTrue(week4Day5.get(0).getTimeWindows().isEmpty());
+        assertTrue(week4Day5.getFirst().getTimeWindows().isEmpty());
         assertTrue(week4Day5.get(1).getTimeWindows().isEmpty());
 
         List<EventStreamDay> week4Day6 = week4.getByDayEntries().get(5);
         assertEquals(week4Day6.size(), 2);
-        assertTrue(week4Day6.get(0).getTimeWindows().isEmpty());
+        assertTrue(week4Day6.getFirst().getTimeWindows().isEmpty());
         assertTrue(week4Day6.get(1).getTimeWindows().isEmpty());
         
         List<EventStreamDay> week4Day7 = week4.getByDayEntries().get(6);
         assertEquals(week4Day7.size(), 2);
-        assertTrue(week4Day7.get(0).getTimeWindows().isEmpty());
+        assertTrue(week4Day7.getFirst().getTimeWindows().isEmpty());
         assertTrue(week4Day7.get(1).getTimeWindows().isEmpty());        
     }
     
@@ -560,30 +560,30 @@ public class StudyAdherenceReportGeneratorTest extends Mockito {
         StudyAdherenceReport report = INSTANCE.generate(builder.build(), schedule);
         
         assertEquals(report.getAdherencePercent(), Integer.valueOf(0));
-        StudyReportWeek week1 = report.getWeeks().get(0);
+        StudyReportWeek week1 = report.getWeeks().getFirst();
         assertEquals(week1.getAdherencePercent(), Integer.valueOf(0));
         assertEquals(week1.getRows().size(), 2);
 
         List<EventStreamDay> week1Day1 = week1.getByDayEntries().get(1);
-        assertEquals(week1Day1.get(1).getTimeWindows().get(0).getState(), EXPIRED);
+        assertEquals(week1Day1.get(1).getTimeWindows().getFirst().getState(), EXPIRED);
         
         List<EventStreamDay> week1Day2 = week1.getByDayEntries().get(2);
-        assertEquals(week1Day2.get(0).getTimeWindows().get(0).getState(), EXPIRED);
+        assertEquals(week1Day2.getFirst().getTimeWindows().getFirst().getState(), EXPIRED);
         
         StudyReportWeek week2 = report.getWeeks().get(1);
         List<EventStreamDay> week2Day1 = week2.getByDayEntries().get(0);
-        assertEquals(week2Day1.get(0).getTimeWindows().get(0).getState(), EXPIRED);
+        assertEquals(week2Day1.getFirst().getTimeWindows().getFirst().getState(), EXPIRED);
         
         StudyReportWeek week3 = report.getWeeks().get(2);
         List<EventStreamDay> week3Day1 = week3.getByDayEntries().get(0);
-        assertEquals(week3Day1.get(0).getTimeWindows().get(0).getState(), UNSTARTED);
+        assertEquals(week3Day1.getFirst().getTimeWindows().getFirst().getState(), UNSTARTED);
         
         StudyReportWeek week4 = report.getWeeks().get(3);
         List<EventStreamDay> week4Day1 = week4.getByDayEntries().get(0);
-        assertEquals(week4Day1.get(0).getTimeWindows().get(0).getState(), NOT_YET_AVAILABLE);
+        assertEquals(week4Day1.getFirst().getTimeWindows().getFirst().getState(), NOT_YET_AVAILABLE);
         
         List<EventStreamDay> week4Day4 = week4.getByDayEntries().get(3);
-        assertEquals(week4Day4.get(1).getTimeWindows().get(0).getState(), NOT_YET_AVAILABLE);
+        assertEquals(week4Day4.get(1).getTimeWindows().getFirst().getState(), NOT_YET_AVAILABLE);
     }
     
     @Test
@@ -663,16 +663,16 @@ public class StudyAdherenceReportGeneratorTest extends Mockito {
         assertEquals(report.getWeeks().size(), 3);
         
         // It's the study bursts, just test a few fields to verify this.
-        StudyReportWeek week1 = report.getWeeks().get(0);
-        assertEquals(week1.getRows().get(0).getLabel(), 
+        StudyReportWeek week1 = report.getWeeks().getFirst();
+        assertEquals(week1.getRows().getFirst().getLabel(), 
                 "Study Burst 1 / Week 1 / Study Burst Tapping Test");
         
         StudyReportWeek week2 = report.getWeeks().get(1);
-        assertEquals(week2.getRows().get(0).getLabel(), 
+        assertEquals(week2.getRows().getFirst().getLabel(), 
                 "Study Burst 2 / Week 2 / Study Burst Tapping Test");
         
         StudyReportWeek week3 = report.getWeeks().get(2);
-        assertEquals(week3.getRows().get(0).getLabel(), 
+        assertEquals(week3.getRows().getFirst().getLabel(), 
                 "Study Burst 3 / Week 3 / Study Burst Tapping Test");
     }
     
@@ -711,7 +711,7 @@ public class StudyAdherenceReportGeneratorTest extends Mockito {
         List<StudyActivityEvent> events =  ImmutableList.of(e1, e2, e3, e4, e5);
         
         Schedule2 schedule = createSchedule();
-        schedule.getSessions().get(0).setStartEventIds(ImmutableList.of("timeline_retrieved", "custom:event2"));
+        schedule.getSessions().getFirst().setStartEventIds(ImmutableList.of("timeline_retrieved", "custom:event2"));
 
         List<TimelineMetadata> metadata = Scheduler.INSTANCE.calculateTimeline(schedule).getMetadata();
 
@@ -738,13 +738,13 @@ public class StudyAdherenceReportGeneratorTest extends Mockito {
         assertEquals(report.getEventTimestamps().get("custom:event2"), DateTime.parse("2022-03-01T18:23:15.999-06:00").withZone(zone));
 
         assertEquals(report.getWeeks().size(), 4);
-        StudyReportWeek week1 = report.getWeeks().get(0);
+        StudyReportWeek week1 = report.getWeeks().getFirst();
         assertEquals(week1.getStartDate(), LocalDate.parse("2022-03-01"));
         assertEquals(week1.getWeekInStudy(), 1);
         assertEquals(week1.getAdherencePercent(), Integer.valueOf(66));
         assertEquals(week1.getRows().size(), 3);
         
-        WeeklyAdherenceReportRow week1Row1 = week1.getRows().get(0);
+        WeeklyAdherenceReportRow week1Row1 = week1.getRows().getFirst();
         assertEquals(week1Row1.getLabel(), "Baseline Tapping Test / Week 1");
         assertEquals(week1Row1.getSearchableLabel(), ":Baseline Tapping Test:Week 1:");
         assertEquals(week1Row1.getSessionGuid(), "baselineGuid");
@@ -770,59 +770,59 @@ public class StudyAdherenceReportGeneratorTest extends Mockito {
         
         List<EventStreamDay> week1Day0 = week1.getByDayEntries().get(0);
         assertEquals(week1Day0.size(), 3);
-        assertDay(week1Day0.get(0), "2022-03-01", 0, false);
+        assertDay(week1Day0.getFirst(), "2022-03-01", 0, false);
         assertDay(week1Day0.get(1), "2022-03-01", 0, false);
         assertDay(week1Day0.get(2), "2022-03-01", 0, false);
         
         List<EventStreamDay> week1Day1 = week1.getByDayEntries().get(1);
         assertEquals(week1Day1.size(), 3);
-        assertDay(week1Day1.get(0), "2022-03-02", 0, false);
+        assertDay(week1Day1.getFirst(), "2022-03-02", 0, false);
         assertDay(week1Day1.get(1), "2022-03-02", 1, false);
         assertDay(week1Day1.get(2), "2022-03-02", 1, false);
         
         assertEquals(week1Day1.get(1).getSessionGuid(), "initialSurveyGuid");
         assertEquals(week1Day1.get(1).getStartEventId(), "custom:event2");
-        assertTimeWindow(week1Day1.get(1).getTimeWindows().get(0), "E_ZDacDPqL-vBKGnB6u6Iw", 
+        assertTimeWindow(week1Day1.get(1).getTimeWindows().getFirst(), "E_ZDacDPqL-vBKGnB6u6Iw", 
                 "win1", EXPIRED, "2022-03-02");
         
         assertEquals(week1Day1.get(2).getSessionGuid(), "initialSurveyGuid");
         assertEquals(week1Day1.get(2).getStartEventId(), "timeline_retrieved");
-        assertTimeWindow(week1Day1.get(2).getTimeWindows().get(0), "pqVRM8cV-buumqQvUGwRsQ", 
+        assertTimeWindow(week1Day1.get(2).getTimeWindows().getFirst(), "pqVRM8cV-buumqQvUGwRsQ", 
                 "win1", COMPLETED, "2022-03-02");
         
         List<EventStreamDay> week1Day2 = week1.getByDayEntries().get(2);
         assertEquals(week1Day2.size(), 3);
-        assertDay(week1Day2.get(0), "2022-03-03", 1, false);
+        assertDay(week1Day2.getFirst(), "2022-03-03", 1, false);
         assertDay(week1Day2.get(1), "2022-03-03", 0, false);
         assertDay(week1Day2.get(2), "2022-03-03", 0, false);
         
-        assertEquals(week1Day2.get(0).getSessionGuid(), "baselineGuid");
-        assertEquals(week1Day2.get(0).getStartEventId(), "timeline_retrieved");
-        assertEquals(week1Day2.get(0).getStartDate(), LocalDate.parse("2022-03-03"));
-        assertTimeWindow(week1Day2.get(0).getTimeWindows().get(0), "xyvAcmEYAVAzCMfGhf187g", 
+        assertEquals(week1Day2.getFirst().getSessionGuid(), "baselineGuid");
+        assertEquals(week1Day2.getFirst().getStartEventId(), "timeline_retrieved");
+        assertEquals(week1Day2.getFirst().getStartDate(), LocalDate.parse("2022-03-03"));
+        assertTimeWindow(week1Day2.getFirst().getTimeWindows().getFirst(), "xyvAcmEYAVAzCMfGhf187g", 
                 "win2", COMPLETED, "2022-03-03");
         
         List<EventStreamDay> week1Day3 = week1.getByDayEntries().get(3);
         assertEquals(week1Day3.size(), 3);
-        assertDay(week1Day3.get(0), "2022-03-04", 0, false);
+        assertDay(week1Day3.getFirst(), "2022-03-04", 0, false);
         assertDay(week1Day3.get(1), "2022-03-04", 0, false);
         assertDay(week1Day3.get(2), "2022-03-04", 0, false);
         
         List<EventStreamDay> week1Day4 = week1.getByDayEntries().get(4);
         assertEquals(week1Day4.size(), 3);
-        assertDay(week1Day4.get(0), "2022-03-05", 0, false);
+        assertDay(week1Day4.getFirst(), "2022-03-05", 0, false);
         assertDay(week1Day4.get(1), "2022-03-05", 0, false);
         assertDay(week1Day4.get(2), "2022-03-05", 0, false);
         
         List<EventStreamDay> week1Day5 = week1.getByDayEntries().get(5);
         assertEquals(week1Day5.size(), 3);
-        assertDay(week1Day5.get(0), "2022-03-06", 0, false);
+        assertDay(week1Day5.getFirst(), "2022-03-06", 0, false);
         assertDay(week1Day5.get(1), "2022-03-06", 0, false);
         assertDay(week1Day5.get(2), "2022-03-06", 0, false);
         
         List<EventStreamDay> week1Day6 = week1.getByDayEntries().get(6);
         assertEquals(week1Day6.size(), 3);
-        assertDay(week1Day6.get(0), "2022-03-07", 0, false);
+        assertDay(week1Day6.getFirst(), "2022-03-07", 0, false);
         assertDay(week1Day6.get(1), "2022-03-07", 0, false);
         assertDay(week1Day6.get(2), "2022-03-07", 0, false);
     }        
@@ -863,7 +863,7 @@ public class StudyAdherenceReportGeneratorTest extends Mockito {
         // This date is in week 7, and there is no week 7. So we create that week
         Schedule2 schedule = createSchedule();
         schedule.setDuration(Period.parse("P8W"));
-        schedule.getSessions().get(0).getTimeWindows().get(0).setExpiration(null);
+        schedule.getSessions().getFirst().getTimeWindows().getFirst().setExpiration(null);
         List<TimelineMetadata> meta = Scheduler.INSTANCE.calculateTimeline(schedule).getMetadata();
         
         AdherenceState.Builder builder = createAdherenceState();
@@ -878,7 +878,7 @@ public class StudyAdherenceReportGeneratorTest extends Mockito {
         assertEquals(weekReport.getAdherencePercent(), Integer.valueOf(0));
         assertEquals(weekReport.getRows().size(), 1);
         
-        WeeklyAdherenceReportRow row = weekReport.getRows().get(0);
+        WeeklyAdherenceReportRow row = weekReport.getRows().getFirst();
         assertEquals(row.getLabel(), "Initial Survey / Week 7"); // Notice: week 7, not week 1
         assertEquals(row.getSearchableLabel(), ":Initial Survey:Week 7:"); // Notice: week 7, not week 1
         assertEquals(row.getSessionGuid(), "initialSurveyGuid");
@@ -886,7 +886,7 @@ public class StudyAdherenceReportGeneratorTest extends Mockito {
         assertEquals(row.getSessionName(), "Initial Survey");
         assertEquals(row.getWeekInStudy(), Integer.valueOf(7));
         
-        EventStreamDay carryOverDay = weekReport.getByDayEntries().get(0).get(0);
+        EventStreamDay carryOverDay = weekReport.getByDayEntries().get(0).getFirst();
         assertEquals(carryOverDay.getSessionGuid(), "initialSurveyGuid");
         assertEquals(carryOverDay.getStartEventId(), "timeline_retrieved");
         // note, this wasn't changed to the day 0 date, and it shouldn't be
@@ -894,17 +894,17 @@ public class StudyAdherenceReportGeneratorTest extends Mockito {
         assertFalse(carryOverDay.isToday());
         
         assertEquals(carryOverDay.getTimeWindows().size(), 1);
-        assertEquals(carryOverDay.getTimeWindows().get(0).getSessionInstanceGuid(), "pqVRM8cV-buumqQvUGwRsQ");
-        assertEquals(carryOverDay.getTimeWindows().get(0).getTimeWindowGuid(), "win1");
-        assertEquals(carryOverDay.getTimeWindows().get(0).getState(), SessionCompletionState.UNSTARTED);
-        assertEquals(carryOverDay.getTimeWindows().get(0).getEndDate(), LocalDate.parse("2022-04-25"));
+        assertEquals(carryOverDay.getTimeWindows().getFirst().getSessionInstanceGuid(), "pqVRM8cV-buumqQvUGwRsQ");
+        assertEquals(carryOverDay.getTimeWindows().getFirst().getTimeWindowGuid(), "win1");
+        assertEquals(carryOverDay.getTimeWindows().getFirst().getState(), SessionCompletionState.UNSTARTED);
+        assertEquals(carryOverDay.getTimeWindows().getFirst().getEndDate(), LocalDate.parse("2022-04-25"));
     }    
     
     @Test
     public void createWeekReport_carryOverDayKeepsOriginalDayAndTodayFlag() throws Exception {
         Schedule2 schedule = createSchedule();
         schedule.setDuration(Period.parse("P8W"));
-        schedule.getSessions().get(0).getTimeWindows().get(0).setExpiration(null);
+        schedule.getSessions().getFirst().getTimeWindows().getFirst().setExpiration(null);
         List<TimelineMetadata> meta = Scheduler.INSTANCE.calculateTimeline(schedule).getMetadata();
         
         AdherenceState.Builder builder = createAdherenceState();
@@ -915,7 +915,7 @@ public class StudyAdherenceReportGeneratorTest extends Mockito {
         
         StudyReportWeek weekReport = report.getWeekReport();
         
-        EventStreamDay carryOverDay = weekReport.getByDayEntries().get(0).get(0);
+        EventStreamDay carryOverDay = weekReport.getByDayEntries().get(0).getFirst();
         assertEquals(carryOverDay.getSessionGuid(), "initialSurveyGuid");
         assertEquals(carryOverDay.getStartEventId(), "timeline_retrieved");
         // note, this wasn't changed to the day 0 date, and it shouldn't be, but
@@ -924,10 +924,10 @@ public class StudyAdherenceReportGeneratorTest extends Mockito {
         assertTrue(carryOverDay.isToday());
         
         assertEquals(carryOverDay.getTimeWindows().size(), 1);
-        assertEquals(carryOverDay.getTimeWindows().get(0).getSessionInstanceGuid(), "pqVRM8cV-buumqQvUGwRsQ");
-        assertEquals(carryOverDay.getTimeWindows().get(0).getTimeWindowGuid(), "win1");
-        assertEquals(carryOverDay.getTimeWindows().get(0).getState(), SessionCompletionState.UNSTARTED);
-        assertEquals(carryOverDay.getTimeWindows().get(0).getEndDate(), LocalDate.parse("2022-04-25"));
+        assertEquals(carryOverDay.getTimeWindows().getFirst().getSessionInstanceGuid(), "pqVRM8cV-buumqQvUGwRsQ");
+        assertEquals(carryOverDay.getTimeWindows().getFirst().getTimeWindowGuid(), "win1");
+        assertEquals(carryOverDay.getTimeWindows().getFirst().getState(), SessionCompletionState.UNSTARTED);
+        assertEquals(carryOverDay.getTimeWindows().getFirst().getEndDate(), LocalDate.parse("2022-04-25"));
     }
     
     private void assertDay(EventStreamDay day, String date, int windowEntries, boolean isToday) {
@@ -949,25 +949,25 @@ public class StudyAdherenceReportGeneratorTest extends Mockito {
         StudyAdherenceReport report = createReport();
         
         List<StudyReportWeek> weeks = ImmutableList.copyOf(report.getWeeks());
-        List<WeeklyAdherenceReportRow> rows = weeks.get(0).getRows();
+        List<WeeklyAdherenceReportRow> rows = weeks.getFirst().getRows();
         
-        assertEquals(rows.get(0).getLabel(), "Baseline Tapping Test / Week 1");
-        assertEquals(rows.get(0).getSessionName(), "Baseline Tapping Test");
+        assertEquals(rows.getFirst().getLabel(), "Baseline Tapping Test / Week 1");
+        assertEquals(rows.getFirst().getSessionName(), "Baseline Tapping Test");
         assertEquals(rows.get(1).getLabel(), "Initial Survey / Week 1");
         assertEquals(rows.get(1).getSessionName(), "Initial Survey");
         
         // elements are in the correct order:
-        assertEquals(weeks.get(0).getByDayEntries().get(1).get(1).getSessionGuid(), "initialSurveyGuid");
-        assertEquals(weeks.get(0).getByDayEntries().get(2).get(0).getSessionGuid(), "baselineGuid");
+        assertEquals(weeks.getFirst().getByDayEntries().get(1).get(1).getSessionGuid(), "initialSurveyGuid");
+        assertEquals(weeks.getFirst().getByDayEntries().get(2).getFirst().getSessionGuid(), "baselineGuid");
         
         // burst comes first here despite alphabetizing
         rows = weeks.get(3).getRows();
-        assertEquals(rows.get(0).getLabel(), "Study Burst 3 / Week 4 / Study Burst Tapping Test");
-        assertEquals(rows.get(0).getSessionName(), "Study Burst Tapping Test");
+        assertEquals(rows.getFirst().getLabel(), "Study Burst 3 / Week 4 / Study Burst Tapping Test");
+        assertEquals(rows.getFirst().getSessionName(), "Study Burst Tapping Test");
         assertEquals(rows.get(1).getLabel(), "Final Survey / Week 4");
         assertEquals(rows.get(1).getSessionName(), "Final Survey");
         
-        assertEquals(weeks.get(3).getByDayEntries().get(0).get(0).getSessionGuid(), "burstTappingGuid");
+        assertEquals(weeks.get(3).getByDayEntries().get(0).getFirst().getSessionGuid(), "burstTappingGuid");
         assertEquals(weeks.get(3).getByDayEntries().get(3).get(1).getSessionGuid(), "finalSurveyGuid");
     }
     
@@ -1030,7 +1030,7 @@ public class StudyAdherenceReportGeneratorTest extends Mockito {
         // To make this work we have to create a fallow week, by delaying the
         // study burst for 4 weeks.
         Schedule2 schedule = createSchedule();
-        schedule.getStudyBursts().get(0).setDelay(Period.parse("P4W"));
+        schedule.getStudyBursts().getFirst().setDelay(Period.parse("P4W"));
         
         StudyActivityEvent e1 = new StudyActivityEvent.Builder()
                 .withEventId("timeline_retrieved")
@@ -1066,8 +1066,8 @@ public class StudyAdherenceReportGeneratorTest extends Mockito {
         StudyAdherenceReport report = INSTANCE.generate(state, schedule);
         
         List<StudyReportWeek> weeks = ImmutableList.copyOf(report.getWeeks());
-        assertEquals(weeks.get(0).getWeekInStudy(), 1);
-        assertEquals(weeks.get(0).getStartDate().toString(), "2022-03-01");
+        assertEquals(weeks.getFirst().getWeekInStudy(), 1);
+        assertEquals(weeks.getFirst().getStartDate().toString(), "2022-03-01");
         assertEquals(weeks.get(1).getWeekInStudy(), 4);
         assertEquals(weeks.get(1).getStartDate().toString(), "2022-03-22");
         
@@ -1101,13 +1101,13 @@ public class StudyAdherenceReportGeneratorTest extends Mockito {
                 ImmutableSet.of(":Study Burst:Study Burst 2:Week 3:Study Burst Tapping Test:"));
         assertEquals(weekReport.getRows(), currentWeek.getRows());
         
-        assertTrue(weekReport.getByDayEntries().get(1).get(0).getTimeWindows().isEmpty());
-        assertTrue(weekReport.getByDayEntries().get(2).get(0).getTimeWindows().isEmpty());
-        assertTrue(weekReport.getByDayEntries().get(3).get(0).getTimeWindows().isEmpty());
-        assertTrue(weekReport.getByDayEntries().get(4).get(0).getTimeWindows().isEmpty());
-        assertTrue(weekReport.getByDayEntries().get(5).get(0).getTimeWindows().isEmpty());
-        assertTrue(weekReport.getByDayEntries().get(6).get(0).getTimeWindows().isEmpty());
-        assertEquals(weekReport.getByDayEntries().get(0).get(0).getSessionGuid(), "burstTappingGuid");
+        assertTrue(weekReport.getByDayEntries().get(1).getFirst().getTimeWindows().isEmpty());
+        assertTrue(weekReport.getByDayEntries().get(2).getFirst().getTimeWindows().isEmpty());
+        assertTrue(weekReport.getByDayEntries().get(3).getFirst().getTimeWindows().isEmpty());
+        assertTrue(weekReport.getByDayEntries().get(4).getFirst().getTimeWindows().isEmpty());
+        assertTrue(weekReport.getByDayEntries().get(5).getFirst().getTimeWindows().isEmpty());
+        assertTrue(weekReport.getByDayEntries().get(6).getFirst().getTimeWindows().isEmpty());
+        assertEquals(weekReport.getByDayEntries().get(0).getFirst().getSessionGuid(), "burstTappingGuid");
     }
     
     @Test
@@ -1129,7 +1129,7 @@ public class StudyAdherenceReportGeneratorTest extends Mockito {
     public void createWeekReport_noCurrentWeekNoStudyStartDate() throws Exception {
         Schedule2 schedule = createSchedule();
         schedule.setDuration(Period.parse("P8W"));
-        schedule.getSessions().get(0).getTimeWindows().get(0).setExpiration(null);
+        schedule.getSessions().getFirst().getTimeWindows().getFirst().setExpiration(null);
         List<TimelineMetadata> meta = Scheduler.INSTANCE.calculateTimeline(schedule).getMetadata();
         
         AdherenceState.Builder builder = createAdherenceState();
@@ -1160,7 +1160,7 @@ public class StudyAdherenceReportGeneratorTest extends Mockito {
     public void createWeekReport_noCarryOverBecauseWindowsAreCompleted() throws Exception {
         Schedule2 schedule = createSchedule();
         schedule.setDuration(Period.parse("P8W"));
-        schedule.getSessions().get(0).getTimeWindows().get(0).setExpiration(null);
+        schedule.getSessions().getFirst().getTimeWindows().getFirst().setExpiration(null);
         List<TimelineMetadata> meta = Scheduler.INSTANCE.calculateTimeline(schedule).getMetadata();
         
         AdherenceState.Builder builder = createAdherenceState();
@@ -1187,7 +1187,7 @@ public class StudyAdherenceReportGeneratorTest extends Mockito {
         
         Schedule2 schedule = createSchedule();
         schedule.setDuration(Period.parse("P8W"));
-        schedule.getSessions().get(0).getTimeWindows().get(0).setExpiration(null);
+        schedule.getSessions().getFirst().getTimeWindows().getFirst().setExpiration(null);
         List<TimelineMetadata> meta = Scheduler.INSTANCE.calculateTimeline(schedule).getMetadata();
         
         AdherenceState.Builder builder = createAdherenceState();
@@ -1203,7 +1203,7 @@ public class StudyAdherenceReportGeneratorTest extends Mockito {
         assertEquals(weekReport.getAdherencePercent(), Integer.valueOf(0));
         assertEquals(weekReport.getRows().size(), 1);
         
-        WeeklyAdherenceReportRow row = weekReport.getRows().get(0);
+        WeeklyAdherenceReportRow row = weekReport.getRows().getFirst();
         assertEquals(row.getLabel(), "Initial Survey / Week 7"); // Notice: week 7, not week 1
         assertEquals(row.getSearchableLabel(), ":Initial Survey:Week 7:"); // Notice: week 7, not week 1
         assertEquals(row.getSessionGuid(), "initialSurveyGuid");
@@ -1211,24 +1211,24 @@ public class StudyAdherenceReportGeneratorTest extends Mockito {
         assertEquals(row.getSessionName(), "Initial Survey");
         assertEquals(row.getWeekInStudy(), Integer.valueOf(7));
         
-        assertTrue(weekReport.getByDayEntries().get(1).get(0).getTimeWindows().isEmpty());
-        assertTrue(weekReport.getByDayEntries().get(2).get(0).getTimeWindows().isEmpty());
-        assertTrue(weekReport.getByDayEntries().get(3).get(0).getTimeWindows().isEmpty());
-        assertTrue(weekReport.getByDayEntries().get(4).get(0).getTimeWindows().isEmpty());
-        assertTrue(weekReport.getByDayEntries().get(5).get(0).getTimeWindows().isEmpty());
-        assertTrue(weekReport.getByDayEntries().get(6).get(0).getTimeWindows().isEmpty());
+        assertTrue(weekReport.getByDayEntries().get(1).getFirst().getTimeWindows().isEmpty());
+        assertTrue(weekReport.getByDayEntries().get(2).getFirst().getTimeWindows().isEmpty());
+        assertTrue(weekReport.getByDayEntries().get(3).getFirst().getTimeWindows().isEmpty());
+        assertTrue(weekReport.getByDayEntries().get(4).getFirst().getTimeWindows().isEmpty());
+        assertTrue(weekReport.getByDayEntries().get(5).getFirst().getTimeWindows().isEmpty());
+        assertTrue(weekReport.getByDayEntries().get(6).getFirst().getTimeWindows().isEmpty());
         
-        EventStreamDay carryOverDay = weekReport.getByDayEntries().get(0).get(0);
+        EventStreamDay carryOverDay = weekReport.getByDayEntries().get(0).getFirst();
         assertEquals(carryOverDay.getSessionGuid(), "initialSurveyGuid");
         assertEquals(carryOverDay.getStartEventId(), "timeline_retrieved");
         // note, this wasn't changed to the day 0 date, and it shouldn't be
         assertEquals(carryOverDay.getStartDate(), LocalDate.parse("2022-03-02"));
         
         assertEquals(carryOverDay.getTimeWindows().size(), 1);
-        assertEquals(carryOverDay.getTimeWindows().get(0).getSessionInstanceGuid(), "pqVRM8cV-buumqQvUGwRsQ");
-        assertEquals(carryOverDay.getTimeWindows().get(0).getTimeWindowGuid(), "win1");
-        assertEquals(carryOverDay.getTimeWindows().get(0).getState(), SessionCompletionState.UNSTARTED);
-        assertEquals(carryOverDay.getTimeWindows().get(0).getEndDate(), LocalDate.parse("2022-04-25"));
+        assertEquals(carryOverDay.getTimeWindows().getFirst().getSessionInstanceGuid(), "pqVRM8cV-buumqQvUGwRsQ");
+        assertEquals(carryOverDay.getTimeWindows().getFirst().getTimeWindowGuid(), "win1");
+        assertEquals(carryOverDay.getTimeWindows().getFirst().getState(), SessionCompletionState.UNSTARTED);
+        assertEquals(carryOverDay.getTimeWindows().getFirst().getEndDate(), LocalDate.parse("2022-04-25"));
     }
     
     @Test
@@ -1240,7 +1240,7 @@ public class StudyAdherenceReportGeneratorTest extends Mockito {
 
         Schedule2 schedule = createSchedule();
         schedule.setDuration(Period.parse("P8W"));
-        schedule.getSessions().get(0).getTimeWindows().get(0).setExpiration(null);
+        schedule.getSessions().getFirst().getTimeWindows().getFirst().setExpiration(null);
         List<TimelineMetadata> meta = Scheduler.INSTANCE.calculateTimeline(schedule).getMetadata();
         
         AdherenceState.Builder builder = createAdherenceState();
@@ -1263,7 +1263,7 @@ public class StudyAdherenceReportGeneratorTest extends Mockito {
 
         Schedule2 schedule = createSchedule();
         schedule.setDuration(Period.parse("P8W"));
-        schedule.getSessions().get(0).getTimeWindows().get(0).setExpiration(null);
+        schedule.getSessions().getFirst().getTimeWindows().getFirst().setExpiration(null);
         List<TimelineMetadata> meta = Scheduler.INSTANCE.calculateTimeline(schedule).getMetadata();
         
         AdherenceState.Builder builder = createAdherenceState();
@@ -1327,7 +1327,7 @@ public class StudyAdherenceReportGeneratorTest extends Mockito {
         StudyAdherenceReport report = INSTANCE.generate(state, schedule);
         
         List<StudyReportWeek> weeks = ImmutableList.copyOf(report.getWeeks());
-        assertEquals(weeks.get(0).getAdherencePercent(), Integer.valueOf(0));
+        assertEquals(weeks.getFirst().getAdherencePercent(), Integer.valueOf(0));
         assertNull(weeks.get(1).getAdherencePercent());
         assertNull(weeks.get(2).getAdherencePercent());
         assertNull(weeks.get(3).getAdherencePercent());
@@ -1629,7 +1629,7 @@ public class StudyAdherenceReportGeneratorTest extends Mockito {
             
         StudyAdherenceReport report = StudyAdherenceReportGenerator.INSTANCE.generate(state, schedule);
         
-        StudyReportWeek week = report.getWeeks().get(0);
+        StudyReportWeek week = report.getWeeks().getFirst();
         assertEquals(week.getWeekInStudy(), -1);
         assertStartDate(week, 0, LocalDate.parse("2022-04-05"));
         assertStartDate(week, 1, LocalDate.parse("2022-04-06"));
@@ -1727,7 +1727,7 @@ public class StudyAdherenceReportGeneratorTest extends Mockito {
             
         StudyAdherenceReport report = StudyAdherenceReportGenerator.INSTANCE.generate(state, schedule);
         
-        StudyReportWeek week = report.getWeeks().get(0);
+        StudyReportWeek week = report.getWeeks().getFirst();
         assertEquals(week.getWeekInStudy(), 0);
         assertStartDate(week, 0, LocalDate.parse("2022-04-19"));
         assertStartDate(week, 6, LocalDate.parse("2022-04-25"));

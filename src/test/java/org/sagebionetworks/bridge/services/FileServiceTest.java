@@ -18,6 +18,7 @@ import static org.testng.Assert.assertSame;
 import static org.testng.Assert.assertTrue;
 import static org.testng.Assert.fail;
 
+import java.net.URI;
 import java.net.URL;
 import java.util.Optional;
 
@@ -285,7 +286,7 @@ public class FileServiceTest extends Mockito {
         
         ResourceList<FileRevision> captured = service.getFileRevisions(TEST_APP_ID,GUID, 100, 25);
         assertEquals(2, captured.getItems().size());
-        assertEquals(DOWNLOAD_URL_1, captured.getItems().get(0).getDownloadURL());
+        assertEquals(DOWNLOAD_URL_1, captured.getItems().getFirst().getDownloadURL());
         assertEquals(DOWNLOAD_URL_2, captured.getItems().get(1).getDownloadURL());
         
         verify(mockFileRevisionDao).getFileRevisions(GUID, 100, 25);
@@ -319,7 +320,7 @@ public class FileServiceTest extends Mockito {
         metadata.setDisposition(ATTACHMENT);
         doReturn(metadata).when(service).getFile(TEST_APP_ID, GUID);
         
-        URL url = new URL("https://" + UPLOAD_BUCKET);
+        URL url = URI.create("https://" + UPLOAD_BUCKET).toURL();
         when(mockS3Client.generatePresignedUrl(any())).thenReturn(url);
         
         FileRevision revision = new FileRevision();
@@ -351,7 +352,7 @@ public class FileServiceTest extends Mockito {
         metadata.setDisposition(INLINE);
         doReturn(metadata).when(service).getFile(TEST_APP_ID, GUID);
         
-        URL url = new URL("https://" + UPLOAD_BUCKET);
+        URL url = URI.create("https://" + UPLOAD_BUCKET).toURL();
         when(mockS3Client.generatePresignedUrl(any())).thenReturn(url);
         
         FileRevision revision = new FileRevision();
@@ -394,7 +395,7 @@ public class FileServiceTest extends Mockito {
         FileMetadata metadata = new FileMetadata();
         doReturn(metadata).when(service).getFile(TEST_APP_ID, GUID);
         
-        URL url = new URL("https://" + UPLOAD_BUCKET);
+        URL url = URI.create("https://" + UPLOAD_BUCKET).toURL();
         when(mockS3Client.generatePresignedUrl(any())).thenReturn(url);
         
         FileRevision revision = new FileRevision();

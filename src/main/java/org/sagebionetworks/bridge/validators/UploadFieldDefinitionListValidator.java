@@ -62,7 +62,7 @@ public class UploadFieldDefinitionListValidator {
 
                     // Validate field name.
                     if (!UploadUtil.isValidSchemaFieldName(fieldName)) {
-                        errors.rejectValue("name", String.format(UploadUtil.INVALID_FIELD_NAME_ERROR_MESSAGE,
+                        errors.rejectValue("name", UploadUtil.INVALID_FIELD_NAME_ERROR_MESSAGE.formatted(
                                 fieldName));
                     }
                 }
@@ -88,8 +88,8 @@ public class UploadFieldDefinitionListValidator {
 
                             // Validate choice answer name.
                             if (!UploadUtil.isValidAnswerChoice(oneAnswer)) {
-                                errors.rejectValue("multiChoice[" + j + "]", String.format(
-                                        UploadUtil.INVALID_ANSWER_CHOICE_ERROR_MESSAGE, oneAnswer));
+                                errors.rejectValue("multiChoice[" + j + "]", 
+                                        UploadUtil.INVALID_ANSWER_CHOICE_ERROR_MESSAGE.formatted(oneAnswer));
                             }
                         }
                     }

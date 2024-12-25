@@ -41,8 +41,8 @@ public class ConstraintsTest {
         
         assertEquals(c.getDataType(), DataType.INTEGER);
         assertEquals(c.getUnit(), Unit.MILLILITERS);
-        assertEquals(c.getMinValue(), new Double(1.0d));
-        assertEquals(c.getMaxValue(), new Double(10000000d));
+        assertEquals(c.getMinValue(), Double.valueOf(1.0d));
+        assertEquals(c.getMaxValue(), Double.valueOf(10000000d));
     }
     
     @Test

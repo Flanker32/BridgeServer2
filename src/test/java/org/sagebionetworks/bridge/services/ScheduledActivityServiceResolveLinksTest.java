@@ -193,9 +193,9 @@ public class ScheduledActivityServiceResolveLinksTest {
         // Execute.
         List<ScheduledActivity> scheduledActivityList = scheduledActivityService.scheduleActivitiesForPlans(
                 SCHEDULE_CONTEXT);
-        CompoundActivity compoundActivity = scheduledActivityList.get(0).getActivity().getCompoundActivity();
-        assertEquals(compoundActivity.getSurveyList().get(0).getIdentifier(), "surveyRefId");
-        assertEquals(compoundActivity.getSchemaList().get(0).getRevision(), (Integer)3);
+        CompoundActivity compoundActivity = scheduledActivityList.getFirst().getActivity().getCompoundActivity();
+        assertEquals(compoundActivity.getSurveyList().getFirst().getIdentifier(), "surveyRefId");
+        assertEquals(compoundActivity.getSchemaList().getFirst().getRevision(), (Integer)3);
 
         // Validate backends. We only called compound activity, schema, and survey services once.
         verify(mockCompoundActivityDefinitionService, times(1)).getCompoundActivityDefinition(any(), any());
@@ -323,13 +323,13 @@ public class ScheduledActivityServiceResolveLinksTest {
             assertEquals(compoundActivity.getTaskIdentifier(), COMPOUND_ACTIVITY_REF_TASK_ID);
 
             assertEquals(compoundActivity.getSchemaList().size(), 1);
-            assertEquals(compoundActivity.getSchemaList().get(0).getId(), SCHEMA_ID);
-            assertEquals(compoundActivity.getSchemaList().get(0).getRevision().intValue(), SCHEMA_REV);
+            assertEquals(compoundActivity.getSchemaList().getFirst().getId(), SCHEMA_ID);
+            assertEquals(compoundActivity.getSchemaList().getFirst().getRevision().intValue(), SCHEMA_REV);
 
             assertEquals(compoundActivity.getSurveyList().size(), 1);
-            assertEquals(compoundActivity.getSurveyList().get(0).getIdentifier(), SURVEY_ID);
-            assertEquals(compoundActivity.getSurveyList().get(0).getGuid(), SURVEY_GUID);
-            assertEquals(compoundActivity.getSurveyList().get(0).getCreatedOn().getMillis(), SURVEY_CREATED_ON_MILLIS);
+            assertEquals(compoundActivity.getSurveyList().getFirst().getIdentifier(), SURVEY_ID);
+            assertEquals(compoundActivity.getSurveyList().getFirst().getGuid(), SURVEY_GUID);
+            assertEquals(compoundActivity.getSurveyList().getFirst().getCreatedOn().getMillis(), SURVEY_CREATED_ON_MILLIS);
         }
     }
 
@@ -522,7 +522,7 @@ public class ScheduledActivityServiceResolveLinksTest {
 
     private static void verifyActivityListSizeAndLabels(List<ScheduledActivity> scheduledActivityList) {
         assertEquals(scheduledActivityList.size(), 2);
-        assertEquals(scheduledActivityList.get(0).getActivity().getLabel(), ACTIVITY_LABEL_PREFIX + "1");
+        assertEquals(scheduledActivityList.getFirst().getActivity().getLabel(), ACTIVITY_LABEL_PREFIX + "1");
         assertEquals(scheduledActivityList.get(1).getActivity().getLabel(), ACTIVITY_LABEL_PREFIX + "2");
     }
 }

@@ -1,7 +1,7 @@
 package org.sagebionetworks.bridge.models.demographics;
 
-import javax.persistence.Embeddable;
-import javax.validation.constraints.NotNull;
+import jakarta.persistence.Embeddable;
+import jakarta.validation.constraints.NotNull;
 
 import org.sagebionetworks.bridge.json.DemographicValueDeserializer;
 import org.sagebionetworks.bridge.models.BridgeEntity;

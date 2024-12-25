@@ -2,7 +2,7 @@ package org.sagebionetworks.bridge.dynamodb;
 
 import java.util.List;
 import java.util.Optional;
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBQueryExpression;
@@ -74,7 +74,7 @@ public class DynamoParticipantVersionDao implements ParticipantVersionDao {
         if (participantVersionList.isEmpty()) {
             return Optional.empty();
         } else {
-            return Optional.of(participantVersionList.get(0));
+            return Optional.of(participantVersionList.getFirst());
         }
     }
 

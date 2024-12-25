@@ -42,24 +42,26 @@ public class SnsInitializer {
     private final RateLimiter rateLimiter = RateLimiter.create(15.0);
 
     // This policy allows our SNS topics to receive notifications from S3 for buckets that we own.
-    static final String S3_NOTIFICATIONS_POLICY = "{" +
-            "  \"Version\": \"2008-10-17\"," +
-            "  \"Statement\": [" +
-            "    {" +
-            "      \"Effect\": \"Allow\"," +
-            "      \"Principal\": {" +
-            "        \"Service\": \"s3.amazonaws.com\"" +
-            "      }," +
-            "      \"Action\": \"SNS:Publish\"," +
-            "      \"Resource\": \"${topicArn}\"," +
-            "      \"Condition\": {" +
-            "          \"StringEquals\": {" +
-            "              \"aws:SourceAccount\": \"${awsAccountId}\"" +
-            "          }\n" +
-            "      }\n" +
-            "    }\n" +
-            "  ]\n" +
-            "}\n";
+    static final String S3_NOTIFICATIONS_POLICY = """
+            {\
+              "Version": "2008-10-17",\
+              "Statement": [\
+                {\
+                  "Effect": "Allow",\
+                  "Principal": {\
+                    "Service": "s3.amazonaws.com"\
+                  },\
+                  "Action": "SNS:Publish",\
+                  "Resource": "${topicArn}",\
+                  "Condition": {\
+                      "StringEquals": {\
+                          "aws:SourceAccount": "${awsAccountId}"\
+                      }
+                  }
+                }
+              ]
+            }
+            """;
 
     private BridgeConfig bridgeConfig;
     private AmazonSNS snsClient;

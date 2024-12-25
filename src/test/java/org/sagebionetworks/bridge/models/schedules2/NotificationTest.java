@@ -40,7 +40,7 @@ public class NotificationTest extends Mockito {
         assertEquals(deser.getNotifyAt(), AFTER_WINDOW_START);
         assertEquals(deser.getOffset(), Period.parse("PT1H"));
         assertEquals(deser.getInterval(), Period.parse("P2D"));
-        NotificationMessage deserMsg = deser.getMessages().get(0);
+        NotificationMessage deserMsg = deser.getMessages().getFirst();
         assertEquals(deserMsg.getLang(), MESSAGE.getLang());
         assertEquals(deserMsg.getSubject(), MESSAGE.getSubject());
         assertEquals(deserMsg.getMessage(), MESSAGE.getMessage());

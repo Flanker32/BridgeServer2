@@ -10,7 +10,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -218,7 +218,7 @@ public class HibernateAdherenceReportDao implements AdherenceReportDao {
             if (query.list().isEmpty()) {
                 return null;
             }
-            return ((List<Integer>)query.list()).get(0);
+            return ((List<Integer>)query.list()).getFirst();
         }
     }
 }    

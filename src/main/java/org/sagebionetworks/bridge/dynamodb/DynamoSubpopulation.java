@@ -153,14 +153,14 @@ public final class DynamoSubpopulation implements Subpopulation {
     @Override
     @DynamoDBIgnore
     public String getConsentHTML() {
-        return String.format("http://%s/%s/consent.html", DOCS_HOST, guid);
+        return "http://%s/%s/consent.html".formatted(DOCS_HOST, guid);
     }
 
     /** {@inheritDoc} */
     @Override
     @DynamoDBIgnore
     public String getConsentPDF() {
-        return String.format("http://%s/%s/consent.pdf", DOCS_HOST, guid);
+        return "http://%s/%s/consent.pdf".formatted(DOCS_HOST, guid);
     }
     @Override
     public void setCriteria(Criteria criteria) {

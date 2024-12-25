@@ -156,133 +156,155 @@ public class IosSchemaValidationHandler2Test {
     @Test
     public void survey() throws Exception {
         // fill in context with survey data
-        String infoJsonText = "{\n" +
-                "   \"files\":[{\n" +
-                "       \"filename\":\"foo.json\",\n" +
-                "       \"timestamp\":\"2015-04-02T03:26:59-07:00\"\n" +
-                "   },{\n" +
-                "       \"filename\":\"bar.json\",\n" +
-                "       \"timestamp\":\"2015-04-02T03:27:09-07:00\"\n" +
-                "   },{\n" +
-                "       \"filename\":\"baz.json\",\n" +
-                "       \"timestamp\":\"2015-04-02T03:24:01-07:00\"\n" +
-                "   },{\n" +
-                "       \"filename\":\"calendar-date.json\",\n" +
-                "       \"timestamp\":\"2015-04-02T03:24:01-07:00\"\n" +
-                "   },{\n" +
-                "       \"filename\":\"time-without-date.json\",\n" +
-                "       \"timestamp\":\"2015-04-02T03:24:01-07:00\"\n" +
-                "   },{\n" +
-                "       \"filename\":\"legacy-date-time.json\",\n" +
-                "       \"timestamp\":\"2015-04-02T03:24:01-07:00\"\n" +
-                "   },{\n" +
-                "       \"filename\":\"new-date-time.json\",\n" +
-                "       \"timestamp\":\"2015-04-02T03:24:01-07:00\"\n" +
-                "   },{\n" +
-                "       \"filename\":\"int-as-string.json\",\n" +
-                "       \"timestamp\":\"2015-04-02T03:24:01-07:00\"\n" +
-                "   },{\n" +
-                "       \"filename\":\"timestamp-as-date.json\",\n" +
-                "       \"timestamp\":\"2015-04-02T03:24:01-07:00\"\n" +
-                "   },{\n" +
-                "       \"filename\":\"inline-json-blob.json\",\n" +
-                "       \"timestamp\":\"2015-04-02T03:24:01-07:00\"\n" +
-                "   }],\n" +
-                "   \"item\":\"test-survey\"\n" +
-                "}";
+        String infoJsonText = """
+                {
+                   "files":[{
+                       "filename":"foo.json",
+                       "timestamp":"2015-04-02T03:26:59-07:00"
+                   },{
+                       "filename":"bar.json",
+                       "timestamp":"2015-04-02T03:27:09-07:00"
+                   },{
+                       "filename":"baz.json",
+                       "timestamp":"2015-04-02T03:24:01-07:00"
+                   },{
+                       "filename":"calendar-date.json",
+                       "timestamp":"2015-04-02T03:24:01-07:00"
+                   },{
+                       "filename":"time-without-date.json",
+                       "timestamp":"2015-04-02T03:24:01-07:00"
+                   },{
+                       "filename":"legacy-date-time.json",
+                       "timestamp":"2015-04-02T03:24:01-07:00"
+                   },{
+                       "filename":"new-date-time.json",
+                       "timestamp":"2015-04-02T03:24:01-07:00"
+                   },{
+                       "filename":"int-as-string.json",
+                       "timestamp":"2015-04-02T03:24:01-07:00"
+                   },{
+                       "filename":"timestamp-as-date.json",
+                       "timestamp":"2015-04-02T03:24:01-07:00"
+                   },{
+                       "filename":"inline-json-blob.json",
+                       "timestamp":"2015-04-02T03:24:01-07:00"
+                   }],
+                   "item":"test-survey"
+                }\
+                """;
         JsonNode infoJsonNode = BridgeObjectMapper.get().readTree(infoJsonText);
         context.setInfoJsonNode(infoJsonNode);
 
-        String fooAnswerJsonText = "{\n" +
-                "   \"questionType\":0,\n" +
-                "   \"textAnswer\":\"foo answer\",\n" +
-                "   \"startDate\":\"2015-04-02T03:26:57-07:00\",\n" +
-                "   \"questionTypeName\":\"Text\",\n" +
-                "   \"item\":\"foo\",\n" +
-                "   \"endDate\":\"2015-04-02T03:26:59-07:00\"\n" +
-                "}";
+        String fooAnswerJsonText = """
+                {
+                   "questionType":0,
+                   "textAnswer":"foo answer",
+                   "startDate":"2015-04-02T03:26:57-07:00",
+                   "questionTypeName":"Text",
+                   "item":"foo",
+                   "endDate":"2015-04-02T03:26:59-07:00"
+                }\
+                """;
 
-        String barAnswerJsonText = "{\n" +
-                "   \"questionType\":0,\n" +
-                "   \"numericAnswer\":42,\n" +
-                "   \"unit\":\"lb\",\n" +
-                "   \"startDate\":\"2015-04-02T03:27:05-07:00\",\n" +
-                "   \"questionTypeName\":\"Integer\",\n" +
-                "   \"item\":\"bar\",\n" +
-                "   \"endDate\":\"2015-04-02T03:27:09-07:00\"\n" +
-                "}";
+        String barAnswerJsonText = """
+                {
+                   "questionType":0,
+                   "numericAnswer":42,
+                   "unit":"lb",
+                   "startDate":"2015-04-02T03:27:05-07:00",
+                   "questionTypeName":"Integer",
+                   "item":"bar",
+                   "endDate":"2015-04-02T03:27:09-07:00"
+                }\
+                """;
 
-        String bazAnswerJsonText = "{\n" +
-                "   \"questionType\":0,\n" +
-                "   \"choiceAnswers\":[\"survey\", \"blob\"],\n" +
-                "   \"startDate\":\"2015-04-02T03:23:59-07:00\",\n" +
-                "   \"questionTypeName\":\"MultipleChoice\",\n" +
-                "   \"item\":\"baz\",\n" +
-                "   \"endDate\":\"2015-04-02T03:24:01-07:00\"\n" +
-                "}";
+        String bazAnswerJsonText = """
+                {
+                   "questionType":0,
+                   "choiceAnswers":["survey", "blob"],
+                   "startDate":"2015-04-02T03:23:59-07:00",
+                   "questionTypeName":"MultipleChoice",
+                   "item":"baz",
+                   "endDate":"2015-04-02T03:24:01-07:00"
+                }\
+                """;
 
-        String calendarDateAnswerJsonText = "{\n" +
-                "   \"questionType\":0,\n" +
-                "   \"dateAnswer\":\"2017-01-31\",\n" +
-                "   \"startDate\":\"2015-04-02T03:23:59-07:00\",\n" +
-                "   \"questionTypeName\":\"Date\",\n" +
-                "   \"item\":\"calendar-date\",\n" +
-                "   \"endDate\":\"2015-04-02T03:24:01-07:00\"\n" +
-                "}";
+        String calendarDateAnswerJsonText = """
+                {
+                   "questionType":0,
+                   "dateAnswer":"2017-01-31",
+                   "startDate":"2015-04-02T03:23:59-07:00",
+                   "questionTypeName":"Date",
+                   "item":"calendar-date",
+                   "endDate":"2015-04-02T03:24:01-07:00"
+                }\
+                """;
 
-        String timeWithoutDateAnswerJsonText = "{\n" +
-                "   \"questionType\":0,\n" +
-                "   \"dateComponentsAnswer\":\"16:42:52.256\",\n" +
-                "   \"startDate\":\"2015-04-02T03:23:59-07:00\",\n" +
-                "   \"questionTypeName\":\"TimeOfDay\",\n" +
-                "   \"item\":\"time-without-date\",\n" +
-                "   \"endDate\":\"2015-04-02T03:24:01-07:00\"\n" +
-                "}";
+        String timeWithoutDateAnswerJsonText = """
+                {
+                   "questionType":0,
+                   "dateComponentsAnswer":"16:42:52.256",
+                   "startDate":"2015-04-02T03:23:59-07:00",
+                   "questionTypeName":"TimeOfDay",
+                   "item":"time-without-date",
+                   "endDate":"2015-04-02T03:24:01-07:00"
+                }\
+                """;
 
-        String legacyDateTimeAnswerJsonText = "{\n" +
-                "   \"questionType\":0,\n" +
-                "   \"dateAnswer\":\"2017-01-31T16:42:52.256-0800\",\n" +
-                "   \"startDate\":\"2015-04-02T03:23:59-07:00\",\n" +
-                "   \"questionTypeName\":\"Date\",\n" +
-                "   \"item\":\"legacy-date-time\",\n" +
-                "   \"endDate\":\"2015-04-02T03:24:01-07:00\"\n" +
-                "}";
+        String legacyDateTimeAnswerJsonText = """
+                {
+                   "questionType":0,
+                   "dateAnswer":"2017-01-31T16:42:52.256-0800",
+                   "startDate":"2015-04-02T03:23:59-07:00",
+                   "questionTypeName":"Date",
+                   "item":"legacy-date-time",
+                   "endDate":"2015-04-02T03:24:01-07:00"
+                }\
+                """;
 
-        String newDateTimeAnswerJsonText = "{\n" +
-                "   \"questionType\":0,\n" +
-                "   \"dateAnswer\":\"2017-02-02T09:13:27.212-0800\",\n" +
-                "   \"startDate\":\"2015-04-02T03:23:59-07:00\",\n" +
-                "   \"questionTypeName\":\"DateAndTime\",\n" +
-                "   \"item\":\"new-date-time\",\n" +
-                "   \"endDate\":\"2015-04-02T03:24:01-07:00\"\n" +
-                "}";
+        String newDateTimeAnswerJsonText = """
+                {
+                   "questionType":0,
+                   "dateAnswer":"2017-02-02T09:13:27.212-0800",
+                   "startDate":"2015-04-02T03:23:59-07:00",
+                   "questionTypeName":"DateAndTime",
+                   "item":"new-date-time",
+                   "endDate":"2015-04-02T03:24:01-07:00"
+                }\
+                """;
 
-        String intAsStringAnswerJsonText = "{\n" +
-                "   \"questionType\":0,\n" +
-                "   \"numericAnswer\":1337,\n" +
-                "   \"startDate\":\"2015-04-02T03:27:05-07:00\",\n" +
-                "   \"questionTypeName\":\"Integer\",\n" +
-                "   \"item\":\"int-as-string\",\n" +
-                "   \"endDate\":\"2015-04-02T03:27:09-07:00\"\n" +
-                "}";
+        String intAsStringAnswerJsonText = """
+                {
+                   "questionType":0,
+                   "numericAnswer":1337,
+                   "startDate":"2015-04-02T03:27:05-07:00",
+                   "questionTypeName":"Integer",
+                   "item":"int-as-string",
+                   "endDate":"2015-04-02T03:27:09-07:00"
+                }\
+                """;
 
-        String timestampAsDateAnswerJsonText = "{\n" +
-                "   \"questionType\":0,\n" +
-                "   \"dateAnswer\":\"2015-12-25T14:41-0800\",\n" +
-                "   \"startDate\":\"2015-04-02T03:23:59-07:00\",\n" +
-                "   \"questionTypeName\":\"DateAndTime\",\n" +
-                "   \"item\":\"timestamp-as-date\",\n" +
-                "   \"endDate\":\"2015-04-02T03:24:01-07:00\"\n" +
-                "}";
+        String timestampAsDateAnswerJsonText = """
+                {
+                   "questionType":0,
+                   "dateAnswer":"2015-12-25T14:41-0800",
+                   "startDate":"2015-04-02T03:23:59-07:00",
+                   "questionTypeName":"DateAndTime",
+                   "item":"timestamp-as-date",
+                   "endDate":"2015-04-02T03:24:01-07:00"
+                }\
+                """;
 
-        String inlineJsonBlobAnswerJsonText = "{\n" +
-                "   \"questionType\":0,\n" +
-                "   \"choiceAnswers\":[\"inline\", \"json\", \"blob\"],\n" +
-                "   \"startDate\":\"2015-04-02T03:23:59-07:00\",\n" +
-                "   \"questionTypeName\":\"MultipleChoice\",\n" +
-                "   \"item\":\"inline-json-blob\",\n" +
-                "   \"endDate\":\"2015-04-02T03:24:01-07:00\"\n" +
-                "}";
+        String inlineJsonBlobAnswerJsonText = """
+                {
+                   "questionType":0,
+                   "choiceAnswers":["inline", "json", "blob"],
+                   "startDate":"2015-04-02T03:23:59-07:00",
+                   "questionTypeName":"MultipleChoice",
+                   "item":"inline-json-blob",
+                   "endDate":"2015-04-02T03:24:01-07:00"
+                }\
+                """;
 
         Map<String, File> fileMap = new HashMap<>();
         addFileToMap(fileMap, "foo.json", fooAnswerJsonText);
@@ -371,13 +393,15 @@ public class IosSchemaValidationHandler2Test {
                 TextNode.valueOf("dummy-attachment-id"));
 
         // fill in context with JSON data
-        String infoJsonText = "{\n" +
-                "   \"files\":[{\n" +
-                "       \"filename\":\"sanitize!@#$attachment.txt\",\n" +
-                "       \"timestamp\":\"2015-04-13T18:47:41-07:00\"\n" +
-                "   }],\n" +
-                "   \"item\":\"non-survey\"\n" +
-                "}";
+        String infoJsonText = """
+                {
+                   "files":[{
+                       "filename":"sanitize!@#$attachment.txt",
+                       "timestamp":"2015-04-13T18:47:41-07:00"
+                   }],
+                   "item":"non-survey"
+                }\
+                """;
         JsonNode infoJsonNode = BridgeObjectMapper.get().readTree(infoJsonText);
         context.setInfoJsonNode(infoJsonNode);
 
@@ -420,12 +444,14 @@ public class IosSchemaValidationHandler2Test {
     @Test
     public void schemaless() throws Exception {
         // Setup inputs. Create a dummy file, which is ignored because we don't have a schema.
-        String infoJsonText = "{\n" +
-                "   \"files\":[{\n" +
-                "       \"filename\":\"dummy\",\n" +
-                "       \"timestamp\":\"2019-05-24T12:44:35.664-07:00\"\n" +
-                "   }]\n" +
-                "}";
+        String infoJsonText = """
+                {
+                   "files":[{
+                       "filename":"dummy",
+                       "timestamp":"2019-05-24T12:44:35.664-07:00"
+                   }]
+                }\
+                """;
         JsonNode infoJsonNode = BridgeObjectMapper.get().readTree(infoJsonText);
         context.setInfoJsonNode(infoJsonNode);
 
@@ -457,13 +483,15 @@ public class IosSchemaValidationHandler2Test {
         // Just test defaults for created on. Minimal test. Everything else has been tested elsewhere.
 
         // fill in context
-        String infoJsonText = "{\n" +
-                "   \"files\":[{\n" +
-                "       \"filename\":\"sanitize!@#$attachment.txt\"\n" +
-                "   }],\n" +
-                "   \"item\":\"non-survey\",\n" +
-                "   \"schemaRevision\":1\n" +
-                "}";
+        String infoJsonText = """
+                {
+                   "files":[{
+                       "filename":"sanitize!@#$attachment.txt"
+                   }],
+                   "item":"non-survey",
+                   "schemaRevision":1
+                }\
+                """;
         JsonNode infoJsonNode = BridgeObjectMapper.get().readTree(infoJsonText);
         context.setInfoJsonNode(infoJsonNode);
 

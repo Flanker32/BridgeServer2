@@ -156,7 +156,7 @@ public class EmailVerificationServiceAsyncHandlerTest {
         for (GetIdentityNotificationAttributesRequest oneGetNotificationRequest : getNotificationRequestList) {
             List<String> identityList = oneGetNotificationRequest.getIdentities();
             assertEquals(identityList.size(), 1);
-            assertEquals(identityList.get(0), EMAIL_ADDRESS);
+            assertEquals(identityList.getFirst(), EMAIL_ADDRESS);
         }
     }
 
@@ -176,7 +176,7 @@ public class EmailVerificationServiceAsyncHandlerTest {
         }
 
         // Verify notification types.
-        assertEquals(requestList.get(0).getNotificationType(), "Bounce");
+        assertEquals(requestList.getFirst().getNotificationType(), "Bounce");
         assertEquals(requestList.get(1).getNotificationType(), "Bounce");
         assertEquals(requestList.get(2).getNotificationType(), "Complaint");
         assertEquals(requestList.get(3).getNotificationType(), "Complaint");

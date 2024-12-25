@@ -7,7 +7,7 @@ import static org.sagebionetworks.bridge.TestUtils.mockRequestBody;
 import static org.sagebionetworks.bridge.spring.controllers.UserDataDownloadController.ACCEPTED_MSG;
 import static org.testng.Assert.assertEquals;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;

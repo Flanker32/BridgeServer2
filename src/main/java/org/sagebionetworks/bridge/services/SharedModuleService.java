@@ -86,7 +86,7 @@ public class SharedModuleService {
             // Error, because this represents a coding error that we should fix.
             LOG.error("Module " + moduleId + " has more than one most recent publisher version.");
         }
-        return importModule(appId, metadataList.get(0));
+        return importModule(appId, metadataList.getFirst());
     }
 
     // Helper method to import a module given the module metadata object.

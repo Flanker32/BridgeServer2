@@ -13,8 +13,8 @@ import static org.sagebionetworks.bridge.TestUtils.mockRequestBody;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNull;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.Lists;
@@ -109,7 +109,7 @@ public class NotificationTopicControllerTest extends Mockito {
 
         verify(mockTopicService).listTopics(TEST_APP_ID, true);
         assertEquals(result.getItems().size(), 1);
-        assertEquals(result.getItems().get(0).getGuid(), topic.getGuid());
+        assertEquals(result.getItems().getFirst().getGuid(), topic.getGuid());
     }
 
     @Test

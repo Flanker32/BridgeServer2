@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
@@ -162,8 +162,8 @@ public class DynamoIndexHelper {
             for (Object oneResult : resultList) {
                 if (!clazz.isInstance(oneResult)) {
                     // This should never happen, but just in case.
-                    throw new BridgeServiceException(String.format(
-                            "DynamoDB returned objects of type %s instead of %s",
+                    throw new BridgeServiceException(
+                            "DynamoDB returned objects of type %s instead of %s".formatted(
                             oneResult.getClass().getName(), clazz.getName()));
                 }
 

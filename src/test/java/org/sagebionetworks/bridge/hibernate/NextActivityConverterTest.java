@@ -3,7 +3,7 @@ package org.sagebionetworks.bridge.hibernate;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNull;
 
-import javax.persistence.PersistenceException;
+import jakarta.persistence.PersistenceException;
 
 import org.sagebionetworks.bridge.json.BridgeObjectMapper;
 import org.sagebionetworks.bridge.models.schedules2.adherence.eventstream.EventStreamDay;

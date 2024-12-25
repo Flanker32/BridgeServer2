@@ -134,7 +134,7 @@ public class HealthDataServiceTest {
         // execute and validate
         List<HealthDataRecord> recordList = svc.getRecordsForUploadDate(TEST_UPLOAD_DATE_STR);
         assertEquals(recordList.size(), 3);
-        assertEquals(recordList.get(0).getHealthCode(), "foo healthcode");
+        assertEquals(recordList.getFirst().getHealthCode(), "foo healthcode");
         assertEquals(recordList.get(1).getHealthCode(), "bar healthcode");
         assertEquals(recordList.get(2).getHealthCode(), "baz healthcode");
     }

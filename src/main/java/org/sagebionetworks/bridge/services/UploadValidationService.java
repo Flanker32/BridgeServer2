@@ -1,7 +1,7 @@
 package org.sagebionetworks.bridge.services;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Resource;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Resource;
 
 import java.util.concurrent.ExecutorService;
 

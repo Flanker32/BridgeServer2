@@ -86,7 +86,7 @@ public class DynamoHealthDataDaoTest {
         // validate intermediate results
         List<HealthDataRecord> recordKeyList = arg.getValue();
         assertEquals(recordKeyList.size(), 1);
-        assertEquals(recordKeyList.get(0).getId(), "test ID");
+        assertEquals(recordKeyList.getFirst().getId(), "test ID");
     }
 
     @Test
@@ -135,7 +135,7 @@ public class DynamoHealthDataDaoTest {
         // validate intermediate results
         List<HealthDataRecord> recordKeyList = arg.getValue();
         assertEquals(recordKeyList.size(), 1);
-        assertEquals(recordKeyList.get(0).getId(), "error record");
+        assertEquals(recordKeyList.getFirst().getId(), "error record");
     }
 
     @Test
@@ -175,7 +175,7 @@ public class DynamoHealthDataDaoTest {
         List<HealthDataRecord> retVal = dao.getRecordsByHealthCodeCreatedOn(TEST_HEALTH_CODE, TEST_CREATED_ON,
                 TEST_CREATED_ON_END);
         assertEquals(retVal.size(), 1);
-        assertSame(retVal.get(0), record);
+        assertSame(retVal.getFirst(), record);
 
         // Verify query.
         ArgumentCaptor<DynamoDBQueryExpression> queryCaptor = ArgumentCaptor.forClass(DynamoDBQueryExpression.class);
@@ -188,7 +188,7 @@ public class DynamoHealthDataDaoTest {
 
         Condition rangeKeyCondition = query.getRangeKeyConditions().get("createdOn");
         assertEquals(rangeKeyCondition.getComparisonOperator(), ComparisonOperator.BETWEEN.toString());
-        assertEquals(rangeKeyCondition.getAttributeValueList().get(0).getN(), String.valueOf(TEST_CREATED_ON));
+        assertEquals(rangeKeyCondition.getAttributeValueList().getFirst().getN(), String.valueOf(TEST_CREATED_ON));
         assertEquals(rangeKeyCondition.getAttributeValueList().get(1).getN(), String.valueOf(TEST_CREATED_ON_END));
     }
 }

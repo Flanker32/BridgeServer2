@@ -27,7 +27,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
-import javax.annotation.PostConstruct;
+import jakarta.annotation.PostConstruct;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -237,7 +237,7 @@ public class TemplateService {
         
         // The ideal case: one and only one template matches the user's context
         if (templateMatches.size() == 1) {
-            return Optional.of(templateMatches.get(0));
+            return Optional.of(templateMatches.getFirst());
         }
         // If not, fall back to the default specified for this app, if it exists. 
         String defaultGuid = app.getDefaultTemplates().get(type.name().toLowerCase());
@@ -252,12 +252,12 @@ public class TemplateService {
         // Return a matching template
         if (templateMatches.size() > 1) {
             LOG.warn("Template matching ambiguous without a default, returning first matched template");
-            return Optional.of(templateMatches.get(0));
+            return Optional.of(templateMatches.getFirst());
         }
         // Return any template
         if (results.getItems().size() > 0) {
             LOG.warn("Template matching failed with no default, returning first template found without matching");
-            return Optional.of(results.getItems().get(0));
+            return Optional.of(results.getItems().getFirst());
         }
         // There is nothing to return
         return Optional.empty();

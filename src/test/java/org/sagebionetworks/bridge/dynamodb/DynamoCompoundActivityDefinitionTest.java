@@ -66,10 +66,10 @@ public class DynamoCompoundActivityDefinitionTest {
 
         // verify that the lists in the def are unchanged
         assertEquals(def.getSchemaList().size(), 1);
-        assertEquals(def.getSchemaList().get(0), FOO_SCHEMA);
+        assertEquals(def.getSchemaList().getFirst(), FOO_SCHEMA);
         assertListIsImmutable(def.getSchemaList(), BAR_SCHEMA);
         assertEquals(def.getSurveyList().size(), 1);
-        assertEquals(def.getSurveyList().get(0), ASDF_SURVEY);
+        assertEquals(def.getSurveyList().getFirst(), ASDF_SURVEY);
         assertListIsImmutable(def.getSurveyList(), JKL_SURVEY);
 
         // set lists to null, validate that lists are still empty and immutable
@@ -108,12 +108,12 @@ public class DynamoCompoundActivityDefinitionTest {
 
         List<SchemaReference> outputSchemaList = def.getSchemaList();
         assertEquals(outputSchemaList.size(), 2);
-        assertEquals(outputSchemaList.get(0), FOO_SCHEMA);
+        assertEquals(outputSchemaList.getFirst(), FOO_SCHEMA);
         assertEquals(outputSchemaList.get(1), BAR_SCHEMA);
 
         List<SurveyReference> outputSurveyList = def.getSurveyList();
         assertEquals(outputSurveyList.size(), 2);
-        assertEquals(outputSurveyList.get(0), ASDF_SURVEY);
+        assertEquals(outputSurveyList.getFirst(), ASDF_SURVEY);
         assertEquals(outputSurveyList.get(1), JKL_SURVEY);
 
         // convert back to JSON

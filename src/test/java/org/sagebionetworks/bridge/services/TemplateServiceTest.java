@@ -403,7 +403,7 @@ public class TemplateServiceTest extends Mockito {
         
         GuidVersionHolder holder = service.createTemplate(app, template);
         assertEquals(holder.getGuid(), GUID1);
-        assertEquals(holder.getVersion(), new Long(10));
+        assertEquals(holder.getVersion(), Long.valueOf(10));
         
         assertEquals(template.getAppId(), TEST_APP_ID);
         assertFalse(template.isDeleted());
@@ -473,7 +473,7 @@ public class TemplateServiceTest extends Mockito {
         
         GuidVersionHolder result = service.updateTemplate(TEST_APP_ID, template);
         assertEquals(result.getGuid(), GUID1);
-        assertEquals(result.getVersion(), new Long(10));
+        assertEquals(result.getVersion(), Long.valueOf(10));
         
         assertEquals(template.getAppId(), TEST_APP_ID);
         assertEquals(template.getGuid(), GUID1);

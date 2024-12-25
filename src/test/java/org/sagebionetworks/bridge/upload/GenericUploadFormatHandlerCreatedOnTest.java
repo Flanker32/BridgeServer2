@@ -49,7 +49,7 @@ public class GenericUploadFormatHandlerCreatedOnTest {
 
         // one message
         assertEquals(context.getMessageList().size(), 1);
-        assertEquals(context.getMessageList().get(0), "Upload has no createdOn; using current time.");
+        assertEquals(context.getMessageList().getFirst(), "Upload has no createdOn; using current time.");
     }
 
     @Test
@@ -71,7 +71,7 @@ public class GenericUploadFormatHandlerCreatedOnTest {
 
         // two messages
         assertEquals(context.getMessageList().size(), 2);
-        assertEquals(context.getMessageList().get(0), "Invalid date-time: Tuesday morning");
+        assertEquals(context.getMessageList().getFirst(), "Invalid date-time: Tuesday morning");
         assertEquals(context.getMessageList().get(1), "Upload has no createdOn; using current time.");
     }
 

@@ -103,7 +103,7 @@ public class HibernateTemplateRevisionDaoTest extends Mockito {
         verify(mockHelper).queryGet(eq(expectedGetQuery), paramsCaptor.capture(), 
                 eq(250), eq(50), eq(HibernateTemplateRevision.class));
         
-        Map<String,Object> params = paramsCaptor.getAllValues().get(0);
+        Map<String,Object> params = paramsCaptor.getAllValues().getFirst();
         assertEquals(params.get(TEMPLATE_GUID_PARAM_NAME), TEMPLATE_GUID);
         
         params = paramsCaptor.getAllValues().get(1);

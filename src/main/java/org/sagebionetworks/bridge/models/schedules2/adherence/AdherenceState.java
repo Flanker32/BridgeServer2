@@ -112,7 +112,7 @@ public final class AdherenceState {
         return stream;
     }
     public EventStreamDay getEventStreamDayByKey(TimelineMetadata meta) {
-        String streamKey = String.format("%s:%s:%s", meta.getSessionGuid(), 
+        String streamKey = "%s:%s:%s".formatted(meta.getSessionGuid(),
                 meta.getSessionStartEventId(), meta.getSessionInstanceStartDay());
         EventStreamDay eventStreamDay = streamsByStreamKey.get(streamKey);
         

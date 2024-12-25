@@ -152,11 +152,11 @@ public class DynamoUploadSchemaDaoTest {
         
         List<UploadSchema> results1 = dao.indexHelper("indexName", new DynamoUploadSchema(), false);
         assertEquals(results1.size(), 1);
-        assertEquals(results1.get(0), undeletedSchema);
+        assertEquals(results1.getFirst(), undeletedSchema);
         
         List<UploadSchema> results2 = dao.indexHelper("indexName", new DynamoUploadSchema(), true);
         assertEquals(results2.size(), 2);
-        assertEquals(results2.get(0), undeletedSchema);
+        assertEquals(results2.getFirst(), undeletedSchema);
         assertEquals(results2.get(1), deletedSchema);
     }
 

@@ -1,6 +1,6 @@
 package org.sagebionetworks.bridge.models;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.joda.time.LocalDate;

@@ -2,7 +2,7 @@ package org.sagebionetworks.bridge.models;
 
 import java.util.List;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 
 import org.joda.time.DateTime;
 

@@ -77,7 +77,7 @@ public class DynamoAppConfigElementDaoTest {
         
         List<AppConfigElement> returned = dao.getMostRecentElements(TEST_APP_ID, true);
         assertEquals(returned.size(), 2);
-        assertIdAndRevision(returned.get(0), ID_1, 3L);
+        assertIdAndRevision(returned.getFirst(), ID_1, 3L);
         assertIdAndRevision(returned.get(1), ID_2, 3L);
         
         verify(mockMapper).query(eq(DynamoAppConfigElement.class), queryCaptor.capture());
@@ -105,7 +105,7 @@ public class DynamoAppConfigElementDaoTest {
         
         List<AppConfigElement> returned = dao.getMostRecentElements(TEST_APP_ID, false);
         assertEquals(returned.size(), 2);
-        assertIdAndRevision(returned.get(0), ID_1, 2L);
+        assertIdAndRevision(returned.getFirst(), ID_1, 2L);
         assertIdAndRevision(returned.get(1), ID_2, 3L);
     }
     
@@ -120,7 +120,7 @@ public class DynamoAppConfigElementDaoTest {
     public void getMostRecentElement() {
         DynamoAppConfigElement element = new DynamoAppConfigElement();
         when(mockMapper.query(eq(DynamoAppConfigElement.class), any())).thenReturn(mockResults);
-        when(mockResults.get(0)).thenReturn(element);
+        when(mockResults.getFirst()).thenReturn(element);
         
         AppConfigElement returned = dao.getMostRecentElement(TEST_APP_ID, "id");
         assertEquals(returned, element);
@@ -130,17 +130,17 @@ public class DynamoAppConfigElementDaoTest {
         
         assertEquals(query.getHashKeyValues().getKey(), TEST_APP_ID + ":id");
         assertFalse(query.isScanIndexForward());
-        assertEquals(query.getLimit(), new Integer(1));
+        assertEquals(query.getLimit(), Integer.valueOf(1));
         
         Condition deleteCondition = query.getQueryFilter().get("deleted");
         assertEquals(deleteCondition.getComparisonOperator(), "EQ");
-        assertFalse(deleteCondition.getAttributeValueList().get(0).getBOOL());
+        assertFalse(deleteCondition.getAttributeValueList().getFirst().getBOOL());
     }
 
     @Test
     public void getMostRecentElementNotFound() {
         when(mockMapper.query(eq(DynamoAppConfigElement.class), any())).thenReturn(mockResults);
-        when(mockResults.get(0)).thenReturn(null);
+        when(mockResults.getFirst()).thenReturn(null);
         
         AppConfigElement returned = dao.getMostRecentElement(TEST_APP_ID, "id");
         assertNull(returned);
@@ -178,7 +178,7 @@ public class DynamoAppConfigElementDaoTest {
         
         Condition deleteCondition = query.getQueryFilter().get("deleted");
         assertEquals(deleteCondition.getComparisonOperator(), "EQ");
-        assertFalse(deleteCondition.getAttributeValueList().get(0).getBOOL());
+        assertFalse(deleteCondition.getAttributeValueList().getFirst().getBOOL());
     }
     
     @Test
@@ -191,7 +191,7 @@ public class DynamoAppConfigElementDaoTest {
         
         verify(mockMapper).load(appConfigElementCaptor.capture());
         assertEquals(appConfigElementCaptor.getValue().getKey(), TEST_APP_ID + ":id");
-        assertEquals(appConfigElementCaptor.getValue().getRevision(), new Long(3));
+        assertEquals(appConfigElementCaptor.getValue().getRevision(), Long.valueOf(3));
     }
     
     @Test
@@ -200,7 +200,7 @@ public class DynamoAppConfigElementDaoTest {
         element.setVersion(1L);
         
         VersionHolder returned = dao.saveElementRevision(element);
-        assertEquals(returned.getVersion(), new Long(1));
+        assertEquals(returned.getVersion(), Long.valueOf(1));
         
         verify(mockMapper).save(element);
     }
@@ -217,7 +217,7 @@ public class DynamoAppConfigElementDaoTest {
         
         verify(mockMapper).delete(appConfigElementCaptor.capture());
         assertEquals(key.getKey(), TEST_APP_ID + ":id");
-        assertEquals(key.getRevision(), new Long(3));
+        assertEquals(key.getRevision(), Long.valueOf(3));
     }
     
     @Test

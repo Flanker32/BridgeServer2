@@ -7,7 +7,7 @@ import static org.testng.Assert.assertTrue;
 
 import java.util.List;
 
-import javax.mail.internet.MimeBodyPart;
+import jakarta.mail.internet.MimeBodyPart;
 
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -48,14 +48,14 @@ public class WithdrawConsentEmailProviderTest {
         
         List<String> recipients = email.getRecipientAddresses();
         assertEquals(recipients.size(), 1);
-        assertEquals(recipients.get(0), "a@a.com");
+        assertEquals(recipients.getFirst(), "a@a.com");
         
         String sender = email.getSenderAddress();
         assertEquals(sender, "\"App Name\" <c@c.com>");
         
         assertEquals(email.getSubject(), "Notification of consent withdrawal for App Name");
         
-        MimeBodyPart body = email.getMessageParts().get(0);
+        MimeBodyPart body = email.getMessageParts().getFirst();
         assertEquals(body.getContent(),
                 "<p>User   &lt;d@d.com&gt; withdrew from the study on October 28, 2015. </p><p>Reason:</p><p><i>No reason given.</i></p>");
     }
@@ -75,7 +75,7 @@ public class WithdrawConsentEmailProviderTest {
 
         List<String> recipients = email.getRecipientAddresses();
         assertEquals(recipients.size(), 2);
-        assertEquals(recipients.get(0), "a@a.com");
+        assertEquals(recipients.getFirst(), "a@a.com");
         assertEquals(recipients.get(1), "b@b.com");
         
         String sender = email.getSenderAddress();
@@ -83,7 +83,7 @@ public class WithdrawConsentEmailProviderTest {
         
         assertEquals(email.getSubject(), "Notification of consent withdrawal for App Name");
         
-        MimeBodyPart body = email.getMessageParts().get(0);
+        MimeBodyPart body = email.getMessageParts().getFirst();
         assertEquals(body.getContent(),
                 "<p>User Jack Aubrey &lt;d@d.com&gt; withdrew from the study on October 28, 2015. </p><p>Reason:</p><p>Because, reasons.</p>");
     }

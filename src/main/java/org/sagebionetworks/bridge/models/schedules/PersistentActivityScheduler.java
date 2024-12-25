@@ -30,7 +30,7 @@ public class PersistentActivityScheduler extends ActivityScheduler {
                     finishedId+"," + schedule.getEventId(), false);
 
             if (!scheduledTimeList.isEmpty()) {
-                DateTime scheduledTime = scheduledTimeList.get(0);
+                DateTime scheduledTime = scheduledTimeList.getFirst();
                 DateTime localDateTime = scheduledTime.withZone(context.getInitialTimeZone());
                 
                 addScheduledActivityAtTimeForOneActivity(scheduledActivities, plan, context,

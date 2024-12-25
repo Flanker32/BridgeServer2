@@ -4,7 +4,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.util.Optional;
 
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 
 import org.sagebionetworks.bridge.dao.DemographicValidationDao;
 import org.sagebionetworks.bridge.exceptions.EntityNotFoundException;

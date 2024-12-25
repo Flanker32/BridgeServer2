@@ -5,8 +5,8 @@ import static org.testng.Assert.assertEquals;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
-import javax.mail.MessagingException;
-import javax.mail.internet.MimeBodyPart;
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.MimeBodyPart;
 
 import com.google.common.collect.ImmutableList;
 
@@ -40,7 +40,7 @@ public class MimeTypeEmailTest {
         assertEquals(email.getType(), EmailType.EMAIL_SIGN_IN);
 
         assertEquals(email.getMessageParts().size(), 1);
-        assertEquals(email.getMessageParts().get(0).getContent(), "dummy content");
+        assertEquals(email.getMessageParts().getFirst().getContent(), "dummy content");
     }
 
     @Test
@@ -70,19 +70,19 @@ public class MimeTypeEmailTest {
     @Test
     public void recipientUnadornedEmailNotChanged() throws Exception {
         MimeTypeEmail email = makeEmailWithRecipient("test@test.com");
-        assertEquals(email.getRecipientAddresses().get(0), "test@test.com");
+        assertEquals(email.getRecipientAddresses().getFirst(), "test@test.com");
     }
     
     @Test
     public void recipientAddressWithNameQuoted() throws Exception {
         MimeTypeEmail email = makeEmailWithRecipient("A, B, and C <test@test.com>");
-        assertEquals(email.getRecipientAddresses().get(0), "\"A, B, and C\" <test@test.com>");
+        assertEquals(email.getRecipientAddresses().getFirst(), "\"A, B, and C\" <test@test.com>");
     }
     
     @Test
     public void recipientAddressWithNameWithQuotesItsAllQuoted() throws Exception {
         MimeTypeEmail email = makeEmailWithRecipient("The \"Fun Guys\" at UofW <test@test.com>");
-        assertEquals(email.getRecipientAddresses().get(0), "\"The \\\"Fun Guys\\\" at UofW\" <test@test.com>");
+        assertEquals(email.getRecipientAddresses().getFirst(), "\"The \\\"Fun Guys\\\" at UofW\" <test@test.com>");
     }
 
     @Test
@@ -112,7 +112,7 @@ public class MimeTypeEmailTest {
 
         List<MimeBodyPart> partList = email.getMessageParts();
         assertEquals(partList.size(), 2);
-        assertEquals(partList.get(0).getContent(), "foo");
+        assertEquals(partList.getFirst().getContent(), "foo");
         assertEquals(partList.get(1).getContent(), "bar");
     }
 

@@ -4,8 +4,8 @@ import static org.sagebionetworks.bridge.BridgeUtils.getElement;
 
 import java.util.Optional;
 
-import javax.persistence.Embeddable;
-import javax.persistence.Embedded;
+import jakarta.persistence.Embeddable;
+import jakarta.persistence.Embedded;
 
 import org.sagebionetworks.bridge.models.studies.Enrollment;
 

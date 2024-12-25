@@ -16,8 +16,8 @@ import static org.testng.Assert.assertSame;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
@@ -137,7 +137,7 @@ public class TemplateControllerTest extends Mockito {
         
         GuidVersionHolder result = controller.createTemplate();
         assertEquals(result.getGuid(), GUID);
-        assertEquals(result.getVersion(), new Long(1));
+        assertEquals(result.getVersion(), Long.valueOf(1));
         
         verify(mockTemplateService).createTemplate(eq(app), templateCaptor.capture());
         assertEquals(templateCaptor.getValue().getName(), "This is a name");
@@ -166,7 +166,7 @@ public class TemplateControllerTest extends Mockito {
         
         GuidVersionHolder result = controller.updateTemplate(GUID);
         assertEquals(result.getGuid(), GUID);
-        assertEquals(result.getVersion(), new Long(2));
+        assertEquals(result.getVersion(), Long.valueOf(2));
         
         verify(mockTemplateService).updateTemplate(eq(TEST_APP_ID), templateCaptor.capture());
         assertEquals(templateCaptor.getValue().getName(), "This is a name");

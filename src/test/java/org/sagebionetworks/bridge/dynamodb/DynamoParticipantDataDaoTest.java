@@ -91,7 +91,7 @@ public class DynamoParticipantDataDaoTest extends Mockito {
         ForwardCursorPagedResourceList<ParticipantData> result =
                 dao.getAllParticipantData(TEST_USER_ID, OFFSET_KEY, PAGE_SIZE);
         assertEquals(result.getItems().size(), 1);
-        assertSame(result.getItems().get(0), participantData);
+        assertSame(result.getItems().getFirst(), participantData);
         assertNull(result.getNextPageOffsetKey());
 
         //Validate

@@ -1,6 +1,6 @@
 package org.sagebionetworks.bridge.services;
 
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 import java.net.URL;
 import java.util.Date;
 import java.util.Optional;

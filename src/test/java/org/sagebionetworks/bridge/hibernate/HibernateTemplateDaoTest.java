@@ -72,7 +72,7 @@ public class HibernateTemplateDaoTest extends Mockito {
         Map<String,Object> queryParams = paramsCaptor.getValue();
         assertEquals(queryParams.get("appId"), TEST_APP_ID);
         assertEquals(queryParams.get("templateType"), SMS_ACCOUNT_EXISTS);
-        String countQuery = queryCaptor.getAllValues().get(0);
+        String countQuery = queryCaptor.getAllValues().getFirst();
         String getQuery = queryCaptor.getAllValues().get(1);
         assertEquals(countQuery, "SELECT count(guid) FROM HibernateTemplate as template WHERE templateType = " + 
                 ":templateType AND appId = :appId ORDER BY createdOn DESC");

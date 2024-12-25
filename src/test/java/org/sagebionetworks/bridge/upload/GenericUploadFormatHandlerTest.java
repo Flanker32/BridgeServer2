@@ -180,10 +180,12 @@ public class GenericUploadFormatHandlerTest {
                 "data-file-attachment-id"));
 
         // Setup inputs.
-        String recordJsonText = "{\n" +
-                "   \"foo\":\"foo-value\",\n" +
-                "   \"bar\":\"bar is an attachment\"\n" +
-                "}";
+        String recordJsonText = """
+                {
+                   "foo":"foo-value",
+                   "bar":"bar is an attachment"
+                }\
+                """;
         File recordJsonFile = makeFileWithContent("record.json", recordJsonText);
 
         File sanitizeAttachmentTxtFile = makeFileWithContent("sanitize!@#$attachment.txt",
@@ -240,10 +242,12 @@ public class GenericUploadFormatHandlerTest {
         when(mockUploadFileHelper.findValueForField(any(), any(), any(), any())).thenReturn(null);
 
         // Setup inputs.
-        String recordJsonText = "{\n" +
-                "   \"foo\":\"foo-value\",\n" +
-                "   \"bar\":\"bar is an attachment\"\n" +
-                "}";
+        String recordJsonText = """
+                {
+                   "foo":"foo-value",
+                   "bar":"bar is an attachment"
+                }\
+                """;
         File recordJsonFile = makeFileWithContent("record.json", recordJsonText);
 
         Map<String, File> fileMap = ImmutableMap.<String, File>builder().put("record.json", recordJsonFile).build();
@@ -280,10 +284,12 @@ public class GenericUploadFormatHandlerTest {
                 "answers-attachment-id"));
 
         // Setup inputs.
-        String recordJsonText = "{\n" +
-                "   \"foo\":\"foo-value\",\n" +
-                "   \"bar\":\"bar-value\"\n" +
-                "}";
+        String recordJsonText = """
+                {
+                   "foo":"foo-value",
+                   "bar":"bar-value"
+                }\
+                """;
         File recordJsonFile = makeFileWithContent("record.json", recordJsonText);
         Map<String, File> fileMap = ImmutableMap.<String, File>builder().put("record.json", recordJsonFile).build();
 
@@ -322,10 +328,12 @@ public class GenericUploadFormatHandlerTest {
         when(mockUploadFileHelper.findValueForField(any(), any(), any(), any())).thenReturn(null);
 
         // Setup inputs.
-        String recordJsonText = "{\n" +
-                "   \"foo\":\"foo-value\",\n" +
-                "   \"bar\":\"bar-value\"\n" +
-                "}";
+        String recordJsonText = """
+                {
+                   "foo":"foo-value",
+                   "bar":"bar-value"
+                }\
+                """;
         File recordJsonFile = makeFileWithContent("record.json", recordJsonText);
         Map<String, File> fileMap = ImmutableMap.<String, File>builder().put("record.json", recordJsonFile).build();
 
@@ -425,16 +433,20 @@ public class GenericUploadFormatHandlerTest {
         mockSchemaServiceWithFields(UploadUtil.ANSWERS_FIELD_DEF);
 
         // Setup inputs.
-        String answersJsonText = "{\n" +
-                "   \"foo\":\"overridden foo\",\n" +
-                "   \"bar\":\"overridden bar\"\n" +
-                "}";
+        String answersJsonText = """
+                {
+                   "foo":"overridden foo",
+                   "bar":"overridden bar"
+                }\
+                """;
         File answersFile = makeFileWithContent(UploadUtil.FIELD_ANSWERS, answersJsonText);
 
-        String recordJsonText = "{\n" +
-                "   \"foo\":\"foo-value\",\n" +
-                "   \"bar\":\"bar-value\"\n" +
-                "}";
+        String recordJsonText = """
+                {
+                   "foo":"foo-value",
+                   "bar":"bar-value"
+                }\
+                """;
         File recordJsonFile = makeFileWithContent("record.json", recordJsonText);
         Map<String, File> fileMap = ImmutableMap.<String, File>builder().put(UploadUtil.FIELD_ANSWERS, answersFile)
                 .put("record.json", recordJsonFile).build();

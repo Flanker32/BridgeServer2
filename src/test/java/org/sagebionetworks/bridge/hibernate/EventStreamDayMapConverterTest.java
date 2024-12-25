@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.persistence.PersistenceException;
+import jakarta.persistence.PersistenceException;
 
 import org.sagebionetworks.bridge.json.BridgeObjectMapper;
 import org.sagebionetworks.bridge.models.schedules2.adherence.eventstream.EventStreamDay;
@@ -35,7 +35,7 @@ public class EventStreamDayMapConverterTest {
         String json = CONVERTER.convertToDatabaseColumn(map);
         Map<Integer, List<EventStreamDay>> deser = BridgeObjectMapper.get().readValue(json, TYPE_REF);
         
-        assertEquals(deser.get(1).get(0).getLabel(), "label");
+        assertEquals(deser.get(1).getFirst().getLabel(), "label");
     }
 
     @Test
@@ -50,7 +50,7 @@ public class EventStreamDayMapConverterTest {
         
         Map<Integer, List<EventStreamDay>> deser = CONVERTER.convertToEntityAttribute(json);
         
-        assertEquals(deser.get(1).get(0).getLabel(), "label");
+        assertEquals(deser.get(1).getFirst().getLabel(), "label");
     }
 
     @Test

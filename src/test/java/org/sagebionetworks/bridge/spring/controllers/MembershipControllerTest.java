@@ -14,7 +14,7 @@ import static org.sagebionetworks.bridge.TestUtils.mockRequestBody;
 
 import java.util.function.Consumer;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;

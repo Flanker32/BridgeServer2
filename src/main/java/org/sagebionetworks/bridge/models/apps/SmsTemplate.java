@@ -34,7 +34,7 @@ public final class SmsTemplate {
 
     @Override
     public String toString() {
-        return String.format("SmsTemplate [message=%s]", message);
+        return "SmsTemplate [message=%s]".formatted(message);
     }
 
 }

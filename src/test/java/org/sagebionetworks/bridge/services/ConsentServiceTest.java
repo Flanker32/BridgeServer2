@@ -16,6 +16,7 @@ import static org.testng.Assert.fail;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.net.URI;
 import java.net.URL;
 import java.util.HashSet;
 import java.util.List;
@@ -176,7 +177,7 @@ public class ConsentServiceTest extends Mockito {
         when(accountService.getAccount(any(AccountId.class))).thenReturn(Optional.of(account));
 
         when(s3Helper.generatePresignedUrl(eq(ConsentService.USERSIGNED_CONSENTS_BUCKET), any(), any(),
-                eq(HttpMethod.GET))).thenReturn(new URL(LONG_URL));
+                eq(HttpMethod.GET))).thenReturn(URI.create(LONG_URL).toURL());
         when(urlShortenerService.shortenUrl(LONG_URL, BridgeConstants.SIGNED_CONSENT_DOWNLOAD_EXPIRE_IN_SECONDS))
                 .thenReturn(SHORT_URL);
 
@@ -241,7 +242,7 @@ public class ConsentServiceTest extends Mockito {
         assertEquals(updatedConsentList.size(), 2);
 
         // First consent is the same.
-        assertEquals(updatedConsentList.get(0), WITHDRAWN_CONSENT_SIGNATURE);
+        assertEquals(updatedConsentList.getFirst(), WITHDRAWN_CONSENT_SIGNATURE);
 
         // Second consent has consentCreatedOn added and withdrawnOn clear, but is otherwise the same.
         assertEquals(updatedConsentList.get(1).getBirthdate(), sig.getBirthdate());
@@ -386,7 +387,7 @@ public class ConsentServiceTest extends Mockito {
         assertEquals(updatedConsentList.size(), 2);
 
         // First consent is unchanged.
-        assertEquals(updatedConsentList.get(0), WITHDRAWN_CONSENT_SIGNATURE);
+        assertEquals(updatedConsentList.getFirst(), WITHDRAWN_CONSENT_SIGNATURE);
 
         // Second consent has withdrawnOn tacked on, but is otherwise the same.
         assertEquals(updatedConsentList.get(1).getBirthdate(), CONSENT_SIGNATURE.getBirthdate());
@@ -399,9 +400,9 @@ public class ConsentServiceTest extends Mockito {
 
         assertEquals(email.getSenderAddress(),
                 "\"Test App [ConsentServiceTest]\" <bridge-testing+support@sagebase.org>");
-        assertEquals(email.getRecipientAddresses().get(0), "bridge-testing+consent@sagebase.org");
+        assertEquals(email.getRecipientAddresses().getFirst(), "bridge-testing+consent@sagebase.org");
         assertEquals(email.getSubject(), "Notification of consent withdrawal for Test App [ConsentServiceTest]");
-        assertEquals(email.getMessageParts().get(0).getContent(), "<p>User   &lt;" + EMAIL
+        assertEquals(email.getMessageParts().getFirst().getContent(), "<p>User   &lt;" + EMAIL
                 + "&gt; withdrew from the study on October 28, 2015. </p><p>Reason:</p><p>For reasons.</p>");
         
         verify(mockEnrollmentService, times(1)).unenroll(eq(account), enrollmentCaptor.capture());
@@ -464,9 +465,9 @@ public class ConsentServiceTest extends Mockito {
 
         assertEquals(email.getSenderAddress(),
                 "\"Test App [ConsentServiceTest]\" <bridge-testing+support@sagebase.org>");
-        assertEquals(email.getRecipientAddresses().get(0), "bridge-testing+consent@sagebase.org");
+        assertEquals(email.getRecipientAddresses().getFirst(), "bridge-testing+consent@sagebase.org");
         assertEquals(email.getSubject(), "Notification of consent withdrawal for Test App [ConsentServiceTest]");
-        assertEquals(email.getMessageParts().get(0).getContent(), "<p>User Allen Wrench &lt;" + EMAIL
+        assertEquals(email.getMessageParts().getFirst().getContent(), "<p>User Allen Wrench &lt;" + EMAIL
                 + "&gt; withdrew from the study on October 28, 2015. </p><p>Reason:</p><p>For reasons.</p>");
 
         Account updatedAccount = accountCaptor.getValue();
@@ -567,7 +568,7 @@ public class ConsentServiceTest extends Mockito {
 
         verify(mockEnrollmentService, times(2)).unenroll(eq(account), enrollmentCaptor.capture());
         
-        Enrollment withdrawnEnrollment1 = enrollmentCaptor.getAllValues().get(0);
+        Enrollment withdrawnEnrollment1 = enrollmentCaptor.getAllValues().getFirst();
         assertEquals(withdrawnEnrollment1.getWithdrawalNote(), WITHDRAWAL.getReason());
         assertEquals(withdrawnEnrollment1.getWithdrawnOn().getMillis(), SIGNED_ON + 10000);
         assertEquals(withdrawnEnrollment1.getAppId(), app.getIdentifier());
@@ -581,9 +582,9 @@ public class ConsentServiceTest extends Mockito {
         assertEquals(withdrawnEnrollment2.getStudyId(), TEST_STUDY_ID);
         assertEquals(withdrawnEnrollment2.getAccountId(), ID);
         
-        assertEquals(account.getAllConsentSignatureHistories().get(SUBPOP_GUID).get(0).getWithdrewOn(),
+        assertEquals(account.getAllConsentSignatureHistories().get(SUBPOP_GUID).getFirst().getWithdrewOn(),
                 Long.valueOf(SIGNED_ON + 10000L));
-        assertEquals(account.getAllConsentSignatureHistories().get(SUBPOP_GUID_2).get(0).getWithdrewOn(),
+        assertEquals(account.getAllConsentSignatureHistories().get(SUBPOP_GUID_2).getFirst().getWithdrewOn(),
                 Long.valueOf(SIGNED_ON + 10000L));
 
         // verify alerts deleted for participant
@@ -649,8 +650,8 @@ public class ConsentServiceTest extends Mockito {
         consentService.withdrawConsent(app, SUBPOP_GUID, PARTICIPANT, CONTEXT, WITHDRAWAL, WITHDREW_ON);
 
         assertEquals(account.getSharingScope(), SharingScope.NO_SHARING);
-        assertEquals(account.getConsentSignatureHistory(SUBPOP_GUID).get(0).getWithdrewOn(), new Long(WITHDREW_ON));
-        assertNull(account.getConsentSignatureHistory(SECOND_SUBPOP).get(0).getWithdrewOn());
+        assertEquals(account.getConsentSignatureHistory(SUBPOP_GUID).getFirst().getWithdrewOn(), Long.valueOf(WITHDREW_ON));
+        assertNull(account.getConsentSignatureHistory(SECOND_SUBPOP).getFirst().getWithdrewOn());
 
         verify(notificationsService).deleteAllRegistrations(app.getIdentifier(), HEALTH_CODE);
     }
@@ -663,8 +664,8 @@ public class ConsentServiceTest extends Mockito {
 
         // You must sign all required consents to sign.
         assertEquals(account.getSharingScope(), SharingScope.NO_SHARING);
-        assertEquals(account.getConsentSignatureHistory(SUBPOP_GUID).get(0).getWithdrewOn(), new Long(WITHDREW_ON));
-        assertNull(account.getConsentSignatureHistory(SECOND_SUBPOP).get(0).getWithdrewOn());
+        assertEquals(account.getConsentSignatureHistory(SUBPOP_GUID).getFirst().getWithdrewOn(), Long.valueOf(WITHDREW_ON));
+        assertNull(account.getConsentSignatureHistory(SECOND_SUBPOP).getFirst().getWithdrewOn());
 
         verify(notificationsService).deleteAllRegistrations(app.getIdentifier(), HEALTH_CODE);
     }
@@ -678,8 +679,8 @@ public class ConsentServiceTest extends Mockito {
         // Not changed because all the required consents are still signed.
         assertEquals(account.getSharingScope(), SharingScope.ALL_QUALIFIED_RESEARCHERS);
 
-        assertEquals(account.getConsentSignatureHistory(SUBPOP_GUID).get(0).getWithdrewOn(), new Long(WITHDREW_ON));
-        assertNull(account.getConsentSignatureHistory(SECOND_SUBPOP).get(0).getWithdrewOn());
+        assertEquals(account.getConsentSignatureHistory(SUBPOP_GUID).getFirst().getWithdrewOn(), Long.valueOf(WITHDREW_ON));
+        assertNull(account.getConsentSignatureHistory(SECOND_SUBPOP).getFirst().getWithdrewOn());
 
         verify(notificationsService, never()).deleteAllRegistrations(any(), any());
     }
@@ -692,8 +693,8 @@ public class ConsentServiceTest extends Mockito {
 
         // Not changed because all the required consents are still signed.
         assertEquals(account.getSharingScope(), SharingScope.ALL_QUALIFIED_RESEARCHERS);
-        assertEquals(account.getConsentSignatureHistory(SUBPOP_GUID).get(0).getWithdrewOn(), new Long(WITHDREW_ON));
-        assertNull(account.getConsentSignatureHistory(SECOND_SUBPOP).get(0).getWithdrewOn());
+        assertEquals(account.getConsentSignatureHistory(SUBPOP_GUID).getFirst().getWithdrewOn(), Long.valueOf(WITHDREW_ON));
+        assertNull(account.getConsentSignatureHistory(SECOND_SUBPOP).getFirst().getWithdrewOn());
 
         verify(notificationsService, never()).deleteAllRegistrations(any(), any());
     }
@@ -870,7 +871,7 @@ public class ConsentServiceTest extends Mockito {
         MimeTypeEmail email = provider.getMimeTypeEmail();
         List<String> recipientList = email.getRecipientAddresses();
         assertEquals(recipientList.size(), 1);
-        assertEquals(recipientList.get(0), "email@email.com");
+        assertEquals(recipientList.getFirst(), "email@email.com");
     }
 
     @Test
@@ -927,7 +928,7 @@ public class ConsentServiceTest extends Mockito {
         MimeTypeEmail email = provider.getMimeTypeEmail();
         List<String> recipientList = email.getRecipientAddresses();
         assertEquals(recipientList.size(), 1);
-        assertEquals(recipientList.get(0), "email@email.com");
+        assertEquals(recipientList.getFirst(), "email@email.com");
     }
 
     @Test
@@ -1142,7 +1143,7 @@ public class ConsentServiceTest extends Mockito {
         assertTrue(status1.isRequired());
         assertTrue(status1.isConsented());
         assertTrue(status1.getSignedMostRecentConsent());
-        assertEquals(status1.getSignedOn(), new Long(SIGNED_ON));
+        assertEquals(status1.getSignedOn(), Long.valueOf(SIGNED_ON));
 
         ConsentStatus status2 = map.get(SECOND_SUBPOP);
         assertNull(status2.getSignedOn());

@@ -442,9 +442,9 @@ public class NotificationTopicServiceTest {
                 ImmutableSet.of(MANUAL_TOPIC_1.getGuid(), MANUAL_TOPIC_3.getGuid()));
         assertEquals(statusList.size(), 4);
 
-        assertEquals(statusList.get(0).getTopicGuid(), MANUAL_TOPIC_1.getGuid());
-        assertEquals(statusList.get(0).getTopicName(), MANUAL_TOPIC_1.getName());
-        assertTrue(statusList.get(0).isSubscribed());
+        assertEquals(statusList.getFirst().getTopicGuid(), MANUAL_TOPIC_1.getGuid());
+        assertEquals(statusList.getFirst().getTopicName(), MANUAL_TOPIC_1.getName());
+        assertTrue(statusList.getFirst().isSubscribed());
 
         assertEquals(statusList.get(1).getTopicGuid(), MANUAL_TOPIC_2.getGuid());
         assertEquals(statusList.get(1).getTopicName(), MANUAL_TOPIC_2.getName());

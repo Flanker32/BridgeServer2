@@ -116,7 +116,7 @@ public class DefaultAppBootstrapperTest extends Mockito {
 
         verify(mockAppService, times(3)).createApp(appCaptor.capture());
         
-        App retApi = appCaptor.getAllValues().get(0);
+        App retApi = appCaptor.getAllValues().getFirst();
         assertEquals(retApi.getIdentifier(), API_APP_ID);
         assertFalse(retApi.isReauthenticationEnabled());
         assertEquals(retApi.getMinAgeOfConsent(), 18);
@@ -211,7 +211,7 @@ public class DefaultAppBootstrapperTest extends Mockito {
         verify(mockAdminAccountService).createAccount(eq(API_APP_ID), accountCaptor.capture());
         verify(mockAdminAccountService).createAccount(eq(API_2_APP_ID), accountCaptor.capture());
 
-        Account apiAdmin = accountCaptor.getAllValues().get(0);
+        Account apiAdmin = accountCaptor.getAllValues().getFirst();
         assertEquals(apiAdmin.getRoles(), ImmutableSet.of(ADMIN));
 
         Account sharedAdmin = accountCaptor.getAllValues().get(1);

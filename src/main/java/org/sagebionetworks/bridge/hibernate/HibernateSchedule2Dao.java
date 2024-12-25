@@ -12,7 +12,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 
 import com.google.common.base.Stopwatch;
 import com.google.common.collect.ImmutableList;
@@ -124,7 +124,7 @@ public class HibernateSchedule2Dao implements Schedule2Dao {
         if (results.isEmpty()) {
             return Optional.empty();
         }
-        return Optional.of(results.get(0));
+        return Optional.of(results.getFirst());
     }
 
     @Override

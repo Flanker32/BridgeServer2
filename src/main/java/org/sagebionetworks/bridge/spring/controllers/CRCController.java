@@ -3,8 +3,8 @@ package org.sagebionetworks.bridge.spring.controllers;
 import static com.google.common.net.HttpHeaders.AUTHORIZATION;
 import static java.lang.Boolean.TRUE;
 import static org.apache.commons.lang3.StringUtils.isNotBlank;
-import static org.apache.http.entity.ContentType.APPLICATION_FORM_URLENCODED;
-import static org.apache.http.entity.ContentType.APPLICATION_JSON;
+import static org.apache.hc.core5.http.ContentType.APPLICATION_FORM_URLENCODED;
+import static org.apache.hc.core5.http.ContentType.APPLICATION_JSON;
 import static org.sagebionetworks.bridge.BridgeConstants.API_APP_ID;
 import static org.sagebionetworks.bridge.BridgeConstants.TEST_USER_GROUP;
 import static org.sagebionetworks.bridge.BridgeUtils.SPACE_JOINER;
@@ -42,10 +42,11 @@ import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
 import com.google.common.net.HttpHeaders;
 import org.apache.commons.io.IOUtils;
-import org.apache.http.Header;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.fluent.Request;
-import org.apache.http.message.BasicHeader;
+import org.apache.hc.core5.http.Header;
+import org.apache.hc.core5.http.HttpResponse;
+import org.apache.hc.core5.http.client.fluent.Request;
+import org.apache.hc.core5.http.message.BasicHeader;
+import org.apache.hc.core5.http.message.StatusLine;
 import org.hl7.fhir.dstu3.model.Address;
 import org.hl7.fhir.dstu3.model.Appointment;
 import org.hl7.fhir.dstu3.model.Appointment.AppointmentParticipantComponent;
@@ -421,7 +422,7 @@ public class CRCController extends BaseController {
         if (code != null) {
             List<Coding> codings = code.getCoding();
             if (codings != null && !codings.isEmpty()) {
-                Coding coding = codings.get(0);
+                Coding coding = codings.getFirst();
                 if (coding != null) {
                     return coding.getCode();
                 }
@@ -436,7 +437,7 @@ public class CRCController extends BaseController {
             List<Extension> extensions = range.getExtension();
             if (extensions != null && !extensions.isEmpty()) {
                 @SuppressWarnings("rawtypes")
-                IPrimitiveType ptype = extensions.get(0).getValueAsPrimitive();
+                IPrimitiveType ptype = extensions.getFirst().getValueAsPrimitive();
                 if (ptype != null) {
                     return ptype.getValueAsString();
                 }
@@ -460,7 +461,7 @@ public class CRCController extends BaseController {
             HttpResponse response = post(url, account, reqBody);
             String resBody = IOUtils.toString(response.getEntity().getContent(), StandardCharsets.UTF_8.name());
             
-            int statusCode = response.getStatusLine().getStatusCode();
+            int statusCode = response.getCode();
             if (statusCode != 200 && statusCode != 201) {
                 logWarningMessage(locationId, statusCode, resBody);
                 return;
@@ -515,11 +516,11 @@ public class CRCController extends BaseController {
     void addGeocodingInformation(ObjectNode actor) {
         String addressString = combineLocationJson(actor);
         if (addressString != null) {
-            String url = String.format(GEOCODING_API, addressString, bridgeConfig.get(GEOCODE_KEY));
+            String url = GEOCODING_API.formatted(addressString, bridgeConfig.get(GEOCODE_KEY));
             try {
                 HttpResponse response = get(url);
-                if (response.getStatusLine().getStatusCode() != 200) {
-                    LOG.error("HTTP error response when geocoding address", response.getStatusLine().toString());
+                if (response.getCode() != 200) {
+                    LOG.error("HTTP error response when geocoding address", new StatusLine(response).toString());
                     return;
                 }
                 String body = IOUtils.toString(response.getEntity().getContent(), StandardCharsets.UTF_8.name());

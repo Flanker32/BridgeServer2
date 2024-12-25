@@ -17,8 +17,8 @@ import static org.testng.Assert.assertEquals;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
@@ -113,7 +113,7 @@ public class SchedulePlanControllerTest extends Mockito {
                 .thenReturn(Lists.newArrayList(plan));
         
         ResourceList<SchedulePlan> result = controller.getSchedulePlansForWorker(TEST_APP_ID, false);
-        assertEquals(result.getItems().get(0), plan);
+        assertEquals(result.getItems().getFirst(), plan);
         
         verify(mockSchedulePlanService).getSchedulePlans(UNKNOWN_CLIENT, TEST_APP_ID, false);
     }
@@ -163,7 +163,7 @@ public class SchedulePlanControllerTest extends Mockito {
         verify(mockSchedulePlanService).getSchedulePlans(UNKNOWN_CLIENT, TEST_APP_ID, false);
         
         assertEquals(1, result.getItems().size());
-        assertEquals(plans.get(0).getGuid(), result.getItems().get(0).getGuid());
+        assertEquals(plans.getFirst().getGuid(), result.getItems().getFirst().getGuid());
     }
     
     @Test
@@ -177,7 +177,7 @@ public class SchedulePlanControllerTest extends Mockito {
         verify(mockSchedulePlanService).getSchedulePlans(UNKNOWN_CLIENT, TEST_APP_ID, true);
         
         assertEquals(1, result.getItems().size());
-        assertEquals(plans.get(0).getGuid(), result.getItems().get(0).getGuid());
+        assertEquals(plans.getFirst().getGuid(), result.getItems().getFirst().getGuid());
     }
     
     @Test

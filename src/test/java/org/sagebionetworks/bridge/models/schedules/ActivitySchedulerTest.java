@@ -102,7 +102,7 @@ public class ActivitySchedulerTest {
         schedule.setExpires("P3Y");
 
         scheduledActivities = schedule.getScheduler().getScheduledActivities(plan, getContext(NOW.plusWeeks(1)));
-        DynamoScheduledActivity schActivity = (DynamoScheduledActivity)scheduledActivities.get(0);
+        DynamoScheduledActivity schActivity = (DynamoScheduledActivity)scheduledActivities.getFirst();
 
         assertNotNull(schActivity.getGuid());
         assertEquals(schActivity.getActivity().getLabel(), "Activity3");
@@ -132,7 +132,7 @@ public class ActivitySchedulerTest {
         schedule2.setEventId("task:task1");
 
         scheduledActivities = schedule.getScheduler().getScheduledActivities(plan, getContext(NOW.plusMonths(2)));
-        assertEquals(scheduledActivities.get(0).getScheduledOn().getMillis(), asLong("2015-04-23 10:00"));
+        assertEquals(scheduledActivities.getFirst().getScheduledOn().getMillis(), asLong("2015-04-23 10:00"));
 
         scheduledActivities = schedule2.getScheduler().getScheduledActivities(plan, getContext(NOW.plusMonths(2)));
         assertEquals(scheduledActivities.size(), 0);
@@ -144,7 +144,7 @@ public class ActivitySchedulerTest {
         
         // One-time tasks without times specified continue to schedule at midnight.
         scheduledActivities = schedule2.getScheduler().getScheduledActivities(plan, getContext(NOW.plusMonths(2)));
-        assertEquals(scheduledActivities.get(0).getScheduledOn(), activity1Event);
+        assertEquals(scheduledActivities.getFirst().getScheduledOn(), activity1Event);
     }
     
     @Test
@@ -160,7 +160,7 @@ public class ActivitySchedulerTest {
         events.put("foo", DateTime.parse("2015-03-25T07:00:00.000-07:00"));
         DateTimeZone zone = DateTimeZone.forOffsetHours(-7);
         scheduledActivities = schedule.getScheduler().getScheduledActivities(plan, getContext(zone, NOW.plusMonths(1)));
-        assertEquals(scheduledActivities.get(0).getScheduledOn(), DateTime.parse("2015-03-27T07:00:00.000-07:00"));
+        assertEquals(scheduledActivities.getFirst().getScheduledOn(), DateTime.parse("2015-03-27T07:00:00.000-07:00"));
         
         // Add an endsOn value in GMT, it shouldn't matter, it'll prevent event from firing
         schedule.setEndsOn("2015-03-25T13:00:00.000-07:00"); // one hour before the event
@@ -215,7 +215,7 @@ public class ActivitySchedulerTest {
 
         scheduledActivities = schedule.getScheduler().getScheduledActivities(plan, getContext(NOW.plusDays(7)));
         assertEquals(scheduledActivities.size(), 2);
-        assertNotEquals(scheduledActivities.get(1), scheduledActivities.get(0));
+        assertNotEquals(scheduledActivities.get(1), scheduledActivities.getFirst());
     }
     
     /**
@@ -232,11 +232,11 @@ public class ActivitySchedulerTest {
         
         events.put("scheduledOn:task:foo", NOW.minusHours(3));
         scheduledActivities = schedule.getScheduler().getScheduledActivities(plan, getContext(NOW.plusDays(1)));
-        assertEquals(scheduledActivities.get(0).getScheduledOn(), NOW.minusHours(3));
+        assertEquals(scheduledActivities.getFirst().getScheduledOn(), NOW.minusHours(3));
 
         events.put("scheduledOn:task:foo", NOW.plusHours(8));
         scheduledActivities = schedule.getScheduler().getScheduledActivities(plan, getContext(NOW.plusDays(1)));
-        assertEquals(scheduledActivities.get(0).getScheduledOn(), NOW.plusHours(8));
+        assertEquals(scheduledActivities.getFirst().getScheduledOn(), NOW.plusHours(8));
     }
     
     @Test
@@ -248,12 +248,12 @@ public class ActivitySchedulerTest {
         
         scheduledActivities = schedule.getScheduler().getScheduledActivities(plan, getContext(NOW.plusDays(1)));
         assertEquals(scheduledActivities.size(), 1);
-        assertEquals(scheduledActivities.get(0).getScheduledOn(), ENROLLMENT.plusDays(2).withZone(PST));
+        assertEquals(scheduledActivities.getFirst().getScheduledOn(), ENROLLMENT.plusDays(2).withZone(PST));
 
         events.remove("survey:event");
         scheduledActivities = schedule.getScheduler().getScheduledActivities(plan, getContext(NOW.plusDays(1)));
         assertEquals(scheduledActivities.size(), 1);
-        assertEquals(scheduledActivities.get(0).getScheduledOn(), ENROLLMENT.withZone(PST));
+        assertEquals(scheduledActivities.getFirst().getScheduledOn(), ENROLLMENT.withZone(PST));
         
         // BUT this produces nothing because the system doesn't fallback to enrollment if an event has been set
         schedule.setEventId("survey:event");
@@ -273,12 +273,12 @@ public class ActivitySchedulerTest {
         
         scheduledActivities = schedule.getScheduler().getScheduledActivities(plan, getContext(NOW.plusDays(1)));
         assertEquals(scheduledActivities.size(), 1);
-        assertEquals(scheduledActivities.get(0).getScheduledOn(), ENROLLMENT.withTime(localTime).plusDays(2).withZoneRetainFields(PST));
+        assertEquals(scheduledActivities.getFirst().getScheduledOn(), ENROLLMENT.withTime(localTime).plusDays(2).withZoneRetainFields(PST));
 
         events.remove("survey:event");
         scheduledActivities = schedule.getScheduler().getScheduledActivities(plan, getContext(NOW.plusDays(1)));
         assertEquals(scheduledActivities.size(), 1);
-        assertEquals(scheduledActivities.get(0).getScheduledOn(), ENROLLMENT.withZone(PST).withTime(localTime));
+        assertEquals(scheduledActivities.getFirst().getScheduledOn(), ENROLLMENT.withZone(PST).withTime(localTime));
         
         // BUT this produces nothing because the system doesn't fallback to enrollment if an event has been set
         schedule.setEventId("survey:event");
@@ -308,7 +308,7 @@ public class ActivitySchedulerTest {
         schedule.addActivity(new Activity.Builder().withLabel("Bar").withTask("bar").build());
         
         scheduledActivities = schedule.getScheduler().getScheduledActivities(plan, getContext(NOW.plusDays(1)));
-        ScheduledActivity activity1 = scheduledActivities.get(0);
+        ScheduledActivity activity1 = scheduledActivities.getFirst();
         assertEquals(activity1.getActivity().getLabel(), "Foo");
         assertTrue(activity1.getPersistent());
         assertTrue(activity1.getActivity().isPersistentlyRescheduledBy(schedule));
@@ -325,7 +325,7 @@ public class ActivitySchedulerTest {
         schedule.addActivity(new Activity.Builder().withGuid("BBB").withLabel("Bar").withTask("bar").build());
         schedule.addActivity(TestUtils.getActivity3());
         scheduledActivities = schedule.getScheduler().getScheduledActivities(plan, getContext(NOW.plusDays(1)));
-        assertFalse(scheduledActivities.get(0).getPersistent());
+        assertFalse(scheduledActivities.getFirst().getPersistent());
         assertTrue(scheduledActivities.get(1).getPersistent());
     }
     
@@ -344,13 +344,13 @@ public class ActivitySchedulerTest {
         // User is in Moscow, however.
         DateTimeZone zone = DateTimeZone.forOffsetHours(3);
         List<ScheduledActivity> activities = schedule.getScheduler().getScheduledActivities(plan, getContext(zone, NOW.withZone(zone).plusDays(1)));
-        assertEquals(activities.get(0).getScheduledOn().toString(), "2015-03-26T10:00:00.000+03:00");
+        assertEquals(activities.getFirst().getScheduledOn().toString(), "2015-03-26T10:00:00.000+03:00");
         assertEquals(activities.get(1).getScheduledOn().toString(), "2015-03-27T10:00:00.000+03:00");
         
         // Now the user flies across the planet, and retrieves the tasks again, they are in the new timezone
         zone = DateTimeZone.forOffsetHours(-7);
         activities = schedule.getScheduler().getScheduledActivities(plan, getContext(zone, NOW.withZone(zone).plusDays(1)));
-        assertEquals(activities.get(0).getScheduledOn().toString(), "2015-03-26T10:00:00.000-07:00");
+        assertEquals(activities.getFirst().getScheduledOn().toString(), "2015-03-26T10:00:00.000-07:00");
         assertEquals(activities.get(1).getScheduledOn().toString(), "2015-03-27T10:00:00.000-07:00");
     }
     

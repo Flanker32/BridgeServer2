@@ -97,7 +97,7 @@ public class AppConfigElementServiceTest {
         verify(dao).saveElementRevision(elementCaptor.capture());
         
         // These have been correctly reset
-        assertEquals(elementCaptor.getValue().getRevision(), new Long(1));
+        assertEquals(elementCaptor.getValue().getRevision(), Long.valueOf(1));
         AppConfigElement captured = elementCaptor.getValue();
         assertNull(captured.getVersion());
         assertFalse(captured.isDeleted());
@@ -132,7 +132,7 @@ public class AppConfigElementServiceTest {
         verify(dao).saveElementRevision(elementCaptor.capture());
         
         // Revision was maintained because it was set, and doesn't exist
-        assertEquals(elementCaptor.getValue().getRevision(), new Long(3));
+        assertEquals(elementCaptor.getValue().getRevision(), Long.valueOf(3));
     }
 
     @Test
@@ -274,14 +274,14 @@ public class AppConfigElementServiceTest {
             assertEquals(element.getModifiedOn(), TIMESTAMP.getMillis());
         }
         verify(dao, times(2)).saveElementRevision(elementCaptor.capture());
-        assertTrue(elementCaptor.getAllValues().get(0).isDeleted());
+        assertTrue(elementCaptor.getAllValues().getFirst().isDeleted());
         assertTrue(elementCaptor.getAllValues().get(1).isDeleted());
     }
     
     @Test
     public void deleteElementAllRevisionsPermanently() {
-        elements.get(0).setId("id");
-        elements.get(0).setRevision(1L);
+        elements.getFirst().setId("id");
+        elements.getFirst().setRevision(1L);
         elements.get(1).setId("id");
         elements.get(1).setRevision(2L);
         when(dao.getElementRevisions(TEST_APP_ID, "id", true)).thenReturn(elements);        

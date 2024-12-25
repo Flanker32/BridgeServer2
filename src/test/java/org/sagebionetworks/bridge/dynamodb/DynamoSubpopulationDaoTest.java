@@ -131,8 +131,8 @@ public class DynamoSubpopulationDaoTest extends Mockito {
         verify(mockCriteriaDao).createOrUpdateCriteria(criteriaCaptor.capture());
         Criteria criteria = criteriaCaptor.getValue();
         assertEquals(criteria.getKey(), "subpopulation:" + TEST_APP_ID);
-        assertEquals(criteria.getMinAppVersion(ANDROID), new Integer(0));
-        assertEquals(criteria.getMinAppVersion(IOS), new Integer(0));
+        assertEquals(criteria.getMinAppVersion(ANDROID), Integer.valueOf(0));
+        assertEquals(criteria.getMinAppVersion(IOS), Integer.valueOf(0));
         assertSame(criteria, subpop.getCriteria());
     }
     
@@ -282,9 +282,9 @@ public class DynamoSubpopulationDaoTest extends Mockito {
         // The test subpopulation in the list that is returned from the mock mapper does not have
         // a criteria object. So it will be created as part of loading.
         List<Subpopulation> list = dao.getSubpopulations(TEST_APP_ID, true);
-        assertEquals(list.get(0).getCriteria(), CRITERIA);
+        assertEquals(list.getFirst().getCriteria(), CRITERIA);
         
-        verify(mockCriteriaDao).getCriteria(list.get(0).getCriteria().getKey());
+        verify(mockCriteriaDao).getCriteria(list.getFirst().getCriteria().getKey());
     }
     
     @Test
@@ -292,10 +292,10 @@ public class DynamoSubpopulationDaoTest extends Mockito {
         // The test subpopulation in the list that is returned from the mock mapper does not have
         // a criteria object. So it will be created as part of loading.
         List<Subpopulation> list = dao.getSubpopulations(TEST_APP_ID, true);
-        assertEquals(list.get(0).getCriteria(), CRITERIA);
+        assertEquals(list.getFirst().getCriteria(), CRITERIA);
         
         // In this case it actually returns a criteria object.
-        verify(mockCriteriaDao).getCriteria(list.get(0).getCriteria().getKey());
+        verify(mockCriteriaDao).getCriteria(list.getFirst().getCriteria().getKey());
     }
     
     @Test
@@ -314,7 +314,7 @@ public class DynamoSubpopulationDaoTest extends Mockito {
         doReturn(CRITERIA).when(mockCriteriaDao).getCriteria(any());
         
         List<Subpopulation> subpops = dao.getSubpopulations(TEST_APP_ID, true);
-        Criteria retrievedCriteria = subpops.get(0).getCriteria();
+        Criteria retrievedCriteria = subpops.getFirst().getCriteria();
         assertEquals(retrievedCriteria, CRITERIA);
     }    
     
@@ -379,7 +379,7 @@ public class DynamoSubpopulationDaoTest extends Mockito {
         
         List<Subpopulation> result = dao.getSubpopulations(TEST_APP_ID, false);
         assertEquals(result.size(), 1);
-        assertFalse(result.get(0).isDeleted());
+        assertFalse(result.getFirst().isDeleted());
     }
 
     @Test

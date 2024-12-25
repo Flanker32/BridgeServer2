@@ -71,7 +71,7 @@ public class HibernateUploadTableJobDaoTest {
         PagedResourceList<UploadTableJob> result = dao.listUploadTableJobsForStudy(TestConstants.TEST_APP_ID,
                 TestConstants.TEST_STUDY_ID, 10, 20);
         assertEquals(result.getItems().size(), 1);
-        assertSame(result.getItems().get(0), job);
+        assertSame(result.getItems().getFirst(), job);
 
         assertEquals(result.getRequestParams().get("start"), 10);
         assertEquals(result.getRequestParams().get("pageSize"), 20);

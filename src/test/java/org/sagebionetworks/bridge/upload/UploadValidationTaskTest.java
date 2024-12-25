@@ -13,7 +13,7 @@ import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 import static org.mockito.Mockito.eq;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 import java.io.IOException;
 import java.util.List;
@@ -100,7 +100,7 @@ public class UploadValidationTaskTest {
         // validate that the handlers ran by checking the messages they wrote
         List<String> messageList = ctx.getMessageList();
         assertEquals(messageList.size(), 3);
-        assertEquals(messageList.get(0), "foo was here");
+        assertEquals(messageList.getFirst(), "foo was here");
         assertEquals(messageList.get(1), "bar was here");
         assertEquals(messageList.get(2), "kilroy was here");
     }
@@ -144,7 +144,7 @@ public class UploadValidationTaskTest {
         // the second message exists.
         List<String> messageList = ctx.getMessageList();
         assertEquals(messageList.size(), 2);
-        assertEquals(messageList.get(0), "foo succeeded");
+        assertEquals(messageList.getFirst(), "foo succeeded");
         assertFalse(Strings.isNullOrEmpty(messageList.get(1)));
     }
 

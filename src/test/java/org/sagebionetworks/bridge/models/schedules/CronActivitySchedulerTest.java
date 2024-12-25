@@ -218,7 +218,7 @@ public class CronActivitySchedulerTest {
         scheduledActivities = schedule.getScheduler().getScheduledActivities(plan, getContext(ENROLLMENT.plusDays(4)));
         // Ultimate result: It's the 23rd, and right at enrollment, you see this task from the 21st.
         assertDates(scheduledActivities, "2015-03-21 06:00");
-        assertEquals(scheduledActivities.get(0).getStatus(), ScheduledActivityStatus.AVAILABLE);
+        assertEquals(scheduledActivities.getFirst().getStatus(), ScheduledActivityStatus.AVAILABLE);
         DateTimeUtils.setCurrentMillisSystem();
     }
     @Test
@@ -318,7 +318,7 @@ public class CronActivitySchedulerTest {
         List<DateTime> scheduleDates = scheduledActivities.stream()
                 .map(ScheduledActivity::getScheduledOn)
                 .collect(Collectors.toList());
-        assertEquals(scheduleDates.get(0).toString(), "2016-05-12T22:00:00.000-07:00");
+        assertEquals(scheduleDates.getFirst().toString(), "2016-05-12T22:00:00.000-07:00");
         assertEquals(scheduleDates.get(1).toString(), "2016-05-13T10:00:00.000-07:00");
         assertEquals(scheduleDates.get(2).toString(), "2016-05-13T22:00:00.000-07:00");
     }

@@ -91,7 +91,7 @@ public class SchedulePlanValidatorTest {
     @Test
     public void abTestStrategyScheduleAddsUpTo100() {
         SchedulePlan plan = getValidABTestStrategy();
-        ((ABTestScheduleStrategy)plan.getStrategy()).getScheduleGroups().get(0).setPercentage(10);
+        ((ABTestScheduleStrategy)plan.getStrategy()).getScheduleGroups().getFirst().setPercentage(10);
         
         assertMessage(plan, "strategy.scheduleGroups groups must add up to 100%", "strategy.scheduleGroups");
     }
@@ -99,7 +99,7 @@ public class SchedulePlanValidatorTest {
     @Test
     public void abTestStrategyScheduleRequiresSchedule() {
         SchedulePlan plan = getValidABTestStrategy();
-        ((ABTestScheduleStrategy)plan.getStrategy()).getScheduleGroups().get(0).setSchedule(null);
+        ((ABTestScheduleStrategy)plan.getStrategy()).getScheduleGroups().getFirst().setSchedule(null);
         
         assertMessage(plan, "strategy.scheduleGroups[0].schedule is required", "strategy.scheduleGroups[0].schedule");
     }
@@ -109,7 +109,7 @@ public class SchedulePlanValidatorTest {
             Validate.entityThrowingException(validator, plan);
             fail("Should have thrown exception");
         } catch (InvalidEntityException e) {
-            assertEquals(e.getErrors().get(fieldName).get(0), message);
+            assertEquals(e.getErrors().get(fieldName).getFirst(), message);
         }
     }
 

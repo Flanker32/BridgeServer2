@@ -7,8 +7,8 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.function.Function;
 
-import javax.persistence.PersistenceException;
-import javax.persistence.RollbackException;
+import jakarta.persistence.PersistenceException;
+import jakarta.persistence.RollbackException;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;

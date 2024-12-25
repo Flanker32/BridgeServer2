@@ -2,8 +2,8 @@ package org.sagebionetworks.bridge.upload;
 
 import java.util.List;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Resource;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Resource;
 
 import org.sagebionetworks.bridge.dao.UploadDao;
 import org.sagebionetworks.bridge.file.FileHelper;

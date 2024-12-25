@@ -57,7 +57,7 @@ public class ConsentSignatureValidator implements Validator {
                 Period period = new Period(birthdate, now);
 
                 if (period.getYears() < minAgeOfConsent || bissextileBirthdayAgeCheck(birthdate, now)) {
-                    String message = String.format(TOO_YOUNG, minAgeOfConsent);
+                    String message = TOO_YOUNG.formatted(minAgeOfConsent);
                     errors.rejectValue("birthdate", message);
                 }
             }

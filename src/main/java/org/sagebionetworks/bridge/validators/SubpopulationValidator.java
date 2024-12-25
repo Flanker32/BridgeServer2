@@ -43,7 +43,7 @@ public class SubpopulationValidator implements Validator {
         for (String dataGroup : subpop.getDataGroupsAssignedWhileConsented()) {
             if (!dataGroups.contains(dataGroup)) {
                 String listStr = (dataGroups.isEmpty()) ? "<empty>" : COMMA_SPACE_JOINER.join(dataGroups);
-                String message = String.format("'%s' is not in enumeration: %s", dataGroup, listStr);
+                String message = "'%s' is not in enumeration: %s".formatted(dataGroup, listStr);
                 errors.rejectValue("dataGroupsAssignedWhileConsented", message);
             }
         }
@@ -53,7 +53,7 @@ public class SubpopulationValidator implements Validator {
             for (String studyId : subpop.getStudyIdsAssignedOnConsent()) {
                 if (!studyIds.contains(studyId)) {
                     String listStr = COMMA_SPACE_JOINER.join(studyIds);
-                    String message = String.format("'%s' is not in enumeration: %s", studyId, listStr);
+                    String message = "'%s' is not in enumeration: %s".formatted(studyId, listStr);
                     errors.rejectValue("studyIdsAssignedOnConsent", message);
                 }
             }

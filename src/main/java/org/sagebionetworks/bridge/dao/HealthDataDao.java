@@ -1,6 +1,6 @@
 package org.sagebionetworks.bridge.dao;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 import java.util.List;
 
 import org.sagebionetworks.bridge.models.healthdata.HealthDataRecord;

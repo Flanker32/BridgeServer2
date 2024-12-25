@@ -261,7 +261,7 @@ public class AccountService {
         checkNotNull(accountId);
 
         Optional<Account> optional = accountDao.getAccount(accountId);
-        if (!optional.isPresent()) {
+        if (optional.isEmpty()) {
             return optional;
         }
         if (!canAccessAccount( optional.get() )) {

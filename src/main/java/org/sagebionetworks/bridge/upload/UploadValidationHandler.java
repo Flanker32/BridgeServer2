@@ -1,6 +1,6 @@
 package org.sagebionetworks.bridge.upload;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 /**
  * <p>

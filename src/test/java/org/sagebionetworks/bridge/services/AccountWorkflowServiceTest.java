@@ -37,7 +37,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
-import javax.mail.internet.MimeBodyPart;
+import jakarta.mail.internet.MimeBodyPart;
 
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
@@ -253,9 +253,9 @@ public class AccountWorkflowServiceTest extends Mockito {
         MimeTypeEmail email = provider.getMimeTypeEmail();
         assertEquals(email.getSenderAddress(), "\"This app name\" <support@support.com>");
         assertEquals(email.getRecipientAddresses().size(), 1);
-        assertEquals(email.getRecipientAddresses().get(0), EMAIL);
+        assertEquals(email.getRecipientAddresses().getFirst(), EMAIL);
         assertEquals(email.getSubject(), "VE This app name");
-        MimeBodyPart body = email.getMessageParts().get(0);
+        MimeBodyPart body = email.getMessageParts().getFirst();
         String bodyString = (String)body.getContent();
         assertTrue(bodyString.contains("/mobile/verifyEmail.html?appId=" + TEST_APP_ID + "&sptoken="+SPTOKEN));
         assertTrue(bodyString.contains("/ve?appId=" + TEST_APP_ID + "&sptoken="+SPTOKEN));
@@ -489,11 +489,11 @@ public class AccountWorkflowServiceTest extends Mockito {
         MimeTypeEmail email = provider.getMimeTypeEmail();
         assertEquals(email.getSenderAddress(), "\"This app name\" <support@support.com>");
         assertEquals(email.getRecipientAddresses().size(), 1);
-        assertEquals(email.getRecipientAddresses().get(0), EMAIL);
+        assertEquals(email.getRecipientAddresses().getFirst(), EMAIL);
         assertEquals(email.getSubject(), "AE This app name");
         assertEquals(email.getType(), EmailType.RESET_PASSWORD);
         
-        MimeBodyPart body = email.getMessageParts().get(0);
+        MimeBodyPart body = email.getMessageParts().getFirst();
         String bodyString = (String)body.getContent();
         assertTrue(bodyString.contains("/mobile/resetPassword.html?appId="+TEST_APP_ID+"&sptoken="+SPTOKEN));
         assertTrue(bodyString.contains("/rp?appId="+TEST_APP_ID+"&sptoken="+SPTOKEN));
@@ -539,10 +539,10 @@ public class AccountWorkflowServiceTest extends Mockito {
         MimeTypeEmail email = provider.getMimeTypeEmail();
         assertEquals(email.getSenderAddress(), "\"This app name\" <support@support.com>");
         assertEquals(email.getRecipientAddresses().size(), 1);
-        assertEquals(email.getRecipientAddresses().get(0), EMAIL);
+        assertEquals(email.getRecipientAddresses().getFirst(), EMAIL);
         assertEquals(email.getSubject(), "AE This app name");
         
-        MimeBodyPart body = email.getMessageParts().get(0);
+        MimeBodyPart body = email.getMessageParts().getFirst();
         String bodyString = (String)body.getContent();
         assertTrue(bodyString.contains("/mobile/resetPassword.html?appId="+TEST_APP_ID+"&sptoken="+SPTOKEN));
         assertTrue(bodyString.contains("/rp?appId="+TEST_APP_ID+"&sptoken="+SPTOKEN));
@@ -587,7 +587,7 @@ public class AccountWorkflowServiceTest extends Mockito {
             
             // Email content is verified in test above. Just verify email sign-in URL.
             MimeTypeEmail email = oneEmailProvider.getMimeTypeEmail();
-            MimeBodyPart body = email.getMessageParts().get(0);
+            MimeBodyPart body = email.getMessageParts().getFirst();
             String bodyString = (String)body.getContent();
             assertTrue(bodyString.contains("/s/"+TEST_APP_ID+"?email=email%40email.com&token="+TOKEN));
             assertFalse(bodyString.contains("${emailSignInUrl}"));
@@ -617,7 +617,7 @@ public class AccountWorkflowServiceTest extends Mockito {
         assertEquals(provider.getTokenMap().get("expirationWindow"), "2");
         assertEquals(provider.getTokenMap().get("expirationPeriod"), "2 hours");
 
-        String bodyString = (String) provider.getMimeTypeEmail().getMessageParts().get(0).getContent();
+        String bodyString = (String) provider.getMimeTypeEmail().getMessageParts().getFirst().getContent();
         assertTrue(bodyString.contains("${emailSignInUrl}"));
         
         verify(mockCacheProvider).setObject(PASSWORD_RESET_FOR_EMAIL, EMAIL,
@@ -797,9 +797,9 @@ public class AccountWorkflowServiceTest extends Mockito {
         MimeTypeEmail email = provider.getMimeTypeEmail();
         assertEquals(email.getSenderAddress(), "\"This app name\" <support@support.com>");
         assertEquals(email.getRecipientAddresses().size(), 1);
-        assertEquals(email.getRecipientAddresses().get(0), EMAIL);
+        assertEquals(email.getRecipientAddresses().getFirst(), EMAIL);
         assertEquals(email.getSubject(), "RP This app name");
-        MimeBodyPart body = email.getMessageParts().get(0);
+        MimeBodyPart body = email.getMessageParts().getFirst();
         String bodyString = (String)body.getContent();
         assertTrue(bodyString.contains("/rp?appId="+TEST_APP_ID+"&sptoken="+SPTOKEN));
         assertEquals(email.getType(), EmailType.RESET_PASSWORD);
@@ -965,7 +965,7 @@ public class AccountWorkflowServiceTest extends Mockito {
         assertTrue(provider.getTokenMap().get("shortUrl").contains(token));
         assertEquals(provider.getApp(), app);
         assertEquals(Iterables.getFirst(provider.getRecipientEmails(), null), EMAIL);
-        assertEquals(provider.getMimeTypeEmail().getMessageParts().get(0).getContent(), "Body " + provider.getTokenMap().get("token"));
+        assertEquals(provider.getMimeTypeEmail().getMessageParts().getFirst().getContent(), "Body " + provider.getTokenMap().get("token"));
         assertEquals(provider.getType(), EmailType.EMAIL_SIGN_IN);
 
         // Verify throttling cache calls.
@@ -1059,9 +1059,9 @@ public class AccountWorkflowServiceTest extends Mockito {
         assertEquals(provider.getTokenMap().get("token"), TOKEN);
         assertEquals(provider.getTokenMap().get("emailSignInExpirationPeriod"), "1 hour");
         
-        assertEquals(provider.getMimeTypeEmail().getRecipientAddresses().get(0), EMAIL);
+        assertEquals(provider.getMimeTypeEmail().getRecipientAddresses().getFirst(), EMAIL);
         assertEquals(provider.getPlainSenderEmail(), SUPPORT_EMAIL);
-        String bodyString = (String)provider.getMimeTypeEmail().getMessageParts().get(0).getContent();
+        String bodyString = (String)provider.getMimeTypeEmail().getMessageParts().getFirst().getContent();
         assertEquals(bodyString, "Body "+TOKEN);
         
         verify(mockCacheProvider).getObject(EMAIL_SIGNIN_CACHE_KEY, String.class);

@@ -33,10 +33,12 @@ public class SchemaReferenceTest {
     @Test
     public void jsonSerialization() throws Exception {
         // start with JSON
-        String jsonText = "{\n" +
-                "   \"id\":\"test-schema\",\n" +
-                "   \"revision\":7\n" +
-                "}";
+        String jsonText = """
+                {
+                   "id":"test-schema",
+                   "revision":7
+                }\
+                """;
 
         // convert to POJO
         SchemaReference schemaRef = BridgeObjectMapper.get().readValue(jsonText, SchemaReference.class);

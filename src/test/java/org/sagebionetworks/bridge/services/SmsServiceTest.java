@@ -270,8 +270,8 @@ public class SmsServiceTest {
         List<UploadFieldDefinition> fieldDefList = schema.getFieldDefinitions();
         assertEquals(fieldDefList.size(), 3);
 
-        assertEquals(fieldDefList.get(0).getName(), SmsService.FIELD_NAME_SENT_ON);
-        assertEquals(fieldDefList.get(0).getType(), UploadFieldType.TIMESTAMP);
+        assertEquals(fieldDefList.getFirst().getName(), SmsService.FIELD_NAME_SENT_ON);
+        assertEquals(fieldDefList.getFirst().getType(), UploadFieldType.TIMESTAMP);
 
         assertEquals(fieldDefList.get(1).getName(), SmsService.FIELD_NAME_SMS_TYPE);
         assertEquals(fieldDefList.get(1).getType(), UploadFieldType.STRING);

@@ -380,28 +380,28 @@ public class HibernateAccountTest {
         List<ConsentSignature> history1 = histories.get(GUID1);
         assertEquals(history1.size(), 3);
         // Signed on values are copied over from keys
-        assertEquals(history1.get(0).getSignedOn(), TIME1);
+        assertEquals(history1.getFirst().getSignedOn(), TIME1);
         assertEquals(history1.get(1).getSignedOn(), TIME2);
         assertEquals(history1.get(2).getSignedOn(), TIME3);
         
         List<ConsentSignature> history2 = histories.get(GUID2);
         assertEquals(history2.size(), 2);
         // Signed on values are copied over from keys
-        assertEquals(history2.get(0).getSignedOn(), TIME4);
+        assertEquals(history2.getFirst().getSignedOn(), TIME4);
         assertEquals(history2.get(1).getSignedOn(), TIME5);
         
         // Test getConsentSignatureHistory(guid). Should produce identical results.
         history1 = account.getConsentSignatureHistory(GUID1);
         assertEquals(history1.size(), 3);
         // Signed on values are copied over from keys
-        assertEquals(history1.get(0).getSignedOn(), TIME1);
+        assertEquals(history1.getFirst().getSignedOn(), TIME1);
         assertEquals(history1.get(1).getSignedOn(), TIME2);
         assertEquals(history1.get(2).getSignedOn(), TIME3);
         
         history2 = account.getConsentSignatureHistory(GUID2);
         assertEquals(history2.size(), 2);
         // Signed on values are copied over from keys
-        assertEquals(history2.get(0).getSignedOn(), TIME4);
+        assertEquals(history2.getFirst().getSignedOn(), TIME4);
         assertEquals(history2.get(1).getSignedOn(), TIME5);
         
         // The last consent in the series was withdrawn, so this consent is not active.

@@ -572,7 +572,7 @@ public class DemographicServiceTest {
 
         Optional<DemographicUser> returnedDemographicUser = demographicService.getDemographicUser(TEST_APP_ID, TEST_STUDY_ID, TEST_USER_ID);
         verify(demographicDao).getDemographicUser(TEST_APP_ID, TEST_STUDY_ID, TEST_USER_ID);
-        assertTrue(!returnedDemographicUser.isPresent());
+        assertTrue(returnedDemographicUser.isEmpty());
     }
 
     /**

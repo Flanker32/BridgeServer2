@@ -97,13 +97,15 @@ public class DynamoActivityEventTest {
     @Test
     public void serialize() throws Exception {
         // Start with JSON.
-        String jsonText = "{\n" +
-                "   \"healthCode\":\"test-health-code\",\n" +
-                "   \"eventId\":\"test-event\",\n" +
-                "   \"updateType\":\"mutable\",\n" + // should be ignored
-                "   \"answerValue\":\"dummy answer\",\n" +
-                "   \"timestamp\":\"2018-08-20T16:15:19.913Z\"\n" +
-                "}";
+        String jsonText = """
+                {
+                   "healthCode":"test-health-code",
+                   "eventId":"test-event",
+                   "updateType":"mutable",
+                   "answerValue":"dummy answer",
+                   "timestamp":"2018-08-20T16:15:19.913Z"
+                }\
+                """;
 
         // Convert to POJO.
         ActivityEvent activityEvent = BridgeObjectMapper.get().readValue(jsonText, ActivityEvent.class);
@@ -133,12 +135,14 @@ public class DynamoActivityEventTest {
         assertEquals(filteredActivityNode.get("type").textValue(), "ActivityEvent");
         
         // without a studyId
-        jsonText = "{\n" +
-                "   \"healthCode\":\"test-health-code\",\n" +
-                "   \"eventId\":\"test-event\",\n" +
-                "   \"answerValue\":\"dummy answer\",\n" +
-                "   \"timestamp\":\"2018-08-20T16:15:19.913Z\"\n" +
-                "}";
+        jsonText = """
+                {
+                   "healthCode":"test-health-code",
+                   "eventId":"test-event",
+                   "answerValue":"dummy answer",
+                   "timestamp":"2018-08-20T16:15:19.913Z"
+                }\
+                """;
         
         activityEvent = BridgeObjectMapper.get().readValue(jsonText, ActivityEvent.class);
         assertNull(activityEvent.getHealthCode());

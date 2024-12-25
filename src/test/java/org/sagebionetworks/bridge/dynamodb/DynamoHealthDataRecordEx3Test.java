@@ -40,13 +40,15 @@ public class DynamoHealthDataRecordEx3Test {
         upload.setCompletedOn(TestConstants.CREATED_ON.getMillis());
 
         // Create metadata.
-        String metadataJsonText = "{\n" +
-                "   \"null-key\":null,\n" +
-                "   \"string-key\":\"string value\",\n" +
-                "   \"int-key\":42,\n" +
-                "   \"array-key\":[\"foo\", \"bar\"],\n" +
-                "   \"object-key\":{\"baz\":\"qux\"}\n" +
-                "}";
+        String metadataJsonText = """
+                {
+                   "null-key":null,
+                   "string-key":"string value",
+                   "int-key":42,
+                   "array-key":["foo", "bar"],
+                   "object-key":{"baz":"qux"}
+                }\
+                """;
         ObjectNode metadataNode = (ObjectNode) BridgeObjectMapper.get().readTree(metadataJsonText);
         upload.setMetadata(metadataNode);
 

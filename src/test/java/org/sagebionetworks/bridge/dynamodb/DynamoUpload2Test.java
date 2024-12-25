@@ -123,7 +123,7 @@ public class DynamoUpload2Test {
         assertTrue(initialList.isEmpty());
 
         assertEquals(list2.size(), 1);
-        assertEquals(list2.get(0), "first message");
+        assertEquals(list2.getFirst(), "first message");
 
         // set should overwrite
         upload2.setValidationMessageList(ImmutableList.of("second message"));
@@ -131,10 +131,10 @@ public class DynamoUpload2Test {
         assertTrue(initialList.isEmpty());
 
         assertEquals(list2.size(), 1);
-        assertEquals(list2.get(0), "first message");
+        assertEquals(list2.getFirst(), "first message");
 
         assertEquals(list3.size(), 1);
-        assertEquals(list3.get(0), "second message");
+        assertEquals(list3.getFirst(), "second message");
     }
 
     @Test
@@ -151,7 +151,7 @@ public class DynamoUpload2Test {
         assertTrue(initialList.isEmpty());
 
         assertEquals(list2.size(), 1);
-        assertEquals(list2.get(0), "first message");
+        assertEquals(list2.getFirst(), "first message");
 
         // append again
         upload2.appendValidationMessages(ImmutableList.of("second message"));
@@ -159,10 +159,10 @@ public class DynamoUpload2Test {
         assertTrue(initialList.isEmpty());
 
         assertEquals(list2.size(), 1);
-        assertEquals(list2.get(0), "first message");
+        assertEquals(list2.getFirst(), "first message");
 
         assertEquals(list3.size(), 2);
-        assertEquals(list3.get(0), "first message");
+        assertEquals(list3.getFirst(), "first message");
         assertEquals(list3.get(1), "second message");
     }
 
@@ -180,7 +180,7 @@ public class DynamoUpload2Test {
         assertTrue(initialList.isEmpty());
 
         assertEquals(list2.size(), 1);
-        assertEquals(list2.get(0), "first message");
+        assertEquals(list2.getFirst(), "first message");
 
         // append on a set
         upload2.appendValidationMessages(ImmutableList.of("second message"));
@@ -188,10 +188,10 @@ public class DynamoUpload2Test {
         assertTrue(initialList.isEmpty());
 
         assertEquals(list2.size(), 1);
-        assertEquals(list2.get(0), "first message");
+        assertEquals(list2.getFirst(), "first message");
 
         assertEquals(list3.size(), 2);
-        assertEquals(list3.get(0), "first message");
+        assertEquals(list3.getFirst(), "first message");
         assertEquals(list3.get(1), "second message");
 
         // set should overwrite the append
@@ -200,14 +200,14 @@ public class DynamoUpload2Test {
         assertTrue(initialList.isEmpty());
 
         assertEquals(list2.size(), 1);
-        assertEquals(list2.get(0), "first message");
+        assertEquals(list2.getFirst(), "first message");
 
         assertEquals(list3.size(), 2);
-        assertEquals(list3.get(0), "first message");
+        assertEquals(list3.getFirst(), "first message");
         assertEquals(list3.get(1), "second message");
 
         assertEquals(list4.size(), 1);
-        assertEquals(list4.get(0), "third message");
+        assertEquals(list4.getFirst(), "third message");
     }
     
     @Test

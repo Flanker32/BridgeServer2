@@ -271,7 +271,7 @@ public class ApplicationControllerTest extends Mockito {
         
         ResponseEntity<String> response = controller.redirectToURL("ABC");
         assertEquals(302, response.getStatusCodeValue());
-        assertEquals("https://long.url.com/", response.getHeaders().get("Location").get(0));
+        assertEquals("https://long.url.com/", response.getHeaders().get("Location").getFirst());
         verify(urlShortenerService).retrieveUrl("ABC");
     }
     

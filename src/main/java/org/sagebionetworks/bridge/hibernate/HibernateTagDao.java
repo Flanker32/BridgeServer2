@@ -3,7 +3,7 @@ package org.sagebionetworks.bridge.hibernate;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 
 import com.google.common.collect.ListMultimap;
 import com.google.common.collect.MultimapBuilder;

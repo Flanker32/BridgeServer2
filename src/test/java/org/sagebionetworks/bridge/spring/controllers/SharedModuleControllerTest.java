@@ -75,7 +75,7 @@ public class SharedModuleControllerTest extends Mockito {
     private static void assertStatus(SharedModuleImportStatus status) throws Exception {
         assertEquals(status.getModuleType(), SharedModuleType.SCHEMA);
         assertEquals(status.getSchemaId(), SCHEMA_ID);
-        assertEquals(status.getSchemaRevision(), new Integer(SCHEMA_REV));
+        assertEquals(status.getSchemaRevision(), Integer.valueOf(SCHEMA_REV));
     }
 
 }

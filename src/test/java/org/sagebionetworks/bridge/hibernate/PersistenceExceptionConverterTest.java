@@ -3,7 +3,7 @@ package org.sagebionetworks.bridge.hibernate;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNull;
 
-import javax.persistence.PersistenceException;
+import jakarta.persistence.PersistenceException;
 
 import org.hibernate.exception.ConstraintViolationException;
 import org.testng.annotations.Test;

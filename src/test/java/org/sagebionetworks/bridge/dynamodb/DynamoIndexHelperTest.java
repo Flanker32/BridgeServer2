@@ -6,7 +6,7 @@ import static org.mockito.Mockito.when;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNull;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 import java.util.HashMap;
 import java.util.List;
@@ -174,8 +174,8 @@ public class DynamoIndexHelperTest {
     private static void validateKeyObjects(List<Thing> keyList) {
         assertEquals(keyList.size(), 4);
 
-        assertEquals(keyList.get(0).key, "foo key");
-        assertNull(keyList.get(0).value);
+        assertEquals(keyList.getFirst().key, "foo key");
+        assertNull(keyList.getFirst().value);
 
         assertEquals(keyList.get(1).key, "bar key");
         assertNull(keyList.get(1).value);

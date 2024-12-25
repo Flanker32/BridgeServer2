@@ -6,7 +6,7 @@ import static org.sagebionetworks.bridge.models.SearchTermPredicate.AND;
 
 import java.util.List;
 
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import org.joda.time.DateTime;

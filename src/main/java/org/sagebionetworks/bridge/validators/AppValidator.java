@@ -169,12 +169,12 @@ public class AppValidator implements Validator {
         
         for (String userProfileAttribute : app.getUserProfileAttributes()) {
             if (RESERVED_ATTR_NAMES.contains(userProfileAttribute)) {
-                String msg = String.format("'%s' conflicts with existing user profile property", userProfileAttribute);
+                String msg = "'%s' conflicts with existing user profile property".formatted(userProfileAttribute);
                 errors.rejectValue("userProfileAttributes", msg);
             }
             // For backwards compatibility, we require this to be a valid JavaScript identifier.
             if (!userProfileAttribute.matches(JS_IDENTIFIER_PATTERN)) {
-                String msg = String.format("'%s' must contain only digits, letters, underscores and dashes, and cannot start with a dash", userProfileAttribute);
+                String msg = "'%s' must contain only digits, letters, underscores and dashes, and cannot start with a dash".formatted(userProfileAttribute);
                 errors.rejectValue("userProfileAttributes", msg);
             }
         }

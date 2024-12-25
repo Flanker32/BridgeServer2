@@ -81,7 +81,7 @@ public class UploadValidationContextTest {
         assertEquals(copy.getRecordId(), "test-record");
 
         assertEquals(copy.getMessageList().size(), 1);
-        assertEquals(copy.getMessageList().get(0), "common message");
+        assertEquals(copy.getMessageList().getFirst(), "common message");
 
         // modify original and validate copy unchanged
         original.setHealthCode("new-health-code");
@@ -89,7 +89,7 @@ public class UploadValidationContextTest {
 
         assertEquals(copy.getHealthCode(), HEALTH_CODE);
         assertEquals(copy.getMessageList().size(), 1);
-        assertEquals(copy.getMessageList().get(0), "common message");
+        assertEquals(copy.getMessageList().getFirst(), "common message");
 
         // modify copy and validate original unchanged
         copy.setRecordId("new-record-id");
@@ -97,7 +97,7 @@ public class UploadValidationContextTest {
 
         assertEquals(original.getRecordId(), "test-record");
         assertEquals(original.getMessageList().size(), 2);
-        assertEquals(original.getMessageList().get(0), "common message");
+        assertEquals(original.getMessageList().getFirst(), "common message");
         assertEquals(original.getMessageList().get(1), "original message");
     }
 }

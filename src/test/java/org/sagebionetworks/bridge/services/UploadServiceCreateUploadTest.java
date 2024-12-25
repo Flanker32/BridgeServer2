@@ -11,6 +11,7 @@ import static org.sagebionetworks.bridge.BridgeConstants.API_APP_ID;
 import static org.sagebionetworks.bridge.TestConstants.TEST_APP_ID;
 import static org.testng.Assert.assertEquals;
 
+import java.net.URI;
 import java.net.URL;
 
 import com.amazonaws.services.s3.AmazonS3;
@@ -88,8 +89,7 @@ public class UploadServiceCreateUploadTest {
         // mock presigned URL call
         presignedUrlRequestArgumentCaptor = ArgumentCaptor.forClass(GeneratePresignedUrlRequest.class);
         AmazonS3 mockS3UploadClient = mock(AmazonS3.class);
-        when(mockS3UploadClient.generatePresignedUrl(presignedUrlRequestArgumentCaptor.capture())).thenReturn(new URL(
-                TEST_PRESIGNED_URL));
+        when(mockS3UploadClient.generatePresignedUrl(presignedUrlRequestArgumentCaptor.capture())).thenReturn(URI.create(TEST_PRESIGNED_URL).toURL());
 
         // set up service
         svc = new UploadService();

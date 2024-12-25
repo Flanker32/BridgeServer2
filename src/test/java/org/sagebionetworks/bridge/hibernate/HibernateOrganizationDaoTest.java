@@ -53,7 +53,7 @@ public class HibernateOrganizationDaoTest extends Mockito {
         verify(mockHelper).queryGet(eq(GET_SUMMARY_QUERY), paramsCaptor.capture(), 
                 eq(5), eq(25), eq(HibernateOrganization.class));
         
-        assertEquals(paramsCaptor.getAllValues().get(0).get("appId"), TEST_APP_ID);
+        assertEquals(paramsCaptor.getAllValues().getFirst().get("appId"), TEST_APP_ID);
         assertEquals(paramsCaptor.getAllValues().get(1).get("appId"), TEST_APP_ID);
     }
 

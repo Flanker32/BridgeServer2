@@ -190,7 +190,7 @@ public class TimelineTest extends Mockito {
         // This fails if you substitute a HashMap for the LinkedHashMap in 
         // Timeline, which preserves key insertion order.
         Timeline timeline = Scheduler.INSTANCE.calculateTimeline(schedule);
-        assertEquals(timeline.getSessions().get(0).getGuid(), SESSION_GUID_1);
+        assertEquals(timeline.getSessions().getFirst().getGuid(), SESSION_GUID_1);
         assertEquals(timeline.getSessions().get(1).getGuid(), SESSION_GUID_2);
         assertEquals(timeline.getSessions().get(2).getGuid(), SESSION_GUID_3);
         assertEquals(timeline.getSessions().get(3).getGuid(), SESSION_GUID_4);
@@ -214,8 +214,8 @@ public class TimelineTest extends Mockito {
         // Alter the schedule so the notification repeats every 2 days within the 
         // time window of 7 days, with 4 events triggering it, so that is 1 
         // notification + 3 from the interval = 4 per window * 28 = 112 total notifications.
-        schedule.getSessions().get(0).getNotifications().get(0).setInterval(Period.parse("P2D"));
-        schedule.getSessions().get(0).getTimeWindows().get(0).setExpiration(Period.parse("P6D"));
+        schedule.getSessions().getFirst().getNotifications().getFirst().setInterval(Period.parse("P2D"));
+        schedule.getSessions().getFirst().getTimeWindows().getFirst().setExpiration(Period.parse("P6D"));
         timeline = Scheduler.INSTANCE.calculateTimeline(schedule);
         
         assertEquals(timeline.getTotalNotifications(), 112);

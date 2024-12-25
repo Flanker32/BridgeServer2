@@ -5,7 +5,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 
 import com.google.common.collect.Lists;
 import com.google.common.net.HttpHeaders;
@@ -75,7 +75,7 @@ public class ApplicationController extends BaseController {
     
     @GetMapping({"/mobile/verifyStudyEmail.html", "/mobile/verifyAppEmail.html", "/vse", "/vae"})
     public String verifyAppEmail(Model model, 
-            @RequestParam(name="appId", required=false) String appId,
+            @RequestParam(required=false) String appId,
             @RequestParam(name="study", required=false) String studyId) {
         App app = appService.getApp(appId != null ? appId : studyId);
         model.addAttribute(APP_NAME, HtmlUtils.htmlEscape(app.getName(), "UTF-8"));
@@ -84,7 +84,7 @@ public class ApplicationController extends BaseController {
     
     @GetMapping({"/mobile/verifyEmail.html", "/ve"})
     public String verifyEmail(Model model, 
-            @RequestParam(name="appId", required=false) String appId,
+            @RequestParam(required=false) String appId,
             @RequestParam(name="study", required=false) String studyId) {
         App app = appService.getApp(appId != null ? appId : studyId);
         model.addAttribute(APP_NAME, HtmlUtils.htmlEscape(app.getName(), "UTF-8"));
@@ -95,7 +95,7 @@ public class ApplicationController extends BaseController {
     
     @GetMapping({"/mobile/resetPassword.html", "/rp"})
     public String resetPassword(Model model, 
-            @RequestParam(name="appId", required=false) String appId,
+            @RequestParam(required=false) String appId,
             @RequestParam(name="study", required=false) String studyId) {
         App app = appService.getApp(appId != null ? appId : studyId);
         String passwordDescription = BridgeUtils.passwordPolicyDescription(app.getPasswordPolicy());
@@ -118,7 +118,7 @@ public class ApplicationController extends BaseController {
     /* Full URL to phone will include email and token, but these are not required for the error page. */
     @GetMapping("/mobile/startSession.html")
     public String startSessionWithQueryParam(Model model,
-            @RequestParam(name = "appId", required = false) String appId,
+            @RequestParam(required = false) String appId,
             @RequestParam(name = "study", required = false) String studyId) {
         App app = appService.getApp(appId != null ? appId : studyId);
         model.addAttribute(APP_NAME, HtmlUtils.htmlEscape(app.getName(), "UTF-8"));

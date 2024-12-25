@@ -69,8 +69,8 @@ public class SurveyPublishValidator implements Validator {
         if (hint == null) {
             return; // will have been validated above, skip this
         }
-        if (con instanceof MultiValueConstraints) {
-            doValidateConstraintsType(errors, hint, (MultiValueConstraints) con);
+        if (con instanceof MultiValueConstraints constraints) {
+            doValidateConstraintsType(errors, hint, constraints);
         }
     }
 

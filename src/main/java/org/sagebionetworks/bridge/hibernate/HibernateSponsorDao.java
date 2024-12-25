@@ -2,7 +2,7 @@ package org.sagebionetworks.bridge.hibernate;
 
 import java.util.List;
 
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 
 import com.google.common.collect.ImmutableList;
 

@@ -17,8 +17,8 @@ import static org.testng.Assert.assertTrue;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -152,15 +152,15 @@ public class SubpopulationControllerTest extends Mockito {
 
         GuidVersionHolder result = controller.createSubpopulation();
         assertEquals(result.getGuid(), "AAA");
-        assertEquals(result.getVersion(), new Long(1L));
+        assertEquals(result.getVersion(), Long.valueOf(1L));
 
         Subpopulation created = captor.getValue();
         assertEquals(created.getName(), "Name");
         assertEquals(created.getDescription(), "Description");
         assertTrue(created.isDefaultGroup());
         Criteria criteria = created.getCriteria();
-        assertEquals(criteria.getMinAppVersion(OperatingSystem.IOS), new Integer(2));
-        assertEquals(criteria.getMaxAppVersion(OperatingSystem.IOS), new Integer(10));
+        assertEquals(criteria.getMinAppVersion(OperatingSystem.IOS), Integer.valueOf(2));
+        assertEquals(criteria.getMaxAppVersion(OperatingSystem.IOS), Integer.valueOf(10));
         assertEquals(criteria.getAllOfGroups(), ImmutableSet.of("requiredGroup"));
         assertEquals(criteria.getNoneOfGroups(), ImmutableSet.of("prohibitedGroup"));
     }
@@ -178,7 +178,7 @@ public class SubpopulationControllerTest extends Mockito {
 
         GuidVersionHolder result = controller.updateSubpopulation("AAA");
         assertEquals(result.getGuid(), "AAA");
-        assertEquals(result.getVersion(), new Long(1L));
+        assertEquals(result.getVersion(), Long.valueOf(1L));
 
         Subpopulation created = captor.getValue();
         assertEquals(created.getGuidString(), "AAA");
@@ -186,8 +186,8 @@ public class SubpopulationControllerTest extends Mockito {
         assertEquals(created.getDescription(), "Description");
         assertTrue(created.isDefaultGroup());
         Criteria criteria = created.getCriteria();
-        assertEquals(criteria.getMinAppVersion(OperatingSystem.IOS), new Integer(2));
-        assertEquals(criteria.getMaxAppVersion(OperatingSystem.IOS), new Integer(10));
+        assertEquals(criteria.getMinAppVersion(OperatingSystem.IOS), Integer.valueOf(2));
+        assertEquals(criteria.getMaxAppVersion(OperatingSystem.IOS), Integer.valueOf(10));
         assertEquals(criteria.getAllOfGroups(), ImmutableSet.of("requiredGroup"));
         assertEquals(criteria.getNoneOfGroups(), ImmutableSet.of("prohibitedGroup"));
     }

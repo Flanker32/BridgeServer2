@@ -9,8 +9,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import javax.annotation.Nonnull;
-import javax.annotation.Resource;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Resource;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -241,10 +241,10 @@ public class IosSchemaValidationHandler2 implements UploadValidationHandler {
         JsonNode fileList = infoJson.get(KEY_FILES);
         if (fileList == null) {
             // Recover by replacing this with an empty list
-            context.addMessage(String.format("upload ID %s info.json does not contain file list", uploadId));
+            context.addMessage("upload ID %s info.json does not contain file list".formatted(uploadId));
             fileList = BridgeObjectMapper.get().createArrayNode();
         } else if (fileList.size() == 0) {
-            context.addMessage(String.format("upload ID %s info.json contains empty file list", uploadId));
+            context.addMessage("upload ID %s info.json contains empty file list".formatted(uploadId));
         }
 
         DateTime createdOnFromFileList = null;
@@ -253,13 +253,13 @@ public class IosSchemaValidationHandler2 implements UploadValidationHandler {
             JsonNode filenameNode = oneFileJson.get(KEY_FILENAME);
             String filename = null;
             if (filenameNode == null) {
-                context.addMessage(String.format("upload ID %s info.json contains file with no name",
+                context.addMessage("upload ID %s info.json contains file with no name".formatted(
                         uploadId));
             } else {
                 filename = filenameNode.textValue();
                 if (!fileNameSet.contains(filename)) {
-                    context.addMessage(String.format(
-                            "upload ID %s info.json contains filename %s, not found in the archive", uploadId,
+                    context.addMessage(
+                            "upload ID %s info.json contains filename %s, not found in the archive".formatted(uploadId,
                             filename));
                 }
             }
@@ -268,7 +268,7 @@ public class IosSchemaValidationHandler2 implements UploadValidationHandler {
             // the latest of these timestamps.
             JsonNode timestampNode = oneFileJson.get(KEY_TIMESTAMP);
             if (timestampNode == null) {
-                context.addMessage(String.format("upload ID %s filename %s has no timestamp", uploadId,
+                context.addMessage("upload ID %s filename %s has no timestamp".formatted(uploadId,
                         filename));
             } else {
                 DateTime timestamp = UploadUtil.parseIosTimestamp(timestampNode.textValue());
@@ -300,7 +300,7 @@ public class IosSchemaValidationHandler2 implements UploadValidationHandler {
             record.setCreatedOnTimeZone(HealthDataRecord.TIME_ZONE_FORMATTER.print(createdOnFromFileList));
         } else {
             // Recover by using current time. Don't set a timezone, since it's indeterminate.
-            context.addMessage(String.format("upload ID %s has no timestamps, using current time", uploadId));
+            context.addMessage("upload ID %s has no timestamps, using current time".formatted(uploadId));
             record.setCreatedOn(DateUtils.getCurrentMillisFromEpoch());
         }
     }
@@ -357,20 +357,20 @@ public class IosSchemaValidationHandler2 implements UploadValidationHandler {
             }
 
             if (oneAnswerNode == null || oneAnswerNode.isNull()) {
-                context.addMessage(String.format("Upload ID %s file %s is null", uploadId, filename));
+                context.addMessage("Upload ID %s file %s is null".formatted(uploadId, filename));
                 continue;
             }
 
             // question name ("item")
             JsonNode answerItemNode = oneAnswerNode.get("item");
             if (answerItemNode == null || answerItemNode.isNull()) {
-                context.addMessage(String.format("Upload ID %s file %s has no question name (item)", uploadId,
+                context.addMessage("Upload ID %s file %s has no question name (item)".formatted(uploadId,
                         filename));
                 continue;
             }
             String answerItem = answerItemNode.textValue();
             if (StringUtils.isBlank(answerItem)) {
-                context.addMessage(String.format("Upload ID %s file %s has blank question name(item)", uploadId,
+                context.addMessage("Upload ID %s file %s has blank question name(item)".formatted(uploadId,
                         filename));
                 continue;
             }
@@ -382,19 +382,19 @@ public class IosSchemaValidationHandler2 implements UploadValidationHandler {
                 questionTypeNameNode = oneAnswerNode.get("questionType");
             }
             if (questionTypeNameNode == null || questionTypeNameNode.isNull()) {
-                context.addMessage(String.format("Upload ID %s file %s has no question type", uploadId, filename));
+                context.addMessage("Upload ID %s file %s has no question type".formatted(uploadId, filename));
                 continue;
             }
             String questionTypeName = questionTypeNameNode.textValue();
             if (StringUtils.isBlank(questionTypeName)) {
-                context.addMessage(String.format("Upload ID %s file %s has blank question type", uploadId, filename));
+                context.addMessage("Upload ID %s file %s has blank question type".formatted(uploadId, filename));
                 continue;
             }
 
             // answer
             String answerKey = SURVEY_TYPE_TO_ANSWER_KEY_MAP.get(questionTypeName);
             if (answerKey == null) {
-                context.addMessage(String.format("Upload ID %s file %s has unknown question type %s", uploadId,
+                context.addMessage("Upload ID %s file %s has unknown question type %s".formatted(uploadId,
                         filename, questionTypeName));
                 continue;
             }

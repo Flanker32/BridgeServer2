@@ -70,7 +70,7 @@ public class AppConfigServiceTest {
     private static final List<ConfigReference> CONFIG_REF_LIST = ImmutableList.of(new ConfigReference("id", 1L));
     private static final List<FileReference> FILE_REF_LIST = ImmutableList.of(new FileReference(GUID, TIMESTAMP));
     private static final List<AssessmentReference> ASSESSMENT_REF_LIST = ImmutableList.of(new AssessmentReference(TEST_APP_ID, GUID));
-    private static final GuidCreatedOnVersionHolder SURVEY_KEY = new GuidCreatedOnVersionHolderImpl(SURVEY_REF_LIST.get(0));
+    private static final GuidCreatedOnVersionHolder SURVEY_KEY = new GuidCreatedOnVersionHolderImpl(SURVEY_REF_LIST.getFirst());
     
     @Mock
     private AppConfigDao mockDao;
@@ -227,8 +227,8 @@ public class AppConfigServiceTest {
     private AppConfig setupAndTestConfigResolution(Supplier<AppConfig> supplier) {
         Survey survey = Survey.create();
         survey.setIdentifier("theIdentifier");
-        survey.setGuid(SURVEY_REF_LIST.get(0).getGuid());
-        survey.setCreatedOn(SURVEY_REF_LIST.get(0).getCreatedOn().getMillis());
+        survey.setGuid(SURVEY_REF_LIST.getFirst().getGuid());
+        survey.setCreatedOn(SURVEY_REF_LIST.getFirst().getCreatedOn().getMillis());
         when(mockSurveyService.getSurvey(TEST_APP_ID, SURVEY_KEY, false, false)).thenReturn(survey);
         
         Assessment assessment = new Assessment();
@@ -251,9 +251,9 @@ public class AppConfigServiceTest {
         AppConfig retValue = supplier.get();
         
         // Verify that we called the resolver on this as well
-        assertEquals(retValue.getSurveyReferences().get(0).getIdentifier(), "theIdentifier");
-        assertEquals(retValue.getAssessmentReferences().get(0).getId(), "assessmentId");
-        assertEquals(retValue.getAssessmentReferences().get(0).getOriginSharedId(), "sharedAssessmentId");
+        assertEquals(retValue.getSurveyReferences().getFirst().getIdentifier(), "theIdentifier");
+        assertEquals(retValue.getAssessmentReferences().getFirst().getId(), "assessmentId");
+        assertEquals(retValue.getAssessmentReferences().getFirst().getOriginSharedId(), "sharedAssessmentId");
         assertEquals(retValue.getConfigElements().get("clientData"), TestUtils.getClientData());  
         
         return retValue;
@@ -276,8 +276,8 @@ public class AppConfigServiceTest {
         assertEquals(match, appConfig2);
         
         // Verify that we called the resolver on this as well
-        assertEquals(match.getAssessmentReferences().get(0).getId(), "assessmentId");
-        assertNull(match.getAssessmentReferences().get(0).getOriginSharedId());
+        assertEquals(match.getAssessmentReferences().getFirst().getId(), "assessmentId");
+        assertNull(match.getAssessmentReferences().getFirst().getOriginSharedId());
     }
     
     @Test
@@ -300,8 +300,8 @@ public class AppConfigServiceTest {
         assertEquals(match, appConfig2);
         
         // Verify that we called the resolver on this as well
-        assertEquals(match.getAssessmentReferences().get(0).getId(), "assessmentId");
-        assertNull(match.getAssessmentReferences().get(0).getOriginSharedId());
+        assertEquals(match.getAssessmentReferences().getFirst().getId(), "assessmentId");
+        assertNull(match.getAssessmentReferences().getFirst().getOriginSharedId());
     }
     
     @Test
@@ -342,10 +342,10 @@ public class AppConfigServiceTest {
         
         // The references are still there. They list the versions being used
         assertEquals(match.getConfigReferences().size(), 2);
-        assertEquals(match.getConfigReferences().get(0).getId(), "id1");
-        assertEquals(match.getConfigReferences().get(0).getRevision(), new Long(1));
+        assertEquals(match.getConfigReferences().getFirst().getId(), "id1");
+        assertEquals(match.getConfigReferences().getFirst().getRevision(), Long.valueOf(1));
         assertEquals(match.getConfigReferences().get(1).getId(), "id2");
-        assertEquals(match.getConfigReferences().get(1).getRevision(), new Long(2));
+        assertEquals(match.getConfigReferences().get(1).getRevision(), Long.valueOf(2));
     }
     
     @Test
@@ -419,7 +419,7 @@ public class AppConfigServiceTest {
         AppConfig match = service.getAppConfigForUser(context, true);
         assertEquals(match, appConfig2);
         
-        assertEquals(match.getSurveyReferences().get(0), SURVEY_REF_LIST.get(0));        
+        assertEquals(match.getSurveyReferences().getFirst(), SURVEY_REF_LIST.getFirst());        
     }
     
     @Test
@@ -433,7 +433,7 @@ public class AppConfigServiceTest {
         
         AppConfig match = service.getAppConfigForUser(context, true);
         
-        assertEquals(match.getSurveyReferences().get(0).getIdentifier(), "anIdentifier");
+        assertEquals(match.getSurveyReferences().getFirst().getIdentifier(), "anIdentifier");
         verify(mockSurveyService, never()).getSurvey(eq(TEST_APP_ID), any(), eq(false), eq(true));
     }
     
@@ -462,8 +462,8 @@ public class AppConfigServiceTest {
     public void getAppConfigForUserReturnsOldestVersion() {
         Survey survey = Survey.create();
         survey.setIdentifier("theIdentifier");
-        survey.setGuid(SURVEY_REF_LIST.get(0).getGuid());
-        survey.setCreatedOn(SURVEY_REF_LIST.get(0).getCreatedOn().getMillis());
+        survey.setGuid(SURVEY_REF_LIST.getFirst().getGuid());
+        survey.setCreatedOn(SURVEY_REF_LIST.getFirst().getCreatedOn().getMillis());
         when(mockSurveyService.getSurvey(TEST_APP_ID, SURVEY_KEY, false, false)).thenReturn(survey);
         
         CriteriaContext context = new CriteriaContext.Builder()
@@ -473,7 +473,7 @@ public class AppConfigServiceTest {
         setupConfigsForUser();
         AppConfig appConfig = service.getAppConfigForUser(context, true);
         assertEquals(appConfig.getCreatedOn(), EARLIER_TIMESTAMP);
-        assertEquals(appConfig.getSurveyReferences().get(0).getIdentifier(), "theIdentifier");
+        assertEquals(appConfig.getSurveyReferences().getFirst().getIdentifier(), "theIdentifier");
     }
     
     @Test

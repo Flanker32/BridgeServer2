@@ -16,7 +16,7 @@ import static org.testng.Assert.assertTrue;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
@@ -141,7 +141,7 @@ public class AppConfigElementsControllerTest {
         when(mockService.createElement(eq(TEST_APP_ID), any())).thenReturn(VERSION_HOLDER);
         
         VersionHolder result = controller.createElement();
-        assertEquals(new Long(1), result.getVersion());
+        assertEquals(Long.valueOf(1), result.getVersion());
         
         verify(mockCacheProvider).removeSetOfCacheKeys(cacheKeyCaptor.capture());
         assertEquals(TEST_APP_ID+":AppConfigList", cacheKeyCaptor.getValue().toString());
@@ -225,14 +225,14 @@ public class AppConfigElementsControllerTest {
         when(mockService.updateElementRevision(eq(TEST_APP_ID), any())).thenReturn(VERSION_HOLDER);
         
         VersionHolder result = controller.updateElementRevision("id", "1");
-        assertEquals(new Long(1), result.getVersion());
+        assertEquals(Long.valueOf(1), result.getVersion());
         
         verify(mockCacheProvider).removeSetOfCacheKeys(cacheKeyCaptor.capture());
         assertEquals(TEST_APP_ID+":AppConfigList", cacheKeyCaptor.getValue().toString());
         
         verify(mockService).updateElementRevision(eq(TEST_APP_ID), elementCaptor.capture());
         assertEquals("id", elementCaptor.getValue().getId());
-        assertEquals(new Long(1), elementCaptor.getValue().getRevision());
+        assertEquals(Long.valueOf(1), elementCaptor.getValue().getRevision());
     }
     
     @Test(expectedExceptions = BadRequestException.class)

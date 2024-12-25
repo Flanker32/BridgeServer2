@@ -6,8 +6,8 @@ import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Set;
 
-import javax.mail.MessagingException;
-import javax.mail.internet.MimeBodyPart;
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.MimeBodyPart;
 
 import org.apache.commons.lang3.StringUtils;
 import org.joda.time.format.DateTimeFormat;
@@ -58,7 +58,7 @@ public class WithdrawConsentEmailProvider extends MimeTypeEmailProvider {
     public MimeTypeEmail getMimeTypeEmail() throws MessagingException {
         MimeTypeEmailBuilder builder = new MimeTypeEmailBuilder();
 
-        String subject = String.format(CONSENT_EMAIL_SUBJECT, getApp().getName());
+        String subject = CONSENT_EMAIL_SUBJECT.formatted(getApp().getName());
         builder.withSubject(subject);
 
         final String sendFromEmail = getFormattedSenderEmail();
@@ -66,7 +66,7 @@ public class WithdrawConsentEmailProvider extends MimeTypeEmailProvider {
         
         builder.withRecipients(recipients);
 
-        String content = String.format("<p>User %s withdrew from the study on %s. </p>", 
+        String content = "<p>User %s withdrew from the study on %s. </p>".formatted(
                 getUserLabel(), FORMATTER.print(withdrewOn));
         content += "<p>Reason:</p>";
         if (StringUtils.isBlank(withdrawal.getReason())) {
@@ -87,7 +87,7 @@ public class WithdrawConsentEmailProvider extends MimeTypeEmailProvider {
     }
     
     private String getUserLabel() {
-        return String.format("%s %s &lt;%s&gt;", nullSafeCleanHtml(firstName), nullSafeCleanHtml(lastName), email);
+        return "%s %s &lt;%s&gt;".formatted(nullSafeCleanHtml(firstName), nullSafeCleanHtml(lastName), email);
     }
 
     // Helper method to strip HTML from a string so it can be safely printed in the Withdraw Consent email. Converts

@@ -262,8 +262,8 @@ public final class DynamoScheduledActivity implements ScheduledActivity, BridgeE
 
     @Override
     public String toString() {
-        return String.format(
-                "DynamoScheduledActivity [healthCode=%s, guid=%s, localScheduledOn=%s, localExpiresOn=%s, startedOn=%s, finishedOn=%s, persistent=%s, timeZone=%s, activity=%s, schedulePlanGuid=%s, referentGuid=%s, clientData=%s]",
+        return 
+                "DynamoScheduledActivity [healthCode=%s, guid=%s, localScheduledOn=%s, localExpiresOn=%s, startedOn=%s, finishedOn=%s, persistent=%s, timeZone=%s, activity=%s, schedulePlanGuid=%s, referentGuid=%s, clientData=%s]".formatted(
                 healthCode, guid, localScheduledOn, localExpiresOn, startedOn, finishedOn, persistent, timeZone,
                 activity, schedulePlanGuid, referentGuid, clientData);
     }

@@ -54,7 +54,7 @@ public class SurveyPublishValidatorTest {
     @Test
     public void validateGuidsNotDuplicates() {
         survey = new TestSurvey(SurveySaveValidatorTest.class, false);
-        survey.getElements().get(0).setGuid(survey.getElements().get(1).getGuid());
+        survey.getElements().getFirst().setGuid(survey.getElements().get(1).getGuid());
         
         assertValidatorMessage(validator, survey, "elements[1].guid", "exists in an earlier survey element");
     }
@@ -62,7 +62,7 @@ public class SurveyPublishValidatorTest {
     @Test
     public void validateIdentifiersNotDuplicates() {
         survey = new TestSurvey(SurveySaveValidatorTest.class, false);
-        survey.getElements().get(0).setIdentifier(survey.getElements().get(1).getIdentifier());
+        survey.getElements().getFirst().setIdentifier(survey.getElements().get(1).getIdentifier());
         
         assertValidatorMessage(validator, survey, "elements[1].identifier", "exists in an earlier survey element");
     }

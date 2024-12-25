@@ -306,7 +306,7 @@ public class SessionValidator implements Validator {
         }
         List<TimeWindow> windowsInOrder = Lists.newArrayList(session.getTimeWindows());
         windowsInOrder.sort(TIME_WINDOW_LENGTH_COMPARATOR);
-        return windowsInOrder.get(0);
+        return windowsInOrder.getFirst();
     }
     
     private void validateTimeWindowOverlaps(Errors errors, Session session) {

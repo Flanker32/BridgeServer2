@@ -412,7 +412,7 @@ public class CriteriaUtilsTest extends Mockito {
         // one the user prefers (given the order of the languages in the context).
         List<AppConfig> selected = CriteriaUtils.filterByCriteria(context, collection, null);
         assertEquals(selected.size(), 2);
-        assertSame(selected.get(0), frAppConfig);
+        assertSame(selected.getFirst(), frAppConfig);
         assertSame(selected.get(1), enAppConfig);
         
         // Let's do it again with a different language preference... the results should change
@@ -420,7 +420,7 @@ public class CriteriaUtilsTest extends Mockito {
                 .withLanguages(ImmutableList.of("en", "fr", "zh")).build();
         selected = CriteriaUtils.filterByCriteria(context, collection, null);
         assertEquals(selected.size(), 3);
-        assertSame(selected.get(0), enAppConfig);
+        assertSame(selected.getFirst(), enAppConfig);
         assertSame(selected.get(1), frAppConfig);
         assertSame(selected.get(2), zhAppConfig);
     }
@@ -448,7 +448,7 @@ public class CriteriaUtilsTest extends Mockito {
         
         List<AppConfig> selected = CriteriaUtils.filterByCriteria(context, collection, null);
         assertEquals(selected.size(), 3);
-        assertSame(selected.get(0), appConfig1);
+        assertSame(selected.getFirst(), appConfig1);
         assertSame(selected.get(1), appConfig2);
         assertSame(selected.get(2), appConfig3);
     }
@@ -477,7 +477,7 @@ public class CriteriaUtilsTest extends Mockito {
         
         // All of these match, but they are returned in 
         List<AppConfig> selected = CriteriaUtils.filterByCriteria(context, collection, comparingLong(AppConfig::getCreatedOn));
-        assertSame(selected.get(0), appConfig2);
+        assertSame(selected.getFirst(), appConfig2);
         assertSame(selected.get(1), appConfig1);
         assertSame(selected.get(2), appConfig3);
     }

@@ -120,7 +120,7 @@ public class AdherenceStateTest extends Mockito {
         assertEquals(stream2.getStartEventId(), "event2");
         assertEquals(stream2.getEventTimestamp(), EVENT_TS2.withZone(TEST_TIME_ZONE));
         
-        assertSame(state.getMetadata().get(0), meta1);
+        assertSame(state.getMetadata().getFirst(), meta1);
         assertSame(state.getMetadata().get(1), meta2);
         
         EventStreamDay day1 = state.getEventStreamDayByKey(meta1);

@@ -1002,7 +1002,7 @@ public class ParticipantServiceTest extends Mockito {
         // Consent was calculated
         assertTrue(retrieved.isConsented());
         // There is history
-        UserConsentHistory history = retrieved.getConsentHistories().get(subpopGuid.getGuid()).get(0);
+        UserConsentHistory history = retrieved.getConsentHistories().get(subpopGuid.getGuid()).getFirst();
         assertEquals(history.getConsentCreatedOn(), START_DATE.getMillis());
     }
     
@@ -1785,7 +1785,7 @@ public class ParticipantServiceTest extends Mockito {
             participantService.createParticipant(APP, participant, false);
             fail("Should have thrown exception");
         } catch(InvalidEntityException e) {
-            assertEquals(e.getErrors().get("externalIds[studyId].externalId").get(0),
+            assertEquals(e.getErrors().get("externalIds[studyId].externalId").getFirst(),
                     "externalIds[studyId].externalId cannot be null or blank");
         }
     }

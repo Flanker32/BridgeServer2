@@ -317,7 +317,7 @@ public class ScheduledActivityService {
                 throw new BadRequestException("A task in the array is null");
             }
             if (schActivity.getGuid() == null) {
-                throw new BadRequestException(String.format("Task #%s has no GUID", i));
+                throw new BadRequestException("Task #%s has no GUID".formatted(i));
             }
             if (byteLength(schActivity.getClientData()) > CLIENT_DATA_MAX_BYTES) {
                 throw new BadRequestException("Client data too large ("+CLIENT_DATA_MAX_BYTES+" bytes limit) for task "
@@ -352,7 +352,7 @@ public class ScheduledActivityService {
                 addToSaves = true;
             }
             if (addToSaves) {
-                activitiesToSave.add(0, dbActivity);
+                activitiesToSave.addFirst(dbActivity);
             }
             
         }

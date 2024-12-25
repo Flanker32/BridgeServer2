@@ -36,7 +36,7 @@ public class ExternalIdValidator implements Validator {
         if (StringUtils.isBlank(extId.getIdentifier())) {
             errors.rejectValue("identifier", "cannot be null or blank");
         } else if (!extId.getIdentifier().matches(IDENTIFIER_PATTERN)) {
-            String msg = String.format("'%s' must contain only digits, letters, underscores and dashes", extId.getIdentifier());
+            String msg = "'%s' must contain only digits, letters, underscores and dashes".formatted(extId.getIdentifier());
             errors.rejectValue("identifier", msg);
         }
         if (!isV3) {

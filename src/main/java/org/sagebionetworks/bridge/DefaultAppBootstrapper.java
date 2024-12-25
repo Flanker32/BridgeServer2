@@ -31,7 +31,6 @@ import org.sagebionetworks.bridge.services.AdminAccountService;
 import org.sagebionetworks.bridge.services.AppService;
 import org.sagebionetworks.bridge.services.OrganizationService;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.annotation.Profile;
 import org.springframework.context.event.ContextRefreshedEvent;
@@ -69,7 +68,6 @@ public class DefaultAppBootstrapper implements ApplicationListener<ContextRefres
     private final SqsInitializer sqsInitializer;
     private final SnsInitializer snsInitializer;
 
-    @Autowired
     public DefaultAppBootstrapper(BridgeConfig bridgeConfig, AdminAccountService adminAccountService,
             AppService appService, OrganizationService orgService,
             AnnotationBasedTableCreator annotationBasedTableCreator, DynamoInitializer dynamoInitializer,
@@ -150,7 +148,7 @@ public class DefaultAppBootstrapper implements ApplicationListener<ContextRefres
             }
             app = appService.createApp(app);
         }
-        if (!orgService.getOrganizationOpt(appId, SAGE_ID).isPresent()) {
+        if (orgService.getOrganizationOpt(appId, SAGE_ID).isEmpty()) {
             Organization org = Organization.create();
             org.setAppId(appId);
             org.setIdentifier(SAGE_ID);
@@ -162,7 +160,7 @@ public class DefaultAppBootstrapper implements ApplicationListener<ContextRefres
     
     private void createAccount(App app, Account admin) {
         String syn = "synapseuserid:"+admin.getSynapseUserId();
-        if (!adminAccountService.getAccount(app.getIdentifier(), syn).isPresent()) {
+        if (adminAccountService.getAccount(app.getIdentifier(), syn).isEmpty()) {
             adminAccountService.createAccount(app.getIdentifier(), admin);
         }
     }

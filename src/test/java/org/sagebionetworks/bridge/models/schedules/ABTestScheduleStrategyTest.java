@@ -60,7 +60,7 @@ public class ABTestScheduleStrategyTest extends Mockito {
         
         List<Schedule> schedules = plan.getStrategy().getAllPossibleSchedules();
         assertEquals(schedules.size(), 3);
-        assertEquals(schedules.get(0).getLabel(), "Schedule 1");
+        assertEquals(schedules.getFirst().getLabel(), "Schedule 1");
         assertEquals(schedules.get(1).getLabel(), "Schedule 2");
         assertEquals(schedules.get(2).getLabel(), "Schedule 3");
         assertTrue(schedules instanceof ImmutableList);
@@ -79,7 +79,7 @@ public class ABTestScheduleStrategyTest extends Mockito {
 
         ABTestScheduleStrategy strategy = (ABTestScheduleStrategy) plan.getStrategy();
         ABTestScheduleStrategy newStrategy = (ABTestScheduleStrategy) newPlan.getStrategy();
-        assertEquals(newStrategy.getScheduleGroups().get(0).getSchedule(), strategy.getScheduleGroups().get(0).getSchedule(),
+        assertEquals(newStrategy.getScheduleGroups().getFirst().getSchedule(), strategy.getScheduleGroups().getFirst().getSchedule(),
                 "Deserialized AB testing strategy is complete");
     }
 

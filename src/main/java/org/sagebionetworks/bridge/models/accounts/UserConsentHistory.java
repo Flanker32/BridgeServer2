@@ -181,8 +181,8 @@ public final class UserConsentHistory {
     
     @Override
     public String toString() {
-        return String.format("UserConsentHistory [healthCode=[REDACTED], subpopulationGuid=%s, consentCreatedOn=%s, name=[REDACTED], birthdate=[REDACTED], imageData=[REDACTED], imageMimeType=%s, signedOn=%s, withdrewOn=%s, hasSignedActiveConsent=%s]",
-            subpopulationGuid, consentCreatedOn, imageMimeType, signedOn, withdrewOn, hasSignedActiveConsent);
+        return "UserConsentHistory [healthCode=[REDACTED], subpopulationGuid=%s, consentCreatedOn=%s, name=[REDACTED], birthdate=[REDACTED], imageData=[REDACTED], imageMimeType=%s, signedOn=%s, withdrewOn=%s, hasSignedActiveConsent=%s]".formatted(
+                subpopulationGuid, consentCreatedOn, imageMimeType, signedOn, withdrewOn, hasSignedActiveConsent);
     }
     
 }

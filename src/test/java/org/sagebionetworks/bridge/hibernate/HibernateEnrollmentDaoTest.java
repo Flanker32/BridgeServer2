@@ -73,7 +73,7 @@ public class HibernateEnrollmentDaoTest extends Mockito {
         assertEquals(retValue.getTotal(), Integer.valueOf(20));
         assertEquals(retValue.getItems().size(), 2);
         
-        EnrollmentDetail detail1 = retValue.getItems().get(0);
+        EnrollmentDetail detail1 = retValue.getItems().getFirst();
         assertEquals(detail1.getParticipant().getLastName(), "account1");
         assertEquals(detail1.getEnrolledBy().getLastName(), "account2");
         assertEquals(detail1.getWithdrawnBy().getLastName(), "account3");
@@ -119,7 +119,7 @@ public class HibernateEnrollmentDaoTest extends Mockito {
         assertEquals(retValue.getTotal(), Integer.valueOf(20));
         assertEquals(retValue.getItems().size(), 2);
         
-        EnrollmentDetail detail1 = retValue.getItems().get(0);
+        EnrollmentDetail detail1 = retValue.getItems().getFirst();
         assertEquals(detail1.getParticipant().getLastName(), "account1");
         assertEquals(detail1.getEnrolledBy().getLastName(), "account2");
         assertEquals(detail1.getWithdrawnBy().getLastName(), "account3");
@@ -166,7 +166,7 @@ public class HibernateEnrollmentDaoTest extends Mockito {
         assertEquals(retValue.getTotal(), Integer.valueOf(20));
         assertEquals(retValue.getItems().size(), 2);
         
-        EnrollmentDetail detail1 = retValue.getItems().get(0);
+        EnrollmentDetail detail1 = retValue.getItems().getFirst();
         assertEquals(detail1.getParticipant().getLastName(), "account1");
         assertEquals(detail1.getEnrolledBy().getLastName(), "account2");
         assertEquals(detail1.getWithdrawnBy().getLastName(), "account3");
@@ -211,7 +211,7 @@ public class HibernateEnrollmentDaoTest extends Mockito {
             .thenReturn(ImmutableList.of(account1), ImmutableList.of(account2), ImmutableList.of(account3));
         
         List<EnrollmentDetail> retValue = dao.getEnrollmentsForUser(TEST_APP_ID, null, TEST_USER_ID);
-        EnrollmentDetail detail1 = retValue.get(0);
+        EnrollmentDetail detail1 = retValue.getFirst();
         assertEquals(detail1.getParticipant().getLastName(), "account1");
         assertEquals(detail1.getEnrolledBy().getLastName(), "account2");
         assertEquals(detail1.getWithdrawnBy().getLastName(), "account3");

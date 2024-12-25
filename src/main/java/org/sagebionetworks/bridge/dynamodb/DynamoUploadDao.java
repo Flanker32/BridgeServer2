@@ -12,9 +12,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.Resource;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
+import jakarta.annotation.Resource;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper.FailedBatch;
@@ -123,7 +123,7 @@ public class DynamoUploadDao implements UploadDao {
     public Upload getUpload(@Nonnull String uploadId) {
         Upload upload = getUploadNoThrow(uploadId);
         if (upload == null) {
-            throw new NotFoundException(String.format("Upload ID %s not found", uploadId));
+            throw new NotFoundException("Upload ID %s not found".formatted(uploadId));
         }
         return upload;
     }
@@ -223,8 +223,8 @@ public class DynamoUploadDao implements UploadDao {
             for (Object oneResult : resultList) {
                 if (!DynamoUpload2.class.isInstance(oneResult)) {
                     // This should never happen, but just in case.
-                    throw new BridgeServiceException(String.format(
-                            "DynamoDB returned objects of type %s instead of %s",
+                    throw new BridgeServiceException(
+                            "DynamoDB returned objects of type %s instead of %s".formatted(
                             oneResult.getClass().getName(), DynamoUpload2.class.getName()));
                 }
 

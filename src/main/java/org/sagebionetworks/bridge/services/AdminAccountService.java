@@ -296,7 +296,7 @@ public class AdminAccountService {
             // It's sufficient to get minimum number of records, we're looking only at the total of all accounts
             PagedResourceList<AccountSummary> summaries = accountDao.getPagedAccountSummaries(app.getIdentifier(), EMPTY_SEARCH);
             if (summaries.getTotal() >= app.getAccountLimit()) {
-                throw new LimitExceededException(String.format(MAX_USERS_ERROR, app.getAccountLimit()));
+                throw new LimitExceededException(MAX_USERS_ERROR.formatted(app.getAccountLimit()));
             }
         }
     }

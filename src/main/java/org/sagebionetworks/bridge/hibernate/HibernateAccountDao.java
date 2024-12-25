@@ -33,7 +33,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 
 import org.apache.commons.lang3.StringUtils;
 import org.joda.time.DateTime;
@@ -129,7 +129,7 @@ public class HibernateAccountDao implements AccountDao {
             if (accountList.isEmpty()) {
                 return Optional.empty();
             }
-            account = accountList.get(0);
+            account = accountList.getFirst();
             if (accountList.size() > 1) {
                 LOG.warn("Multiple accounts found email/phone query; example accountId=" + account.getId());
             }

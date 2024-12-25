@@ -281,7 +281,7 @@ public class ScheduledActivityServiceDuplicateTest {
         assertEquals(filterByGuid(activities, "bea8fd5d-7622-451f-a727-f9e37f00e1be").size(), 0);
         assertEquals(filterByGuid(activities, "6966c3d7-0949-43a8-804e-efc25d0f83e2").size(), 1);
         assertEquals(filterByGuid(activities, "79cf1788-a087-4fa3-92e4-92e43d9699a7").size(), 1);
-        assertNotNull(filterByLabel(activities, "Training Session 1").get(0).getStartedOn());
+        assertNotNull(filterByLabel(activities, "Training Session 1").getFirst().getStartedOn());
     }
     
     @Test
@@ -309,7 +309,7 @@ public class ScheduledActivityServiceDuplicateTest {
         assertEquals(filterByGuid(activities, "bea8fd5d-7622-451f-a727-f9e37f00e1be").size(), 0);
         assertEquals(filterByGuid(activities, "6966c3d7-0949-43a8-804e-efc25d0f83e2").size(), 1);
         assertEquals(filterByGuid(activities, "79cf1788-a087-4fa3-92e4-92e43d9699a7").size(), 1);
-        assertNotNull(filterByLabel(activities, "Training Session 1").get(0).getStartedOn());
+        assertNotNull(filterByLabel(activities, "Training Session 1").getFirst().getStartedOn());
     }
     
     @Test
@@ -333,7 +333,7 @@ public class ScheduledActivityServiceDuplicateTest {
         assertEquals(filterByGuid(activities, "6966c3d7-0949-43a8-804e-efc25d0f83e2").size(), 1);
         assertEquals(filterByGuid(activities, "79cf1788-a087-4fa3-92e4-92e43d9699a7").size(), 1);
         // This one hasn't been started, obviously
-        assertNull(filterByLabel(activities, "Training Session 1").get(0).getStartedOn());
+        assertNull(filterByLabel(activities, "Training Session 1").getFirst().getStartedOn());
     }
     
     @Test
@@ -359,9 +359,9 @@ public class ScheduledActivityServiceDuplicateTest {
         // It's adjusted, magically it's still 6/30 I haven't figured out why yet.
         List<ScheduledActivity> list = filterByLabel(activities, "Do Persistent Activity");
         assertEquals(list.size(), 1);
-        assertEquals(list.get(0).getGuid(), "21e97935-6d64-4cd5-ae70-653caad7b2f9:2016-06-30T12:43:07.951");
+        assertEquals(list.getFirst().getGuid(), "21e97935-6d64-4cd5-ae70-653caad7b2f9:2016-06-30T12:43:07.951");
         // This one hasn't been started, obviously
-        assertNull(filterByLabel(activities, "Training Session 1").get(0).getStartedOn());
+        assertNull(filterByLabel(activities, "Training Session 1").getFirst().getStartedOn());
     }
     
     private void allWithinQueryWindow(List<ScheduledActivity> activities, ScheduleContext context) {

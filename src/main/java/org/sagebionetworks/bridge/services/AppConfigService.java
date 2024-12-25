@@ -144,7 +144,7 @@ public class AppConfigService {
             // If there is more than one match, return the one created first, but log a message
             LOG.info("CriteriaContext matches more than one app config: criteriaContext=" + context + ", appConfigs="+matches);
         }
-        AppConfig matched = matches.get(0);
+        AppConfig matched = matches.getFirst();
         resolveReferences(context.getAppId(), matched);
         return matched;
     }
@@ -209,7 +209,7 @@ public class AppConfigService {
         try {
             return appConfigElementService.getElementRevision(appId, configRef.getId(), configRef.getRevision());
         } catch(EntityNotFoundException e) {
-            String message = String.format("AppConfig[guid=%s] references missing AppConfigElement[id=%s, revision=%d]",
+            String message = "AppConfig[guid=%s] references missing AppConfigElement[id=%s, revision=%d]".formatted(
                     appConfigGuid, configRef.getId(), configRef.getRevision());
             logError(message);
         }

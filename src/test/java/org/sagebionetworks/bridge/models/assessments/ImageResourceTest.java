@@ -24,8 +24,8 @@ public class ImageResourceTest {
         assertEquals(node.size(), 4);
         assertEquals(node.get("name").textValue(), "default");
         assertEquals(node.get("module").textValue(), "sage_survey");
-        assertEquals(node.get("labels").get(0).get("lang").textValue(), LABELS.get(0).getLang());
-        assertEquals(node.get("labels").get(0).get("value").textValue(), LABELS.get(0).getValue());
+        assertEquals(node.get("labels").get(0).get("lang").textValue(), LABELS.getFirst().getLang());
+        assertEquals(node.get("labels").get(0).get("value").textValue(), LABELS.getFirst().getValue());
         assertEquals(node.get("labels").get(1).get("lang").textValue(), LABELS.get(1).getLang());
         assertEquals(node.get("labels").get(1).get("value").textValue(), LABELS.get(1).getValue());
 
@@ -33,8 +33,8 @@ public class ImageResourceTest {
 
         assertEquals(deserialized.getName(), "default");
         assertEquals(deserialized.getModule(), "sage_survey");
-        assertEquals(deserialized.getLabels().get(0).getLang(), LABELS.get(0).getLang());
-        assertEquals(deserialized.getLabels().get(0).getValue(), LABELS.get(0).getValue());
+        assertEquals(deserialized.getLabels().getFirst().getLang(), LABELS.getFirst().getLang());
+        assertEquals(deserialized.getLabels().getFirst().getValue(), LABELS.getFirst().getValue());
         assertEquals(deserialized.getLabels().get(1).getLang(), LABELS.get(1).getLang());
         assertEquals(deserialized.getLabels().get(1).getValue(), LABELS.get(1).getValue());
     }

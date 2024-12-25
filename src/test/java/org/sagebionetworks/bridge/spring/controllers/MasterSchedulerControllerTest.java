@@ -7,8 +7,8 @@ import static org.testng.Assert.assertTrue;
 import java.util.List;
 import java.util.Optional;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 import static org.sagebionetworks.bridge.Roles.SUPERADMIN;
 import static org.sagebionetworks.bridge.TestConstants.ACCOUNT_ID;
@@ -124,7 +124,7 @@ public class MasterSchedulerControllerTest extends Mockito {
         ResourceList<MasterSchedulerConfig> result = controller.getAllSchedulerConfigs();
         
         assertEquals(result.getItems().size(), 3);
-        assertEquals(result.getItems().get(0).getScheduleId(), SCHEDULE_ID);
+        assertEquals(result.getItems().getFirst().getScheduleId(), SCHEDULE_ID);
         assertEquals(result.getItems().get(1).getCronSchedule(), CRON_SCHEDULE);
         assertEquals(result.getItems().get(2).getSqsQueueUrl(), SQS_QUEUE_URL);
         verify(mockSchedulerService).getAllSchedulerConfigs();
@@ -152,7 +152,7 @@ public class MasterSchedulerControllerTest extends Mockito {
         assertTrue(config.getRequestTemplate().get("a").booleanValue());
         assertEquals(config.getRequestTemplate().get("b").textValue(), "string");
         assertEquals(config.getSqsQueueUrl(), SQS_QUEUE_URL);
-        assertEquals(config.getVersion(), new Long(VERSION));
+        assertEquals(config.getVersion(), Long.valueOf(VERSION));
     }
     
     @Test
@@ -194,7 +194,7 @@ public class MasterSchedulerControllerTest extends Mockito {
         assertTrue(config.getRequestTemplate().get("a").booleanValue());
         assertEquals(config.getRequestTemplate().get("b").textValue(), "string");
         assertEquals(config.getSqsQueueUrl(), UPDATED_SQS_QUEUE_URL);
-        assertEquals(config.getVersion(), new Long(2));
+        assertEquals(config.getVersion(), Long.valueOf(2));
     }
     
     @Test

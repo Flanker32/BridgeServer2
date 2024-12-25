@@ -294,7 +294,7 @@ public class AppServiceTest extends Mockito {
         when(mockAppDao.getApps()).thenReturn(ImmutableList.of(app));
         
         List<App> results = service.getApps();
-        assertSame(results.get(0), app);
+        assertSame(results.getFirst(), app);
         
         verify(mockAppDao).getApps();
     }
@@ -361,7 +361,7 @@ public class AppServiceTest extends Mockito {
 
         MimeTypeEmail email = emailProviderCaptor.getValue().getMimeTypeEmail();
         assertEquals(email.getType(), EmailType.VERIFY_CONSENT_EMAIL);
-        String body = (String) email.getMessageParts().get(0).getContent();
+        String body = (String) email.getMessageParts().getFirst().getContent();
 
         assertTrue(body.contains("/vse?appId="+ TEST_APP_ID + "&token=" +
                 VERIFICATION_TOKEN + "&type=consent_notification"));
@@ -371,7 +371,7 @@ public class AppServiceTest extends Mockito {
         
         List<String> recipientList = email.getRecipientAddresses();
         assertEquals(recipientList.size(), 1);
-        assertEquals(recipientList.get(0), consentNotificationEmail);
+        assertEquals(recipientList.getFirst(), consentNotificationEmail);
     }
 
     @Test
@@ -497,10 +497,12 @@ public class AppServiceTest extends Mockito {
     @Test(expectedExceptions = BadRequestException.class)
     public void verifyEmailMismatchedApp() {
         // Mock Cache Provider.
-        String verificationDataJson = "{\n" +
-                "   \"appId\":\"wrong-app\",\n" +
-                "   \"email\":\"correct-email@example.com\"\n" +
-                "}";
+        String verificationDataJson = """
+                {
+                   "appId":"wrong-app",
+                   "email":"correct-email@example.com"
+                }\
+                """;
         when(mockCacheProvider.getObject(VER_CACHE_KEY, String.class)).thenReturn(verificationDataJson);
 
         // Mock getApp().
@@ -1361,7 +1363,7 @@ public class AppServiceTest extends Mockito {
         // Add project to tracking view. We truncate the "syn" from the project ID.
         verify(mockSynapseClient).putEntity(view);
         assertEquals(view.getScopeIds().size(), 1);
-        assertEquals(view.getScopeIds().get(0), "apseProjectId");
+        assertEquals(view.getScopeIds().getFirst(), "apseProjectId");
 
         // invite users to team
         verify(mockSynapseClient, times(3)).createMembershipInvitation(any(), eq(null), eq(null));

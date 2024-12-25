@@ -200,7 +200,7 @@ public class UploadArchiveService {
             throw new BridgeServiceException(ex);
         }
         if (encryptor == null) {
-            throw new BridgeServiceException(String.format("No encrypt for app %s", appId));
+            throw new BridgeServiceException("No encrypt for app %s".formatted(appId));
         }
         return encryptor;
     }

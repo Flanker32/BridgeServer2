@@ -801,8 +801,8 @@ public class BridgeUtilsTest extends Mockito {
     @Test
     public void testGetLongOrDefault() {
         assertNull(BridgeUtils.getLongOrDefault(null, null));
-        assertEquals(BridgeUtils.getLongOrDefault(null, 10L), new Long(10));
-        assertEquals(BridgeUtils.getLongOrDefault("20", null), new Long(20));
+        assertEquals(BridgeUtils.getLongOrDefault(null, 10L), Long.valueOf(10));
+        assertEquals(BridgeUtils.getLongOrDefault("20", null), Long.valueOf(20));
     }
     
     @Test(expectedExceptions = BadRequestException.class)

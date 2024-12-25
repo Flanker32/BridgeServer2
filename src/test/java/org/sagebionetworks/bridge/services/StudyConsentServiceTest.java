@@ -243,7 +243,7 @@ public class StudyConsentServiceTest extends Mockito {
         assertEquals(subpopCaptor.getValue().getPublishedConsentCreatedOn(), CREATED_ON);
 
         verify(mockS3Client, times(2)).putObject(requestCaptor.capture());
-        PutObjectRequest request = requestCaptor.getAllValues().get(0);
+        PutObjectRequest request = requestCaptor.getAllValues().getFirst();
         assertEquals(request.getBucketName(), PUBLICATION_BUCKET);
         assertEquals(request.getCannedAcl(), PublicRead);
         assertEquals(IOUtils.toString(request.getInputStream(), UTF_8), transformedDoc);

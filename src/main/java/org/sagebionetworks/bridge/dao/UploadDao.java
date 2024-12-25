@@ -1,8 +1,8 @@
 package org.sagebionetworks.bridge.dao;
 
 import java.util.List;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 import org.joda.time.DateTime;
 

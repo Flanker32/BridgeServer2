@@ -149,13 +149,13 @@ public class StudyParticipantTest {
         assertEquals(deserParticipant.getNote(), TEST_NOTE);
         assertEquals(deserParticipant.getClientTimeZone(), TEST_CLIENT_TIME_ZONE);
         
-        UserConsentHistory deserHistory = deserParticipant.getConsentHistories().get("AAA").get(0);
+        UserConsentHistory deserHistory = deserParticipant.getConsentHistories().get("AAA").getFirst();
         assertEquals(deserHistory.getBirthdate(), "2002-02-02");
         assertEquals(deserHistory.getConsentCreatedOn(), 1000000L);
         assertEquals(deserHistory.getSignedOn(), 2000000L);
         assertEquals(deserHistory.getName(), "Test User");
         assertEquals(deserHistory.getSubpopulationGuid(), "AAA");
-        assertEquals(deserHistory.getWithdrewOn(), new Long(3000000L));
+        assertEquals(deserHistory.getWithdrewOn(), Long.valueOf(3000000L));
         
         EnrollmentInfo info1 = deserParticipant.getEnrollments().get("studyA");
         assertEquals(info1.getExternalId(), "externalIdA");

@@ -130,7 +130,7 @@ public class SendMailViaAmazonServiceConsentTest {
         // validate to
         List<String> toList = req.getDestinations();
         assertEquals(toList.size(), 1, "Correct number of recipients");
-        assertEquals(toList.get(0), "test-user@sagebase.org", "Correct recipient");
+        assertEquals(toList.getFirst(), "test-user@sagebase.org", "Correct recipient");
 
         // Validate message content. MIME message must be ASCII
         String rawMessage = new String(req.getRawMessage().getData().array(), Charsets.US_ASCII);
@@ -171,7 +171,7 @@ public class SendMailViaAmazonServiceConsentTest {
         // validate to
         List<String> toList = req.getDestinations();
         assertEquals(toList.size(), 1, "Correct number of recipients");
-        assertEquals(toList.get(0), "test-user@sagebase.org", "Correct recipient");
+        assertEquals(toList.getFirst(), "test-user@sagebase.org", "Correct recipient");
 
         // Validate message content. MIME message must be ASCII
         String rawMessage = new String(req.getRawMessage().getData().array(), Charsets.US_ASCII);

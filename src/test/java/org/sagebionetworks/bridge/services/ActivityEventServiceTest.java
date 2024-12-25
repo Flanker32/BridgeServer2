@@ -140,7 +140,7 @@ public class ActivityEventServiceTest {
 
         verify(activityEventDao, times(2)).publishEvent(any());
 
-        ActivityEvent activityEvent = activityEventArgumentCaptor.getAllValues().get(0);
+        ActivityEvent activityEvent = activityEventArgumentCaptor.getAllValues().getFirst();
         assertEquals(activityEvent.getEventId(), "custom:myEvent");
         assertEquals(activityEvent.getUpdateType(), FUTURE_ONLY);
         assertEquals(activityEvent.getHealthCode(), HEALTH_CODE);
@@ -169,7 +169,7 @@ public class ActivityEventServiceTest {
 
         verify(activityEventDao, times(1)).publishEvent(any());
 
-        ActivityEvent activityEvent = activityEventArgumentCaptor.getAllValues().get(0);
+        ActivityEvent activityEvent = activityEventArgumentCaptor.getAllValues().getFirst();
         assertEquals(activityEvent.getEventId(), "custom:myEvent");
         assertEquals(activityEvent.getUpdateType(), FUTURE_ONLY);
         assertEquals(activityEvent.getHealthCode(), HEALTH_CODE);
@@ -374,10 +374,10 @@ public class ActivityEventServiceTest {
 
         List<ActivityEvent> publishedEventList = publishedEventCaptor.getAllValues();
 
-        assertEquals(publishedEventList.get(0).getEventId(), "enrollment");
-        assertTrue(publishedEventList.get(0).getTimestamp().isEqual(enrollment));
-        assertEquals(publishedEventList.get(0).getUpdateType(), IMMUTABLE);
-        assertEquals(publishedEventList.get(0).getHealthCode(), HEALTH_CODE);
+        assertEquals(publishedEventList.getFirst().getEventId(), "enrollment");
+        assertTrue(publishedEventList.getFirst().getTimestamp().isEqual(enrollment));
+        assertEquals(publishedEventList.getFirst().getUpdateType(), IMMUTABLE);
+        assertEquals(publishedEventList.getFirst().getHealthCode(), HEALTH_CODE);
 
         assertEquals(publishedEventList.get(1).getEventId(), "custom:3-days-after");
         assertTrue(publishedEventList.get(1).getTimestamp().isEqual(
@@ -488,10 +488,10 @@ public class ActivityEventServiceTest {
 
         List<ActivityEvent> publishedEventList = publishedEventCaptor.getAllValues();
 
-        assertEquals(publishedEventList.get(0).getEventId(), "activities_retrieved");
-        assertEquals(publishedEventList.get(0).getTimestamp(), retrieved);
-        assertEquals(publishedEventList.get(0).getUpdateType(), IMMUTABLE);
-        assertEquals(publishedEventList.get(0).getHealthCode(), "AAA-BBB-CCC");
+        assertEquals(publishedEventList.getFirst().getEventId(), "activities_retrieved");
+        assertEquals(publishedEventList.getFirst().getTimestamp(), retrieved);
+        assertEquals(publishedEventList.getFirst().getUpdateType(), IMMUTABLE);
+        assertEquals(publishedEventList.getFirst().getHealthCode(), "AAA-BBB-CCC");
 
         assertEquals(publishedEventList.get(1).getEventId(), "custom:3-days-after");
         assertEquals(publishedEventList.get(1).getTimestamp(),
@@ -533,10 +533,10 @@ public class ActivityEventServiceTest {
 
         List<ActivityEvent> publishedEventList = publishedEventCaptor.getAllValues();
         
-        assertEquals(publishedEventList.get(0).getEventId(), "custom:myEvent");
-        assertEquals(publishedEventList.get(0).getTimestamp(), timestamp);
-        assertEquals(publishedEventList.get(0).getUpdateType(), FUTURE_ONLY);
-        assertEquals(publishedEventList.get(0).getHealthCode(), "AAA-BBB-CCC");
+        assertEquals(publishedEventList.getFirst().getEventId(), "custom:myEvent");
+        assertEquals(publishedEventList.getFirst().getTimestamp(), timestamp);
+        assertEquals(publishedEventList.getFirst().getUpdateType(), FUTURE_ONLY);
+        assertEquals(publishedEventList.getFirst().getHealthCode(), "AAA-BBB-CCC");
 
         assertEquals(publishedEventList.get(1).getEventId(), "custom:3-days-after");
         assertTrue(publishedEventList.get(1).getTimestamp().isEqual(timestamp.plusDays(3)));
@@ -733,10 +733,10 @@ public class ActivityEventServiceTest {
 
         List<ActivityEvent> publishedEventList = publishedEventCaptor.getAllValues();
 
-        assertEquals(publishedEventList.get(0).getEventId(), "install_link_sent");
-        assertEquals(publishedEventList.get(0).getTimestamp(), retrieved);
-        assertEquals(publishedEventList.get(0).getUpdateType(), FUTURE_ONLY);
-        assertEquals(publishedEventList.get(0).getHealthCode(), HEALTH_CODE);
+        assertEquals(publishedEventList.getFirst().getEventId(), "install_link_sent");
+        assertEquals(publishedEventList.getFirst().getTimestamp(), retrieved);
+        assertEquals(publishedEventList.getFirst().getUpdateType(), FUTURE_ONLY);
+        assertEquals(publishedEventList.getFirst().getHealthCode(), HEALTH_CODE);
 
         assertEquals(publishedEventList.get(1).getEventId(), "custom:3-days-after");
         assertEquals(publishedEventList.get(1).getTimestamp(),

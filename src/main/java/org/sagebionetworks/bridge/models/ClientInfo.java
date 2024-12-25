@@ -102,11 +102,11 @@ public final class ClientInfo {
     private static final Pattern SEMICOLON_IN_APP_STANZA = Pattern.compile("^.*;.*\\(.*$");
     private static final Pattern MULTI_SLASHES_IN_OUTER_STANZA = Pattern.compile("^.*/.*/.*$");
     private static final Pattern DEVICE_STANZA_FORMAT = Pattern.compile(
-            String.format("^%s*\\;?%s*\\/?%s*$", NOT_DEVICE, NOT, NOT));
+            "^%s*\\;?%s*\\/?%s*$".formatted(NOT_DEVICE, NOT, NOT));
     
-    private static final Pattern VALID1 = Pattern.compile(String.format("^%s+$", NOT));
-    private static final Pattern VALID2 = Pattern.compile(String.format("^%s*/%s*$", NOT, NOT));
-    private static final Pattern VALID3 = Pattern.compile(String.format("^%s*/%s*/%s*$", NOT, NOT, NOT));
+    private static final Pattern VALID1 = Pattern.compile("^%s+$".formatted(NOT));
+    private static final Pattern VALID2 = Pattern.compile("^%s*/%s*$".formatted(NOT, NOT));
+    private static final Pattern VALID3 = Pattern.compile("^%s*/%s*/%s*$".formatted(NOT, NOT, NOT));
     private static final List<Pattern> VALID_NO_DEVICE_FORMATS = ImmutableList.of(VALID1, VALID2, VALID3);
     
     private final String appName;

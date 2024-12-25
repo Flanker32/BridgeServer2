@@ -7,8 +7,8 @@ import static org.testng.Assert.assertTrue;
 
 import java.sql.SQLException;
 
-import javax.persistence.OptimisticLockException;
-import javax.persistence.PersistenceException;
+import jakarta.persistence.OptimisticLockException;
+import jakarta.persistence.PersistenceException;
 
 import org.mockito.MockitoAnnotations;
 import org.testng.annotations.BeforeMethod;

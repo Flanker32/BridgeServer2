@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 
 import org.sagebionetworks.bridge.dao.AlertDao;
 import org.sagebionetworks.bridge.hibernate.QueryBuilder.WhereClauseBuilder;

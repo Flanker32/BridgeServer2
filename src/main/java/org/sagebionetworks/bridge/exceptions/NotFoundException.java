@@ -1,6 +1,6 @@
 package org.sagebionetworks.bridge.exceptions;
 
-import org.apache.http.HttpStatus;
+import org.apache.hc.core5.http.HttpStatus;
 
 /** Generic 404 NOT FOUND exception for things that aren't BridgeEntities. */
 @NoStackTraceException

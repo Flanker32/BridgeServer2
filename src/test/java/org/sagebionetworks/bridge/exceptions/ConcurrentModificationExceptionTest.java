@@ -1,6 +1,6 @@
 package org.sagebionetworks.bridge.exceptions;
 
-import static org.apache.http.HttpStatus.SC_CONFLICT;
+import static org.apache.hc.core5.http.HttpStatus.SC_CONFLICT;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;

@@ -5,7 +5,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 import java.util.List;
 import java.util.Set;
 
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 
 import org.sagebionetworks.bridge.BridgeConstants;
 import org.sagebionetworks.bridge.config.BridgeConfigFactory;
@@ -398,7 +398,7 @@ public class CacheProvider {
 
     private void promptToStartRedisIfLocal(Throwable e) {
         if (BridgeConfigFactory.getConfig().isLocal()) {
-            throw new BridgeServiceException(String.format(LOCAL_SERVICE_ERROR, e.getMessage()));
+            throw new BridgeServiceException(LOCAL_SERVICE_ERROR.formatted(e.getMessage()));
         }
     }
 }

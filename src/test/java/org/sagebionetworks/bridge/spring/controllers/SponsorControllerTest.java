@@ -16,8 +16,8 @@ import static org.sagebionetworks.bridge.spring.controllers.SponsorController.RE
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertSame;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
@@ -40,8 +40,8 @@ import org.sagebionetworks.bridge.services.SponsorService;
 
 public class SponsorControllerTest extends Mockito {
     
-    private static final String ADD_MSG = String.format(ADD_SPONSOR_MSG, TEST_ORG_ID, TEST_STUDY_ID);
-    private static final String REMOVE_MSG = String.format(REMOVE_SPONSOR_MSG, TEST_ORG_ID, TEST_STUDY_ID);
+    private static final String ADD_MSG = ADD_SPONSOR_MSG.formatted(TEST_ORG_ID, TEST_STUDY_ID);
+    private static final String REMOVE_MSG = REMOVE_SPONSOR_MSG.formatted(TEST_ORG_ID, TEST_STUDY_ID);
 
     @Mock
     SponsorService mockService;

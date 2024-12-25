@@ -1,6 +1,6 @@
 package org.sagebionetworks.bridge.hibernate;
 
-import javax.persistence.PersistenceException;
+import jakarta.persistence.PersistenceException;
 
 import com.amazonaws.util.Throwables;
 

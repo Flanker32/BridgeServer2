@@ -9,3 +9,5 @@ test-output/
 dump.rdb
 /bin/
 
+
+.autodev

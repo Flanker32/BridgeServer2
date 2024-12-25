@@ -11,7 +11,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 
 import org.hibernate.query.NativeQuery;
 import org.springframework.stereotype.Component;
@@ -135,7 +135,7 @@ class HibernateAssessmentDao implements AssessmentDao {
         if (results.isEmpty()) {
             return Optional.empty();
         }
-        return Optional.of(Assessment.create(results.get(0)));
+        return Optional.of(Assessment.create(results.getFirst()));
     }
 
     @Override
@@ -150,7 +150,7 @@ class HibernateAssessmentDao implements AssessmentDao {
         if (results.isEmpty()) {
             return Optional.empty();
         }
-        return Optional.of(Assessment.create(results.get(0)));
+        return Optional.of(Assessment.create(results.getFirst()));
     }
     
     @Override

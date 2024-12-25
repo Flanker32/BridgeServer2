@@ -275,8 +275,8 @@ public class IntervalActivitySchedulerTest {
         schedule.setDelay("P1M");
         
         scheduledActivities = schedule.getScheduler().getScheduledActivities(plan, getContext(ENROLLMENT.plusMonths(3)));
-        assertEquals(scheduledActivities.get(0).getScheduledOn().getMillis(), asLong("2015-04-23 09:40"));
-        assertEquals(scheduledActivities.get(0).getExpiresOn().getMillis(), asLong("2015-04-30 09:40"));
+        assertEquals(scheduledActivities.getFirst().getScheduledOn().getMillis(), asLong("2015-04-23 09:40"));
+        assertEquals(scheduledActivities.getFirst().getExpiresOn().getMillis(), asLong("2015-04-30 09:40"));
     }
     @Test
     public void onceExpiresScheduleWorks() {
@@ -433,8 +433,8 @@ public class IntervalActivitySchedulerTest {
         events.put("survey:AAA:completedOn", asDT("2015-04-06 09:22"));
         scheduledActivities = schedule.getScheduler().getScheduledActivities(plan, getContext(ENROLLMENT.plusMonths(6)));
         
-        assertEquals(scheduledActivities.get(0).getScheduledOn().getMillis(), asLong("2015-04-06 12:22"));
-        assertEquals(scheduledActivities.get(0).getExpiresOn().getMillis(), asLong("2015-04-09 12:22"));
+        assertEquals(scheduledActivities.getFirst().getScheduledOn().getMillis(), asLong("2015-04-06 12:22"));
+        assertEquals(scheduledActivities.getFirst().getExpiresOn().getMillis(), asLong("2015-04-09 12:22"));
     }
     @Test
     public void recurringScheduleWorks() {

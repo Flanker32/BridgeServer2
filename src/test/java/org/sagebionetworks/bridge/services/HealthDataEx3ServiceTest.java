@@ -7,6 +7,7 @@ import static org.mockito.Mockito.when;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertSame;
 
+import java.net.URI;
 import java.net.URL;
 import java.util.Optional;
 
@@ -77,7 +78,7 @@ public class HealthDataEx3ServiceTest {
         when(mockS3Client.generatePresignedUrl(any())).thenAnswer(i -> {
             GeneratePresignedUrlRequest request = i.getArgument(0);
             String filePath = request.getKey();
-            return new URL("https://" + RECORD_BUCKET + "/" + filePath);
+            return URI.create("https://" + RECORD_BUCKET + "/" + filePath).toURL();
         });
 
         DateTimeUtils.setCurrentMillisFixed(TestConstants.TIMESTAMP.getMillis());
@@ -154,7 +155,7 @@ public class HealthDataEx3ServiceTest {
         assertEquals(result.getId(), RECORD_ID);
         assertEquals(result.getAppId(), TestConstants.TEST_APP_ID);
         assertEquals(result.getHealthCode(), TestConstants.HEALTH_CODE);
-        assertEquals(result.getCreatedOn(), new Long(TestConstants.CREATED_ON.getMillis()));
+        assertEquals(result.getCreatedOn(), Long.valueOf(TestConstants.CREATED_ON.getMillis()));
         assertEquals(result.getDownloadExpiration(), DateTime.now().plusMinutes(EXPIRATION_IN_MINUTES).getMillis());
 
         verify(mockS3Client).generatePresignedUrl(requestCaptor.capture());

@@ -23,9 +23,9 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.function.Function;
 
-import javax.persistence.OptimisticLockException;
-import javax.persistence.PersistenceException;
-import javax.persistence.RollbackException;
+import jakarta.persistence.OptimisticLockException;
+import jakarta.persistence.PersistenceException;
+import jakarta.persistence.RollbackException;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;

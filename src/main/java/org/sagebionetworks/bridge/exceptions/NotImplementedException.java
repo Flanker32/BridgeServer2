@@ -1,6 +1,6 @@
 package org.sagebionetworks.bridge.exceptions;
 
-import org.apache.http.HttpStatus;
+import org.apache.hc.core5.http.HttpStatus;
 
 /**
  * This endpoint has not been implemented for this app. It has been disabled, or 

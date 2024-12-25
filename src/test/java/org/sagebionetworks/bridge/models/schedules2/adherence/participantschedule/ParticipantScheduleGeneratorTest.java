@@ -60,7 +60,7 @@ public class ParticipantScheduleGeneratorTest {
 
         // But the schedule is different
         assertEquals(retValue.getSchedule().size(), 7);
-        assertScheduledSession(retValue.getSchedule().get(0), "NpLGwpRYGr3cYjJvp945zQ", LocalDate.parse("2015-02-02"),
+        assertScheduledSession(retValue.getSchedule().getFirst(), "NpLGwpRYGr3cYjJvp945zQ", LocalDate.parse("2015-02-02"),
                 LocalDate.parse("2015-02-02"), "MDoRIcMJpAZ3Xqy_uZAbnw", "AzGvv4ph-7Xzi9VRIrFyWw");
         assertScheduledSession(retValue.getSchedule().get(1), "0dVupumHdJENCi5rzjA1sQ", LocalDate.parse("2015-02-09"),
                 LocalDate.parse("2015-02-09"), "mZTon_L0lXXErPKme-Ojhg", "okkx1iuHoh6MV8I8I9vYYQ");
@@ -106,8 +106,8 @@ public class ParticipantScheduleGeneratorTest {
         assertNull(session.getEndDay());
         
         // assessments are always the same
-        assertEquals(session.getAssessments().get(0).getRefKey(), "646f8c04646f8c04");
-        assertEquals(session.getAssessments().get(0).getInstanceGuid(), asmtInstanceGuid1);
+        assertEquals(session.getAssessments().getFirst().getRefKey(), "646f8c04646f8c04");
+        assertEquals(session.getAssessments().getFirst().getInstanceGuid(), asmtInstanceGuid1);
         assertEquals(session.getAssessments().get(1).getRefKey(), "75b56f2d75b56f2d");
         assertEquals(session.getAssessments().get(1).getInstanceGuid(), asmtInstanceGuid2);
     }

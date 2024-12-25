@@ -64,7 +64,7 @@ public class StudyReportWeekTest {
             day.setLabel(count+"");
         });
         assertEquals(days.size(), 3);
-        assertEquals(days.get(0).getLabel(), "0"); // zero position
+        assertEquals(days.getFirst().getLabel(), "0"); // zero position
         assertEquals(days.get(1).getLabel(), "0"); // day1 again in zero position
         assertEquals(days.get(2).getLabel(), "1"); // day2 in position 1
     }
@@ -108,14 +108,14 @@ public class StudyReportWeekTest {
         List<EventStreamDay> days = copy.getByDayEntries().get(5);
         assertNotSame(copy.getByDayEntries(), week.getByDayEntries());
         
-        EventStreamDay copyDay = days.get(0);
+        EventStreamDay copyDay = days.getFirst();
         assertEquals(copyDay.getLabel(), "dayLabel");
         assertNotSame(copyDay, day);
         
         List<WeeklyAdherenceReportRow> copyRows = copy.getRows();
         assertNotSame(copyRows, week.getRows());
         
-        WeeklyAdherenceReportRow copyRow = copyRows.get(0);
+        WeeklyAdherenceReportRow copyRow = copyRows.getFirst();
         assertEquals(copyRow.getLabel(), row.getLabel());
         assertEquals(copyRow.getSearchableLabel(), row.getSearchableLabel());
         assertEquals(copyRow.getSessionGuid(), row.getSessionGuid());

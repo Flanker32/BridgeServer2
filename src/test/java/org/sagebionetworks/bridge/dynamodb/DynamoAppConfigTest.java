@@ -158,7 +158,7 @@ public class DynamoAppConfigTest {
         assertEquals(node.get("surveyReferences").size(), 2);
         assertEquals(node.get("surveyReferences").get(0).get("identifier").textValue(), "surveyA");
         assertEquals(node.get("surveyReferences").get(0).get("guid").textValue(),
-                appConfig.getSurveyReferences().get(0).getGuid());
+                appConfig.getSurveyReferences().getFirst().getGuid());
         assertEquals(node.get("surveyReferences").get(0).get("createdOn").textValue(), SURVEY_PUB_DATE.toString());
         assertEquals(node.get("surveyReferences").get(1).get("identifier").textValue(), "surveyB");
         assertEquals(node.get("surveyReferences").get(1).get("guid").textValue(),

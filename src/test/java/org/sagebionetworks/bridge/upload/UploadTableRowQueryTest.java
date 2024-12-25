@@ -12,16 +12,18 @@ public class UploadTableRowQueryTest {
     @Test
     public void deserialize() throws JsonProcessingException {
         // We only ever deserialize this from JSON, so just test that it works.
-        String jsonText = "{\n" +
-                "   \"appId\":\"test-app\",\n" +
-                "   \"studyId\":\"test-study\",\n" +
-                "   \"assessmentGuid\":\"test-assessment\",\n" +
-                "   \"startTime\":\"2018-05-01T00:00:00.000Z\",\n" +
-                "   \"endTime\":\"2018-05-02T00:00:00.000Z\",\n" +
-                "   \"includeTestData\":true,\n" +
-                "   \"start\":10,\n" +
-                "   \"pageSize\":50\n" +
-                "}";
+        String jsonText = """
+                {
+                   "appId":"test-app",
+                   "studyId":"test-study",
+                   "assessmentGuid":"test-assessment",
+                   "startTime":"2018-05-01T00:00:00.000Z",
+                   "endTime":"2018-05-02T00:00:00.000Z",
+                   "includeTestData":true,
+                   "start":10,
+                   "pageSize":50
+                }\
+                """;
 
         UploadTableRowQuery query = BridgeObjectMapper.get().readValue(jsonText, UploadTableRowQuery.class);
         assertEquals(query.getAppId(), "test-app");

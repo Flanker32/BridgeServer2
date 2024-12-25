@@ -142,7 +142,7 @@ public class DynamoMasterSchedulerConfigDaoTest extends Mockito {
         assertTrue(mapperConfig.getRequestTemplate().get("a").booleanValue());
         assertEquals(mapperConfig.getRequestTemplate().get("b").textValue(), "string");
         assertEquals(mapperConfig.getSqsQueueUrl(), SQS_QUEUE_URL);
-        assertEquals(mapperConfig.getVersion(), new Long(1));
+        assertEquals(mapperConfig.getVersion(), Long.valueOf(1));
         
         DynamoDBSaveExpression expr = saveExpressionCaptor.getValue();
         Map<String,ExpectedAttributeValue> map = expr.getExpected();

@@ -2,7 +2,7 @@ package org.sagebionetworks.bridge.models.notifications;
 
 import java.util.Objects;
 
-import javax.persistence.Embeddable;
+import jakarta.persistence.Embeddable;
 
 import org.sagebionetworks.bridge.models.BridgeEntity;
 import org.sagebionetworks.bridge.models.HasLang;

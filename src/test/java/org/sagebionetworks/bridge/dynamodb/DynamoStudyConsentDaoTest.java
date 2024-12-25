@@ -83,7 +83,7 @@ public class DynamoStudyConsentDaoTest extends Mockito {
         
         assertEquals(query.getHashKeyValues().getSubpopulationGuid(), SUBPOP_GUID.getGuid());
         assertFalse(query.isScanIndexForward());
-        assertEquals(query.getLimit(), new Integer(1));
+        assertEquals(query.getLimit(), Integer.valueOf(1));
     }
     
     @Test

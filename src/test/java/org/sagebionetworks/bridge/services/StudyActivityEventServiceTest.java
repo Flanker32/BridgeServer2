@@ -230,7 +230,7 @@ public class StudyActivityEventServiceTest extends Mockito {
         
         verify(mockDao, times(4)).deleteEvent(eventCaptor.capture());
         
-        StudyActivityEvent origin = eventCaptor.getAllValues().get(0);
+        StudyActivityEvent origin = eventCaptor.getAllValues().getFirst();
         assertEquals(origin.getEventId(), "custom:foo");
         
         StudyActivityEvent sb1 = eventCaptor.getAllValues().get(1);
@@ -438,7 +438,7 @@ public class StudyActivityEventServiceTest extends Mockito {
         
         verify(mockDao, times(4)).publishEvent(eventCaptor.capture());
         
-        StudyActivityEvent origin = eventCaptor.getAllValues().get(0);
+        StudyActivityEvent origin = eventCaptor.getAllValues().getFirst();
         assertEquals(origin.getEventId(), "enrollment");
         
         StudyActivityEvent sb1 = eventCaptor.getAllValues().get(1);
@@ -495,7 +495,7 @@ public class StudyActivityEventServiceTest extends Mockito {
         
         verify(mockDao, times(4)).publishEvent(eventCaptor.capture());
         
-        StudyActivityEvent origin = eventCaptor.getAllValues().get(0);
+        StudyActivityEvent origin = eventCaptor.getAllValues().getFirst();
         assertEquals(origin.getEventId(), "enrollment");
         
         StudyActivityEvent sb1 = eventCaptor.getAllValues().get(1);
@@ -599,7 +599,7 @@ public class StudyActivityEventServiceTest extends Mockito {
         
         verify(mockDao, times(1)).publishEvent(eventCaptor.capture());
         
-        StudyActivityEvent origin = eventCaptor.getAllValues().get(0);
+        StudyActivityEvent origin = eventCaptor.getAllValues().getFirst();
         assertEquals(origin.getEventId(), "enrollment");
     }
     
@@ -843,7 +843,7 @@ public class StudyActivityEventServiceTest extends Mockito {
         
         PagedResourceList<StudyActivityEvent> retValue = service.getStudyActivityEventHistory(
                 ACCOUNT_ID, TEST_STUDY_ID, "install_link_sent", 10, 100);
-        StudyActivityEvent event = retValue.getItems().get(0);
+        StudyActivityEvent event = retValue.getItems().getFirst();
         assertEquals(retValue.getItems().size(), 1);
         assertEquals(event.getTimestamp(), MODIFIED_ON);
         assertEquals(event.getCreatedOn(), MODIFIED_ON);
@@ -883,7 +883,7 @@ public class StudyActivityEventServiceTest extends Mockito {
         PagedResourceList<StudyActivityEvent> retValue = service.getStudyActivityEventHistory(
                 ACCOUNT_ID, TEST_STUDY_ID, CREATED_ON_FIELD, 0, 50);
         assertEquals(retValue.getItems().size(), 1);
-        StudyActivityEvent event = retValue.getItems().get(0);
+        StudyActivityEvent event = retValue.getItems().getFirst();
         assertEquals(event.getTimestamp(), CREATED_ON);
         assertEquals(event.getCreatedOn(), CREATED_ON);
         assertNull(event.getRecordCount());
@@ -940,7 +940,7 @@ public class StudyActivityEventServiceTest extends Mockito {
         PagedResourceList<StudyActivityEvent> retValue = service.getStudyActivityEventHistory(
                 ACCOUNT_ID, TEST_STUDY_ID, "event1", null, null);
         assertEquals(retValue.getItems().size(), 1);
-        assertEquals(retValue.getItems().get(0), event);
+        assertEquals(retValue.getItems().getFirst(), event);
         
         verify(mockDao).getStudyActivityEventHistory(TEST_USER_ID, TEST_STUDY_ID, "custom:event1", null, null);
     }
@@ -960,7 +960,7 @@ public class StudyActivityEventServiceTest extends Mockito {
         ResourceList<StudyActivityEvent> retValue = service.getRecentStudyActivityEvents(TEST_APP_ID, TEST_STUDY_ID, TEST_USER_ID);
         assertEquals(retValue.getItems().size(), 2);
         
-        StudyActivityEvent event = retValue.getItems().get(0);
+        StudyActivityEvent event = retValue.getItems().getFirst();
         assertEquals(event.getEventId(), CREATED_ON_FIELD);
         assertEquals(event.getTimestamp(), CREATED_ON);
         
@@ -987,8 +987,8 @@ public class StudyActivityEventServiceTest extends Mockito {
             .thenReturn(list);
         
         ResourceList<StudyActivityEvent> retValue = service.getRecentStudyActivityEvents(TEST_APP_ID, TEST_STUDY_ID, TEST_USER_ID);
-        assertEquals(retValue.getItems().get(0).getEventId(), ENROLLMENT_FIELD);
-        assertEquals(retValue.getItems().get(0).getTimestamp(), CREATED_ON); // not modifiedOn
+        assertEquals(retValue.getItems().getFirst().getEventId(), ENROLLMENT_FIELD);
+        assertEquals(retValue.getItems().getFirst().getTimestamp(), CREATED_ON); // not modifiedOn
     }
 
     @Test
@@ -1006,9 +1006,9 @@ public class StudyActivityEventServiceTest extends Mockito {
         PagedResourceList<StudyActivityEvent> retValue = service.getStudyActivityEventHistory(ACCOUNT_ID, TEST_STUDY_ID, ENROLLMENT_FIELD, null, null);
         assertEquals(retValue.getItems().size(), 1);
         assertEquals(retValue.getTotal(), Integer.valueOf(1));
-        assertEquals(retValue.getItems().get(0).getTimestamp(), MODIFIED_ON);
+        assertEquals(retValue.getItems().getFirst().getTimestamp(), MODIFIED_ON);
         
-        StudyActivityEvent event = retValue.getItems().get(0);
+        StudyActivityEvent event = retValue.getItems().getFirst();
         assertEquals(event.getEventId(), "enrollment");
         assertEquals(event.getTimestamp(), MODIFIED_ON);
         assertNull(event.getOriginEventId());
@@ -1033,7 +1033,7 @@ public class StudyActivityEventServiceTest extends Mockito {
         PagedResourceList<StudyActivityEvent> retValue = service.getStudyActivityEventHistory(ACCOUNT_ID, TEST_STUDY_ID, ENROLLMENT_FIELD, null, null);
         assertEquals(retValue.getItems().size(), 1);
         assertEquals(retValue.getTotal(), Integer.valueOf(1));
-        assertEquals(retValue.getItems().get(0).getTimestamp(), CREATED_ON); // not modifiedOn
+        assertEquals(retValue.getItems().getFirst().getTimestamp(), CREATED_ON); // not modifiedOn
     }
     
     // BRIDGE-3179
@@ -1055,7 +1055,7 @@ public class StudyActivityEventServiceTest extends Mockito {
         
         ResourceList<StudyActivityEvent> list = service.getRecentStudyActivityEvents(TEST_APP_ID, TEST_STUDY_ID, TEST_USER_ID);
         assertEquals(list.getItems().size(), 1);
-        assertEquals(list.getItems().get(0).getTimestamp(), CREATED_ON);
+        assertEquals(list.getItems().getFirst().getTimestamp(), CREATED_ON);
     }
 
     private void assertStudyBurstAlert(Alert alert) {

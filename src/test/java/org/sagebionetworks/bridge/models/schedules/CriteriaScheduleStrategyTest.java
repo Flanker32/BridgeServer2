@@ -267,7 +267,7 @@ public class CriteriaScheduleStrategyTest {
         setUpStrategyWithProhibitedDataGroups();
 
         List<Schedule> schedules = strategy.getAllPossibleSchedules();
-        assertEquals(schedules.get(0), SCHEDULE_FOR_STRATEGY_WITH_APP_VERSIONS);
+        assertEquals(schedules.getFirst(), SCHEDULE_FOR_STRATEGY_WITH_APP_VERSIONS);
         assertEquals(schedules.get(1), SCHEDULE_FOR_STRATEGY_WITH_ONE_REQUIRED_DATA_GROUP);
         assertEquals(schedules.get(2), SCHEDULE_FOR_STRATEGY_WITH_PROHIBITED_DATA_GROUPS);
         assertEquals(schedules.size(), 3);
@@ -358,7 +358,7 @@ public class CriteriaScheduleStrategyTest {
             Validate.entityThrowingException(VALIDATOR, PLAN);
             fail("Should have thrown exception");
         } catch(InvalidEntityException e) {
-            assertEquals(e.getErrors().get("strategy.scheduleCriteria[0].schedule").get(0),
+            assertEquals(e.getErrors().get("strategy.scheduleCriteria[0].schedule").getFirst(),
                     "strategy.scheduleCriteria[0].schedule is required");
         }
     }
@@ -378,7 +378,7 @@ public class CriteriaScheduleStrategyTest {
             Validate.entityThrowingException(VALIDATOR, PLAN);
             fail("Should have thrown exception");
         } catch(InvalidEntityException e) {
-            assertEquals(e.getErrors().get("strategy.scheduleCriteria[0].criteria").get(0),
+            assertEquals(e.getErrors().get("strategy.scheduleCriteria[0].criteria").getFirst(),
                     "strategy.scheduleCriteria[0].criteria is required");
         }
     }

@@ -6,7 +6,7 @@ import static org.testng.Assert.assertNull;
 
 import java.util.List;
 
-import javax.persistence.PersistenceException;
+import jakarta.persistence.PersistenceException;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 

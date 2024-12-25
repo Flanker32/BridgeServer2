@@ -140,7 +140,7 @@ public class DynamoHealthDataEx3DaoTest {
                 TestConstants.HEALTH_CODE, CREATED_ON_START, CREATED_ON_END, BridgeConstants.API_DEFAULT_PAGE_SIZE,
                 null);
         assertEquals(resultList.getItems().size(), 1);
-        assertSame(resultList.getItems().get(0), record);
+        assertSame(resultList.getItems().getFirst(), record);
         assertNull(resultList.getNextPageOffsetKey());
 
         // Validate.
@@ -158,7 +158,7 @@ public class DynamoHealthDataEx3DaoTest {
         Condition rangeKeyCondition = query.getRangeKeyConditions().get("createdOn");
         assertEquals(rangeKeyCondition.getComparisonOperator(), ComparisonOperator.BETWEEN.toString());
         assertEquals(rangeKeyCondition.getAttributeValueList().size(), 2);
-        assertEquals(rangeKeyCondition.getAttributeValueList().get(0).getN(), String.valueOf(CREATED_ON_START));
+        assertEquals(rangeKeyCondition.getAttributeValueList().getFirst().getN(), String.valueOf(CREATED_ON_START));
         assertEquals(rangeKeyCondition.getAttributeValueList().get(1).getN(), String.valueOf(CREATED_ON_END));
     }
 
@@ -179,7 +179,7 @@ public class DynamoHealthDataEx3DaoTest {
 
         DynamoDBQueryExpression<DynamoHealthDataRecordEx3> query = queryCaptor.getValue();
         Condition rangeKeyCondition = query.getRangeKeyConditions().get("createdOn");
-        assertEquals(rangeKeyCondition.getAttributeValueList().get(0).getN(), String.valueOf(CREATED_ON_START));
+        assertEquals(rangeKeyCondition.getAttributeValueList().getFirst().getN(), String.valueOf(CREATED_ON_START));
     }
 
     @Test
@@ -199,7 +199,7 @@ public class DynamoHealthDataEx3DaoTest {
 
         DynamoDBQueryExpression<DynamoHealthDataRecordEx3> query = queryCaptor.getValue();
         Condition rangeKeyCondition = query.getRangeKeyConditions().get("createdOn");
-        assertEquals(rangeKeyCondition.getAttributeValueList().get(0).getN(), String.valueOf(CREATED_ON_START + 10000));
+        assertEquals(rangeKeyCondition.getAttributeValueList().getFirst().getN(), String.valueOf(CREATED_ON_START + 10000));
     }
 
     @Test(expectedExceptions = BadRequestException.class, expectedExceptionsMessageRegExp =
@@ -222,7 +222,7 @@ public class DynamoHealthDataEx3DaoTest {
         ForwardCursorPagedResourceList<HealthDataRecordEx3> resultList = dao.getRecordsForHealthCode(
                 TestConstants.HEALTH_CODE, CREATED_ON_START, CREATED_ON_END, 2, null);
         assertEquals(resultList.getItems().size(), 2);
-        assertSame(resultList.getItems().get(0), record0);
+        assertSame(resultList.getItems().getFirst(), record0);
         assertSame(resultList.getItems().get(1), record1);
         assertEquals(resultList.getNextPageOffsetKey(), String.valueOf(CREATED_ON_START + 10000));
     }
@@ -238,7 +238,7 @@ public class DynamoHealthDataEx3DaoTest {
                 TestConstants.TEST_APP_ID, CREATED_ON_START, CREATED_ON_END,
                 BridgeConstants.API_DEFAULT_PAGE_SIZE, null);
         assertEquals(resultList.getItems().size(), 1);
-        assertSame(resultList.getItems().get(0), record);
+        assertSame(resultList.getItems().getFirst(), record);
         assertNull(resultList.getNextPageOffsetKey());
 
         // Validate.
@@ -256,7 +256,7 @@ public class DynamoHealthDataEx3DaoTest {
         Condition rangeKeyCondition = query.getRangeKeyConditions().get("createdOn");
         assertEquals(rangeKeyCondition.getComparisonOperator(), ComparisonOperator.BETWEEN.toString());
         assertEquals(rangeKeyCondition.getAttributeValueList().size(), 2);
-        assertEquals(rangeKeyCondition.getAttributeValueList().get(0).getN(), String.valueOf(CREATED_ON_START));
+        assertEquals(rangeKeyCondition.getAttributeValueList().getFirst().getN(), String.valueOf(CREATED_ON_START));
         assertEquals(rangeKeyCondition.getAttributeValueList().get(1).getN(), String.valueOf(CREATED_ON_END));
     }
 
@@ -271,7 +271,7 @@ public class DynamoHealthDataEx3DaoTest {
                 TestConstants.TEST_APP_ID, STUDY_ID, CREATED_ON_START, CREATED_ON_END,
                 BridgeConstants.API_DEFAULT_PAGE_SIZE, null);
         assertEquals(resultList.getItems().size(), 1);
-        assertSame(resultList.getItems().get(0), record);
+        assertSame(resultList.getItems().getFirst(), record);
         assertNull(resultList.getNextPageOffsetKey());
 
         // Validate.
@@ -290,7 +290,7 @@ public class DynamoHealthDataEx3DaoTest {
         Condition rangeKeyCondition = query.getRangeKeyConditions().get("createdOn");
         assertEquals(rangeKeyCondition.getComparisonOperator(), ComparisonOperator.BETWEEN.toString());
         assertEquals(rangeKeyCondition.getAttributeValueList().size(), 2);
-        assertEquals(rangeKeyCondition.getAttributeValueList().get(0).getN(), String.valueOf(CREATED_ON_START));
+        assertEquals(rangeKeyCondition.getAttributeValueList().getFirst().getN(), String.valueOf(CREATED_ON_START));
         assertEquals(rangeKeyCondition.getAttributeValueList().get(1).getN(), String.valueOf(CREATED_ON_END));
     }
 }

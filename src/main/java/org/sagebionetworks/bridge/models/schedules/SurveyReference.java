@@ -82,7 +82,7 @@ public final class SurveyReference {
     
     @Override
     public String toString() {
-        return String.format("SurveyReference [identifier=%s, guid=%s, createdOn=%s, href=%s]",
-            identifier, guid, createdOn, getHref());
+        return "SurveyReference [identifier=%s, guid=%s, createdOn=%s, href=%s]".formatted(
+                identifier, guid, createdOn, getHref());
     }
 }

@@ -88,7 +88,7 @@ public class HibernateAssessmentTest {
         assertEquals(assessment.getSummary(), "summary");
         assertEquals(assessment.getValidationStatus(), "validationStatus");
         assertEquals(assessment.getNormingStatus(), "normingStatus");
-        assertEquals(assessment.getMinutesToComplete(), new Integer(10));
+        assertEquals(assessment.getMinutesToComplete(), Integer.valueOf(10));
         assertEquals(assessment.getOsName(), ANDROID);
         assertEquals(assessment.getOriginGuid(), "originGuid");
         assertEquals(assessment.getOwnerId(), TEST_OWNER_ID);
@@ -101,8 +101,8 @@ public class HibernateAssessmentTest {
         assertEquals(assessment.getVersion(), 8);
         assertEquals(assessment.getImageResource().getName(), "default");
         assertEquals(assessment.getImageResource().getModule(), "sage_survey");
-        assertEquals(assessment.getImageResource().getLabels().get(0).getLang(), LABELS.get(0).getLang());
-        assertEquals(assessment.getImageResource().getLabels().get(0).getValue(), LABELS.get(0).getValue());
+        assertEquals(assessment.getImageResource().getLabels().getFirst().getLang(), LABELS.getFirst().getLang());
+        assertEquals(assessment.getImageResource().getLabels().getFirst().getValue(), LABELS.getFirst().getValue());
         assertEquals(assessment.getImageResource().getLabels().get(1).getLang(), LABELS.get(1).getLang());
         assertEquals(assessment.getImageResource().getLabels().get(1).getValue(), LABELS.get(1).getValue());
         assertEquals(assessment.getFrameworkIdentifier(), FRAMEWORK_IDENTIFIER);

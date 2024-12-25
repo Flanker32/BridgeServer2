@@ -90,7 +90,7 @@ public class DynamoParticipantVersionDaoTest {
         List<ParticipantVersion> resultList = dao.getAllParticipantVersionsForHealthCode(TestConstants.TEST_APP_ID,
                 TestConstants.HEALTH_CODE);
         assertEquals(resultList.size(), 1);
-        assertSame(resultList.get(0), participantVersion);
+        assertSame(resultList.getFirst(), participantVersion);
 
         ArgumentCaptor<DynamoDBQueryExpression<DynamoParticipantVersion>> queryCaptor = ArgumentCaptor.forClass(
                 DynamoDBQueryExpression.class);

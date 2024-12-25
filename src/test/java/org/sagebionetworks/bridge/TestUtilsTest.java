@@ -62,8 +62,8 @@ public class TestUtilsTest {
     public void createCriteriaWithArguments() {
         Criteria criteria = TestUtils.createCriteria(5, 15, ALL_OF_GROUPS, NONE_OF_GROUPS);
 
-        assertEquals(criteria.getMinAppVersion(IOS), new Integer(5));
-        assertEquals(criteria.getMaxAppVersion(IOS), new Integer(15));
+        assertEquals(criteria.getMinAppVersion(IOS), Integer.valueOf(5));
+        assertEquals(criteria.getMaxAppVersion(IOS), Integer.valueOf(15));
         assertEquals(criteria.getAllOfGroups(), ALL_OF_GROUPS);
         assertEquals(criteria.getNoneOfGroups(), NONE_OF_GROUPS);
     }
@@ -79,9 +79,9 @@ public class TestUtilsTest {
         Criteria criteria = newCriteria();
         
         Criteria newCriteria = TestUtils.copyCriteria(criteria);
-        assertEquals(newCriteria.getMinAppVersion(IOS), new Integer(5));
-        assertEquals(newCriteria.getMaxAppVersion(IOS), new Integer(15));
-        assertEquals(newCriteria.getMaxAppVersion(ANDROID), new Integer(12));
+        assertEquals(newCriteria.getMinAppVersion(IOS), Integer.valueOf(5));
+        assertEquals(newCriteria.getMaxAppVersion(IOS), Integer.valueOf(15));
+        assertEquals(newCriteria.getMaxAppVersion(ANDROID), Integer.valueOf(12));
         assertEquals(newCriteria.getAllOfGroups(), ALL_OF_GROUPS);
         assertEquals(newCriteria.getNoneOfGroups(), NONE_OF_GROUPS);
         assertEquals(newCriteria.getAppVersionOperatingSystems(), Sets.newHashSet(IOS, ANDROID));

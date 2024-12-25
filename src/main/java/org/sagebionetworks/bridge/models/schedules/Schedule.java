@@ -239,7 +239,7 @@ public class Schedule implements BridgeEntity {
     }
     @Override
     public String toString() {
-        return String.format("Schedule [label=%s, scheduleType=%s, cronTrigger=%s, startsOn=%s, endsOn=%s, delay=%s, expires=%s, sequencePeriod=%s, interval=%s, times=%s, eventId=%s, activities=%s]", 
-            label, scheduleType, cronTrigger, startsOn, endsOn, delay, expires, sequencePeriod, interval, times, eventId, activities);
+        return "Schedule [label=%s, scheduleType=%s, cronTrigger=%s, startsOn=%s, endsOn=%s, delay=%s, expires=%s, sequencePeriod=%s, interval=%s, times=%s, eventId=%s, activities=%s]".formatted(
+                label, scheduleType, cronTrigger, startsOn, endsOn, delay, expires, sequencePeriod, interval, times, eventId, activities);
     }
 }    

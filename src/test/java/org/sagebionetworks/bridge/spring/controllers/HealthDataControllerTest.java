@@ -11,8 +11,8 @@ import static org.testng.Assert.assertNull;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.google.common.collect.ImmutableList;
@@ -74,10 +74,12 @@ public class HealthDataControllerTest extends Mockito {
     }
     
     private static final HealthDataRecord.ExporterStatus TEST_STATUS = HealthDataRecord.ExporterStatus.SUCCEEDED;
-    private static final String TEST_STATUS_JSON = "{\n" +
-            "   \"recordIds\":[\"record-to-update\"],\n" +
-            "   \"synapseExporterStatus\":\"SUCCEEDED\"\n" +
-            "}";
+    private static final String TEST_STATUS_JSON = """
+            {
+               "recordIds":["record-to-update"],
+               "synapseExporterStatus":"SUCCEEDED"
+            }\
+            """;
 
     @InjectMocks
     @Spy
@@ -179,8 +181,8 @@ public class HealthDataControllerTest extends Mockito {
         List<HealthDataRecord> recordList = recordResourceList.getItems();
         assertEquals(recordList.size(), 2);
 
-        assertEquals(TEST_RECORD_ID + "1", recordList.get(0).getId());
-        assertNull(recordList.get(0).getHealthCode());
+        assertEquals(TEST_RECORD_ID + "1", recordList.getFirst().getId());
+        assertNull(recordList.getFirst().getHealthCode());
 
         assertEquals(TEST_RECORD_ID + "2", recordList.get(1).getId());
         assertNull(recordList.get(1).getHealthCode());
@@ -312,7 +314,7 @@ public class HealthDataControllerTest extends Mockito {
         // then verify if it parse json correctly as a request entity
         verify(mockHealthDataService).updateRecordsWithExporterStatus(requestArgumentCaptor.capture());
         RecordExportStatusRequest capturedRequest = requestArgumentCaptor.getValue();
-        assertEquals(TEST_RECORD_ID, capturedRequest.getRecordIds().get(0));
+        assertEquals(TEST_RECORD_ID, capturedRequest.getRecordIds().getFirst());
         assertEquals(TEST_STATUS, capturedRequest.getSynapseExporterStatus());
     }
 }

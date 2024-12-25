@@ -57,11 +57,11 @@ public class HibernateFileRevisionDaoTest extends Mockito {
         assertEquals(results.getItems().size(), 1);
         assertEquals(results.getRequestParams().get("offsetBy"), 10);
         assertEquals(results.getRequestParams().get("pageSize"), 25);
-        assertEquals(results.getTotal(), new Integer(100));
+        assertEquals(results.getTotal(), Integer.valueOf(100));
         
         verify(mockHelper).queryCount(queryCaptor.capture(), paramsCaptor.capture());
-        assertEquals(queryCaptor.getAllValues().get(0), "SELECT count(fileGuid) FROM FileRevision WHERE fileGuid = :fileGuid");
-        assertEquals(paramsCaptor.getAllValues().get(0).get("fileGuid"), GUID);
+        assertEquals(queryCaptor.getAllValues().getFirst(), "SELECT count(fileGuid) FROM FileRevision WHERE fileGuid = :fileGuid");
+        assertEquals(paramsCaptor.getAllValues().getFirst().get("fileGuid"), GUID);
         
         verify(mockHelper).queryGet(queryCaptor.capture(), paramsCaptor.capture(), eq(10), eq(25), eq(FileRevision.class));
         assertEquals(queryCaptor.getAllValues().get(1), "FROM FileRevision WHERE fileGuid = :fileGuid ORDER BY createdOn DESC");

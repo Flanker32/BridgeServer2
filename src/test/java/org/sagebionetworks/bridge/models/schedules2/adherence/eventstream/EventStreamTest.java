@@ -81,7 +81,7 @@ public class EventStreamTest {
             day.setLabel(count+"");
         });
         assertEquals(days.size(), 3);
-        assertEquals(days.get(0).getLabel(), "0"); // zero position
+        assertEquals(days.getFirst().getLabel(), "0"); // zero position
         assertEquals(days.get(1).getLabel(), "0"); // day1 again in zero position
         assertEquals(days.get(2).getLabel(), "1"); // day2 in position 1
     }

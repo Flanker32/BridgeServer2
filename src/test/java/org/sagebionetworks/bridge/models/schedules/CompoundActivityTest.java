@@ -173,12 +173,12 @@ public class CompoundActivityTest {
 
         List<SchemaReference> outputSchemaList = compoundActivity.getSchemaList();
         assertEquals(outputSchemaList.size(), 2);
-        assertEquals(outputSchemaList.get(0), fooSchema);
+        assertEquals(outputSchemaList.getFirst(), fooSchema);
         assertEquals(outputSchemaList.get(1), barSchema);
 
         List<SurveyReference> outputSurveyList = compoundActivity.getSurveyList();
         assertEquals(outputSurveyList.size(), 2);
-        assertEquals(outputSurveyList.get(0), asdfSurvey);
+        assertEquals(outputSurveyList.getFirst(), asdfSurvey);
         assertEquals(outputSurveyList.get(1), jklSurvey);
 
         // convert back to JSON

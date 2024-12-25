@@ -53,8 +53,8 @@ public class SurveyElementTest {
         assertEquals(question.getType(), "SurveyQuestion");
         assertEquals(question.getUiHint(), UIHint.TEXTFIELD);
         
-        assertEquals(question.getBeforeRules().get(0), BEFORE_RULE);
-        assertEquals(question.getAfterRules().get(0), AFTER_RULE);
+        assertEquals(question.getBeforeRules().getFirst(), BEFORE_RULE);
+        assertEquals(question.getAfterRules().getFirst(), AFTER_RULE);
 
         // convert back to JSON
         String convertedJson = BridgeObjectMapper.get().writeValueAsString(question);
@@ -79,8 +79,8 @@ public class SurveyElementTest {
         assertEquals(deserQuestion.getPromptDetail(), "Details about question");
         assertEquals(deserQuestion.getType(), "SurveyQuestion");
         assertEquals(deserQuestion.getUiHint(), UIHint.TEXTFIELD);
-        assertEquals(deserQuestion.getBeforeRules().get(0), BEFORE_RULE);
-        assertEquals(deserQuestion.getAfterRules().get(0), AFTER_RULE);
+        assertEquals(deserQuestion.getBeforeRules().getFirst(), BEFORE_RULE);
+        assertEquals(deserQuestion.getAfterRules().getFirst(), AFTER_RULE);
     }
 
     @Test
@@ -112,8 +112,8 @@ public class SurveyElementTest {
         assertNull(infoScreen.getSurveyCompoundKey());
         assertEquals(infoScreen.getTitle(), "Survey Info");
         assertEquals(infoScreen.getType(), "SurveyInfoScreen");
-        assertEquals(infoScreen.getBeforeRules().get(0), BEFORE_RULE);
-        assertEquals(infoScreen.getAfterRules().get(0), AFTER_RULE);
+        assertEquals(infoScreen.getBeforeRules().getFirst(), BEFORE_RULE);
+        assertEquals(infoScreen.getAfterRules().getFirst(), AFTER_RULE);
 
         assertEquals(infoScreen.getImage().getSource(), "http://www.example.com/test.png");
         assertEquals(infoScreen.getImage().getWidth(), 200);

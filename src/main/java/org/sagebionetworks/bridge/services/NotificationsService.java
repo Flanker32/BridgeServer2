@@ -7,7 +7,7 @@ import static org.sagebionetworks.bridge.BridgeUtils.SEMICOLON_SPACE_JOINER;
 import java.util.List;
 import java.util.Set;
 
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;

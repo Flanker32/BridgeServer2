@@ -1,6 +1,6 @@
 package org.sagebionetworks.bridge.dynamodb;
 
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 
 import org.joda.time.DateTime;
 import org.sagebionetworks.bridge.dao.MasterSchedulerStatusDao;

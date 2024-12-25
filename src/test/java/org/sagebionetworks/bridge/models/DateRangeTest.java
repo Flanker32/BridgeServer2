@@ -44,10 +44,12 @@ public class DateRangeTest {
     @Test
     public void jsonSerialization() throws Exception {
         // start with JSON
-        String jsonText = "{\n" +
-                "   \"startDate\":\"2015-08-03\",\n" +
-                "   \"endDate\":\"2015-08-07\"\n" +
-                "}";
+        String jsonText = """
+                {
+                   "startDate":"2015-08-03",
+                   "endDate":"2015-08-07"
+                }\
+                """;
 
         // convert to POJO
         DateRange dateRange = BridgeObjectMapper.get().readValue(jsonText, DateRange.class);

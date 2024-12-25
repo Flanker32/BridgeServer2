@@ -21,17 +21,19 @@ public class SqsInitializer {
     private static final Logger LOG = LoggerFactory.getLogger(SqsInitializer.class);
 
     static final String CONFIG_KEY_DEAD_LETTER_QUEUE_ARN = "dead.letter.queue.arn";
-    static final String POLICY_SNS_ALLOWED = "{\n" +
-            "  \"Statement\": [{\n" +
-            "    \"Sid\": \"Allow-SNS-SendMessage\",\n" +
-            "    \"Effect\": \"Allow\",\n" +
-            "    \"Principal\": {\n" +
-            "      \"Service\": \"sns.amazonaws.com\"\n" +
-            "    },\n" +
-            "    \"Action\": [\"sqs:SendMessage\"],\n" +
-            "    \"Resource\": \"*\"\n" +
-            "  }]\n" +
-            "}";
+    static final String POLICY_SNS_ALLOWED = """
+            {
+              "Statement": [{
+                "Sid": "Allow-SNS-SendMessage",
+                "Effect": "Allow",
+                "Principal": {
+                  "Service": "sns.amazonaws.com"
+                },
+                "Action": ["sqs:SendMessage"],
+                "Resource": "*"
+              }]
+            }\
+            """;
 
     private BridgeConfig bridgeConfig;
     private String deadLetterQueueArn;

@@ -86,8 +86,8 @@ public class BridgeObjectMapper extends ObjectMapper {
             BeanSerializerModifier bsm = new BeanSerializerModifier() {
                 public JsonSerializer<?> modifySerializer(SerializationConfig config, BeanDescription beanDesc,
                                 JsonSerializer<?> serializer) {
-                    if (serializer instanceof BeanSerializerBase) {
-                        return new TypeBeanSerializer((BeanSerializerBase) serializer);
+                    if (serializer instanceof BeanSerializerBase base) {
+                        return new TypeBeanSerializer(base);
                     }
                     return serializer;
                 }

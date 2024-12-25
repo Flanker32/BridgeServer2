@@ -165,7 +165,7 @@ public class DynamoHealthDataDocumentationDaoTest {
         ForwardCursorPagedResourceList<HealthDataDocumentation> resultList = dao.getDocumentationForParentId(
                 TEST_APP_ID, API_DEFAULT_PAGE_SIZE, OFFSET_KEY);
         assertEquals(resultList.getItems().size(), 1);
-        assertSame(resultList.getItems().get(0), doc);
+        assertSame(resultList.getItems().getFirst(), doc);
         assertNull(resultList.getNextPageOffsetKey());
 
         // validate
@@ -181,7 +181,7 @@ public class DynamoHealthDataDocumentationDaoTest {
         Condition rangeKeyCondition = query.getRangeKeyConditions().get("identifier");
         assertEquals(rangeKeyCondition.getComparisonOperator(), ComparisonOperator.GE.toString());
         assertEquals(rangeKeyCondition.getAttributeValueList().size(), 1);
-        assertEquals(rangeKeyCondition.getAttributeValueList().get(0).getS(), OFFSET_KEY);
+        assertEquals(rangeKeyCondition.getAttributeValueList().getFirst().getS(), OFFSET_KEY);
     }
 
     @Test
@@ -198,7 +198,7 @@ public class DynamoHealthDataDocumentationDaoTest {
         ForwardCursorPagedResourceList<HealthDataDocumentation> resultList = dao.getDocumentationForParentId(
                 TEST_APP_ID, 2, OFFSET_KEY);
         assertEquals(resultList.getItems().size(), 2);
-        assertSame(resultList.getItems().get(0), doc0);
+        assertSame(resultList.getItems().getFirst(), doc0);
         assertSame(resultList.getItems().get(1), doc1);
         assertEquals(resultList.getNextPageOffsetKey(), DOC_ID);
     }

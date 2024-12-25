@@ -92,12 +92,14 @@ public class ConsentSignatureTest {
 
     @Test
     public void jsonHappyCaseNullImage() throws Exception {
-        String jsonStr = "{\n" +
-                "   \"name\":\"test name\",\n" +
-                "   \"birthdate\":\"1970-01-01\",\n" +
-                "   \"imageData\":null,\n" +
-                "   \"imageMimeType\":null\n" +
-                "}";
+        String jsonStr = """
+                {
+                   "name":"test name",
+                   "birthdate":"1970-01-01",
+                   "imageData":null,
+                   "imageMimeType":null
+                }\
+                """;
         ConsentSignature sig = BridgeObjectMapper.get().readValue(jsonStr, ConsentSignature.class);
         assertEquals(sig.getName(), "test name");
         assertEquals(sig.getBirthdate(), "1970-01-01");

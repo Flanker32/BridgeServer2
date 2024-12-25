@@ -16,8 +16,8 @@ import static org.testng.Assert.assertTrue;
 import java.util.List;
 import java.util.Set;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.ImmutableList;
@@ -118,7 +118,7 @@ public class NotificationRegistrationControllerTest extends Mockito {
         
         assertEquals(result.getItems().size(), 1);
         
-        NotificationRegistration registration = serializeAndDeserialize(result.getItems().get(0));
+        NotificationRegistration registration = serializeAndDeserialize(result.getItems().getFirst());
         assertEquals(registration.getDeviceId(), DEVICE_ID);
         assertEquals(registration.getGuid(), GUID);
         assertEquals(registration.getOsName(), OS_NAME);
@@ -129,7 +129,7 @@ public class NotificationRegistrationControllerTest extends Mockito {
     @Test
     public void createRegistration() throws Exception {
         // Mock service.
-        doReturn(createRegList().get(0)).when(mockNotificationService).createRegistration(any(), any(), any());
+        doReturn(createRegList().getFirst()).when(mockNotificationService).createRegistration(any(), any(), any());
 
         // Mock Play context.
         String json = TestUtils.createJson("{'deviceId':'"+DEVICE_ID+"','osName':'"+OS_NAME+"'}");
@@ -151,7 +151,7 @@ public class NotificationRegistrationControllerTest extends Mockito {
     
     @Test
     public void updateRegistration() throws Exception {
-        doReturn(createRegList().get(0)).when(mockNotificationService).updateRegistration(any(), any());
+        doReturn(createRegList().getFirst()).when(mockNotificationService).updateRegistration(any(), any());
         
         String json = TestUtils.createJson("{'guid':'guidWeIgnore','deviceId':'NEW_DEVICE_ID','osName':'"+OS_NAME+"'}");
         mockRequestBody(mockRequest, json);
@@ -170,7 +170,7 @@ public class NotificationRegistrationControllerTest extends Mockito {
     
     @Test
     public void getRegistration() throws Exception {
-        doReturn(createRegList().get(0)).when(mockNotificationService).getRegistration(HEALTH_CODE, GUID);
+        doReturn(createRegList().getFirst()).when(mockNotificationService).getRegistration(HEALTH_CODE, GUID);
         
         NotificationRegistration result = controller.getRegistration(GUID);
         
@@ -197,7 +197,7 @@ public class NotificationRegistrationControllerTest extends Mockito {
         ResourceList<SubscriptionStatus> result = controller.getSubscriptionStatuses(GUID);
         
         assertEquals(result.getItems().size(), 1);
-        SubscriptionStatus retrievedStatus = result.getItems().get(0);
+        SubscriptionStatus retrievedStatus = result.getItems().getFirst();
         assertEquals(retrievedStatus.getTopicGuid(), "topicGuid");
         assertEquals(retrievedStatus.getTopicName(), "topicName");
         assertTrue(retrievedStatus.isSubscribed());
@@ -214,7 +214,7 @@ public class NotificationRegistrationControllerTest extends Mockito {
         ResourceList<SubscriptionStatus> result = controller.subscribe(GUID);
         
         assertEquals(result.getItems().size(), 1);
-        SubscriptionStatus retrievedStatus = result.getItems().get(0);
+        SubscriptionStatus retrievedStatus = result.getItems().getFirst();
         assertEquals(retrievedStatus.getTopicGuid(), "topicGuid");
         assertEquals(retrievedStatus.getTopicName(), "topicName");
         assertTrue(retrievedStatus.isSubscribed());

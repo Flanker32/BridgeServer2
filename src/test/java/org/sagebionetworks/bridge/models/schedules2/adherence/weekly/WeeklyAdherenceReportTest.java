@@ -58,7 +58,7 @@ public class WeeklyAdherenceReportTest {
         report.setWeekInStudy(2);
         report.setStartDate(LocalDate.parse("2022-02-02"));
         report.setByDayEntries(ImmutableMap.of(
-                new Integer(6), ImmutableList.of(new EventStreamDay())));
+                Integer.valueOf(6), ImmutableList.of(new EventStreamDay())));
         report.setNextActivity(nextActivity);
 
         // It's there, it works, it's persisted, but it's not part of JSON output

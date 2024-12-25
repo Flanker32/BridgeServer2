@@ -328,7 +328,7 @@ public class HealthDataService {
     public String createOrUpdateRecord(HealthDataRecord record) {
         // validate record
         if (record == null) {
-            throw new InvalidEntityException(String.format(CANNOT_BE_NULL, "HealthDataRecord"));
+            throw new InvalidEntityException(CANNOT_BE_NULL.formatted("HealthDataRecord"));
         }
         Validate.entityThrowingException(HealthDataRecordValidator.INSTANCE, record);
 
@@ -350,7 +350,7 @@ public class HealthDataService {
     public int deleteRecordsForHealthCode(String healthCode) {
         // validate health code
         if (StringUtils.isBlank(healthCode)) {
-            throw new BadRequestException(String.format(CANNOT_BE_BLANK, "healthCode"));
+            throw new BadRequestException(CANNOT_BE_BLANK.formatted("healthCode"));
         }
         // TODO: validate health code against health code table
 
@@ -368,7 +368,7 @@ public class HealthDataService {
     public HealthDataRecord getRecordById(String id) {
         // validate ID
         if (StringUtils.isBlank(id)) {
-            throw new BadRequestException(String.format(CANNOT_BE_BLANK, "id"));
+            throw new BadRequestException(CANNOT_BE_BLANK.formatted("id"));
         }
 
         // call through to DAO
@@ -386,7 +386,7 @@ public class HealthDataService {
     public List<HealthDataRecord> getRecordsForUploadDate(String uploadDate) {
         // validate upload date
         if (StringUtils.isBlank(uploadDate)) {
-            throw new BadRequestException(String.format(CANNOT_BE_BLANK, "uploadDate"));
+            throw new BadRequestException(CANNOT_BE_BLANK.formatted("uploadDate"));
         }
 
         // use Joda to parse the upload date, to validate it
@@ -394,7 +394,7 @@ public class HealthDataService {
         try {
             DateUtils.parseCalendarDate(uploadDate);
         } catch (IllegalArgumentException ex) {
-            throw new BadRequestException(String.format("Expected date format YYYY-MM-DD, received %s", uploadDate));
+            throw new BadRequestException("Expected date format YYYY-MM-DD, received %s".formatted(uploadDate));
         }
 
         // call through to DAO
@@ -406,10 +406,10 @@ public class HealthDataService {
             DateTime createdOnEnd) {
         Preconditions.checkArgument(StringUtils.isNotBlank(healthCode));
         if (createdOnStart == null) {
-            throw new BadRequestException(String.format(CANNOT_BE_NULL, "createdOnStart"));
+            throw new BadRequestException(CANNOT_BE_NULL.formatted("createdOnStart"));
         }
         if (createdOnEnd == null) {
-            throw new BadRequestException(String.format(CANNOT_BE_NULL, "createdOnEnd"));
+            throw new BadRequestException(CANNOT_BE_NULL.formatted("createdOnEnd"));
         }
         if (createdOnStart.isAfter(createdOnEnd)) {
             throw new BadRequestException("createdOnStart can't be after createdOnEnd");

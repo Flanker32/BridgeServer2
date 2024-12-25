@@ -117,9 +117,9 @@ public class DynamoActivityEvent implements ActivityEvent {
             }
             String typeName = objectType.name().toLowerCase();
             if (objectId != null && eventType != null) {
-                return String.format("%s:%s:%s", typeName, objectId, eventType.name().toLowerCase());
+                return "%s:%s:%s".formatted(typeName, objectId, eventType.name().toLowerCase());
             } else if (objectId != null) {
-                return String.format("%s:%s", typeName, objectId);
+                return "%s:%s".formatted(typeName, objectId);
             }
             return typeName;
         }

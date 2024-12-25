@@ -11,7 +11,7 @@ import static org.sagebionetworks.bridge.models.ResourceList.END_TIME;
 
 import java.util.List;
 
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;

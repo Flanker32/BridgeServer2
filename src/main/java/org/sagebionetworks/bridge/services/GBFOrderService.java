@@ -10,11 +10,11 @@ import com.fasterxml.jackson.datatype.joda.JodaModule;
 import com.google.common.annotations.Beta;
 import com.google.common.collect.Lists;
 import org.apache.commons.io.IOUtils;
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.fluent.Executor;
-import org.apache.http.client.fluent.Request;
-import org.apache.http.impl.client.HttpClients;
+import org.apache.hc.core5.http.HttpEntity;
+import org.apache.hc.core5.http.HttpResponse;
+import org.apache.hc.core5.http.client.fluent.Executor;
+import org.apache.hc.core5.http.client.fluent.Request;
+import org.apache.hc.client5.http.impl.classic.HttpClients;
 import org.joda.time.LocalDate;
 
 import org.sagebionetworks.bridge.config.BridgeConfig;
@@ -32,7 +32,7 @@ import java.net.SocketException;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 
-import static org.apache.http.entity.ContentType.APPLICATION_JSON;
+import static org.apache.hc.core5.http.ContentType.APPLICATION_JSON;
 
 @Component
 public class GBFOrderService {
@@ -137,7 +137,7 @@ public class GBFOrderService {
     }
     
     void handleGbfHttpStatusErrors(HttpResponse httpResponse) {
-        int statusCode = httpResponse.getStatusLine().getStatusCode();
+        int statusCode = httpResponse.getCode();
         
         if (statusCode >= 400 && statusCode < 500) {
             logGbfHttpStatusError(statusCode, httpResponse.getEntity());

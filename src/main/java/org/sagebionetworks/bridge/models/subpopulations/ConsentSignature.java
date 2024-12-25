@@ -4,8 +4,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.util.Objects;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
@@ -131,7 +131,7 @@ public final class ConsentSignature implements BridgeEntity {
 
     @Override
     public String toString() {
-        return String.format("ConsentSignature [name=%s, birthdate=%s, imageData=%s, imageMimeType=%s, consentCreatedOn=%s, signedOn=%s, withdrewOn=%s]", 
+        return "ConsentSignature [name=%s, birthdate=%s, imageData=%s, imageMimeType=%s, consentCreatedOn=%s, signedOn=%s, withdrewOn=%s]".formatted(
                 name, birthdate, imageData, imageMimeType, consentCreatedOn, signedOn, withdrewOn);
     }
     

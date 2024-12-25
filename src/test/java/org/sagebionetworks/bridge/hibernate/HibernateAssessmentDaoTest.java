@@ -18,7 +18,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.function.Function;
 
-import javax.persistence.OptimisticLockException;
+import jakarta.persistence.OptimisticLockException;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
@@ -139,7 +139,7 @@ public class HibernateAssessmentDaoTest extends Mockito {
                 .thenReturn(list);
         
         PagedResourceList<Assessment> page = dao.getAssessments(TEST_APP_ID, null, 0, 20, null, false);
-        assertEquals(queryCaptor.getAllValues().get(0), "SELECT COUNT(*) " + QUERY_SQL_EXC_DELETED);
+        assertEquals(queryCaptor.getAllValues().getFirst(), "SELECT COUNT(*) " + QUERY_SQL_EXC_DELETED);
         assertEquals(queryCaptor.getAllValues().get(1), "SELECT * " + QUERY_SQL_EXC_DELETED);
         
         Map<String,Object> params = paramsCaptor.getValue();
@@ -157,7 +157,7 @@ public class HibernateAssessmentDaoTest extends Mockito {
                 .thenReturn(list);
         
         PagedResourceList<Assessment> page = dao.getAssessments(TEST_APP_ID, TEST_ORG_ID, 0, 20, null, false);
-        assertEquals(queryCaptor.getAllValues().get(0), "SELECT COUNT(*) " + QUERY_SQL_WITH_OWNERID_EXC_DELETED);
+        assertEquals(queryCaptor.getAllValues().getFirst(), "SELECT COUNT(*) " + QUERY_SQL_WITH_OWNERID_EXC_DELETED);
         assertEquals(queryCaptor.getAllValues().get(1), "SELECT * " + QUERY_SQL_WITH_OWNERID_EXC_DELETED);
         
         Map<String,Object> params = paramsCaptor.getValue();
@@ -174,7 +174,7 @@ public class HibernateAssessmentDaoTest extends Mockito {
                 .thenReturn(ImmutableList.of());
         
         dao.getAssessments(TEST_APP_ID, null, 0, 20, null, true);
-        assertEquals(queryCaptor.getAllValues().get(0), "SELECT COUNT(*) " + QUERY_SQL_INC_DELETED);
+        assertEquals(queryCaptor.getAllValues().getFirst(), "SELECT COUNT(*) " + QUERY_SQL_INC_DELETED);
         assertEquals(queryCaptor.getAllValues().get(1), "SELECT * " + QUERY_SQL_INC_DELETED);
     }
     
@@ -185,7 +185,7 @@ public class HibernateAssessmentDaoTest extends Mockito {
                 .thenReturn(ImmutableList.of());
         
         dao.getAssessments(TEST_APP_ID, null, 0, 20, ImmutableSet.of("tagA", "tagB"), false);
-        assertEquals(queryCaptor.getAllValues().get(0), "SELECT COUNT(*) " + QUERY_SQL_WITH_TAGS);
+        assertEquals(queryCaptor.getAllValues().getFirst(), "SELECT COUNT(*) " + QUERY_SQL_WITH_TAGS);
         assertEquals(queryCaptor.getAllValues().get(1), "SELECT * " + QUERY_SQL_WITH_TAGS);
     }
     
@@ -474,7 +474,7 @@ public class HibernateAssessmentDaoTest extends Mockito {
         for (String query : queries) {
             assertEquals(QUERY_COUNT_FROM_ORG, query);
         }
-        Map<String, Object> privateMap = paramsList.get(0);
+        Map<String, Object> privateMap = paramsList.getFirst();
         Map<String, Object> publishedMap = paramsList.get(1);
         assertEquals(TEST_APP_ID, privateMap.get("appId"));
         assertEquals(TEST_ORG_ID, privateMap.get("ownerId"));

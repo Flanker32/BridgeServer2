@@ -158,12 +158,14 @@ public class ConsentSignatureValidatorTest {
 
     @Test
     public void jsonEmptyImageData() throws Exception {
-        String jsonStr = "{\n" +
-                "   \"name\":\"test name\",\n" +
-                "   \"birthdate\":\"1970-01-01\",\n" +
-                "   \"imageData\":\"\",\n" +
-                "   \"imageMimeType\":\"image/fake\"\n" +
-                "}";
+        String jsonStr = """
+                {
+                   "name":"test name",
+                   "birthdate":"1970-01-01",
+                   "imageData":"",
+                   "imageMimeType":"image/fake"
+                }\
+                """;
         ConsentSignature sig = BridgeObjectMapper.get().readValue(jsonStr, ConsentSignature.class);
         assertValidatorMessage(validator, sig, "imageData", "cannot be an empty string");
     }
@@ -199,11 +201,13 @@ public class ConsentSignatureValidatorTest {
 
     @Test
     public void jsonImageMimeTypeWithoutData() throws Exception {
-        String jsonStr = "{\n" +
-                "   \"name\":\"test name\",\n" +
-                "   \"birthdate\":\"1970-01-01\",\n" +
-                "   \"imageMimeType\":\"image/fake\"\n" +
-                "}";
+        String jsonStr = """
+                {
+                   "name":"test name",
+                   "birthdate":"1970-01-01",
+                   "imageMimeType":"image/fake"
+                }\
+                """;
         ConsentSignature sig = BridgeObjectMapper.get().readValue(jsonStr, ConsentSignature.class);
         try {
             Validate.entityThrowingException(validator, sig);

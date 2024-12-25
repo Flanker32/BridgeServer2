@@ -1,6 +1,6 @@
 package org.sagebionetworks.bridge.hibernate;
 
-import javax.persistence.AttributeConverter;
+import jakarta.persistence.AttributeConverter;
 
 import org.joda.time.LocalDate;
 

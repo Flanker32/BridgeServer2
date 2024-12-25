@@ -22,8 +22,8 @@ import static org.testng.Assert.assertSame;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
@@ -158,7 +158,7 @@ public class ActivityEventControllerTest extends Mockito {
         when(mockActivityEventService.getActivityEventList(TEST_APP_ID, null, HEALTH_CODE)).thenReturn(activityEvents);
         
         ResourceList<ActivityEvent> list = controller.getSelfActivityEvents();
-        ActivityEvent returnedEvent = list.getItems().get(0);
+        ActivityEvent returnedEvent = list.getItems().getFirst();
         assertEquals(returnedEvent.getEventId(), "foo");
         assertEquals(returnedEvent.getTimestamp(), TIMESTAMP);
         

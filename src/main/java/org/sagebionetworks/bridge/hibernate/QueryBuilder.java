@@ -1,7 +1,6 @@
 package org.sagebionetworks.bridge.hibernate;
 
 import static java.lang.Boolean.TRUE;
-import static java.lang.String.format;
 import static org.apache.commons.lang3.StringUtils.isNotBlank;
 import static org.sagebionetworks.bridge.BridgeUtils.AND_JOINER;
 import static org.sagebionetworks.bridge.BridgeUtils.OR_JOINER;
@@ -191,7 +190,7 @@ class QueryBuilder {
                 for (Map.Entry<String, DateTime> entry : map.entrySet()) {
                     String keyName = varPrefix + "Key" + count;
                     String valName = varPrefix + "Val" + count++;
-                    String q = format("(%s = :%s AND %s = :%s)", field1, keyName, field2, valName);
+                    String q = "(%s = :%s AND %s = :%s)".formatted(field1, keyName, field2, valName);
                     clauses.add(q);
                     whereParams.put(keyName, entry.getKey());
                     whereParams.put(valName, entry.getValue().getMillis());

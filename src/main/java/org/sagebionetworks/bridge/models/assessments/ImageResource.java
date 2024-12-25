@@ -2,8 +2,8 @@ package org.sagebionetworks.bridge.models.assessments;
 
 import java.util.List;
 
-import javax.persistence.Convert;
-import javax.persistence.Embeddable;
+import jakarta.persistence.Convert;
+import jakarta.persistence.Embeddable;
 
 import org.sagebionetworks.bridge.hibernate.LabelListConverter;
 import org.sagebionetworks.bridge.json.BridgeTypeName;

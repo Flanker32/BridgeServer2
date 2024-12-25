@@ -44,7 +44,7 @@ public class DateRangeResourceListTest {
         assertEquals(list.getStartDate(), LocalDate.parse("2016-02-03"));
         assertEquals(list.getEndDate(), LocalDate.parse("2016-02-23"));
         assertEquals(list.getItems().size(), 3);
-        assertEquals(list.getItems().get(0), "1");
+        assertEquals(list.getItems().getFirst(), "1");
         assertEquals(list.getItems().get(1), "2");
         assertEquals(list.getItems().get(2), "3");
         assertEquals(list.getRequestParams().get("startDate"), "2016-02-03");

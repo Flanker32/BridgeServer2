@@ -191,7 +191,7 @@ public final class Activity implements BridgeEntity {
 
     @Override
     public String toString() {
-        return String.format("Activity [label=%s, labelDetail=%s, guid=%s, compoundActivity=%s, task=%s, survey=%s, " +
-                "activityType=%s]", label, labelDetail, guid, compoundActivity, task, survey, activityType);
+        return ("Activity [label=%s, labelDetail=%s, guid=%s, compoundActivity=%s, task=%s, survey=%s, " +
+                "activityType=%s]").formatted(label, labelDetail, guid, compoundActivity, task, survey, activityType);
     }
 }

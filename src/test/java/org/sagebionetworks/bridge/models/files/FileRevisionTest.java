@@ -42,7 +42,7 @@ public class FileRevisionTest {
         assertEquals(deser.getCreatedOn(), TIMESTAMP);
         assertEquals(deser.getName(), "oneName");
         assertEquals(deser.getDescription(), "oneDescription");
-        assertEquals(deser.getSize(), new Long(3000));
+        assertEquals(deser.getSize(), Long.valueOf(3000));
         assertEquals(deser.getUploadURL(), "uploadURL");
         assertEquals(deser.getStatus(), AVAILABLE);
         assertEquals(deser.getMimeType(), "application/pdf");

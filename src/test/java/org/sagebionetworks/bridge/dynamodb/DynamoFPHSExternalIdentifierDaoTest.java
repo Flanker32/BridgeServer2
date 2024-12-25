@@ -152,7 +152,7 @@ public class DynamoFPHSExternalIdentifierDaoTest extends Mockito {
         
         List<DynamoFPHSExternalIdentifier> ids = idsCaptor.getValue();
         assertEquals(ids.size(), 2);
-        assertEquals(ids.get(0).getExternalId(), fphsExternalId1.getExternalId());
+        assertEquals(ids.getFirst().getExternalId(), fphsExternalId1.getExternalId());
         assertEquals(ids.get(1).getExternalId(), fphsExternalId2.getExternalId());
     }
     

@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 
 import com.google.common.collect.ImmutableMap;
 
@@ -40,7 +40,7 @@ public class HibernateFileMetadataDao implements FileMetadataDao {
         Map<String, Object> params = ImmutableMap.of("appId", appId, "guid", guid);
 
         List<FileMetadata> files = hibernateHelper.queryGet(FROM_FILE+WITH_GUID, params, null, null, FileMetadata.class);
-        return (files.isEmpty()) ? Optional.empty() : Optional.of(files.get(0));
+        return (files.isEmpty()) ? Optional.empty() : Optional.of(files.getFirst());
     }
 
     @Override

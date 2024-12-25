@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
 
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 
 import org.sagebionetworks.bridge.BridgeUtils;
 import org.sagebionetworks.bridge.dao.CriteriaDao;
@@ -168,7 +168,7 @@ public class DynamoSchedulePlanDao implements SchedulePlanDao {
             return null;
         }
         
-        plan = plans.get(0);
+        plan = plans.getFirst();
         forEachCriteria(plan, scheduleCriteria -> loadCriteria(scheduleCriteria));
         return plan;
     }

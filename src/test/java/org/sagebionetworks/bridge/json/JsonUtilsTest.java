@@ -81,7 +81,7 @@ public class JsonUtilsTest {
         
         assertNull(JsonUtils.asLong(node, null));
         assertNull(JsonUtils.asLong(node, "badProp"));
-        assertEquals(JsonUtils.asLong(node, "key"), new Long(3));
+        assertEquals(JsonUtils.asLong(node, "key"), Long.valueOf(3));
     }
 
     @Test
@@ -99,7 +99,7 @@ public class JsonUtilsTest {
         
         assertNull(JsonUtils.asInt(node, null));
         assertNull(JsonUtils.asInt(node, "badProp"));
-        assertEquals(JsonUtils.asInt(node, "key"), new Integer(3));
+        assertEquals(JsonUtils.asInt(node, "key"), Integer.valueOf(3));
     }
 
     @Test

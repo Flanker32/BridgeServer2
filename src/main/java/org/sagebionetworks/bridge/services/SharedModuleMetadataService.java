@@ -228,7 +228,7 @@ public class SharedModuleMetadataService {
         }
 
         // Return the first (only) result.
-        return queryMetadataList.get(0);
+        return queryMetadataList.getFirst();
     }
 
     /**

@@ -77,7 +77,7 @@ public class SponsorService {
             return cached;
         }
         Optional<Organization> opt = organizationService.getOrganizationOpt(appId, orgId);
-        if (!opt.isPresent()) {
+        if (opt.isEmpty()) {
             return ImmutableSet.of();
         }
         cached = sponsorDao.getSponsoredStudies(appId, orgId, null, null).getItems().stream()
@@ -168,7 +168,7 @@ public class SponsorService {
             // thrown.
             studyService.getStudy(appId, studyId, true);
             organizationService.getOrganization(appId, orgId);
-            throw new BadRequestException(String.format(NOT_A_SPONSOR_MSG, orgId, studyId));
+            throw new BadRequestException(NOT_A_SPONSOR_MSG.formatted(orgId, studyId));
         }
     }
     

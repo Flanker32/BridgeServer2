@@ -31,7 +31,7 @@ public class ParticipantScheduleTest extends Mockito {
         Schedule2 schedule = Schedule2Test.createValidSchedule();
         Timeline timeline = Scheduler.INSTANCE.calculateTimeline(schedule);
         
-        ScheduledSession schSession = timeline.getSchedule().get(0);
+        ScheduledSession schSession = timeline.getSchedule().getFirst();
         schSession.getTimeWindow().setGuid(null);
         
         schSession = schSession.toBuilder()

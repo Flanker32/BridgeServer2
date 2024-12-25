@@ -167,7 +167,7 @@ public class CriteriaUtils {
         for (String item : setItems) {
             if (!fullSet.contains(item)) {
                 String listStr = (fullSet.isEmpty()) ? "<empty>" : COMMA_SPACE_JOINER.join(fullSet);
-                String message = String.format("'%s' is not in enumeration: %s", item, listStr);
+                String message = "'%s' is not in enumeration: %s".formatted(item, listStr);
                 errors.add(message);
             }
         }

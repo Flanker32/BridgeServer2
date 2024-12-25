@@ -79,7 +79,7 @@ public final class DynamoStudyConsent1 implements StudyConsent {
     
     @Override
     public String toString() {
-        return String.format("DynamoStudyConsent1 [subpopGuid=%s, createdOn=%s, storagePath=%s, version=%s]",
-            subpopGuid, createdOn, storagePath, version);
+        return "DynamoStudyConsent1 [subpopGuid=%s, createdOn=%s, storagePath=%s, version=%s]".formatted(
+                subpopGuid, createdOn, storagePath, version);
     }
 }

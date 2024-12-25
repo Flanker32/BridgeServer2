@@ -1,9 +1,8 @@
 package org.sagebionetworks.bridge.spring.controllers;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -33,9 +32,9 @@ public class EchoController {
         }
     }
 
-    @RequestMapping(path = {"/echo", "/echo/{urlToken}"}, method = RequestMethod.GET)
-    public EchoResult handleEcho(@PathVariable(name = "urlToken", required = false) String urlToken,
-            @RequestParam(name = "queryParam", required = false) String queryParam) {
+    @GetMapping({"/echo", "/echo/{urlToken}"})
+    public EchoResult handleEcho(@PathVariable(required = false) String urlToken,
+            @RequestParam(required = false) String queryParam) {
         return new EchoResult(urlToken, queryParam);
     }
 }

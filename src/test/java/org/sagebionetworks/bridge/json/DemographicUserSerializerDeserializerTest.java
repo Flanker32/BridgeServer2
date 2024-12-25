@@ -204,7 +204,7 @@ public class DemographicUserSerializerDeserializerTest {
         demographic.setValues(values);
 
         assertEquals(values.size(), 1);
-        assertEquals(values.get(0).getValue(), "foo");
+        assertEquals(values.getFirst().getValue(), "foo");
     }
 
     /**

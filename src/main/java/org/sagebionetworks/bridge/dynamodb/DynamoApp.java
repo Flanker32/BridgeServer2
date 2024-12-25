@@ -754,7 +754,7 @@ public final class DynamoApp implements App {
 
     @Override
     public String toString() {
-        return String.format(
+        return (
                 "DynamoApp [name=%s, shortName=%s, active=%s, sponsorName=%s, identifier=%s, adherenceReportEnabled=%b, automaticCustomEvents=%s"
                         + "autoVerificationEmailSuppressed=%b, minAgeOfConsent=%s, exporter3Configuration=%s, exporter3Enabled=%b, participantIpLockingEnabled=%b, "
                         + "appIdExcludedInExport=%b, supportEmail=%s, synapseDataAccessTeamId=%s, synapseProjectId=%s, "
@@ -766,12 +766,12 @@ public final class DynamoApp implements App {
                         + "pushNotificationARNs=%s, installLinks=%s, disableExport=%s, emailSignInEnabled=%s, "
                         + "phoneSignInEnabled=%s, accountLimit=%s, oauthProviders=%s, appleAppLinks=%s, androidAppLinks=%s, "
                         + "reauthenticationEnabled=%s, autoVerificationPhoneSuppressed=%s, verifyChannelOnSignInEnabled=%s, "
-                        + "defaultTemplates=%s]",
+                        + "defaultTemplates=%s]").formatted(
                 name, shortName, active, sponsorName, identifier, adherenceReportEnabled, automaticCustomEvents,
                 autoVerificationEmailSuppressed, minAgeOfConsent, exporter3Configuration, exporter3Enabled, participantIpLockingEnabled, appIdExcludedInExport,
                 supportEmail, synapseDataAccessTeamId, synapseProjectId, technicalEmail, uploadValidationStrictness,
                 consentNotificationEmail, consentNotificationEmailVerified, version, profileAttributes, taskIdentifiers,
-                activityEventKeys, customEvents, dataGroups, passwordPolicy, strictUploadValidationEnabled, 
+                activityEventKeys, customEvents, dataGroups, passwordPolicy, strictUploadValidationEnabled,
                 healthCodeExportEnabled, emailVerificationEnabled, externalIdValidationEnabled, externalIdRequiredOnSignup,
                 minSupportedAppVersions, usesCustomExportSchedule, pushNotificationARNs, installLinks, disableExport,
                 emailSignInEnabled, phoneSignInEnabled, accountLimit, oauthProviders, appleAppLinks, androidAppLinks,

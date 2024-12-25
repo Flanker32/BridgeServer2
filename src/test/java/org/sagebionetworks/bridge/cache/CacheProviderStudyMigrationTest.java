@@ -143,7 +143,7 @@ public class CacheProviderStudyMigrationTest extends Mockito {
         when(mockJedisOps.get(key.toString())).thenReturn(json);
         
         List<Subpopulation> subpops = provider.getObject(key, SURVEY_LIST_REF);
-        assertEquals(subpops.get(0).getAppId(), TEST_APP_ID);
+        assertEquals(subpops.getFirst().getAppId(), TEST_APP_ID);
     }
     
     @Test
@@ -153,6 +153,6 @@ public class CacheProviderStudyMigrationTest extends Mockito {
         when(mockJedisOps.get(key.toString())).thenReturn(json);
         
         List<Subpopulation> subpops = provider.getObject(key, SURVEY_LIST_REF);
-        assertEquals(subpops.get(0).getAppId(), TEST_APP_ID);
+        assertEquals(subpops.getFirst().getAppId(), TEST_APP_ID);
     }
 }

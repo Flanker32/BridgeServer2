@@ -17,8 +17,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
@@ -355,7 +355,7 @@ public class SharedModuleMetadataControllerTest extends Mockito {
 
         List<SharedModuleMetadata> metadataList = metadataResourceList.getItems();
         assertEquals(1, metadataList.size());
-        assertMetadata(metadataList.get(0));
+        assertMetadata(metadataList.getFirst());
     }
 
     private static void assertMetadata(SharedModuleMetadata metadata) {

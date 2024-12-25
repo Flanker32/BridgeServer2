@@ -161,7 +161,7 @@ public class UploadTableService {
         List<UploadTableJob> jobList = uploadTableJobDao.listUploadTableJobsForStudy(appId, studyId, 0,
                 1).getItems();
         if (!jobList.isEmpty()) {
-            UploadTableJob mostRecentJob = jobList.get(0);
+            UploadTableJob mostRecentJob = jobList.getFirst();
             DateTime mostRecentJobRequestedOn = mostRecentJob.getRequestedOn();
 
             // If it's within the last 5 minutes, just return that job GUID.

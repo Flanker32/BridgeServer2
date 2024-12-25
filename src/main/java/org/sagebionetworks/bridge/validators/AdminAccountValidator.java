@@ -80,7 +80,7 @@ public class AdminAccountValidator implements Validator {
     }
 
     private String messageForSet(Set<String> set, String fieldName) {
-        return String.format("'%s' is not defined for app (use %s)", 
+        return "'%s' is not defined for app (use %s)".formatted(
                 fieldName, BridgeUtils.COMMA_SPACE_JOINER.join(set));
     }
 }

@@ -20,7 +20,7 @@ import java.util.Set;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
 
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 
 import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -704,7 +704,7 @@ public class AppService {
         // Create and send verification email. Users cannot edit this template so there's no backwards
         // compatibility issues
         String appId = BridgeUtils.encodeURIComponent(app.getIdentifier());
-        String shortUrl = String.format(VERIFY_APP_EMAIL_URL, BASE_URL, appId, token, type.toString().toLowerCase());
+        String shortUrl = VERIFY_APP_EMAIL_URL.formatted(BASE_URL, appId, token, type.toString().toLowerCase());
         
         TemplateRevision revision = TemplateRevision.create();
         revision.setSubject(appEmailVerificationTemplateSubject);

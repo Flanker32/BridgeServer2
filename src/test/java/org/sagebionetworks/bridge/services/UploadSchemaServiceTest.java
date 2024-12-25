@@ -1019,9 +1019,9 @@ public class UploadSchemaServiceTest {
 
     // Validate that the errors throw for a schema made from makeInvalidSchema()
     private static void assertSchemaValidationException(InvalidEntityException ex) {
-        assertEquals(ex.getErrors().get("name").get(0), "name is required");
-        assertEquals(ex.getErrors().get("schemaType").get(0), "schemaType is required");
-        assertEquals(ex.getErrors().get("fieldDefinitions[0].name").get(0), "fieldDefinitions[0].name is required");
-        assertEquals(ex.getErrors().get("fieldDefinitions[0].type").get(0), "fieldDefinitions[0].type is required");
+        assertEquals(ex.getErrors().get("name").getFirst(), "name is required");
+        assertEquals(ex.getErrors().get("schemaType").getFirst(), "schemaType is required");
+        assertEquals(ex.getErrors().get("fieldDefinitions[0].name").getFirst(), "fieldDefinitions[0].name is required");
+        assertEquals(ex.getErrors().get("fieldDefinitions[0].type").getFirst(), "fieldDefinitions[0].type is required");
     }
 }

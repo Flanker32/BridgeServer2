@@ -86,7 +86,7 @@ public class DynamoSchedulePlanDaoTest extends Mockito {
         schedulePlan = (DynamoSchedulePlan)constructSchedulePlan();
         
         CriteriaScheduleStrategy strategy = (CriteriaScheduleStrategy) schedulePlan.getStrategy();
-        ScheduleCriteria scheduleCriteria = strategy.getScheduleCriteria().get(0);
+        ScheduleCriteria scheduleCriteria = strategy.getScheduleCriteria().getFirst();
         Criteria criteria = scheduleCriteria.getCriteria();
         
         when(mockCriteriaDao.getCriteria(SCHEDULE_CRITERIA_KEY)).thenReturn(criteria);
@@ -137,10 +137,10 @@ public class DynamoSchedulePlanDaoTest extends Mockito {
         mockSchedulePlanQuery();
         List<SchedulePlan> plans = dao.getSchedulePlans(ClientInfo.UNKNOWN_CLIENT, TEST_APP_ID, false);
         
-        SchedulePlan plan = plans.get(0);
+        SchedulePlan plan = plans.getFirst();
         CriteriaScheduleStrategy strategy = (CriteriaScheduleStrategy)plan.getStrategy();
         
-        Criteria criteria = strategy.getScheduleCriteria().get(0).getCriteria();
+        Criteria criteria = strategy.getScheduleCriteria().getFirst().getCriteria();
         assertCriteria(criteria);
         
         String key = criteria.getKey();
@@ -153,11 +153,11 @@ public class DynamoSchedulePlanDaoTest extends Mockito {
         when(mockCriteriaDao.getCriteria(key)).thenReturn(persistedCriteria);
         
         plans = dao.getSchedulePlans(ClientInfo.UNKNOWN_CLIENT, TEST_APP_ID, false);
-        plan = plans.get(0);
+        plan = plans.getFirst();
         strategy = (CriteriaScheduleStrategy)plan.getStrategy();
-        criteria = strategy.getScheduleCriteria().get(0).getCriteria();
-        assertEquals(criteria.getMinAppVersion(IOS), new Integer(1));
-        assertEquals(criteria.getMaxAppVersion(IOS), new Integer(65));
+        criteria = strategy.getScheduleCriteria().getFirst().getCriteria();
+        assertEquals(criteria.getMinAppVersion(IOS), Integer.valueOf(1));
+        assertEquals(criteria.getMaxAppVersion(IOS), Integer.valueOf(65));
         assertTrue(criteria.getAllOfGroups().isEmpty());
         assertTrue(criteria.getNoneOfGroups().isEmpty());
     }
@@ -168,7 +168,7 @@ public class DynamoSchedulePlanDaoTest extends Mockito {
         SchedulePlan plan = dao.getSchedulePlan(TEST_APP_ID, schedulePlan.getGuid());
         CriteriaScheduleStrategy strategy = (CriteriaScheduleStrategy)plan.getStrategy();
         
-        Criteria criteria = strategy.getScheduleCriteria().get(0).getCriteria();
+        Criteria criteria = strategy.getScheduleCriteria().getFirst().getCriteria();
         assertCriteria(criteria);
         
         String key = criteria.getKey();
@@ -182,9 +182,9 @@ public class DynamoSchedulePlanDaoTest extends Mockito {
         
         plan = dao.getSchedulePlan(TEST_APP_ID, plan.getGuid());
         strategy = (CriteriaScheduleStrategy)plan.getStrategy();
-        criteria = strategy.getScheduleCriteria().get(0).getCriteria();
-        assertEquals(criteria.getMinAppVersion(IOS), new Integer(1));
-        assertEquals(criteria.getMaxAppVersion(IOS), new Integer(65));
+        criteria = strategy.getScheduleCriteria().getFirst().getCriteria();
+        assertEquals(criteria.getMinAppVersion(IOS), Integer.valueOf(1));
+        assertEquals(criteria.getMaxAppVersion(IOS), Integer.valueOf(65));
         assertTrue(criteria.getAllOfGroups().isEmpty());
         assertTrue(criteria.getNoneOfGroups().isEmpty());
     }
@@ -194,7 +194,7 @@ public class DynamoSchedulePlanDaoTest extends Mockito {
         SchedulePlan plan = dao.createSchedulePlan(TEST_APP_ID, schedulePlan);
         CriteriaScheduleStrategy strategy = (CriteriaScheduleStrategy)plan.getStrategy();
         
-        Criteria criteria = strategy.getScheduleCriteria().get(0).getCriteria();
+        Criteria criteria = strategy.getScheduleCriteria().getFirst().getCriteria();
         assertCriteria(criteria);
         
         ArgumentCaptor<Criteria> criteriaCaptor = ArgumentCaptor.forClass(Criteria.class);
@@ -229,16 +229,16 @@ public class DynamoSchedulePlanDaoTest extends Mockito {
         
         // Verify returned object still has changes
         strategy = (CriteriaScheduleStrategy)updated.getStrategy();
-        scheduleCriteria = strategy.getScheduleCriteria().get(0);
+        scheduleCriteria = strategy.getScheduleCriteria().getFirst();
         Criteria returnedCriteria = scheduleCriteria.getCriteria();
-        assertEquals(returnedCriteria.getMinAppVersion(IOS), new Integer(100));
-        assertEquals(returnedCriteria.getMaxAppVersion(IOS), new Integer(200));        
+        assertEquals(returnedCriteria.getMinAppVersion(IOS), Integer.valueOf(100));
+        assertEquals(returnedCriteria.getMaxAppVersion(IOS), Integer.valueOf(200));        
         
         // Verify they were persisted
         verify(mockCriteriaDao).createOrUpdateCriteria(criteriaCaptor.capture());
         Criteria updatedCriteria = criteriaCaptor.getValue();
-        assertEquals(updatedCriteria.getMinAppVersion(IOS), new Integer(100));
-        assertEquals(updatedCriteria.getMaxAppVersion(IOS), new Integer(200));        
+        assertEquals(updatedCriteria.getMinAppVersion(IOS), Integer.valueOf(100));
+        assertEquals(updatedCriteria.getMaxAppVersion(IOS), Integer.valueOf(200));        
     }
     
     @Test(expectedExceptions = EntityNotFoundException.class)
@@ -417,7 +417,7 @@ public class DynamoSchedulePlanDaoTest extends Mockito {
         plan.setAppId(null); // not allowed, should be set to app argument
         plan.setDeleted(true); // not allowed, should be set to false
         plan.setVersion(1L); // not allowed, should be set to null
-        Criteria criteria = ((CriteriaScheduleStrategy)plan.getStrategy()).getScheduleCriteria().get(0).getCriteria();
+        Criteria criteria = ((CriteriaScheduleStrategy)plan.getStrategy()).getScheduleCriteria().getFirst().getCriteria();
         criteria.setKey(null); // verify this is set by the dao
         
         SchedulePlan returned = dao.createSchedulePlan(TEST_APP_ID, plan);
@@ -442,7 +442,7 @@ public class DynamoSchedulePlanDaoTest extends Mockito {
     
     @Test
     public void updateSchedulePlan() {
-        Criteria criteria = ((CriteriaScheduleStrategy) schedulePlan.getStrategy()).getScheduleCriteria().get(0)
+        Criteria criteria = ((CriteriaScheduleStrategy) schedulePlan.getStrategy()).getScheduleCriteria().getFirst()
                 .getCriteria();
         
         mockSchedulePlanQuery();
@@ -462,7 +462,7 @@ public class DynamoSchedulePlanDaoTest extends Mockito {
         assertEquals(query.getHashKeyValues().getAppId(), TEST_APP_ID);
         Condition cond = query.getRangeKeyConditions().get("guid");
         assertEquals(cond.getComparisonOperator(), EQ.name());
-        assertEquals(cond.getAttributeValueList().get(0).getS(), GUID);
+        assertEquals(cond.getAttributeValueList().getFirst().getS(), GUID);
         assertFalse(query.isScanIndexForward());
         
         // Verify the criteria were persisted
@@ -553,8 +553,8 @@ public class DynamoSchedulePlanDaoTest extends Mockito {
     }
     
     private void assertCriteria(Criteria criteria) {
-        assertEquals(criteria.getMinAppVersion(IOS), new Integer(2));
-        assertEquals(criteria.getMaxAppVersion(IOS), new Integer(10));
+        assertEquals(criteria.getMinAppVersion(IOS), Integer.valueOf(2));
+        assertEquals(criteria.getMaxAppVersion(IOS), Integer.valueOf(10));
         assertEquals(criteria.getAllOfGroups(), ALL_OF_GROUPS);
         assertEquals(criteria.getNoneOfGroups(), NONE_OF_GROUPS);
     }

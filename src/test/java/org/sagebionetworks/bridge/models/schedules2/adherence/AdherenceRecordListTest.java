@@ -29,7 +29,7 @@ public class AdherenceRecordListTest {
         
         AdherenceRecordList deser = BridgeObjectMapper.get().readValue(node.toString(), AdherenceRecordList.class);
         assertEquals(deser.getRecords().size(), 2);
-        assertEquals(deser.getRecords().get(0).getClientTimeZone(), "America/Los_Angeles");
+        assertEquals(deser.getRecords().getFirst().getClientTimeZone(), "America/Los_Angeles");
         assertEquals(deser.getRecords().get(1).getClientTimeZone(), "America/Los_Angeles");
     }
     

@@ -104,7 +104,7 @@ public class IntegrationTestUserService {
                     .withAppId(app.getIdentifier()).build();
             
             if (consentUser) {
-                String name = String.format("[Signature for %s]", participant.getEmail());
+                String name = "[Signature for %s]".formatted(participant.getEmail());
                 ConsentSignature signature = new ConsentSignature.Builder().withName(name)
                         .withBirthdate("1989-08-19").withSignedOn(DateUtils.getCurrentMillisFromEpoch()).build();
                 

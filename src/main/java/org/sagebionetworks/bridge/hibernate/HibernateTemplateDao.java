@@ -10,7 +10,7 @@ import static org.sagebionetworks.bridge.models.ResourceList.TOTAL;
 import java.util.List;
 import java.util.Optional;
 
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 
 import com.google.common.collect.ImmutableMap;
 

@@ -279,7 +279,7 @@ public class SubpopulationServiceTest extends Mockito {
         
         List<Subpopulation> results = service.getSubpopulations(TEST_APP_ID, false);
         assertEquals(results.size(), 2);
-        assertEquals(results.get(0), subpop1);
+        assertEquals(results.getFirst(), subpop1);
         assertEquals(results.get(1), subpop2);
         verify(subpopDao).getSubpopulations(TEST_APP_ID, false);
     }
@@ -325,7 +325,7 @@ public class SubpopulationServiceTest extends Mockito {
         CriteriaContext context = createContext();
         
         List<Subpopulation> subpops = service.getSubpopulationsForUser(context);
-        Subpopulation retrieved = subpops.get(0);
+        Subpopulation retrieved = subpops.getFirst();
         Criteria criteria = retrieved.getCriteria();
         assertEquals(criteria, CRITERIA);
         
@@ -338,7 +338,7 @@ public class SubpopulationServiceTest extends Mockito {
         CriteriaContext context = createContext();
         
         List<Subpopulation> subpops = service.getSubpopulationsForUser(context);
-        Subpopulation retrieved = subpops.get(0);
+        Subpopulation retrieved = subpops.getFirst();
         Criteria criteria = retrieved.getCriteria();
         assertNotNull(criteria);
         
@@ -384,7 +384,7 @@ public class SubpopulationServiceTest extends Mockito {
         List<Subpopulation> results = service.getSubpopulationsForUser(context);
 
         assertEquals(results.size(), 1);
-        assertEquals(results.get(0).getName(), "Subpop 1");
+        assertEquals(results.getFirst().getName(), "Subpop 1");
     }
 
     /**

@@ -93,7 +93,7 @@ public final class GuidCreatedOnVersionHolderImpl implements GuidCreatedOnVersio
     
     @Override
     public String toString() {
-        return String.format("GuidCreatedOnVersionHolderImpl [guid=%s, createdOn=%d, version=%d]", 
-            guid, createdOn, version);
+        return "GuidCreatedOnVersionHolderImpl [guid=%s, createdOn=%d, version=%d]".formatted(
+                guid, createdOn, version);
     }
 }

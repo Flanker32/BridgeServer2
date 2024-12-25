@@ -197,7 +197,7 @@ public class UploadSchemaServiceFromSurveyTest {
 
         // validate schema
         UploadSchema daoInputSchema = daoInputSchemaCaptor.getValue();
-        assertSchema(daoInputSchema, oldSchema.getFieldDefinitions().get(0), UploadUtil.ANSWERS_FIELD_DEF);
+        assertSchema(daoInputSchema, oldSchema.getFieldDefinitions().getFirst(), UploadUtil.ANSWERS_FIELD_DEF);
     }
 
     @Test

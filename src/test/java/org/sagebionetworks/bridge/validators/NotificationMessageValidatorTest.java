@@ -51,7 +51,7 @@ public class NotificationMessageValidatorTest {
             Validate.entityThrowingException(NotificationMessageValidator.INSTANCE, message);
             fail("Should have thrown exception");
         } catch(InvalidEntityException e) {
-            assertEquals(e.getErrors().get(fieldName).get(0), fieldName+error);
+            assertEquals(e.getErrors().get(fieldName).getFirst(), fieldName+error);
         }
     }
 

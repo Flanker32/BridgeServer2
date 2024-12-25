@@ -17,12 +17,13 @@ import static org.testng.Assert.assertNull;
 import static org.testng.Assert.assertSame;
 import static org.testng.Assert.fail;
 
+import java.net.URI;
 import java.net.URL;
 import java.util.EnumSet;
 import java.util.Optional;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.google.common.collect.ImmutableList;
@@ -172,7 +173,7 @@ public class UploadControllerTest extends Mockito {
             "{'name':'uploadName','contentLength':100,'contentMd5':'abc','contentType':'application/zip'}"));
         when(mockRequest.getHeader("User-Agent")).thenReturn("app/10");
         
-        UploadSession uploadSession = new UploadSession("id", new URL("http://server.com/"), 1000);
+        UploadSession uploadSession = new UploadSession("id", URI.create("http://server.com/").toURL(), 1000);
         
         doReturn(uploadSession).when(mockUploadService).createUpload(any(), any(), any());
         

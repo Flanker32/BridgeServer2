@@ -2,7 +2,7 @@ package org.sagebionetworks.bridge.hibernate;
 
 import java.util.List;
 
-import javax.persistence.PersistenceException;
+import jakarta.persistence.PersistenceException;
 
 import com.google.common.base.Throwables;
 
@@ -20,8 +20,8 @@ public interface PersistenceExceptionConverter {
         List<Throwable> chain = Throwables.getCausalChain(exception);
         for (int i=0; i < chain.size(); i++) {
             Throwable throwable = chain.get(i);
-            if (throwable instanceof ConstraintViolationException) {
-                return (ConstraintViolationException)throwable;
+            if (throwable instanceof ConstraintViolationException violationException) {
+                return violationException;
             }
         }
         return null;

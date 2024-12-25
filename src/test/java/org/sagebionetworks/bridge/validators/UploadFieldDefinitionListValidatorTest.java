@@ -56,7 +56,7 @@ public class UploadFieldDefinitionListValidatorTest {
         // validates invalid field names.
         String fieldName = "**invalid$field^name##";
         assertValidatorMessage(ImmutableList.of(makeValidFieldDefBuilder().withName(fieldName).build()), true,
-                FIELD_LIST_ATTR_NAME + "[0].name", String.format(UploadUtil.INVALID_FIELD_NAME_ERROR_MESSAGE, fieldName));
+                FIELD_LIST_ATTR_NAME + "[0].name", UploadUtil.INVALID_FIELD_NAME_ERROR_MESSAGE.formatted(fieldName));
     }
 
     @Test
@@ -86,7 +86,7 @@ public class UploadFieldDefinitionListValidatorTest {
         String answerChoice = "!invalid@choice%";
         assertValidatorMessage(ImmutableList.of(makeValidFieldDefBuilder().withMultiChoiceAnswerList(answerChoice)
                 .build()), true, FIELD_LIST_ATTR_NAME + "[0].multiChoice[0]",
-                String.format(UploadUtil.INVALID_ANSWER_CHOICE_ERROR_MESSAGE, answerChoice));
+                UploadUtil.INVALID_ANSWER_CHOICE_ERROR_MESSAGE.formatted(answerChoice));
     }
 
     @Test
@@ -127,7 +127,7 @@ public class UploadFieldDefinitionListValidatorTest {
         assertEquals(errors.hasErrors(), hasError);
         if (hasError) {
             Map<String, List<String>> errorMap = Validate.convertErrorsToSimpleMap(errors);
-            assertEquals(errorMap.get(fieldName).get(0), fieldName + " " + errorMessage);
+            assertEquals(errorMap.get(fieldName).getFirst(), fieldName + " " + errorMessage);
         }
     }
 

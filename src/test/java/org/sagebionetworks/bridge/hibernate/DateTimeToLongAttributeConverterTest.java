@@ -9,7 +9,7 @@ import org.testng.annotations.Test;
 
 public class DateTimeToLongAttributeConverterTest {
 
-    private static final Long MILLIS = new Long(1460542200000L);
+    private static final Long MILLIS = Long.valueOf(1460542200000L);
     private static final DateTime DATETIME = DateTime.parse("2016-04-13T10:10:00.000Z");
     
     private DateTimeToLongAttributeConverter converter;

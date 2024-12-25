@@ -90,7 +90,7 @@ public class SessionStateTest extends Mockito {
         List<AdherenceRecord> recs = getRecords();
         
         SessionState state = new SessionState(4);
-        state.add(recs.get(0));
+        state.add(recs.getFirst());
         state.add(recs.get(1));
         state.add(recs.get(2));
         state.add(recs.get(3));
@@ -125,7 +125,7 @@ public class SessionStateTest extends Mockito {
         List<AdherenceRecord> recs = getRecords();
         
         SessionState state = new SessionState(4);
-        state.add(recs.get(0));
+        state.add(recs.getFirst());
         state.add(recs.get(1));
         state.add(recs.get(2));
         state.add(recs.get(3));
@@ -145,7 +145,7 @@ public class SessionStateTest extends Mockito {
         recs.get(2).setFinishedOn(null);
         
         SessionState state = new SessionState(4);
-        state.add(recs.get(0));
+        state.add(recs.getFirst());
         state.add(recs.get(1));
         state.add(recs.get(2));
         // not the 4th record
@@ -175,7 +175,7 @@ public class SessionStateTest extends Mockito {
     @Test
     public void finishSessionRecordIsChanged() {
         List<AdherenceRecord> recs = getRecords();
-        recs.get(0).setDeclined(true);
+        recs.getFirst().setDeclined(true);
         recs.get(1).setDeclined(true);
         recs.get(2).setDeclined(true);
         recs.get(3).setDeclined(true);

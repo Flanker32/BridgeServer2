@@ -9,7 +9,7 @@ import static org.sagebionetworks.bridge.models.ResourceList.PAGE_SIZE;
 
 import java.util.List;
 
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 
 import org.sagebionetworks.bridge.dao.OAuthAccessGrantDao;
 import org.sagebionetworks.bridge.models.ForwardCursorPagedResourceList;

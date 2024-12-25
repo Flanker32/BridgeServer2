@@ -78,7 +78,7 @@ public class EmailVerificationServiceTest {
         assertEquals(status, EmailVerificationStatus.VERIFIED);
         verify(asyncExecutorService, never()).execute(any());
         verify(sesClient).getIdentityVerificationAttributes(getCaptor.capture());
-        assertEquals(getCaptor.getValue().getIdentities().get(0), EMAIL_ADDRESS);
+        assertEquals(getCaptor.getValue().getIdentities().getFirst(), EMAIL_ADDRESS);
 
         verify(cacheProvider).setObject(eq(EMAIL_ADDRESS_KEY), eq("VERIFIED"), anyInt());
     }
@@ -92,7 +92,7 @@ public class EmailVerificationServiceTest {
         assertEquals(status, EmailVerificationStatus.PENDING);
         verifyAsyncHandler();
         verify(sesClient).getIdentityVerificationAttributes(getCaptor.capture());
-        assertEquals(getCaptor.getValue().getIdentities().get(0), EMAIL_ADDRESS);
+        assertEquals(getCaptor.getValue().getIdentities().getFirst(), EMAIL_ADDRESS);
 
         verify(cacheProvider).setObject(eq(EMAIL_ADDRESS_KEY), eq("PENDING"), anyInt());
     }
@@ -106,7 +106,7 @@ public class EmailVerificationServiceTest {
         assertEquals(status, EmailVerificationStatus.PENDING);
         verifyAsyncHandler();
         verify(sesClient).getIdentityVerificationAttributes(getCaptor.capture());
-        assertEquals(getCaptor.getValue().getIdentities().get(0), EMAIL_ADDRESS);
+        assertEquals(getCaptor.getValue().getIdentities().getFirst(), EMAIL_ADDRESS);
         
         verify(cacheProvider).setObject(eq(EMAIL_ADDRESS_KEY), eq("PENDING"), anyInt());
     }

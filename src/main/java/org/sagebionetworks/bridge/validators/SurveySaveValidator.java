@@ -109,7 +109,7 @@ public class SurveySaveValidator implements Validator {
         if (isBlank(questionId)) {
             errors.rejectValue("identifier", "is required");
         } else if (!UploadUtil.isValidSchemaFieldName(questionId)) {
-            errors.rejectValue("identifier", String.format(UploadUtil.INVALID_FIELD_NAME_ERROR_MESSAGE, questionId));
+            errors.rejectValue("identifier", UploadUtil.INVALID_FIELD_NAME_ERROR_MESSAGE.formatted(questionId));
         }
 
         if (question.getUiHint() == null) {
@@ -164,8 +164,7 @@ public class SurveySaveValidator implements Validator {
             validateOneRuleSet(errors, element.getBeforeRules(), alreadySeenIdentifiers, propertyPath, "beforeRules");
             validateOneRuleSet(errors, element.getAfterRules(), alreadySeenIdentifiers, propertyPath, "afterRules");
             
-            if (element instanceof SurveyQuestion) {
-                SurveyQuestion question = (SurveyQuestion)element;
+            if (element instanceof SurveyQuestion question) {
             
                 validateOneRuleSet(errors, question.getConstraints().getRules(), alreadySeenIdentifiers,
                         propertyPath+".constraints", "rules");
@@ -187,8 +186,7 @@ public class SurveySaveValidator implements Validator {
             validateSkipToTargetExists(errors, element.getAfterRules(), alreadySeenIdentifiers, propertyPath,
                     "afterRules");
             
-            if (element instanceof SurveyQuestion) {
-                SurveyQuestion question = (SurveyQuestion)element;
+            if (element instanceof SurveyQuestion question) {
                 
                 validateSkipToTargetExists(errors, question.getConstraints().getRules(), alreadySeenIdentifiers,
                         propertyPath + ".constraints", "rules");
@@ -318,24 +316,24 @@ public class SurveySaveValidator implements Validator {
             return; // will have been validated above, skip this
         }
         if (!con.getSupportedHints().contains(hint)) {
-            errors.rejectValue("dataType", String.format("'%s' doesn't match the UI hint of '%s'",
+            errors.rejectValue("dataType", "'%s' doesn't match the UI hint of '%s'".formatted(
                     con.getDataType().name().toLowerCase(), hint.name().toLowerCase()));
-        } else if (con instanceof MultiValueConstraints) {
-            doValidateConstraintsType(errors, hint, (MultiValueConstraints)con);
-        } else if (con instanceof StringConstraints) {
-            doValidateConstraintsType(errors, hint, (StringConstraints)con);
-        } else if (con instanceof DateConstraints) {
-            doValidateConstraintsType(errors, hint, (DateConstraints)con);
-        } else if (con instanceof DateTimeConstraints) {
-            doValidateConstraintsType(errors, hint, (DateTimeConstraints)con);
-        } else if (con instanceof YearMonthConstraints) {
-            doValidateConstraintsType(errors, hint, (YearMonthConstraints)con);
-        } else if (con instanceof PostalCodeConstraints) {
-            doValidateConstraintsType(errors, hint, (PostalCodeConstraints)con);
-        } else if (con instanceof NumericalConstraints) {
-            doValidateConstraintsType(errors, hint, (NumericalConstraints)con);
-        } else if (con instanceof YearConstraints) {
-            doValidateConstraintsType(errors, hint, (YearConstraints)con);
+        } else if (con instanceof MultiValueConstraints constraints) {
+            doValidateConstraintsType(errors, hint, constraints);
+        } else if (con instanceof StringConstraints constraints) {
+            doValidateConstraintsType(errors, hint, constraints);
+        } else if (con instanceof DateConstraints constraints) {
+            doValidateConstraintsType(errors, hint, constraints);
+        } else if (con instanceof DateTimeConstraints constraints) {
+            doValidateConstraintsType(errors, hint, constraints);
+        } else if (con instanceof YearMonthConstraints constraints) {
+            doValidateConstraintsType(errors, hint, constraints);
+        } else if (con instanceof PostalCodeConstraints constraints) {
+            doValidateConstraintsType(errors, hint, constraints);
+        } else if (con instanceof NumericalConstraints constraints) {
+            doValidateConstraintsType(errors, hint, constraints);
+        } else if (con instanceof YearConstraints constraints) {
+            doValidateConstraintsType(errors, hint, constraints);
         }
     }
 
@@ -369,7 +367,7 @@ public class SurveySaveValidator implements Validator {
                 String optionValue = oneOption.getValue();
                 if (!UploadUtil.isValidAnswerChoice(optionValue)) {
                     errors.rejectValue("value",
-                            String.format(UploadUtil.INVALID_ANSWER_CHOICE_ERROR_MESSAGE, optionValue));
+                            UploadUtil.INVALID_ANSWER_CHOICE_ERROR_MESSAGE.formatted(optionValue));
                 }
 
                 // record values seen so far

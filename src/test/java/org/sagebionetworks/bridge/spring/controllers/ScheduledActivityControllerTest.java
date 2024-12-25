@@ -21,8 +21,8 @@ import static org.testng.Assert.assertTrue;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -415,7 +415,7 @@ public class ScheduledActivityControllerTest extends Mockito {
         
         ForwardCursorPagedResourceList<ScheduledActivity> list = MAPPER.readValue(MAPPER.treeAsTokens(result),
                 ACTIVITY_TYPE_REF);
-        assertNull(list.getItems().get(0).getHealthCode());
+        assertNull(list.getItems().getFirst().getHealthCode());
     }
 
     @Test
@@ -511,7 +511,7 @@ public class ScheduledActivityControllerTest extends Mockito {
         verify(mockScheduledActivityService).updateScheduledActivities(eq(HEALTH_CODE), activitiesCaptor.capture());
         
         List<ScheduledActivity> capturedActivities = activitiesCaptor.getValue();
-        assertEquals(capturedActivities.get(0).getClientData(), clientData);
+        assertEquals(capturedActivities.getFirst().getClientData(), clientData);
     }
 
     @Test

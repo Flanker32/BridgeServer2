@@ -1,17 +1,17 @@
 package org.sagebionetworks.bridge.spring.interceptors;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
+import org.springframework.web.servlet.HandlerInterceptor;
 
 import org.sagebionetworks.bridge.config.BridgeConfig;
 
 /** Interceptor for HTTPS forwarding. */
 @Component
-public class HttpsForwardingInterceptor extends HandlerInterceptorAdapter {
+public class HttpsForwardingInterceptor implements HandlerInterceptor {
     // Package-scoped for unit tests.
     static final String HEADER_LOCATION = "Location";
     static final String HEADER_X_FORWARDED_PROTO = "X-Forwarded-Proto";

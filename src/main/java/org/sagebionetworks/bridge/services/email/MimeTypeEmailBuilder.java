@@ -3,7 +3,7 @@ package org.sagebionetworks.bridge.services.email;
 import java.util.Collection;
 import java.util.List;
 
-import javax.mail.internet.MimeBodyPart;
+import jakarta.mail.internet.MimeBodyPart;
 
 import com.google.common.collect.Lists;
 

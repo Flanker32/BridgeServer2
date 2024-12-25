@@ -41,8 +41,8 @@ import java.util.Base64;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Stream;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
@@ -51,9 +51,9 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import org.apache.commons.io.IOUtils;
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.StatusLine;
+import org.apache.hc.core5.http.HttpEntity;
+import org.apache.hc.core5.http.HttpResponse;
+import org.apache.hc.core5.http.message.StatusLine;
 import org.hl7.fhir.dstu3.model.Address;
 import org.hl7.fhir.dstu3.model.Appointment;
 import org.hl7.fhir.dstu3.model.Appointment.AppointmentParticipantComponent;
@@ -391,7 +391,7 @@ public class CRCControllerTest extends Mockito {
         
         HttpResponse mockResponse = mock(HttpResponse.class);
         StatusLine mockStatusLine = mock(StatusLine.class);
-        when(mockResponse.getStatusLine()).thenReturn(mockStatusLine);
+        when(new StatusLine(mockResponse)).thenReturn(mockStatusLine);
         when(mockStatusLine.getStatusCode()).thenReturn(200);
         
         // doReturn(mockResponse).when(controller).put(any(), any(), any());
@@ -704,7 +704,7 @@ public class CRCControllerTest extends Mockito {
         doReturn(mockResponse).when(controller).post(any(), any(), any());
         
         StatusLine mockStatusLine = mock(StatusLine.class);
-        when(mockResponse.getStatusLine()).thenReturn(mockStatusLine);
+        when(new StatusLine(mockResponse)).thenReturn(mockStatusLine);
         when(mockStatusLine.getStatusCode()).thenReturn(400);
 
         HttpEntity mockEntity = mock(HttpEntity.class);
@@ -989,7 +989,7 @@ public class CRCControllerTest extends Mockito {
         doReturn(mockResponse).when(controller).post(any(), any(), any());
         
         StatusLine mockStatusLine = mock(StatusLine.class);
-        when(mockResponse.getStatusLine()).thenReturn(mockStatusLine);
+        when(new StatusLine(mockResponse)).thenReturn(mockStatusLine);
         // Search failures do come back as 200s 
         when(mockStatusLine.getStatusCode()).thenReturn(200);
 
@@ -1088,22 +1088,22 @@ public class CRCControllerTest extends Mockito {
         Patient patient = controller.createPatient(account);
         
         assertTrue(patient.getActive());
-        assertEquals(patient.getIdentifier().get(0).getValue(), TEST_USER_ID);
-        assertEquals(patient.getIdentifier().get(0).getSystem(), USER_ID_VALUE_NS);
-        assertEquals(patient.getName().get(0).getGivenAsSingleString(), "Test");
-        assertEquals(patient.getName().get(0).getFamily(), "User");
-        assertEquals(patient.getMeta().getTag().get(0).getSystem(), "source");
-        assertEquals(patient.getMeta().getTag().get(0).getCode(), "sage");
+        assertEquals(patient.getIdentifier().getFirst().getValue(), TEST_USER_ID);
+        assertEquals(patient.getIdentifier().getFirst().getSystem(), USER_ID_VALUE_NS);
+        assertEquals(patient.getName().getFirst().getGivenAsSingleString(), "Test");
+        assertEquals(patient.getName().getFirst().getFamily(), "User");
+        assertEquals(patient.getMeta().getTag().getFirst().getSystem(), "source");
+        assertEquals(patient.getMeta().getTag().getFirst().getCode(), "sage");
         assertEquals(patient.getGender().name(), "FEMALE");
         assertEquals(LocalDate.fromDateFields(patient.getBirthDate()).toString(), "1980-08-10");
-        assertEquals(patient.getTelecom().get(0).getValue(), PHONE.getNumber());
-        assertEquals(patient.getTelecom().get(0).getSystem().name(), "PHONE");
+        assertEquals(patient.getTelecom().getFirst().getValue(), PHONE.getNumber());
+        assertEquals(patient.getTelecom().getFirst().getSystem().name(), "PHONE");
         assertEquals(patient.getTelecom().get(1).getValue(), PHONE.getNumber());
         assertEquals(patient.getTelecom().get(1).getSystem().name(), "SMS");
         assertEquals(patient.getTelecom().get(2).getValue(), EMAIL);
         assertEquals(patient.getTelecom().get(2).getSystem().name(), "EMAIL");
-        Address address = patient.getAddress().get(0);
-        assertEquals(address.getLine().get(0).getValue(), "123 Sesame Street");
+        Address address = patient.getAddress().getFirst();
+        assertEquals(address.getLine().getFirst().getValue(), "123 Sesame Street");
         assertEquals(address.getLine().get(1).getValue(), "Apt. 6");
         assertEquals(address.getCity(), "Seattle");
         assertEquals(address.getState(), "WA");
@@ -1116,7 +1116,7 @@ public class CRCControllerTest extends Mockito {
         assertEquals(patient.getGender().name(), "UNKNOWN");
         // I'm defaulting this because I don't see the client submitting it in the UI, so
         // I'm anticipating it won't be there, but eventually we'll have to collect state.
-        assertEquals(patient.getAddress().get(0).getState(), "NY");
+        assertEquals(patient.getAddress().getFirst().getState(), "NY");
         assertTrue(patient.getActive());
     }
     
@@ -1260,7 +1260,7 @@ public class CRCControllerTest extends Mockito {
 
         Patient patient = controller.createPatient(account);
         assertEquals(patient.getTelecom().size(), 1);
-        assertEquals(patient.getTelecom().get(0).getSystem(), ContactPointSystem.EMAIL);
+        assertEquals(patient.getTelecom().getFirst().getSystem(), ContactPointSystem.EMAIL);
     }
 
     @Test
@@ -1273,7 +1273,7 @@ public class CRCControllerTest extends Mockito {
 
         Patient patient = controller.createPatient(account);
         assertEquals(patient.getTelecom().size(), 1);
-        assertEquals(patient.getTelecom().get(0).getSystem(), ContactPointSystem.SMS);
+        assertEquals(patient.getTelecom().getFirst().getSystem(), ContactPointSystem.SMS);
     }
     
     @Test

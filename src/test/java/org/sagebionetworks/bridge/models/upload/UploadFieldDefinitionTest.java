@@ -110,17 +110,19 @@ public class UploadFieldDefinitionTest {
     @Test
     public void testSerialization() throws Exception {
         // start with JSON
-        String jsonText = "{\n" +
-                "   \"allowOtherChoices\":true,\n" +
-                "   \"fileExtension\":\".json\",\n" +
-                "   \"mimeType\":\"text/json\",\n" +
-                "   \"maxLength\":24,\n" +
-                "   \"multiChoiceAnswerList\":[\"asdf\", \"jkl\"],\n" +
-                "   \"name\":\"test-field\",\n" +
-                "   \"required\":false,\n" +
-                "   \"type\":\"INT\",\n" +
-                "   \"unboundedText\":true\n" +
-                "}";
+        String jsonText = """
+                {
+                   "allowOtherChoices":true,
+                   "fileExtension":".json",
+                   "mimeType":"text/json",
+                   "maxLength":24,
+                   "multiChoiceAnswerList":["asdf", "jkl"],
+                   "name":"test-field",
+                   "required":false,
+                   "type":"INT",
+                   "unboundedText":true
+                }\
+                """;
 
         // convert to POJO
         List<String> expectedMultiChoiceAnswerList = ImmutableList.of("asdf", "jkl");

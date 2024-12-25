@@ -145,7 +145,7 @@ public class HibernateStudyActivityEventDaoTest extends Mockito {
                 eq(150), eq(50), eq(StudyActivityEvent.class));
         verify(mockHelper).nativeQueryCount(eq("SELECT count(*) " + HISTORY_SQL), paramsCaptor.capture());
         
-        Map<String,Object> params = paramsCaptor.getAllValues().get(0);
+        Map<String,Object> params = paramsCaptor.getAllValues().getFirst();
         assertEquals(params.get(USER_ID_FIELD), TEST_USER_ID);
         assertEquals(params.get(STUDY_ID_FIELD), TEST_STUDY_ID);
         assertEquals(params.get(EVENT_ID_FIELD), "custom:event1");

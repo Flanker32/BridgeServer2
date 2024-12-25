@@ -125,7 +125,7 @@ public class AssessmentServiceTest extends Mockito {
         PagedResourceList<Assessment> retValue = service.getAssessments(
                 TEST_APP_ID, TEST_OWNER_ID, 10, 26, STRING_TAGS, true);
         
-        assertEquals(retValue.getItems().get(0), ASSESSMENT);
+        assertEquals(retValue.getItems().getFirst(), ASSESSMENT);
         assertEquals(retValue.getTotal(), Integer.valueOf(100));
         
         assertEquals(retValue.getRequestParams().get("offsetBy"), 10);
@@ -1101,7 +1101,7 @@ public class AssessmentServiceTest extends Mockito {
         verify(mockDao).publishAssessment(eq(TEST_APP_ID), assessmentCaptor.capture(), 
                 assessmentCaptor.capture(), any(AssessmentConfig.class));
         
-        Assessment original = assessmentCaptor.getAllValues().get(0);
+        Assessment original = assessmentCaptor.getAllValues().getFirst();
         Assessment assessmentToPublish = assessmentCaptor.getAllValues().get(1);
         
         assertEquals(original.getOriginGuid(), assessmentToPublish.getGuid());

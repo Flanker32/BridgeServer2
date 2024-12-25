@@ -11,7 +11,7 @@ import static org.testng.Assert.assertSame;
 import java.util.List;
 import java.util.Map;
 
-import javax.persistence.PersistenceException;
+import jakarta.persistence.PersistenceException;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -180,7 +180,7 @@ public class HibernateStudyDaoTest extends Mockito {
         study.setVersion(2L);
 
         VersionHolder holder = dao.createStudy(study);
-        assertEquals(holder.getVersion(), new Long(2));
+        assertEquals(holder.getVersion(), Long.valueOf(2));
         
         verify(hibernateHelper).create(studyCaptor.capture());
         
@@ -194,7 +194,7 @@ public class HibernateStudyDaoTest extends Mockito {
         study.setVersion(2L);
         
         VersionHolder holder = dao.updateStudy(study);
-        assertEquals(holder.getVersion(), new Long(2));
+        assertEquals(holder.getVersion(), Long.valueOf(2));
         
         verify(hibernateHelper).update(studyCaptor.capture());
         

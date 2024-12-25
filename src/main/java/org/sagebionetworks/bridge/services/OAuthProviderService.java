@@ -29,13 +29,13 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.node.NullNode;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
-import org.apache.http.message.BasicNameValuePair;
+import org.apache.hc.client5.http.impl.classic.CloseableHttpResponse;
+import org.apache.hc.core5.http.NameValuePair;
+import org.apache.hc.client5.http.entity.UrlEncodedFormEntity;
+import org.apache.hc.client5.http.classic.methods.HttpPost;
+import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
+import org.apache.hc.client5.http.impl.classic.HttpClients;
+import org.apache.hc.core5.http.message.BasicNameValuePair;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 
@@ -180,7 +180,7 @@ class OAuthProviderService {
     private OAuthProviderService.Response executeInternal(HttpPost client) {
         try (CloseableHttpClient httpclient = HttpClients.createDefault()) {
             CloseableHttpResponse response = httpclient.execute(client);
-            int statusCode = response.getStatusLine().getStatusCode();
+            int statusCode = response.getCode();
 
             JsonNode body;
             try {
@@ -384,7 +384,7 @@ class OAuthProviderService {
         
         // Invalid client errors indicate that we have not written this service correctly.
         if (statusCode == 401 && isErrorType(response, INVALID_CLIENT_ERRORS)) {
-            LOG.error(String.format(LOG_ERROR_MSG, response.getStatusCode(), response.getBody()));
+            LOG.error(LOG_ERROR_MSG.formatted(response.getStatusCode(), response.getBody()));
             throw new BridgeServiceException(SERVICE_ERROR_MSG);
         } 
         // If it's a 401 (unauthorized) or the tokens are invalid/expired, we report a 404 (no grant).
@@ -402,7 +402,7 @@ class OAuthProviderService {
         } 
         // And everything, for now, can be treated as Bridge server error.
         else if (statusCode != 200) {
-            LOG.error(String.format(LOG_ERROR_MSG, response.getStatusCode(), response.getBody()));
+            LOG.error(LOG_ERROR_MSG.formatted(response.getStatusCode(), response.getBody()));
             throw new BridgeServiceException(SERVICE_ERROR_MSG, response.getStatusCode());
         }
         return converter.apply(response.getBody());

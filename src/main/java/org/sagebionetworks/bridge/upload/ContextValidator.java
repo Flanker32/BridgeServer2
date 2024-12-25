@@ -1,6 +1,6 @@
 package org.sagebionetworks.bridge.upload;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 /**
  * This interface is used with the TestingHandler to validate the production context against the (cloned) testing

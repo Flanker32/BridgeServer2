@@ -61,7 +61,7 @@ public class SessionInfoTest extends Mockito {
     @Test
     public void noMinutesAddsUpToNoProperty() {
         Session session = SessionTest.createValidSession();
-        session.getAssessments().get(0).setMinutesToComplete(null);
+        session.getAssessments().getFirst().setMinutesToComplete(null);
         session.getAssessments().get(1).setMinutesToComplete(null);
         
         SessionInfo info = SessionInfo.createTimelineEntry(session);
@@ -73,7 +73,7 @@ public class SessionInfoTest extends Mockito {
     @Test
     public void mixedMinutesAddsWorks() {
         Session session = SessionTest.createValidSession();
-        session.getAssessments().get(0).setMinutesToComplete(null);
+        session.getAssessments().getFirst().setMinutesToComplete(null);
         
         SessionInfo info = SessionInfo.createTimelineEntry(session);
         

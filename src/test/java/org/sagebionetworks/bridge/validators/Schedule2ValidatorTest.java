@@ -171,7 +171,7 @@ public class Schedule2ValidatorTest extends Mockito {
     @Test
     public void sessionDelayCannotBeLongerThanScheduleDuration() {
         Schedule2 schedule = createValidSchedule();
-        schedule.getSessions().get(0).setDelay(Period.parse("P8WT2M"));
+        schedule.getSessions().getFirst().setDelay(Period.parse("P8WT2M"));
         
         assertValidatorMessage(INSTANCE, schedule, SESSIONS_FIELD + "[0]." + DELAY_FIELD, CANNOT_BE_LONGER_THAN_SCHEDULE);
     }
@@ -179,14 +179,14 @@ public class Schedule2ValidatorTest extends Mockito {
     @Test
     public void sessionIntervalCannotBeLongerThanScheduleDuration() {
         Schedule2 schedule = createValidSchedule();
-        schedule.getSessions().get(0).setInterval(Period.parse("P9W"));
+        schedule.getSessions().getFirst().setInterval(Period.parse("P9W"));
         assertValidatorMessage(INSTANCE, schedule, SESSIONS_FIELD + "[0]." + INTERVAL_FIELD, CANNOT_BE_LONGER_THAN_SCHEDULE);
     }
     
     @Test
     public void studyBurstIdentifierCannotBeNull() {
         Schedule2 schedule = createValidSchedule();
-        schedule.getStudyBursts().get(0).setIdentifier(null);
+        schedule.getStudyBursts().getFirst().setIdentifier(null);
         
         assertValidatorMessage(INSTANCE, schedule, STUDY_BURSTS_FIELD + "[0]." + IDENTIFIER_FIELD, CANNOT_BE_BLANK);
     }
@@ -194,21 +194,21 @@ public class Schedule2ValidatorTest extends Mockito {
     @Test
     public void studyBurstIdentifierCannotBeBlank() {
         Schedule2 schedule = createValidSchedule();
-        schedule.getStudyBursts().get(0).setIdentifier("");
+        schedule.getStudyBursts().getFirst().setIdentifier("");
         assertValidatorMessage(INSTANCE, schedule, STUDY_BURSTS_FIELD + "[0]." + IDENTIFIER_FIELD, CANNOT_BE_BLANK);
     }
 
     @Test
     public void studyBurstIdentifierInvalid() {
         Schedule2 schedule = createValidSchedule();
-        schedule.getStudyBursts().get(0).setIdentifier("This:Isn't:Valid");
+        schedule.getStudyBursts().getFirst().setIdentifier("This:Isn't:Valid");
         assertValidatorMessage(INSTANCE, schedule, STUDY_BURSTS_FIELD + "[0]." + IDENTIFIER_FIELD, BRIDGE_RELAXED_ID_ERROR);
     }
     
     @Test
     public void studyBurstOriginEventIdCannotBeNull() {
         Schedule2 schedule = createValidSchedule();
-        schedule.getStudyBursts().get(0).setOriginEventId(null);
+        schedule.getStudyBursts().getFirst().setOriginEventId(null);
         
         assertValidatorMessage(INSTANCE, schedule, STUDY_BURSTS_FIELD + "[0]." + ORIGIN_EVENT_ID_FIELD, CANNOT_BE_BLANK);
     }
@@ -216,7 +216,7 @@ public class Schedule2ValidatorTest extends Mockito {
     @Test
     public void studyBurstOriginEventIdCannotBeBlank() {
         Schedule2 schedule = createValidSchedule();
-        schedule.getStudyBursts().get(0).setOriginEventId("");
+        schedule.getStudyBursts().getFirst().setOriginEventId("");
         
         assertValidatorMessage(INSTANCE, schedule, STUDY_BURSTS_FIELD + "[0]." + ORIGIN_EVENT_ID_FIELD, CANNOT_BE_BLANK);
     }
@@ -224,7 +224,7 @@ public class Schedule2ValidatorTest extends Mockito {
     @Test
     public void studyBurstDelayCannotBeInvalidPeriod() {
         Schedule2 schedule = createValidSchedule();
-        schedule.getStudyBursts().get(0).setDelay(Period.parse("PT42H"));
+        schedule.getStudyBursts().getFirst().setDelay(Period.parse("PT42H"));
         
         assertValidatorMessage(INSTANCE, schedule, STUDY_BURSTS_FIELD + "[0]." + DELAY_FIELD, WRONG_LONG_PERIOD);
     }
@@ -232,7 +232,7 @@ public class Schedule2ValidatorTest extends Mockito {
     @Test
     public void studyBurstIntervalCannotBeNull() {
         Schedule2 schedule = createValidSchedule();
-        schedule.getStudyBursts().get(0).setInterval(null);
+        schedule.getStudyBursts().getFirst().setInterval(null);
         
         assertValidatorMessage(INSTANCE, schedule, STUDY_BURSTS_FIELD + "[0]." + INTERVAL_FIELD, CANNOT_BE_NULL);
     }
@@ -240,7 +240,7 @@ public class Schedule2ValidatorTest extends Mockito {
     @Test
     public void studyBurstIntervalCannotBeInvalidPeriod() {
         Schedule2 schedule = createValidSchedule();
-        schedule.getStudyBursts().get(0).setInterval(Period.parse("PT1000M"));
+        schedule.getStudyBursts().getFirst().setInterval(Period.parse("PT1000M"));
         
         assertValidatorMessage(INSTANCE, schedule, STUDY_BURSTS_FIELD + "[0]." + INTERVAL_FIELD, WRONG_LONG_PERIOD);
     }
@@ -248,7 +248,7 @@ public class Schedule2ValidatorTest extends Mockito {
     @Test
     public void studyBurstOccurrencesCannotBeNull() {
         Schedule2 schedule = createValidSchedule();
-        schedule.getStudyBursts().get(0).setOccurrences(null);
+        schedule.getStudyBursts().getFirst().setOccurrences(null);
         
         assertValidatorMessage(INSTANCE, schedule, STUDY_BURSTS_FIELD + "[0]." + OCCURRENCES_FIELD, CANNOT_BE_NULL);
     }
@@ -256,28 +256,28 @@ public class Schedule2ValidatorTest extends Mockito {
     @Test
     public void studyBurstOccurrencesCannotBeZero() {
         Schedule2 schedule = createValidSchedule();
-        schedule.getStudyBursts().get(0).setOccurrences(0);
+        schedule.getStudyBursts().getFirst().setOccurrences(0);
         assertValidatorMessage(INSTANCE, schedule, STUDY_BURSTS_FIELD + "[0]." + OCCURRENCES_FIELD, OUT_OF_RANGE_ERROR);
     }
 
     @Test
     public void studyBurstOccurrencesCannotBeNegative() {
         Schedule2 schedule = createValidSchedule();
-        schedule.getStudyBursts().get(0).setOccurrences(-2);
+        schedule.getStudyBursts().getFirst().setOccurrences(-2);
         assertValidatorMessage(INSTANCE, schedule, STUDY_BURSTS_FIELD + "[0]." + OCCURRENCES_FIELD, OUT_OF_RANGE_ERROR);
     }
 
     @Test
     public void studyBurstOccurrencesCannotBeTooBig() {
         Schedule2 schedule = createValidSchedule();
-        schedule.getStudyBursts().get(0).setOccurrences(30);
+        schedule.getStudyBursts().getFirst().setOccurrences(30);
         assertValidatorMessage(INSTANCE, schedule, STUDY_BURSTS_FIELD + "[0]." + OCCURRENCES_FIELD, OUT_OF_RANGE_ERROR);
     }
 
     @Test
     public void studyBurstUpdateTypeCannotBeNull() {
         Schedule2 schedule = createValidSchedule();
-        schedule.getStudyBursts().get(0).setUpdateType(null);
+        schedule.getStudyBursts().getFirst().setUpdateType(null);
         
         assertValidatorMessage(INSTANCE, schedule, STUDY_BURSTS_FIELD + "[0]." + UPDATE_TYPE_FIELD, CANNOT_BE_NULL);
     }
@@ -292,16 +292,16 @@ public class Schedule2ValidatorTest extends Mockito {
         burst.setInterval(Period.parse("P1W"));
         burst.setOccurrences(2);
         burst.setUpdateType(FUTURE_ONLY);
-        schedule.setStudyBursts(ImmutableList.of( schedule.getStudyBursts().get(0), burst ));
+        schedule.setStudyBursts(ImmutableList.of( schedule.getStudyBursts().getFirst(), burst ));
         
-        schedule.getStudyBursts().get(0).setUpdateType(null);
+        schedule.getStudyBursts().getFirst().setUpdateType(null);
         assertValidatorMessage(INSTANCE, schedule, STUDY_BURSTS_FIELD + "[1]." + IDENTIFIER_FIELD, CANNOT_BE_DUPLICATE);
     }
     
     @Test
     public void stringLengthValidation_burstIds() {
         Schedule2 schedule = createValidSchedule();
-        schedule.getStudyBursts().get(0).setIdentifier(generateStringOfLength(256));
+        schedule.getStudyBursts().getFirst().setIdentifier(generateStringOfLength(256));
         
         assertValidatorMessage(INSTANCE, schedule, STUDY_BURSTS_FIELD + "[0]." + IDENTIFIER_FIELD, getInvalidStringLengthMessage(255));
     }

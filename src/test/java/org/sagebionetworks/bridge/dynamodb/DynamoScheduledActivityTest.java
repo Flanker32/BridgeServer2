@@ -55,7 +55,7 @@ public class DynamoScheduledActivityTest {
         List<ScheduledActivity> activities = Lists.newArrayList(activity1, activity2, activity3);
         Collections.sort(activities, ScheduledActivity.SCHEDULED_ACTIVITY_COMPARATOR);
         
-        assertEquals(activities.get(0), activity1);
+        assertEquals(activities.getFirst(), activity1);
         assertEquals(activities.get(1), activity3);
         assertEquals(activities.get(2), activity2);
     }
@@ -83,7 +83,7 @@ public class DynamoScheduledActivityTest {
         
         // Activity 3 comes first because it's complete, the others follow. This is arbitrary...
         // in reality they are broken activities, but the comparator will not fail.
-        assertEquals(activities.get(0), activity3);
+        assertEquals(activities.getFirst(), activity3);
         assertEquals(activities.get(1), activity1);
         assertEquals(activities.get(2), activity2);
     }

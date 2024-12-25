@@ -35,9 +35,9 @@ import java.util.Map;
 import java.util.Set;
 import java.util.function.Consumer;
 
-import javax.servlet.ReadListener;
-import javax.servlet.ServletInputStream;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.ReadListener;
+import jakarta.servlet.ServletInputStream;
+import jakarta.servlet.http.HttpServletRequest;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
@@ -144,7 +144,7 @@ public class TestUtils {
     }
     
     public static String createJson(String json, Object... args) {
-        return String.format(json.replaceAll("'", "\""), args);
+        return json.replaceAll("'", "\"").formatted(args);
     }
     
     public static StudyActivityEvent createEvent(String eventId, DateTime timestamp, Integer recordCount) {
@@ -332,7 +332,7 @@ public class TestUtils {
      */
     public static void assertValidatorMessage(Validator validator, Object object, String fieldName, String error) {
         if (error.contains("%s")) {
-            error = String.format(error, fieldName);
+            error = error.formatted(fieldName);
         } else if (!error.startsWith(" ")) {
             error = fieldName + " " + error;
         } else {
@@ -770,7 +770,7 @@ public class TestUtils {
     public static String makeRandomTestEmail(Class<?> cls) {
         String devPart = BridgeConfigFactory.getConfig().getUser();
         String rndPart = TestUtils.randomName(cls);
-        return String.format("bridge-testing+%s-%s@sagebase.org", devPart, rndPart);
+        return "bridge-testing+%s-%s@sagebase.org".formatted(devPart, rndPart);
     }
     
     public static ConfigResolver mockConfigResolver(Environment env, String subdomain) {

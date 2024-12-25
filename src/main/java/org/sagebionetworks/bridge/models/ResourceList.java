@@ -132,8 +132,8 @@ public class ResourceList<T> {
     }
     protected LocalDate getLocalDate(String fieldName) {
         Object object = requestParams.get(fieldName);
-        if (object instanceof String) {
-            return LocalDate.parse((String)object);
+        if (object instanceof String string) {
+            return LocalDate.parse(string);
         }
         return (LocalDate)object;
     }

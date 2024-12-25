@@ -68,7 +68,7 @@ public class DynamoUploadDedupeDaoTest extends Mockito {
         
         when(mockMapper.query(eq(DynamoUploadDedupe.class), any())).thenReturn(mockQueryList);
         when(mockQueryList.isEmpty()).thenReturn(false);
-        when(mockQueryList.get(0)).thenReturn(dedupe);
+        when(mockQueryList.getFirst()).thenReturn(dedupe);
         
         String originalUploadId = dao.getDuplicate(HEALTHCODE, UPLOAD_MD5,
                 UPLOAD_REQUESTED_ON);
@@ -84,7 +84,7 @@ public class DynamoUploadDedupeDaoTest extends Mockito {
         
         Condition requestedOnCondition = query.getRangeKeyConditions().get("uploadRequestedOn");
         assertEquals(requestedOnCondition.getComparisonOperator(), BETWEEN.name());
-        assertEquals(requestedOnCondition.getAttributeValueList().get(0).getN(), Long.toString(startOfRange));
+        assertEquals(requestedOnCondition.getAttributeValueList().getFirst().getN(), Long.toString(startOfRange));
         assertEquals(requestedOnCondition.getAttributeValueList().get(1).getN(), Long.toString(endOfRange));
     }
 

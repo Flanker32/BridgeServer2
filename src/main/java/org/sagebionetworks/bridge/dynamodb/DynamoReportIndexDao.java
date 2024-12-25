@@ -5,7 +5,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 import java.util.Map;
 import java.util.Set;
 
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -117,7 +117,7 @@ public class DynamoReportIndexDao implements ReportIndexDao {
         checkNotNull(reportType);
         
         // Don't use ReportDataKey because it enforces presence of healthCode for ReportType.PARTICIPANT.
-        String key = String.format("%s:%s", appId, reportType.name());
+        String key = "%s:%s".formatted(appId, reportType.name());
         
         DynamoReportIndex hashKey = new DynamoReportIndex();
         hashKey.setKey(key);

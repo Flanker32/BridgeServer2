@@ -117,8 +117,8 @@ public class DynamoSurveyQuestion extends DynamoSurveyElement implements SurveyQ
 
     @Override
     public String toString() {
-        return String.format("DynamoSurveyQuestion [surveyCompoundKey=%s, guid=%s, identifier=%s, type=%s, order=%s, beforeRules=%s, afterRules=%s, hint=%s, prompt=%s, promptDetail=%s, fireEvent=%s, constraints=%s]", 
-            getSurveyCompoundKey(), getGuid(), getIdentifier(), getType(), getOrder(), getBeforeRules(), getAfterRules(), hint, prompt, promptDetail, fireEvent, constraints);
+        return "DynamoSurveyQuestion [surveyCompoundKey=%s, guid=%s, identifier=%s, type=%s, order=%s, beforeRules=%s, afterRules=%s, hint=%s, prompt=%s, promptDetail=%s, fireEvent=%s, constraints=%s]".formatted(
+                getSurveyCompoundKey(), getGuid(), getIdentifier(), getType(), getOrder(), getBeforeRules(), getAfterRules(), hint, prompt, promptDetail, fireEvent, constraints);
     }
 
 }

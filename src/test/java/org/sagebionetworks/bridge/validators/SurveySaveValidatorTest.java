@@ -108,7 +108,7 @@ public class SurveySaveValidatorTest {
     @Test
     public void preventsDuplicateElementIdentfiers() {
         survey = new TestSurvey(SurveySaveValidatorTest.class, true);
-        String identifier = survey.getElements().get(0).getIdentifier();
+        String identifier = survey.getElements().getFirst().getIdentifier();
         survey.getElements().get(1).setIdentifier(identifier);
 
         survey.setGuid(null);
@@ -160,7 +160,7 @@ public class SurveySaveValidatorTest {
     @Test
     public void questionIdentifierRequired() {
         survey = new TestSurvey(SurveySaveValidatorTest.class, false);
-        survey.getElements().get(0).setIdentifier("");
+        survey.getElements().getFirst().setIdentifier("");
 
         assertValidatorMessage(validator, survey, "elements[0].identifier", "is required");
     }
@@ -169,16 +169,16 @@ public class SurveySaveValidatorTest {
     public void questionIdentifierInvalid() {
         String fieldName = "**invalid!q##";
         survey = new TestSurvey(SurveySaveValidatorTest.class, false);
-        survey.getElements().get(0).setIdentifier(fieldName);
+        survey.getElements().getFirst().setIdentifier(fieldName);
 
         assertValidatorMessage(validator, survey, "elements[0].identifier",
-                String.format(UploadUtil.INVALID_FIELD_NAME_ERROR_MESSAGE, fieldName));
+                UploadUtil.INVALID_FIELD_NAME_ERROR_MESSAGE.formatted(fieldName));
     }
 
     @Test
     public void questionUiHintRequired() {
         survey = new TestSurvey(SurveySaveValidatorTest.class, false);
-        survey.getUnmodifiableQuestionList().get(0).setUiHint(null);
+        survey.getUnmodifiableQuestionList().getFirst().setUiHint(null);
 
         assertValidatorMessage(validator, survey, "elements[0].uiHint", "is required");
     }
@@ -186,7 +186,7 @@ public class SurveySaveValidatorTest {
     @Test
     public void questionPromptRequired() {
         survey = new TestSurvey(SurveySaveValidatorTest.class, false);
-        survey.getUnmodifiableQuestionList().get(0).setPrompt("");
+        survey.getUnmodifiableQuestionList().getFirst().setPrompt("");
 
         assertValidatorMessage(validator, survey, "elements[0].prompt", "is required");
     }
@@ -194,7 +194,7 @@ public class SurveySaveValidatorTest {
     @Test
     public void questionConstraintsRequired() {
         survey = new TestSurvey(SurveySaveValidatorTest.class, false);
-        survey.getUnmodifiableQuestionList().get(0).setConstraints(null);
+        survey.getUnmodifiableQuestionList().getFirst().setConstraints(null);
 
         assertValidatorMessage(validator, survey, "elements[0].constraints", "is required");
     }
@@ -206,7 +206,7 @@ public class SurveySaveValidatorTest {
     @Test
     public void constraintDataTypeRequired() {
         survey = new TestSurvey(SurveySaveValidatorTest.class, false);
-        survey.getUnmodifiableQuestionList().get(0).getConstraints().setDataType(null);
+        survey.getUnmodifiableQuestionList().getFirst().getConstraints().setDataType(null);
 
         assertValidatorMessage(validator, survey, "elements[0].constraints.dataType", "is required");
     }
@@ -215,7 +215,7 @@ public class SurveySaveValidatorTest {
     public void uiHintMustBeSupportedByConstraintsType() {
         survey = new TestSurvey(SurveySaveValidatorTest.class, false);
         // Boolean constraints do not jive with lists (which are normally for select multiple)
-        survey.getUnmodifiableQuestionList().get(0).setUiHint(UIHint.LIST);
+        survey.getUnmodifiableQuestionList().getFirst().setUiHint(UIHint.LIST);
 
         assertValidatorMessage(validator, survey, "elements[0].constraints.dataType",
                 "'boolean' doesn't match the UI hint of 'list'");
@@ -310,7 +310,7 @@ public class SurveySaveValidatorTest {
         ((MultiValueConstraints) question.getConstraints()).setEnumeration(optionList);
 
         assertValidatorMessage(validator, survey, "elements[7].constraints.enumeration[0].value",
-                String.format(UploadUtil.INVALID_ANSWER_CHOICE_ERROR_MESSAGE, answerChoice));
+                UploadUtil.INVALID_ANSWER_CHOICE_ERROR_MESSAGE.formatted(answerChoice));
     }
 
     @Test
@@ -804,7 +804,7 @@ public class SurveySaveValidatorTest {
         Survey tempSurvey = new TestSurvey(SurveySaveValidatorTest.class, false);
         SurveyQuestion question = ((TestSurvey)tempSurvey).getStringQuestion();
         question.setIdentifier("foo");
-        survey.getElements().add(0, question);
+        survey.getElements().addFirst(question);
 
         assertValidatorMessage(validator, survey, "elements[1].constraints.rules[0].skipTo", "back references question foo");
     }
@@ -848,7 +848,7 @@ public class SurveySaveValidatorTest {
         Survey tempSurvey = new TestSurvey(SurveySaveValidatorTest.class, false);
         SurveyQuestion question = ((TestSurvey)tempSurvey).getStringQuestion();
         question.setIdentifier("foo");
-        survey.getElements().add(0, question);
+        survey.getElements().addFirst(question);
 
         assertValidatorMessage(validator, survey, "elements[1].afterRules[0].skipTo", "back references question foo");
     }
@@ -1117,7 +1117,7 @@ public class SurveySaveValidatorTest {
     @Test
     public void validateGuidsNotDuplicates() {
         survey = new TestSurvey(SurveySaveValidatorTest.class, false);
-        survey.getElements().get(0).setGuid(survey.getElements().get(1).getGuid());
+        survey.getElements().getFirst().setGuid(survey.getElements().get(1).getGuid());
         
         assertValidatorMessage(validator, survey, "elements[1].guid", "exists in an earlier survey element");
     }
@@ -1125,7 +1125,7 @@ public class SurveySaveValidatorTest {
     @Test
     public void validateIdentifiersNotDuplicates() {
         survey = new TestSurvey(SurveySaveValidatorTest.class, false);
-        survey.getElements().get(0).setIdentifier(survey.getElements().get(1).getIdentifier());
+        survey.getElements().getFirst().setIdentifier(survey.getElements().get(1).getIdentifier());
         
         assertValidatorMessage(validator, survey, "elements[1].identifier", "exists in an earlier survey element");
     }

@@ -179,7 +179,7 @@ public class DynamoParticipantVersionTest {
         JsonNode languagesNode = jsonNode.get("languages");
         assertTrue(languagesNode.isArray());
         assertEquals(languagesNode.size(), 1);
-        assertEquals(languagesNode.get(0).textValue(), LANGUAGES.get(0));
+        assertEquals(languagesNode.get(0).textValue(), LANGUAGES.getFirst());
 
         JsonNode studyMembershipsNode = jsonNode.get("studyMemberships");
         assertTrue(studyMembershipsNode.isObject());

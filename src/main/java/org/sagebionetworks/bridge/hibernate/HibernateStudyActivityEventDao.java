@@ -9,7 +9,7 @@ import static org.sagebionetworks.bridge.models.ResourceList.PAGE_SIZE;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 
 import org.springframework.stereotype.Component;
 

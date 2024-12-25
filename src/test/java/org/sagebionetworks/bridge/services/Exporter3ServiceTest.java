@@ -337,8 +337,8 @@ public class Exporter3ServiceTest {
         verify(mockSynapseHelper, atLeastOnce()).createEntityWithRetry(materializedViewCaptor.capture());
         MaterializedView capturedMaterializedView = null;
         for (Entity entity : materializedViewCaptor.getAllValues()) {
-            if (entity instanceof MaterializedView) {
-                capturedMaterializedView = (MaterializedView) entity;
+            if (entity instanceof MaterializedView view) {
+                capturedMaterializedView = view;
             }
         }
         if (capturedMaterializedView == null) {
@@ -346,7 +346,7 @@ public class Exporter3ServiceTest {
         }
         assertEquals(capturedMaterializedView.getName(), Exporter3Service.VIEW_NAME_PARTICIPANT_VERSIONS_DEMOGRAPHICS);
         assertEquals(capturedMaterializedView.getParentId(), PROJECT_ID);
-        assertEquals(capturedMaterializedView.getDefiningSQL(), String.format(Exporter3Service.VIEW_DEFINING_SQL,
+        assertEquals(capturedMaterializedView.getDefiningSQL(), Exporter3Service.VIEW_DEFINING_SQL.formatted(
                 PARTICIPANT_VERSION_TABLE_ID, PARTICIPANT_VERSION_DEMOGRAPHICS_TABLE_ID));
         verify(mockSynapseHelper).createAclWithRetry(PARTICIPANT_VERSION_DEMOGRAPHICS_VIEW_ID,
                 ImmutableSet.of(EXPORTER_SYNAPSE_ID, BRIDGE_ADMIN_TEAM_ID),
@@ -647,7 +647,7 @@ public class Exporter3ServiceTest {
                 .capture());
         List<Entity> entitiesToCreateList = entitiesToCreateCaptor.getAllValues();
 
-        Project projectToCreate = (Project) entitiesToCreateList.get(0);
+        Project projectToCreate = (Project) entitiesToCreateList.getFirst();
         assertEquals(projectToCreate.getName(), EXPECTED_PROJECT_NAME);
 
         // Verify project ACLs.
@@ -675,7 +675,7 @@ public class Exporter3ServiceTest {
         MaterializedView capturedMaterializedView = (MaterializedView) entitiesToCreateList.get(1);
         assertEquals(capturedMaterializedView.getName(), Exporter3Service.VIEW_NAME_PARTICIPANT_VERSIONS_DEMOGRAPHICS);
         assertEquals(capturedMaterializedView.getParentId(), PROJECT_ID);
-        assertEquals(capturedMaterializedView.getDefiningSQL(), String.format(Exporter3Service.VIEW_DEFINING_SQL,
+        assertEquals(capturedMaterializedView.getDefiningSQL(), Exporter3Service.VIEW_DEFINING_SQL.formatted(
                 PARTICIPANT_VERSION_TABLE_ID, PARTICIPANT_VERSION_DEMOGRAPHICS_TABLE_ID));
         verify(mockSynapseHelper).createAclWithRetry(PARTICIPANT_VERSION_DEMOGRAPHICS_VIEW_ID, DATA_ADMIN_ID_SET,
                 DATA_READ_ONLY_ID_SET);

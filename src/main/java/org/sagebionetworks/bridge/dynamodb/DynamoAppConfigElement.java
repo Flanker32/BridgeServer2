@@ -39,7 +39,7 @@ public final class DynamoAppConfigElement implements AppConfigElement {
         if (StringUtils.isBlank(appId) || StringUtils.isBlank(id)) {
             return null;
         }
-        return String.format("%s:%s", appId, id);
+        return "%s:%s".formatted(appId, id);
     }
     public void setKey(String key) {
         this.appId = null;

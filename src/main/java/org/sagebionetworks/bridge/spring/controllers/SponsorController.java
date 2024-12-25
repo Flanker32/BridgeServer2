@@ -71,22 +71,22 @@ public class SponsorController extends BaseController {
             "/v1/organizations/{orgId}/studies/{studyId}"})
     @ResponseStatus(code = CREATED)
     public StatusMessage addStudySponsor(
-            @PathVariable(name = "studyId") String studyId, 
-            @PathVariable(name = "orgId") String orgId) {
+            @PathVariable String studyId, 
+            @PathVariable String orgId) {
         UserSession session = getAuthenticatedSession(ADMIN);
         
         sponsorService.addStudySponsor(session.getAppId(), studyId, orgId);
-        return new StatusMessage(String.format(ADD_SPONSOR_MSG, orgId, studyId));
+        return new StatusMessage(ADD_SPONSOR_MSG.formatted(orgId, studyId));
     }
         
     @DeleteMapping(path = {"/v5/studies/{studyId}/sponsors/{orgId}", 
             "/v1/organizations/{orgId}/studies/{studyId}"})
     public StatusMessage removeStudySponsor(
-            @PathVariable(name = "studyId") String studyId,
-            @PathVariable(name = "orgId") String orgId) {
+            @PathVariable String studyId,
+            @PathVariable String orgId) {
         UserSession session = getAuthenticatedSession(ADMIN);
         
         sponsorService.removeStudySponsor(session.getAppId(), studyId, orgId);
-        return new StatusMessage(String.format(REMOVE_SPONSOR_MSG, orgId, studyId));
+        return new StatusMessage(REMOVE_SPONSOR_MSG.formatted(orgId, studyId));
     }
 }

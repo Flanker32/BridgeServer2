@@ -55,7 +55,7 @@ public class BulkDownloadUtil {
             }
         }
 
-        System.out.println(String.format("Downloading %s files for S3 keys (%s)", s3KeyArr.length,
+        System.out.println("Downloading %s files for S3 keys (%s)".formatted(s3KeyArr.length,
                 COMMA_SPACE_JOINER.join(s3KeyArr)));
 
         // spring beans
@@ -98,9 +98,9 @@ public class BulkDownloadUtil {
             try {
                 s3DownloadHandler.handle(ctx);
             } catch (Exception ex) {
-                System.out.println(String.format(
+                System.out.println((
                         "Error downloading file %s from S3 with uploadId %s from app %s, healthCode %s, timestamp " +
-                                "%s: %s",
+                                "%s: %s").formatted(
                         uploadObj.metadata.getFilename(), uploadObj.metadata.getUploadId(), uploadObj.appId,
                         uploadObj.metadata.getHealthCode(),
                         uploadObj.metadata.getUploadDate().toString(ISODateTimeFormat.date()), ex.getMessage()));
@@ -110,8 +110,8 @@ public class BulkDownloadUtil {
             try {
                 decryptHandler.handle(ctx);
             } catch (Exception ex) {
-                System.out.println(String.format(
-                        "Error decrypting file %s with uploadId %s from app %s, healthCode %s, timestamp %s: %s",
+                System.out.println(
+                        "Error decrypting file %s with uploadId %s from app %s, healthCode %s, timestamp %s: %s".formatted(
                         uploadObj.metadata.getFilename(), uploadObj.metadata.getUploadId(), uploadObj.appId,
                         uploadObj.metadata.getHealthCode(),
                         uploadObj.metadata.getUploadDate().toString(ISODateTimeFormat.date()), ex.getMessage()));
@@ -122,8 +122,8 @@ public class BulkDownloadUtil {
             try {
                 unzipHandler.handle(ctx);
             } catch (Exception ex) {
-                System.out.println(String.format(
-                        "Error unzipping file %s with uploadId %s from app %s, healthCode %s, timestamp %s: %s",
+                System.out.println(
+                        "Error unzipping file %s with uploadId %s from app %s, healthCode %s, timestamp %s: %s".formatted(
                         uploadObj.metadata.getFilename(), uploadObj.metadata.getUploadId(), uploadObj.appId,
                         uploadObj.metadata.getHealthCode(),
                         uploadObj.metadata.getUploadDate().toString(ISODateTimeFormat.date()), ex.getMessage()));
@@ -148,14 +148,14 @@ public class BulkDownloadUtil {
         for (List<Object> oneResultList : batchLoadResultMap.values()) {
             for (Object oneResult : oneResultList) {
                 if (!(oneResult instanceof DynamoUpload2)) {
-                    System.out.println(String.format("DDB returned object of type %s instead of DynamoUpload2",
+                    System.out.println("DDB returned object of type %s instead of DynamoUpload2".formatted(
                             oneResult.getClass().getName()));
                     continue;
                 }
                 uploadMetadataList.add((DynamoUpload2) oneResult);
             }
         }
-        System.out.println(String.format("Got %s results from DDB Upload table", uploadMetadataList.size()));
+        System.out.println("Got %s results from DDB Upload table".formatted(uploadMetadataList.size()));
 
         System.out.println("Downloading files from S3 and cross-referencing app ID from health code...");
         List<UploadObject> uploads = new ArrayList<>();

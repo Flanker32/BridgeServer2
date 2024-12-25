@@ -20,8 +20,8 @@ import static org.testng.Assert.fail;
 
 import java.util.Optional;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 import org.mockito.ArgumentMatchers;
 import org.mockito.InjectMocks;

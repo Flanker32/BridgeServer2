@@ -109,7 +109,7 @@ public class AssessmentValidator implements Validator {
                 ownerAppId = appId;
                 ownerOrgId = assessment.getOwnerId();
             }
-            if (!organizationService.getOrganizationOpt(ownerAppId, ownerOrgId).isPresent()) {
+            if (organizationService.getOrganizationOpt(ownerAppId, ownerOrgId).isEmpty()) {
                 errors.rejectValue("ownerId", "is not a valid organization ID");
             }
         }

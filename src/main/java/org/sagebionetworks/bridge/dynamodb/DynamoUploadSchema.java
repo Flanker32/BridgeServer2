@@ -94,7 +94,7 @@ public class DynamoUploadSchema implements UploadSchema {
             // Similarly here.
             return null;
         }
-        return String.format("%s:%s", appId, schemaId);
+        return "%s:%s".formatted(appId, schemaId);
     }
 
     /**

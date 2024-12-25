@@ -16,8 +16,8 @@ import static org.testng.Assert.assertFalse;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
@@ -152,7 +152,7 @@ public class AppConfigControllerTest extends Mockito {
         
         assertEquals(capturedContext.getAppId(), TEST_APP_ID);
         assertEquals(capturedContext.getClientInfo().getAppName(), "Asthma");
-        assertEquals(capturedContext.getClientInfo().getAppVersion(), new Integer(26));
+        assertEquals(capturedContext.getClientInfo().getAppVersion(), Integer.valueOf(26));
         assertEquals(capturedContext.getLanguages(), ImmutableList.of("en"));
         assertEquals(capturedContext.getClientInfo().getOsName(), "iPhone OS");
         RequestContext.set(null);
@@ -190,7 +190,7 @@ public class AppConfigControllerTest extends Mockito {
         GuidVersionHolder result = controller.createAppConfig();
         
         assertEquals(result.getGuid(), GUID);
-        assertEquals(result.getVersion(), new Long(1));
+        assertEquals(result.getVersion(), Long.valueOf(1));
         verify(mockService).createAppConfig(eq(TEST_APP_ID), any());
     }
     
@@ -203,7 +203,7 @@ public class AppConfigControllerTest extends Mockito {
         GuidVersionHolder result = controller.updateAppConfig(GUID);
         
         assertEquals(result.getGuid(), GUID);
-        assertEquals(result.getVersion(), new Long(1));
+        assertEquals(result.getVersion(), Long.valueOf(1));
         verify(mockService).updateAppConfig(eq(TEST_APP_ID), any());
     }
     

@@ -7,7 +7,7 @@ import static org.sagebionetworks.bridge.models.SearchTermPredicate.AND;
 import java.util.List;
 import java.util.Set;
 
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
@@ -92,6 +92,6 @@ public class HibernateEnrollmentDao implements EnrollmentDao {
         if (accounts.isEmpty()) {
             return null;
         }
-        return new AccountRef(accounts.get(0));
+        return new AccountRef(accounts.getFirst());
     }
 }

@@ -63,17 +63,17 @@ public class DynamoOAuthAccessGrantDaoTest extends Mockito {
         ForwardCursorPagedResourceList<OAuthAccessGrant> grants = dao.getAccessGrants(TEST_APP_ID, VENDOR_ID,
                 OFFSET_KEY, 5);
         assertEquals(grants.getItems().size(), 2);
-        assertEquals(grants.getItems().get(0), grant1);
+        assertEquals(grants.getItems().getFirst(), grant1);
         assertEquals(grants.getItems().get(1), grant2);
         assertEquals(grants.getRequestParams().get("offsetKey"), OFFSET_KEY);
-        assertEquals(grants.getRequestParams().get("pageSize"), new Integer(5));
+        assertEquals(grants.getRequestParams().get("pageSize"), Integer.valueOf(5));
 
         verify(mockMapper).queryPage(eq(DynamoOAuthAccessGrant.class), queryCaptor.capture());
         DynamoDBQueryExpression<DynamoOAuthAccessGrant> query = queryCaptor.getValue();
         assertEquals(query.getHashKeyValues().getKey(), KEY);
-        assertEquals(query.getLimit(), new Integer(6));
+        assertEquals(query.getLimit(), Integer.valueOf(6));
         Condition healthKeyCondition = query.getRangeKeyConditions().get("healthCode");
-        assertEquals(healthKeyCondition.getAttributeValueList().get(0).getS(), OFFSET_KEY);
+        assertEquals(healthKeyCondition.getAttributeValueList().getFirst().getS(), OFFSET_KEY);
     }
     
     @Test
@@ -86,15 +86,15 @@ public class DynamoOAuthAccessGrantDaoTest extends Mockito {
         
         ForwardCursorPagedResourceList<OAuthAccessGrant> grants = dao.getAccessGrants(TEST_APP_ID, VENDOR_ID, null, 5);
         assertEquals(grants.getItems().size(), 2);
-        assertEquals(grants.getItems().get(0), grant1);
+        assertEquals(grants.getItems().getFirst(), grant1);
         assertEquals(grants.getItems().get(1), grant2);
         assertNull(grants.getRequestParams().get("offsetKey"));
-        assertEquals(grants.getRequestParams().get("pageSize"), new Integer(5));
+        assertEquals(grants.getRequestParams().get("pageSize"), Integer.valueOf(5));
 
         verify(mockMapper).queryPage(eq(DynamoOAuthAccessGrant.class), queryCaptor.capture());
         DynamoDBQueryExpression<DynamoOAuthAccessGrant> query = queryCaptor.getValue();
         assertEquals(query.getHashKeyValues().getKey(), KEY);
-        assertEquals(query.getLimit(), new Integer(6));
+        assertEquals(query.getLimit(), Integer.valueOf(6));
         assertNull(query.getRangeKeyConditions());
     }
     

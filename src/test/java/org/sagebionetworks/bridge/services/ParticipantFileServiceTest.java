@@ -26,6 +26,7 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import java.net.URI;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -76,7 +77,7 @@ public class ParticipantFileServiceTest {
         when(mockS3Client.generatePresignedUrl(any())).thenAnswer(i -> {
             GeneratePresignedUrlRequest request = i.getArgument(0);
             String filePath = request.getKey();
-            return new URL("https://" + UPLOAD_BUCKET + "/" + filePath);
+            return URI.create("https://" + UPLOAD_BUCKET + "/" + filePath).toURL();
         });
 
         ObjectMetadata metadata = new ObjectMetadata();
@@ -180,8 +181,8 @@ public class ParticipantFileServiceTest {
             try {
                 service.getParticipantFile("userid", "fileid");
             } catch (LimitExceededException e) {
-                fail(String.format(
-                        "RateLimiter should not have rejected download %d of 100 KB with initial of 1 MB", i + 1));
+                fail(
+                        "RateLimiter should not have rejected download %d of 100 KB with initial of 1 MB".formatted(i + 1));
             }
         }
         verify(mockS3Client, times(10)).getObjectMetadata(UPLOAD_BUCKET, "userid/fileid");

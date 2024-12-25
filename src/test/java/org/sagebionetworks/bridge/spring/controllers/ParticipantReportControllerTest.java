@@ -23,7 +23,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
@@ -462,7 +462,7 @@ public class ParticipantReportControllerTest extends Mockito {
         
         assertEquals(results.getItems().size(), 1);
         assertEquals(results.getRequestParams().get("reportType"), ReportType.PARTICIPANT);
-        assertEquals(results.getItems().get(0).getIdentifier(), "fofo");
+        assertEquals(results.getItems().getFirst().getIdentifier(), "fofo");
         
         verify(mockReportService).getReportIndices(TEST_APP_ID, ReportType.PARTICIPANT);
     }
@@ -628,7 +628,7 @@ public class ParticipantReportControllerTest extends Mockito {
         assertEquals(result.getRequestParams().get("endDate").toString(), "2015-02-02");
         assertEquals(result.getItems().size(), 2);
         
-        ReportData data1 = result.getItems().get(0);
+        ReportData data1 = result.getItems().getFirst();
         assertEquals(data1.getDate(), "2015-02-10");
         
         JsonNode child1Data = data1.getData();
@@ -668,10 +668,10 @@ public class ParticipantReportControllerTest extends Mockito {
         List<ReportData> list = page.getItems();
         assertEquals(2, list.size());
 
-        assertEquals("2015-02-10T00:00:00.000Z", list.get(0).getDateTime().toString());
-        assertEquals(2, list.get(0).getData().size());
-        assertEquals("First", list.get(0).getData().get("field1").textValue());
-        assertEquals("Name", list.get(0).getData().get("field2").textValue());
+        assertEquals("2015-02-10T00:00:00.000Z", list.getFirst().getDateTime().toString());
+        assertEquals(2, list.getFirst().getData().size());
+        assertEquals("First", list.getFirst().getData().get("field1").textValue());
+        assertEquals("Name", list.getFirst().getData().get("field2").textValue());
 
         assertEquals("2015-02-12T00:00:00.000Z", list.get(1).getDateTime().toString());
         assertEquals(2, list.get(1).getData().size());

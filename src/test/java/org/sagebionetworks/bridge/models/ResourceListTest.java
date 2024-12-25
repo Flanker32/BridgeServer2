@@ -39,7 +39,7 @@ public class ResourceListTest {
         
         ResourceList<String> deser = BridgeObjectMapper.get().readValue(node.toString(), new TypeReference<ResourceList<String>>() {});
         
-        assertEquals(deser.getItems().get(0), "A");
+        assertEquals(deser.getItems().getFirst(), "A");
         assertEquals(deser.getItems().get(1), "B");
         assertEquals(deser.getItems().get(2), "C");
         // This is deserialized as an integer, not a long, that is a property of the library. Looks the same in JSON.

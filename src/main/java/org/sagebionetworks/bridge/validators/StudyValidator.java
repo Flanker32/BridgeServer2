@@ -173,8 +173,8 @@ public class StudyValidator implements Validator {
         }
         if (protectedCustomEventIds != null && !uniqueIds.containsAll(protectedCustomEventIds)) {
             protectedCustomEventIds.removeAll(uniqueIds);
-            errors.rejectValue(CUSTOM_EVENTS_FIELD, 
-                    String.format("cannot remove custom events currently used in a schedule: %s",
+            errors.rejectValue(CUSTOM_EVENTS_FIELD,
+                    "cannot remove custom events currently used in a schedule: %s".formatted(
                             COMMA_SPACE_JOINER.join(protectedCustomEventIds)));
         }
         for (int i=0; i < study.getContacts().size(); i++) {
@@ -226,7 +226,7 @@ public class StudyValidator implements Validator {
         if (study.getScheduleGuid() != null) {
             try {
                 Optional<Schedule2> opt = scheduleService.getScheduleForStudyValidator(study.getAppId(), study.getScheduleGuid());
-                if (!opt.isPresent()) {
+                if (opt.isEmpty()) {
                     errors.rejectValue(SCHEDULE_GUID_FIELD, SCHEDULE_GUID_INVALID_MSG);
                 } else if (!sponsorService.isStudySponsoredBy(study.getIdentifier(), opt.get().getOwnerId())) {
                     errors.rejectValue(SCHEDULE_GUID_FIELD, SCHEDULE_GUID_OWNER_ERROR_MSG);

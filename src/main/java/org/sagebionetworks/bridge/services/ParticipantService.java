@@ -534,7 +534,7 @@ public class ParticipantService {
         // It's sufficient to get minimum number of records, we're looking only at the total of all accounts
         PagedResourceList<AccountSummary> summaries = getPagedAccountSummaries(app, AccountSummarySearch.EMPTY_SEARCH);
         if (summaries.getTotal() >= app.getAccountLimit()) {
-            throw new LimitExceededException(String.format(BridgeConstants.MAX_USERS_ERROR, app.getAccountLimit()));
+            throw new LimitExceededException(BridgeConstants.MAX_USERS_ERROR.formatted(app.getAccountLimit()));
         }
     }
     

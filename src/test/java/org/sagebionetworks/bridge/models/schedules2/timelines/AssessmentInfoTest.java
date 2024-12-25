@@ -75,8 +75,8 @@ public class AssessmentInfoTest extends Mockito {
         assertEquals(node.get("colorScheme").get("type").textValue(), "ColorScheme");
         assertEquals(node.get("imageResource").get("name").textValue(), "default");
         assertEquals(node.get("imageResource").get("module").textValue(), "sage_survey");
-        assertEquals(node.get("imageResource").get("labels").get(0).get("lang").textValue(), LABELS.get(0).getLang());
-        assertEquals(node.get("imageResource").get("labels").get(0).get("value").textValue(), LABELS.get(0).getValue());
+        assertEquals(node.get("imageResource").get("labels").get(0).get("lang").textValue(), LABELS.getFirst().getLang());
+        assertEquals(node.get("imageResource").get("labels").get(0).get("value").textValue(), LABELS.getFirst().getValue());
         assertEquals(node.get("imageResource").get("labels").get(1).get("lang").textValue(), LABELS.get(1).getLang());
         assertEquals(node.get("imageResource").get("labels").get(1).get("value").textValue(), LABELS.get(1).getValue());
         assertEquals(node.get("imageResource").get("type").textValue(), "ImageResource");

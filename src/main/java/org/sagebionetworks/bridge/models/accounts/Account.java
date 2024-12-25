@@ -41,7 +41,7 @@ public interface Account extends BridgeEntity {
     default ConsentSignature getActiveConsentSignature(SubpopulationGuid subpopGuid) {
         List<ConsentSignature> history = getConsentSignatureHistory(subpopGuid);
         if (!history.isEmpty()) {
-            ConsentSignature signature = history.get(history.size()-1);
+            ConsentSignature signature = history.getLast();
             return (signature.getWithdrewOn() == null) ? signature : null;
         }
         return null;

@@ -4,7 +4,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.util.Map;
 
-import org.apache.http.HttpStatus;
+import org.apache.hc.core5.http.HttpStatus;
 
 import com.google.common.collect.ImmutableMap;
 
@@ -68,7 +68,7 @@ public class ConstraintViolationException extends BridgeServiceException {
             Map<String,String> entityMap = entityMapBuilder.build();
             Map<String,String> referrerMap = referrerMapBuilder.build();
             if (message == null) {
-                message = String.format("Operation not permitted because entity %s refers to this entity %s.",
+                message = "Operation not permitted because entity %s refers to this entity %s.".formatted(
                         referrerMap, entityMap);
             }
             return new ConstraintViolationException(message, entityMap, referrerMap);

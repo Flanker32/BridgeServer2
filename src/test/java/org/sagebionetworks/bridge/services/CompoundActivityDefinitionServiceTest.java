@@ -128,7 +128,7 @@ public class CompoundActivityDefinitionServiceTest {
                 .withTaskIdentifier(TASK_ID).build();
         Activity newActivity = new Activity.Builder()
                 .withCompoundActivity(compoundActivity).build();
-        plan.getStrategy().getAllPossibleSchedules().get(0).getActivities().set(0, newActivity);
+        plan.getStrategy().getAllPossibleSchedules().getFirst().getActivities().set(0, newActivity);
         when(schedulePlanService.getSchedulePlans(ClientInfo.UNKNOWN_CLIENT, TEST_APP_ID, true))
                 .thenReturn(Lists.newArrayList(plan));
         

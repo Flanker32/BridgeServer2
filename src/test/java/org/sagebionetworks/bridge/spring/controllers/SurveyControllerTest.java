@@ -21,8 +21,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
@@ -251,7 +251,7 @@ public class SurveyControllerTest extends Mockito {
         doReturn(session).when(controller).getAuthenticatedSession(WORKER);
         // make surveys
         List<Survey> surveyList = getSurveys(2, false);
-        surveyList.get(0).setGuid("survey-0");
+        surveyList.getFirst().setGuid("survey-0");
         surveyList.get(1).setGuid("survey-1");
         when(mockSurveyService.getAllSurveysMostRecentlyPublishedVersion(TEST_APP_ID, false)).thenReturn(surveyList);
 
@@ -260,7 +260,7 @@ public class SurveyControllerTest extends Mockito {
         
         List<Survey> resultSurveyList = result.getItems();
         assertEquals(resultSurveyList.size(), 2);
-        assertEquals(resultSurveyList.get(0).getGuid(), "survey-0");
+        assertEquals(resultSurveyList.getFirst().getGuid(), "survey-0");
         assertEquals(resultSurveyList.get(1).getGuid(), "survey-1");
     }
 

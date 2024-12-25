@@ -30,7 +30,7 @@ import org.sagebionetworks.bridge.services.ParticipantDataService;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.List;
 import java.util.Map;
@@ -148,7 +148,7 @@ public class ParticipantDataControllerTest extends Mockito {
         ForwardCursorPagedResourceList<String> result = controller.getAllDataForSelf(OFFSET_KEY, PAGE_SIZE_STRING);
 
         assertEquals(NEXT_PAGE_OFFSET_KEY, result.getNextPageOffsetKey());
-        assertEquals(result.getItems().get(0), IDENTIFIER);
+        assertEquals(result.getItems().getFirst(), IDENTIFIER);
         assertEquals(result.getItems().get(1), IDENTIFIER);
     }
 
@@ -207,7 +207,7 @@ public class ParticipantDataControllerTest extends Mockito {
         ForwardCursorPagedResourceList<String> result = controller.getAllDataForAdminWorker(session.getAppId(),
                 session.getId(), OFFSET_KEY, PAGE_SIZE_STRING);
 
-        assertEquals(expected.getItems().get(0).getIdentifier(), result.getItems().get(0));
+        assertEquals(expected.getItems().getFirst().getIdentifier(), result.getItems().getFirst());
         assertEquals(expected.getItems().size(), result.getItems().size());
 
         verify(mockParticipantDataService).getAllParticipantData(TEST_USER_ID, OFFSET_KEY, PAGE_SIZE_INT);

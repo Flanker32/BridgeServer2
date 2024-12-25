@@ -1,6 +1,6 @@
 package org.sagebionetworks.bridge.dynamodb;
 
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -145,7 +145,7 @@ public class DynamoUploadSchemaDao implements UploadSchemaDao {
         if (schemaList.isEmpty()) {
             return null;
         } else {
-            return schemaList.get(0);
+            return schemaList.getFirst();
         }
     }
 

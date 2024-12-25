@@ -34,8 +34,8 @@ import static org.testng.Assert.assertTrue;
 import java.util.List;
 import java.util.Optional;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -304,7 +304,7 @@ public class AppControllerTest extends Mockito {
         verify(mockAppService, times(1)).createAppAndUsers(any());
         AppAndUsers capObj = argumentCaptor.getValue();
         assertEquals(capObj.getApp(), app);
-        assertEquals(capObj.getUsers().get(0).getEmail(), TEST_USER_EMAIL);
+        assertEquals(capObj.getUsers().getFirst().getEmail(), TEST_USER_EMAIL);
         assertEquals(capObj.getUsers().get(1).getEmail(), TEST_USER_EMAIL_2);
         assertEquals(capObj.getAdminIds(), adminIds);
         assertEquals(result.getVersion(), app.getVersion());
@@ -609,7 +609,7 @@ public class AppControllerTest extends Mockito {
         
         ResourceList<App> deser = BridgeObjectMapper.get().readValue(json, APP_RESOURCE_LIST_TYPE);
         assertEquals(deser.getItems().size(), 2);
-        assertNotNull(deser.getItems().get(0).getSponsorName());
+        assertNotNull(deser.getItems().getFirst().getSponsorName());
         assertNotNull(deser.getItems().get(1).getSponsorName());
     }
     
@@ -622,7 +622,7 @@ public class AppControllerTest extends Mockito {
         
         ResourceList<App> deser = BridgeObjectMapper.get().readValue(json, APP_RESOURCE_LIST_TYPE);
         assertEquals(deser.getItems().size(), 3);
-        assertNull(deser.getItems().get(0).getSponsorName());
+        assertNull(deser.getItems().getFirst().getSponsorName());
         assertNull(deser.getItems().get(1).getSponsorName());
         assertNull(deser.getItems().get(2).getSponsorName());
     }
@@ -636,7 +636,7 @@ public class AppControllerTest extends Mockito {
         
         ResourceList<App> deser = BridgeObjectMapper.get().readValue(json, APP_RESOURCE_LIST_TYPE);
         assertEquals(deser.getItems().size(), 2);
-        assertNull(deser.getItems().get(0).getSponsorName());
+        assertNull(deser.getItems().getFirst().getSponsorName());
         assertNull(deser.getItems().get(1).getSponsorName());
     }
 
@@ -649,7 +649,7 @@ public class AppControllerTest extends Mockito {
         
         ResourceList<App> deser = BridgeObjectMapper.get().readValue(json, APP_RESOURCE_LIST_TYPE);
         assertEquals(deser.getItems().size(), 3);
-        assertNull(deser.getItems().get(0).getSponsorName());
+        assertNull(deser.getItems().getFirst().getSponsorName());
         assertNull(deser.getItems().get(1).getSponsorName());
         assertNull(deser.getItems().get(2).getSponsorName());
     }
@@ -663,7 +663,7 @@ public class AppControllerTest extends Mockito {
         
         ResourceList<App> deser = BridgeObjectMapper.get().readValue(json, APP_RESOURCE_LIST_TYPE);
         assertEquals(deser.getItems().size(), 2);
-        assertNull(deser.getItems().get(0).getSponsorName());
+        assertNull(deser.getItems().getFirst().getSponsorName());
         assertNull(deser.getItems().get(1).getSponsorName());
     }
     @Test(expectedExceptions = NotAuthenticatedException.class)
@@ -682,7 +682,7 @@ public class AppControllerTest extends Mockito {
  
         ResourceList<App> deser = BridgeObjectMapper.get().readValue(json, APP_RESOURCE_LIST_TYPE);
         assertEquals(deser.getItems().size(), 3);
-        assertNotNull(deser.getItems().get(0).getSponsorName());
+        assertNotNull(deser.getItems().getFirst().getSponsorName());
         assertNotNull(deser.getItems().get(1).getSponsorName());
         assertNotNull(deser.getItems().get(2).getSponsorName());
     }
@@ -698,7 +698,7 @@ public class AppControllerTest extends Mockito {
  
         ResourceList<App> deser = BridgeObjectMapper.get().readValue(json, APP_RESOURCE_LIST_TYPE);
         assertEquals(deser.getItems().size(), 2);
-        assertNotNull(deser.getItems().get(0).getSponsorName());
+        assertNotNull(deser.getItems().getFirst().getSponsorName());
         assertNotNull(deser.getItems().get(1).getSponsorName());
     }
 
@@ -922,7 +922,7 @@ public class AppControllerTest extends Mockito {
         ResourceList<App> list = BridgeObjectMapper.get().readValue(returnValue, APP_RESOURCE_LIST_TYPE);
         
         assertEquals(list.getItems().size(), 2);
-        assertEquals(list.getItems().get(0).getName(), "Name1");
+        assertEquals(list.getItems().getFirst().getName(), "Name1");
         assertEquals(list.getItems().get(1).getName(), "Name2");
         
         verify(mockAppService, never()).getApp(any());

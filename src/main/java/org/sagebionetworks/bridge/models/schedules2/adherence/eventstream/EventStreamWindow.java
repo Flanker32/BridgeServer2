@@ -8,7 +8,7 @@ import org.joda.time.LocalTime;
 import org.sagebionetworks.bridge.hibernate.LocalTimeToStringConverter;
 import org.sagebionetworks.bridge.models.schedules2.adherence.SessionCompletionState;
 
-import javax.persistence.Convert;
+import jakarta.persistence.Convert;
 
 public final class EventStreamWindow {
     private String sessionInstanceGuid;

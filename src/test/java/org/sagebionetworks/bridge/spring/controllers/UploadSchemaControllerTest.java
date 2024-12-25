@@ -18,7 +18,7 @@ import static org.testng.Assert.assertNull;
 
 import java.util.Set;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -41,19 +41,21 @@ import org.sagebionetworks.bridge.services.UploadSchemaService;
 
 public class UploadSchemaControllerTest extends Mockito {
     private static final String TEST_SCHEMA_ID = "controller-test-schema";
-    private static final String TEST_SCHEMA_JSON = "{\n" +
-                    "   \"name\":\"Controller Test Schema\",\n" +
-                    "   \"revision\":3,\n" +
-                    "   \"schemaId\":\"controller-test-schema\",\n" +
-                    "   \"schemaType\":\"ios_data\",\n" +
-                    "   \"fieldDefinitions\":[\n" +
-                    "       {\n" +
-                    "           \"name\":\"field-name\",\n" +
-                    "           \"required\":true,\n" +
-                    "           \"type\":\"STRING\"\n" +
-                    "       }\n" +
-                    "   ]\n" +
-                    "}";
+    private static final String TEST_SCHEMA_JSON = """
+                    {
+                       "name":"Controller Test Schema",
+                       "revision":3,
+                       "schemaId":"controller-test-schema",
+                       "schemaType":"ios_data",
+                       "fieldDefinitions":[
+                           {
+                               "name":"field-name",
+                               "required":true,
+                               "type":"STRING"
+                           }
+                       ]
+                    }\
+                    """;
 
     @Test
     public void verifyAnnotations() throws Exception {

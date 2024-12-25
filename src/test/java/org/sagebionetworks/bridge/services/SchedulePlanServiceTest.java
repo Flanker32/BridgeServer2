@@ -124,8 +124,8 @@ public class SchedulePlanServiceTest {
         verify(mockSurveyService).getSurvey(eq(TEST_APP_ID), any(), eq(false), eq(true));
         verify(mockSchedulePlanDao).createSchedulePlan(any(), spCaptor.capture());
         
-        List<Activity> activities = spCaptor.getValue().getStrategy().getAllPossibleSchedules().get(0).getActivities();
-        assertEquals(activities.get(0).getSurvey().getIdentifier(), "identifier1");
+        List<Activity> activities = spCaptor.getValue().getStrategy().getAllPossibleSchedules().getFirst().getActivities();
+        assertEquals(activities.getFirst().getSurvey().getIdentifier(), "identifier1");
         assertNotNull(activities.get(1).getTask());
         assertEquals(activities.get(2).getSurvey().getIdentifier(), "identifier2");
     }
@@ -144,8 +144,8 @@ public class SchedulePlanServiceTest {
         verify(mockSchedulePlanDao).getSchedulePlan(app.getIdentifier(), plan.getGuid());
         verify(mockSchedulePlanDao).updateSchedulePlan(any(), spCaptor.capture());
         
-        List<Activity> activities = spCaptor.getValue().getStrategy().getAllPossibleSchedules().get(0).getActivities();
-        assertEquals(activities.get(0).getSurvey().getIdentifier(), "identifier1");
+        List<Activity> activities = spCaptor.getValue().getStrategy().getAllPossibleSchedules().getFirst().getActivities();
+        assertEquals(activities.getFirst().getSurvey().getIdentifier(), "identifier1");
         assertNotNull(activities.get(1).getTask());
         assertEquals(activities.get(2).getSurvey().getIdentifier(), "identifier2");
     }
@@ -157,12 +157,12 @@ public class SchedulePlanServiceTest {
         Activity activity = new Activity.Builder().withGuid("guid").withLabel("A survey activity")
                 .withPublishedSurvey("junkIdentifier", surveyGuid1).build();
         SchedulePlan plan = constructSchedulePlan();
-        plan.getStrategy().getAllPossibleSchedules().get(0).getActivities().set(0, activity);
+        plan.getStrategy().getAllPossibleSchedules().getFirst().getActivities().set(0, activity);
         
         when(mockSchedulePlanDao.getSchedulePlan(app.getIdentifier(), plan.getGuid())).thenReturn(plan);
         
         // Verify that this was set.
-        String identifier = plan.getStrategy().getAllPossibleSchedules().get(0).getActivities().get(0)
+        String identifier = plan.getStrategy().getAllPossibleSchedules().getFirst().getActivities().getFirst()
                 .getSurvey().getIdentifier();
         assertEquals(identifier, "junkIdentifier");
         
@@ -176,7 +176,7 @@ public class SchedulePlanServiceTest {
         verify(mockSchedulePlanDao).updateSchedulePlan(any(), spCaptor.capture());
         
         // It was not used.
-        identifier = spCaptor.getValue().getStrategy().getAllPossibleSchedules().get(0).getActivities().get(0)
+        identifier = spCaptor.getValue().getStrategy().getAllPossibleSchedules().getFirst().getActivities().getFirst()
                 .getSurvey().getIdentifier();
         assertNotEquals(identifier, "junkIdentifier");
         
@@ -201,7 +201,7 @@ public class SchedulePlanServiceTest {
         
         SchedulePlan updatedPlan = spCaptor.getValue();
         assertNotEquals(updatedPlan.getGuid(), "AAA");
-        assertNotEquals(updatedPlan.getVersion(), new Long(2L));
+        assertNotEquals(updatedPlan.getVersion(), Long.valueOf(2L));
         for (Schedule schedule : plan.getStrategy().getAllPossibleSchedules()) {
             for (Activity activity : schedule.getActivities()) {
                 assertFalse( existingActivityGUIDs.contains(activity.getGuid()) );
@@ -241,11 +241,11 @@ public class SchedulePlanServiceTest {
             fail("Should have thrown exception");
         } catch(InvalidEntityException e) {
             assertEquals(
-                    e.getErrors().get("strategy.scheduleCriteria[0].schedule.activities[0].task.identifier").get(0),
+                    e.getErrors().get("strategy.scheduleCriteria[0].schedule.activities[0].task.identifier").getFirst(),
                     "strategy.scheduleCriteria[0].schedule.activities[0].task.identifier 'DDD' is not in enumeration: tapTest, taskGuid, CCC");
-            assertEquals(e.getErrors().get("strategy.scheduleCriteria[0].criteria.allOfGroups").get(0),
+            assertEquals(e.getErrors().get("strategy.scheduleCriteria[0].criteria.allOfGroups").getFirst(),
                     "strategy.scheduleCriteria[0].criteria.allOfGroups 'FFF' is not in enumeration: AAA");
-            assertEquals(e.getErrors().get("strategy.scheduleCriteria[0].criteria.noneOfStudyIds").get(0),
+            assertEquals(e.getErrors().get("strategy.scheduleCriteria[0].criteria.noneOfStudyIds").getFirst(),
                     "strategy.scheduleCriteria[0].criteria.noneOfStudyIds 'studyD' is not in enumeration: <empty>");
         }
     }
@@ -260,11 +260,11 @@ public class SchedulePlanServiceTest {
             fail("Should have thrown exception");
         } catch(InvalidEntityException e) {
             assertEquals(
-                    e.getErrors().get("strategy.scheduleCriteria[0].schedule.activities[0].task.identifier").get(0),
+                    e.getErrors().get("strategy.scheduleCriteria[0].schedule.activities[0].task.identifier").getFirst(),
                     "strategy.scheduleCriteria[0].schedule.activities[0].task.identifier 'DDD' is not in enumeration: tapTest, taskGuid, CCC");
-            assertEquals(e.getErrors().get("strategy.scheduleCriteria[0].criteria.allOfGroups").get(0),
+            assertEquals(e.getErrors().get("strategy.scheduleCriteria[0].criteria.allOfGroups").getFirst(),
                     "strategy.scheduleCriteria[0].criteria.allOfGroups 'FFF' is not in enumeration: AAA");
-            assertEquals(e.getErrors().get("strategy.scheduleCriteria[0].criteria.noneOfStudyIds").get(0),
+            assertEquals(e.getErrors().get("strategy.scheduleCriteria[0].criteria.noneOfStudyIds").getFirst(),
                     "strategy.scheduleCriteria[0].criteria.noneOfStudyIds 'studyD' is not in enumeration: <empty>");
         }
     }
@@ -332,7 +332,7 @@ public class SchedulePlanServiceTest {
         SchedulePlan plan = TestUtils.getSimpleSchedulePlan(TEST_APP_ID);
         plan.setLabel("Label");
         plan.setGuid("BBB");
-        plan.getStrategy().getAllPossibleSchedules().get(0).setExpires("P3D");
+        plan.getStrategy().getAllPossibleSchedules().getFirst().setExpires("P3D");
         return plan;
     }
     

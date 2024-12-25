@@ -296,7 +296,7 @@ public class AdminAccountServiceTest extends Mockito {
         verify(mockPermissionService).updatePermissionsFromRoles(accountCaptor.capture(), accountCaptor.capture());
         
         List<Account> capturedAccounts = accountCaptor.getAllValues();
-        assertEquals(capturedAccounts.get(0).getRoles(), ImmutableSet.of(DEVELOPER));
+        assertEquals(capturedAccounts.getFirst().getRoles(), ImmutableSet.of(DEVELOPER));
         assertNull(capturedAccounts.get(1));
     }
     

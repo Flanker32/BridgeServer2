@@ -23,10 +23,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Vector;
 
-import javax.servlet.FilterChain;
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 import com.google.common.collect.ImmutableList;
 
@@ -106,7 +106,7 @@ public class RequestFilterTest extends Mockito {
         
         verify(filter, times(2)).setRequestContext(contextCaptor.capture());
         
-        RequestContext context = contextCaptor.getAllValues().get(0);
+        RequestContext context = contextCaptor.getAllValues().getFirst();
         assertEquals(context.getId(), "ABCXZ");
         
         assertNull(contextCaptor.getAllValues().get(1));
@@ -136,7 +136,7 @@ public class RequestFilterTest extends Mockito {
         
         verify(filter, times(2)).setRequestContext(contextCaptor.capture());
         
-        RequestContext context = contextCaptor.getAllValues().get(0);
+        RequestContext context = contextCaptor.getAllValues().getFirst();
         assertEquals(context.getId(), "AAABAAA");
         
         assertNull(contextCaptor.getAllValues().get(1));

@@ -87,7 +87,7 @@ public class SimpleScheduleStrategyTest extends Mockito {
         
         List<Schedule> schedules = plan.getStrategy().getAllPossibleSchedules();
         assertEquals(schedules.size(), 1);
-        assertEquals(schedules.get(0).getLabel(), "Test label for the user");
+        assertEquals(schedules.getFirst().getLabel(), "Test label for the user");
         assertTrue(schedules instanceof ImmutableList);
     }
 }

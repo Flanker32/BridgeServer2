@@ -186,7 +186,7 @@ public class DynamoTopicSubscriptionDaoTest {
         verify(mockSnsClient).unsubscribe(unsubscribeStringCaptor.capture());
         verify(mockMapper).delete(subscriptionCaptor.capture());
         
-        DynamoTopicSubscription loadKey = subscriptionCaptor.getAllValues().get(0);
+        DynamoTopicSubscription loadKey = subscriptionCaptor.getAllValues().getFirst();
         assertEquals(loadKey.getRegistrationGuid(), "registrationGuid");
         assertEquals(loadKey.getTopicGuid(), "topicGuid");
         
@@ -220,7 +220,7 @@ public class DynamoTopicSubscriptionDaoTest {
         verify(mockSnsClient).unsubscribe(unsubscribeStringCaptor.capture());
         verify(mockMapper, never()).delete(subscriptionCaptor.capture());
         
-        DynamoTopicSubscription loadKey = subscriptionCaptor.getAllValues().get(0);
+        DynamoTopicSubscription loadKey = subscriptionCaptor.getAllValues().getFirst();
         assertEquals(loadKey.getRegistrationGuid(), "registrationGuid");
         assertEquals(loadKey.getTopicGuid(), "topicGuid");
         
@@ -250,7 +250,7 @@ public class DynamoTopicSubscriptionDaoTest {
         verify(mockSnsClient).unsubscribe(unsubscribeStringCaptor.capture());
         verify(mockMapper).delete(subscriptionCaptor.capture());
         
-        DynamoTopicSubscription loadKey = subscriptionCaptor.getAllValues().get(0);
+        DynamoTopicSubscription loadKey = subscriptionCaptor.getAllValues().getFirst();
         assertEquals(loadKey.getRegistrationGuid(), "registrationGuid");
         assertEquals(loadKey.getTopicGuid(), "topicGuid");
         

@@ -100,7 +100,7 @@ public class AppAndUsersTest {
         assertEquals(retAdminIds, adminIds);
         assertEquals(retApp, app);
         
-        Account acct1 = userList.get(0);
+        Account acct1 = userList.getFirst();
         assertEquals(acct1.getEmail(), mockUser1.getEmail());
         assertEquals(acct1.getFirstName(), TEST_USER_FIRST_NAME);
         assertEquals(acct1.getLastName(), TEST_USER_LAST_NAME);

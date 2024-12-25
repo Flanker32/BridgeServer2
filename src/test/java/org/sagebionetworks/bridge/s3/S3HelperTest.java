@@ -50,7 +50,7 @@ public class S3HelperTest {
         S3Helper testS3Helper = setupWithMockS3(bucket, key, content);
         List<String> lineList = testS3Helper.readS3FileAsLines(bucket, key);
         assertEquals(lineList.size(), 3);
-        assertEquals(lineList.get(0), "foo");
+        assertEquals(lineList.getFirst(), "foo");
         assertEquals(lineList.get(1), "bar");
         assertEquals(lineList.get(2), "baz");
     }

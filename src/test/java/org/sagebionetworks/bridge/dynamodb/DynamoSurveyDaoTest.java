@@ -141,9 +141,9 @@ public class DynamoSurveyDaoTest extends Mockito {
         assertEquals(query.getHashKeyValues().getAppId(), TEST_APP_ID);
         Condition rangeKeyCondition = query.getRangeKeyConditions().get("identifier");
         assertEquals(rangeKeyCondition.getComparisonOperator(), EQ.name());
-        assertEquals(rangeKeyCondition.getAttributeValueList().get(0).getS(), SURVEY_ID);
+        assertEquals(rangeKeyCondition.getAttributeValueList().getFirst().getS(), SURVEY_ID);
         assertFalse(query.isConsistentRead());
-        assertEquals(query.getLimit(), new Integer(1));
+        assertEquals(query.getLimit(), Integer.valueOf(1));
     }
 
     public void getSurveyGuidForIdentifier_NoSurvey() {
@@ -279,7 +279,7 @@ public class DynamoSurveyDaoTest extends Mockito {
         
         verify(mockSurveyElementMapper).batchSave(elementsCaptor.capture());
         assertEquals(elementsCaptor.getValue().size(), 1);
-        assertSame(elementsCaptor.getValue().get(0), survey.getElements().get(0));
+        assertSame(elementsCaptor.getValue().getFirst(), survey.getElements().getFirst());
         
         verify(mockSurveyMapper).save(surveyCaptor.capture());
         assertSame(surveyCaptor.getValue(), survey);
@@ -351,7 +351,7 @@ public class DynamoSurveyDaoTest extends Mockito {
         assertEquals(updated.getName(), "Updated Name");
         assertEquals(updated.getCopyrightNotice(), "Updated Copyright Notice");
         assertTrue(updated.isDeleted());
-        assertEquals(updated.getVersion(), new Long(3L));
+        assertEquals(updated.getVersion(), Long.valueOf(3L));
     }
     
     @Test
@@ -396,7 +396,7 @@ public class DynamoSurveyDaoTest extends Mockito {
         Survey result = dao.publishSurvey(TEST_APP_ID, survey, true);
         assertTrue(survey.isPublished());
         assertEquals(result.getModifiedOn(), CREATED_ON);
-        assertEquals(result.getSchemaRevision(), new Integer(3));
+        assertEquals(result.getSchemaRevision(), Integer.valueOf(3));
         
         verify(mockUploadSchemaService).createUploadSchemaFromSurvey(TEST_APP_ID, survey, true);
     }
@@ -416,7 +416,7 @@ public class DynamoSurveyDaoTest extends Mockito {
         Survey result = dao.publishSurvey(TEST_APP_ID, survey, false);
         assertTrue(survey.isPublished());
         assertEquals(result.getModifiedOn(), CREATED_ON);
-        assertEquals(result.getSchemaRevision(), new Integer(3));
+        assertEquals(result.getSchemaRevision(), Integer.valueOf(3));
         
         verify(mockUploadSchemaService).createUploadSchemaFromSurvey(TEST_APP_ID, survey, false);
     }
@@ -685,9 +685,9 @@ public class DynamoSurveyDaoTest extends Mockito {
         
         List<Survey> results = dao.getAllSurveysMostRecentlyPublishedVersion(TEST_APP_ID, true);
         assertEquals(results.size(), 2);
-        assertEquals(results.get(0).getCreatedOn(), CREATED_ON);
+        assertEquals(results.getFirst().getCreatedOn(), CREATED_ON);
         assertEquals(results.get(1).getCreatedOn(), CREATED_ON);
-        assertEquals(ImmutableSet.of(results.get(0).getGuid(), results.get(1).getGuid()),
+        assertEquals(ImmutableSet.of(results.getFirst().getGuid(), results.get(1).getGuid()),
                 ImmutableSet.of(GUID, "guidTwo"));
         
         verify(mockSurveyMapper).queryPage(eq(DynamoSurvey.class), queryCaptor.capture());
@@ -736,9 +736,9 @@ public class DynamoSurveyDaoTest extends Mockito {
         
         List<Survey> results = dao.getAllSurveysMostRecentVersion(TEST_APP_ID, true);
         assertEquals(results.size(), 2);
-        assertEquals(results.get(0).getCreatedOn(), CREATED_ON);
+        assertEquals(results.getFirst().getCreatedOn(), CREATED_ON);
         assertEquals(results.get(1).getCreatedOn(), CREATED_ON);
-        assertEquals(ImmutableSet.of(results.get(0).getGuid(), results.get(1).getGuid()),
+        assertEquals(ImmutableSet.of(results.getFirst().getGuid(), results.get(1).getGuid()),
                 ImmutableSet.of(GUID, "guidTwo"));
         
         verify(mockSurveyMapper).queryPage(eq(DynamoSurvey.class), queryCaptor.capture());
@@ -784,8 +784,8 @@ public class DynamoSurveyDaoTest extends Mockito {
         when(mockElementResultsPage.getResults()).thenReturn(ImmutableList.of((DynamoSurveyElement)question));
         
         Survey result = dao.getSurvey(TEST_APP_ID, SURVEY_KEY, true);
-        SurveyQuestion resultQuestion = result.getUnmodifiableQuestionList().get(0);
-        SurveyRule rule = resultQuestion.getAfterRules().get(0);
+        SurveyQuestion resultQuestion = result.getUnmodifiableQuestionList().getFirst();
+        SurveyRule rule = resultQuestion.getAfterRules().getFirst();
         assertTrue(rule.getEndSurvey());
     }
     
@@ -807,8 +807,8 @@ public class DynamoSurveyDaoTest extends Mockito {
         when(mockElementResultsPage.getResults()).thenReturn(ImmutableList.of((DynamoSurveyElement)question));
         
         Survey result = dao.getSurvey(TEST_APP_ID, SURVEY_KEY, true);
-        SurveyQuestion resultQuestion = result.getUnmodifiableQuestionList().get(0);
-        SurveyRule rule = resultQuestion.getConstraints().getRules().get(0);
+        SurveyQuestion resultQuestion = result.getUnmodifiableQuestionList().getFirst();
+        SurveyRule rule = resultQuestion.getConstraints().getRules().getFirst();
         assertTrue(rule.getEndSurvey());
     }
     
@@ -839,7 +839,7 @@ public class DynamoSurveyDaoTest extends Mockito {
         
         Condition rangeKeyCondition = query.getRangeKeyConditions().get("identifier");
         assertEquals(rangeKeyCondition.getComparisonOperator(), EQ.name());
-        assertEquals(rangeKeyCondition.getAttributeValueList().get(0).getS(), SURVEY_ID);
+        assertEquals(rangeKeyCondition.getAttributeValueList().getFirst().getS(), SURVEY_ID);
         
         assertEquals(query.getQueryFilter().size(), 1);
         verifyCreatedOnQueryCondition(query);
@@ -891,7 +891,7 @@ public class DynamoSurveyDaoTest extends Mockito {
 
         Condition rangeKeyCondition = query.getRangeKeyConditions().get("identifier");
         assertEquals(rangeKeyCondition.getComparisonOperator(), EQ.name());
-        assertEquals(rangeKeyCondition.getAttributeValueList().get(0).getS(), SURVEY_ID);
+        assertEquals(rangeKeyCondition.getAttributeValueList().getFirst().getS(), SURVEY_ID);
         
         assertNull(query.getQueryFilter());
     }
@@ -920,7 +920,7 @@ public class DynamoSurveyDaoTest extends Mockito {
 
         Condition rangeKeyCondition = query.getRangeKeyConditions().get("identifier");
         assertEquals(rangeKeyCondition.getComparisonOperator(), EQ.name());
-        assertEquals(rangeKeyCondition.getAttributeValueList().get(0).getS(), SURVEY_ID);
+        assertEquals(rangeKeyCondition.getAttributeValueList().getFirst().getS(), SURVEY_ID);
         
         assertEquals(query.getQueryFilter().size(), 1);
         verifyIsDeletedQueryCondition(query);
@@ -950,7 +950,7 @@ public class DynamoSurveyDaoTest extends Mockito {
 
         Condition rangeKeyCondition = query.getRangeKeyConditions().get("identifier");
         assertEquals(rangeKeyCondition.getComparisonOperator(), EQ.name());
-        assertEquals(rangeKeyCondition.getAttributeValueList().get(0).getS(), SURVEY_ID);
+        assertEquals(rangeKeyCondition.getAttributeValueList().getFirst().getS(), SURVEY_ID);
         
         assertEquals(query.getQueryFilter().size(), 1);
         verifyIsDeletedQueryCondition(query);
@@ -983,7 +983,7 @@ public class DynamoSurveyDaoTest extends Mockito {
 
         Condition rangeKeyCondition = query.getRangeKeyConditions().get("identifier");
         assertEquals(rangeKeyCondition.getComparisonOperator(), EQ.name());
-        assertEquals(rangeKeyCondition.getAttributeValueList().get(0).getS(), SURVEY_ID);
+        assertEquals(rangeKeyCondition.getAttributeValueList().getFirst().getS(), SURVEY_ID);
         
         assertEquals(query.getQueryFilter().size(), 2);
         verifyIsDeletedQueryCondition(query);
@@ -1039,24 +1039,24 @@ public class DynamoSurveyDaoTest extends Mockito {
     private void verifyIsDeletedQueryCondition(DynamoDBQueryExpression<DynamoSurvey> query) {
         Condition deletedCond = query.getQueryFilter().get("deleted");
         assertEquals(deletedCond.getComparisonOperator(), EQ.name());
-        assertEquals(deletedCond.getAttributeValueList().get(0).getN(), "0");
+        assertEquals(deletedCond.getAttributeValueList().getFirst().getN(), "0");
     }
 
     private void verifyAppIdQueryCondition(DynamoDBQueryExpression<DynamoSurvey> query) {
         Condition appIdCond = query.getQueryFilter().get("studyKey");
         assertEquals(appIdCond.getComparisonOperator(), EQ.name());
-        assertEquals(appIdCond.getAttributeValueList().get(0).getS(), TEST_APP_ID);
+        assertEquals(appIdCond.getAttributeValueList().getFirst().getS(), TEST_APP_ID);
     }
     
     private void verifyPublishedQueryCondition(DynamoDBQueryExpression<DynamoSurvey> query) {
         Condition appIdCond = query.getQueryFilter().get("published");
         assertEquals(appIdCond.getComparisonOperator(), EQ.name());
-        assertEquals(appIdCond.getAttributeValueList().get(0).getN(), "1");
+        assertEquals(appIdCond.getAttributeValueList().getFirst().getN(), "1");
     }
     
     private void verifyCreatedOnQueryCondition(DynamoDBQueryExpression<DynamoSurvey> query) {
         Condition createdOnCond = query.getQueryFilter().get("versionedOn");
         assertEquals(createdOnCond.getComparisonOperator(), EQ.name());
-        assertNotEquals(createdOnCond.getAttributeValueList().get(0).getN(), new Long(0));
+        assertNotEquals(createdOnCond.getAttributeValueList().getFirst().getN(), Long.valueOf(0));
     }
 }

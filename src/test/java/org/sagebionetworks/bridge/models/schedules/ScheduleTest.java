@@ -85,10 +85,10 @@ public class ScheduleTest {
         assertEquals(schedule.getScheduleType(), ScheduleType.RECURRING);
         assertEquals(schedule.getStartsOn().toString(), "2015-02-02T10:10:10.000Z");
         assertEquals(schedule.getEndsOn().toString(), "2015-01-01T10:10:10.000Z");
-        assertEquals(schedule.getTimes().get(0).toString(), "10:10:00.000");
+        assertEquals(schedule.getTimes().getFirst().toString(), "10:10:00.000");
         assertEquals(schedule.getTimes().get(1).toString(), "14:00:00.000");
         assertEquals(schedule.getSequencePeriod().toString(), "P3W");
-        activity = schedule.getActivities().get(0);
+        activity = schedule.getActivities().getFirst();
         assertEquals(activity.getLabel(), "label");
         assertEquals(activity.getTask().getIdentifier(), "ref");
     }

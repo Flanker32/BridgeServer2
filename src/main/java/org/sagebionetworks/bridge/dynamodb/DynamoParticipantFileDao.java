@@ -14,7 +14,7 @@ import org.sagebionetworks.bridge.models.files.ParticipantFile;
 import com.google.common.collect.ImmutableList;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -54,7 +54,7 @@ public class DynamoParticipantFileDao implements ParticipantFileDao {
                 .limit(pageSize).map(i -> (ParticipantFile) i).collect(Collectors.toList());
         String nextPageOffsetKey = null;
         if (fileResults.size() == pageSize) {
-            nextPageOffsetKey = fileResults.get(fileResults.size() - 1).getFileId();
+            nextPageOffsetKey = fileResults.getLast().getFileId();
         }
 
         return new ForwardCursorPagedResourceList<>(fileResults, nextPageOffsetKey, true)

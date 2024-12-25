@@ -1,7 +1,7 @@
 package org.sagebionetworks.bridge.dynamodb;
 
 import java.util.List;
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBQueryExpression;
@@ -51,7 +51,7 @@ public class DynamoUploadDedupeDao implements UploadDedupeDao {
         if (dedupeList.isEmpty()) {
             return null;
         } else {
-            return dedupeList.get(0).getOriginalUploadId();
+            return dedupeList.getFirst().getOriginalUploadId();
         }
     }
 

@@ -105,7 +105,7 @@ public class DynamoAppConfigDaoTest extends Mockito {
         // where the deleted flag is not set to 1 (deleted)
         Condition condition = query.getQueryFilter().get("deleted");
         assertEquals(condition.getComparisonOperator(), NE.name());
-        assertEquals(condition.getAttributeValueList().get(0).getN(), "1");
+        assertEquals(condition.getAttributeValueList().getFirst().getN(), "1");
     }
     
     @Test

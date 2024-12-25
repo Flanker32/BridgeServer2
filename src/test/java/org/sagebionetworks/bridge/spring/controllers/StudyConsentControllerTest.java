@@ -11,7 +11,7 @@ import static org.testng.Assert.assertEquals;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 import com.google.common.collect.Lists;
 

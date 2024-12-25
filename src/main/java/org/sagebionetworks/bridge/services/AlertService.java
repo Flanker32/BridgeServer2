@@ -58,7 +58,7 @@ public class AlertService {
         //
         // this can happen, for example, with the new enrollment alert, where
         // enrollments can be added to the account before the account is created
-        if (!getAccount(alert.getAppId(), alert.getUserId()).isPresent()) {
+        if (getAccount(alert.getAppId(), alert.getUserId()).isEmpty()) {
             return;
         }
 

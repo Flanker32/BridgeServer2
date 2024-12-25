@@ -123,7 +123,7 @@ public class OrganizationServiceTest extends Mockito {
         assertEquals(retList.getRequestParams().get("pageSize"), 20);
         assertEquals(retList.getTotal(), Integer.valueOf(1));
         assertEquals(retList.getItems().size(), 1);
-        assertEquals(retList.getItems().get(0), org);
+        assertEquals(retList.getItems().getFirst(), org);
     }
 
     @Test

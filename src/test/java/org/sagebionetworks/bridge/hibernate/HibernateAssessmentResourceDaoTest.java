@@ -96,7 +96,7 @@ public class HibernateAssessmentResourceDaoTest extends Mockito {
         PagedResourceList<AssessmentResource> retValue = dao.getResources(TEST_APP_ID, ASSESSMENT_ID, 10, 50, 
                 RESOURCE_CATEGORIES, 1, 100, false);
         assertEquals(retValue.getItems().size(), 1);
-        assertEquals(retValue.getItems().get(0).getGuid(), GUID);
+        assertEquals(retValue.getItems().getFirst().getGuid(), GUID);
 
         verify(mockHelper).queryCount(countQueryCaptor.capture(), countParamsCaptor.capture());
         verify(mockHelper).queryGet(queryCaptor.capture(), paramsCaptor.capture(), 
@@ -128,7 +128,7 @@ public class HibernateAssessmentResourceDaoTest extends Mockito {
         PagedResourceList<AssessmentResource> retValue = dao.getResources(TEST_APP_ID, ASSESSMENT_ID, null, null, 
                 null, null, null, true);
         assertEquals(retValue.getItems().size(), 1);
-        assertEquals(retValue.getItems().get(0).getGuid(), GUID);
+        assertEquals(retValue.getItems().getFirst().getGuid(), GUID);
 
         verify(mockHelper).queryCount(countQueryCaptor.capture(), countParamsCaptor.capture());
         verify(mockHelper).queryGet(queryCaptor.capture(), paramsCaptor.capture(), 
@@ -209,7 +209,7 @@ public class HibernateAssessmentResourceDaoTest extends Mockito {
         verify(mockSession, times(3)).merge(hibernateResourceCaptor.capture());
         
         List<HibernateAssessmentResource> retValue = hibernateResourceCaptor.getAllValues();
-        assertEquals(retValue.get(0).getGuid(), GUID+"1");
+        assertEquals(retValue.getFirst().getGuid(), GUID+"1");
         assertEquals(retValue.get(1).getGuid(), GUID+"2");
         assertEquals(retValue.get(2).getGuid(), GUID+"3");
     }

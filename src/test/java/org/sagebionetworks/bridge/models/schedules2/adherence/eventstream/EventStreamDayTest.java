@@ -119,7 +119,7 @@ public class EventStreamDayTest {
         assertEquals(copy.isToday(), day.isToday());
         
         assertEquals(copy.getTimeWindows().size(), day.getTimeWindows().size());
-        compareWindows(copy.getTimeWindows().get(0), day.getTimeWindows().get(0));
+        compareWindows(copy.getTimeWindows().getFirst(), day.getTimeWindows().getFirst());
         compareWindows(copy.getTimeWindows().get(1), day.getTimeWindows().get(1));
     }
     
@@ -280,7 +280,7 @@ public class EventStreamDayTest {
     private void assertWindowSortOrder(EventStreamDay day, EventStreamWindow win1, EventStreamWindow win2,
                                  EventStreamWindow win3) {
         List<EventStreamWindow> windows = day.getTimeWindows();
-        compareWindows(windows.get(0), win1);
+        compareWindows(windows.getFirst(), win1);
         compareWindows(windows.get(1), win2);
         compareWindows(windows.get(2), win3);
     }

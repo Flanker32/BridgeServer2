@@ -90,7 +90,7 @@ public class MasterSchedulerServiceTest {
         assertTrue(config.getRequestTemplate().get("a").booleanValue());
         assertEquals(config.getRequestTemplate().get("b").textValue(), "string");
         assertEquals(config.getSqsQueueUrl(), SQS_QUEUE_URL);
-        assertEquals(config.getVersion(), new Long(VERSION));
+        assertEquals(config.getVersion(), Long.valueOf(VERSION));
         assertSame(mockConfig, config);
         
         verify(configDao).createSchedulerConfig(configCaptor.capture());
@@ -123,7 +123,7 @@ public class MasterSchedulerServiceTest {
         assertTrue(config.getRequestTemplate().get("a").booleanValue());
         assertEquals(config.getRequestTemplate().get("b").textValue(), "string");
         assertEquals(config.getSqsQueueUrl(), SQS_QUEUE_URL);
-        assertEquals(config.getVersion(), new Long(VERSION));
+        assertEquals(config.getVersion(), Long.valueOf(VERSION));
         assertSame(mockConfig, config);
         verify(configDao).getSchedulerConfig(SCHEDULE_ID);
     }
@@ -161,7 +161,7 @@ public class MasterSchedulerServiceTest {
         assertTrue(config.getRequestTemplate().get("a").booleanValue());
         assertEquals(config.getRequestTemplate().get("b").textValue(), "string2");
         assertEquals(config.getSqsQueueUrl(), SQS_QUEUE_URL);
-        assertEquals(config.getVersion(), new Long(2));
+        assertEquals(config.getVersion(), Long.valueOf(2));
         
         verify(configDao).getSchedulerConfig(SCHEDULE_ID);
         verify(configDao).updateSchedulerConfig(configCaptor.capture());

@@ -112,10 +112,10 @@ public class HibernateSchedule2DaoTest extends Mockito {
         verify(mockHibernateHelper).queryGet(queryCaptor.capture(), paramsCaptor.capture(), eq(10), eq(100),
                 eq(Schedule2.class));
 
-        String countQuery = queryCaptor.getAllValues().get(0);
+        String countQuery = queryCaptor.getAllValues().getFirst();
         String getQuery = queryCaptor.getAllValues().get(1);
 
-        Map<String, Object> countParams = paramsCaptor.getAllValues().get(0);
+        Map<String, Object> countParams = paramsCaptor.getAllValues().getFirst();
         Map<String, Object> getParams = paramsCaptor.getAllValues().get(1);
 
         assertEquals(countQuery, SELECT_COUNT + GET_ALL_SCHEDULES + " " + AND_DELETED);
@@ -139,10 +139,10 @@ public class HibernateSchedule2DaoTest extends Mockito {
         verify(mockHibernateHelper).queryGet(queryCaptor.capture(), paramsCaptor.capture(), eq(0), eq(50),
                 eq(Schedule2.class));
 
-        String countQuery = queryCaptor.getAllValues().get(0);
+        String countQuery = queryCaptor.getAllValues().getFirst();
         String getQuery = queryCaptor.getAllValues().get(1);
 
-        Map<String, Object> countParams = paramsCaptor.getAllValues().get(0);
+        Map<String, Object> countParams = paramsCaptor.getAllValues().getFirst();
         Map<String, Object> getParams = paramsCaptor.getAllValues().get(1);
 
         assertEquals(countQuery, SELECT_COUNT + GET_ALL_SCHEDULES);
@@ -167,10 +167,10 @@ public class HibernateSchedule2DaoTest extends Mockito {
         verify(mockHibernateHelper).queryGet(queryCaptor.capture(), paramsCaptor.capture(), eq(10), eq(100),
                 eq(Schedule2.class));
 
-        String countQuery = queryCaptor.getAllValues().get(0);
+        String countQuery = queryCaptor.getAllValues().getFirst();
         String getQuery = queryCaptor.getAllValues().get(1);
 
-        Map<String, Object> countParams = paramsCaptor.getAllValues().get(0);
+        Map<String, Object> countParams = paramsCaptor.getAllValues().getFirst();
         Map<String, Object> getParams = paramsCaptor.getAllValues().get(1);
 
         assertEquals(countQuery, SELECT_COUNT + GET_ORG_SCHEDULES + " " + AND_DELETED);
@@ -194,10 +194,10 @@ public class HibernateSchedule2DaoTest extends Mockito {
         verify(mockHibernateHelper).queryGet(queryCaptor.capture(), paramsCaptor.capture(), eq(0), eq(50),
                 eq(Schedule2.class));
 
-        String countQuery = queryCaptor.getAllValues().get(0);
+        String countQuery = queryCaptor.getAllValues().getFirst();
         String getQuery = queryCaptor.getAllValues().get(1);
 
-        Map<String, Object> countParams = paramsCaptor.getAllValues().get(0);
+        Map<String, Object> countParams = paramsCaptor.getAllValues().getFirst();
         Map<String, Object> getParams = paramsCaptor.getAllValues().get(1);
 
         assertEquals(countQuery, SELECT_COUNT + GET_ORG_SCHEDULES);
@@ -262,7 +262,7 @@ public class HibernateSchedule2DaoTest extends Mockito {
         assertEquals(retValue, schedule);
 
         verify(mockSession, times(2)).createNativeQuery(queryCaptor.capture());
-        assertEquals(queryCaptor.getAllValues().get(0), DELETE_ORPHANED_SESSIONS);
+        assertEquals(queryCaptor.getAllValues().getFirst(), DELETE_ORPHANED_SESSIONS);
         assertEquals(queryCaptor.getAllValues().get(1), DELETE_TIMELINE_RECORDS);
         verify(mockQuery).setParameter("guid", SCHEDULE_GUID);
         verify(mockQuery).setParameter("guids", ImmutableSet.of(SESSION_GUID_1, SESSION_GUID_2));

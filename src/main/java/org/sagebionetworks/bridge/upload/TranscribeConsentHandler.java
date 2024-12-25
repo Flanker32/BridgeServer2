@@ -5,7 +5,7 @@ import static org.sagebionetworks.bridge.BridgeUtils.mapStudyMemberships;
 
 import java.util.Set;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 import com.google.common.collect.Iterables;
 

@@ -21,7 +21,7 @@ public class AppVersionHelper {
         testAppVersionHelper(objClass, "Max");
 
         // test getAppVersionOperatingSystems
-        Object obj = objClass.newInstance();
+        Object obj = objClass.getDeclaredConstructor().newInstance();
         Method setMinMethod = objClass.getMethod("setMinAppVersion", String.class, Integer.class);
         Method setMaxMethod = objClass.getMethod("setMinAppVersion", String.class, Integer.class);
 
@@ -50,7 +50,7 @@ public class AppVersionHelper {
 
     @SuppressWarnings("unchecked")
     private static void testAppVersionHelper(Class<?> objClass, String prefix) throws Exception {
-        Object obj = objClass.newInstance();
+        Object obj = objClass.getDeclaredConstructor().newInstance();
         Method getMapMethod = objClass.getMethod("get" + prefix + "AppVersions");
         Method setMapMethod = objClass.getMethod("set" + prefix + "AppVersions", Map.class);
         Method getByOsNameMethod = objClass.getMethod("get" + prefix + "AppVersion", String.class);

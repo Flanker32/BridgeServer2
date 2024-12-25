@@ -25,7 +25,7 @@ public class UploadRedriveListTest {
 
         UploadRedriveList deser = BridgeObjectMapper.get().readValue(node.toString(), UploadRedriveList.class);
         assertEquals(deser.getUploadIds().size(), 2);
-        assertEquals(deser.getUploadIds().get(0), UPLOAD_ID_1);
+        assertEquals(deser.getUploadIds().getFirst(), UPLOAD_ID_1);
         assertEquals(deser.getUploadIds().get(1), UPLOAD_ID_2);
     }
     

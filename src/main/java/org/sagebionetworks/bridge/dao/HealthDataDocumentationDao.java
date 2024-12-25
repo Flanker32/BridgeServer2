@@ -3,7 +3,7 @@ package org.sagebionetworks.bridge.dao;
 import org.sagebionetworks.bridge.models.ForwardCursorPagedResourceList;
 import org.sagebionetworks.bridge.models.HealthDataDocumentation;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 /** DAO for health data documentation. */
 public interface HealthDataDocumentationDao {

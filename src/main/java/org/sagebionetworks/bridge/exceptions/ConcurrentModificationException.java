@@ -2,7 +2,7 @@ package org.sagebionetworks.bridge.exceptions;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-import org.apache.http.HttpStatus;
+import org.apache.hc.core5.http.HttpStatus;
 import org.sagebionetworks.bridge.BridgeUtils;
 import org.sagebionetworks.bridge.models.BridgeEntity;
 

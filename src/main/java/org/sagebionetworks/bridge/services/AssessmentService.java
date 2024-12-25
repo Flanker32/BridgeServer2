@@ -450,7 +450,7 @@ public class AssessmentService {
         if (page.getItems().isEmpty()) {
             return Optional.empty();
         }
-        return Optional.of(page.getItems().get(0));
+        return Optional.of(page.getItems().getFirst());
     }
     
     /**

@@ -15,10 +15,10 @@ import java.util.List;
 
 import com.google.common.collect.ImmutableList;
 import org.apache.commons.codec.binary.Base64;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.util.EntityUtils;
+import org.apache.hc.client5.http.entity.UrlEncodedFormEntity;
+import org.apache.hc.client5.http.classic.methods.HttpPost;
+import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
+import org.apache.hc.core5.http.io.entity.EntityUtils;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.mockito.ArgumentCaptor;
@@ -83,15 +83,17 @@ public class OAuthProviderServiceTest extends Mockito {
             CALLBACK_URL, INTROSPECT_ENDPOINT);
 
     // This is an actual Introspect response from FitBit (with client and user IDs obfuscated).
-    private static final String INTROSPECT_RESPONSE_BODY = "{\n" +
-            "   \"active\": true,\n" +
-            "   \"scope\": \"{ACTIVITY=READ, HEARTRATE=READ, SLEEP=READ}\",\n" +
-            "   \"client_id\": \"22CQ7B\",\n" +
-            "   \"user_id\": \"6CGW8Z\",\n" +
-            "   \"token_type\": \"access_token\",\n" +
-            "   \"exp\": 1565861634000,\n" +
-            "   \"iat\": 1565832834000\n" +
-            "}";
+    private static final String INTROSPECT_RESPONSE_BODY = """
+            {
+               "active": true,
+               "scope": "{ACTIVITY=READ, HEARTRATE=READ, SLEEP=READ}",
+               "client_id": "22CQ7B",
+               "user_id": "6CGW8Z",
+               "token_type": "access_token",
+               "exp": 1565861634000,
+               "iat": 1565832834000
+            }\
+            """;
     private static final List<String> EXPECTED_SCOPE_LIST = ImmutableList.of("ACTIVITY", "HEARTRATE", "SLEEP");
 
     @Spy

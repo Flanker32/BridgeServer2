@@ -277,7 +277,7 @@ public class DynamoUploadDaoTest {
 
         List<String> messageList = uploadCaptor.getValue().getValidationMessageList();
         assertEquals(messageList.size(), 1);
-        assertEquals(messageList.get(0), "wrote new");
+        assertEquals(messageList.getFirst(), "wrote new");
     }
 
     @Test
@@ -298,7 +298,7 @@ public class DynamoUploadDaoTest {
 
         List<String> messageList = uploadCaptor.getValue().getValidationMessageList();
         assertEquals(messageList.size(), 2);
-        assertEquals(messageList.get(0), "pre-existing message");
+        assertEquals(messageList.getFirst(), "pre-existing message");
         assertEquals(messageList.get(1), "appended this message");
     }
 
@@ -330,7 +330,7 @@ public class DynamoUploadDaoTest {
 
         verify(mockIndexHelper).query(querySpecCaptor.capture());
         QuerySpec mockSpec = querySpecCaptor.getValue();
-        assertEquals(mockSpec.getMaxPageSize(), new Integer(51));
+        assertEquals(mockSpec.getMaxPageSize(), Integer.valueOf(51));
         assertEquals(mockSpec.getHashKey().getValue(), healthCode);
 
         verify(mockMapper).batchLoad(uploadListCaptor.capture());
@@ -339,7 +339,7 @@ public class DynamoUploadDaoTest {
 
         // These have been sorted.
         assertEquals(page.getItems().size(), 2);
-        assertEquals(page.getItems().get(0).getRequestedOn(), 10000);
+        assertEquals(page.getItems().getFirst().getRequestedOn(), 10000);
         assertEquals(page.getItems().get(1).getRequestedOn(), 30000);
 
         // All parameters were returned. No paging in this test

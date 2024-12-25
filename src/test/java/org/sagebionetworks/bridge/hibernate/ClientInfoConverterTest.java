@@ -4,7 +4,7 @@ import static org.sagebionetworks.bridge.TestConstants.UA;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNull;
 
-import javax.persistence.PersistenceException;
+import jakarta.persistence.PersistenceException;
 
 import org.mockito.Mockito;
 import org.testng.annotations.Test;

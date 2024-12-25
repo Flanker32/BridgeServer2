@@ -135,7 +135,7 @@ public class HibernateAlertDaoTest {
         assertEquals(returnedAlerts.getRequestParams().get("offsetBy"), 2);
         assertEquals(returnedAlerts.getRequestParams().get("pageSize"), 100);
         assertEquals(returnedAlerts.getItems().size(), 1);
-        assertSame(returnedAlerts.getItems().get(0), alert);
+        assertSame(returnedAlerts.getItems().getFirst(), alert);
         String QUERY = "FROM Alert a WHERE " +
             "a.appId = :appId AND " +
             "a.studyId = :studyId AND " +

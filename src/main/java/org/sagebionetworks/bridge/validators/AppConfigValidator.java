@@ -191,7 +191,7 @@ public class AppConfigValidator implements Validator {
                         errors.rejectValue("", "refers to the same file as another reference");
                     } else {
                         Optional<FileRevision> revision = fileService.getFileRevision(ref.getGuid(), ref.getCreatedOn());
-                        if (!revision.isPresent()) {
+                        if (revision.isEmpty()) {
                             errors.rejectValue("", "does not refer to a file revision");
                         }
                     }

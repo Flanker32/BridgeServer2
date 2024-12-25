@@ -319,7 +319,7 @@ public class CacheProviderTest {
         TypeReference<List<OAuthProvider>> typeRef = new TypeReference<List<OAuthProvider>>() {};
         
         List<OAuthProvider> returned = cacheProvider.getObject(CACHE_KEY, typeRef);
-        assertEquals(returned.get(0), provider1);
+        assertEquals(returned.getFirst(), provider1);
         assertEquals(returned.get(1), provider2);
         assertEquals(returned.size(), 2);
     }

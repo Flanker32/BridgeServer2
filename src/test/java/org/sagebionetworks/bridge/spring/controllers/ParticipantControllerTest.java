@@ -56,8 +56,8 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -834,7 +834,7 @@ public class ParticipantControllerTest extends Mockito {
         List<UserConsentHistory> deserHistories = deserParticipant.getConsentHistories().get("guid");
         assertEquals(deserHistories.size(), 1);
 
-        UserConsentHistory deserHistory = deserHistories.get(0);
+        UserConsentHistory deserHistory = deserHistories.getFirst();
         assertEquals(deserHistory.getSubpopulationGuid(), "guid");
         assertEquals(deserHistory.getConsentCreatedOn(), timestamp.getMillis());
         assertEquals(deserHistory.getName(), "Test Name");
@@ -842,7 +842,7 @@ public class ParticipantControllerTest extends Mockito {
         assertEquals(deserHistory.getImageData(), "imageData");
         assertEquals(deserHistory.getImageMimeType(), "imageMimeType");
         assertEquals(deserHistory.getSignedOn(), timestamp.getMillis());
-        assertEquals(deserHistory.getWithdrewOn(), new Long(timestamp.getMillis()));
+        assertEquals(deserHistory.getWithdrewOn(), Long.valueOf(timestamp.getMillis()));
         assertTrue(deserHistory.isHasSignedActiveConsent());
     }
     
@@ -1509,7 +1509,7 @@ public class ParticipantControllerTest extends Mockito {
         ResourceList<ActivityEvent> result = controller.getActivityEventsForWorker(TEST_APP_ID, TEST_USER_ID);
 
         verify(mockParticipantService).getActivityEvents(app, null, TEST_USER_ID);
-        assertEquals(result.getItems().get(0).getEventId(), "event-id");
+        assertEquals(result.getItems().getFirst().getEventId(), "event-id");
     }
 
     @Test
@@ -1603,7 +1603,7 @@ public class ParticipantControllerTest extends Mockito {
 
         assertEquals(page.getItems().size(), 3);
         assertEquals(page.getTotal(), (Integer) 30);
-        assertEquals(page.getItems().get(0), SUMMARY1);
+        assertEquals(page.getItems().getFirst(), SUMMARY1);
 
         assertDatesWithTimeZoneEqual(START_TIME, page.getStartTime());
         assertDatesWithTimeZoneEqual(END_TIME, page.getEndTime());

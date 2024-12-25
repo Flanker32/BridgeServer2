@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 
 import org.sagebionetworks.bridge.dao.AppConfigElementDao;
 import org.sagebionetworks.bridge.exceptions.BridgeServiceException;
@@ -90,7 +90,7 @@ public class DynamoAppConfigElementDao implements AppConfigElementDao {
         
         PaginatedQueryList<DynamoAppConfigElement> results = mapper.query(DynamoAppConfigElement.class, query);
         
-        return (results.isEmpty()) ? null : results.get(0);
+        return (results.isEmpty()) ? null : results.getFirst();
     }
 
     @Override

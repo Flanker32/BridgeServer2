@@ -1,7 +1,7 @@
 package org.sagebionetworks.bridge.upload;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Resource;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Resource;
 import java.io.File;
 
 import org.sagebionetworks.bridge.file.FileHelper;

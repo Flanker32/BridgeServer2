@@ -243,7 +243,7 @@ class ValidatorUtils {
             return;
         }
         if (persistingText.length() > maxLength) {
-            errors.rejectValue(fieldName, String.format(INVALID_STRING_LENGTH, maxLength));
+            errors.rejectValue(fieldName, INVALID_STRING_LENGTH.formatted(maxLength));
         }
     }
     

@@ -111,7 +111,7 @@ public class PersistentActivitySchedulerTest {
         assertDates(scheduledActivities, MSK, "2015-04-10 11:40");
         
         // and it's reissued any time that task itself is completed.
-        events.put("activity:"+schedule.getActivities().get(0).getGuid()+":finished", asDT("2015-04-12 09:40"));
+        events.put("activity:"+schedule.getActivities().getFirst().getGuid()+":finished", asDT("2015-04-12 09:40"));
         scheduledActivities = schedule.getScheduler().getScheduledActivities(plan, getContext(ENROLLMENT.plusMonths(2)));
         assertDates(scheduledActivities, MSK, "2015-04-12 09:40");
     }

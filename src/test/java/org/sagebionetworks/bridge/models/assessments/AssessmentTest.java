@@ -120,8 +120,8 @@ public class AssessmentTest {
         assertEquals(node.get("version").longValue(), 8L);
         assertEquals(node.get("imageResource").get("name").textValue(), "default");
         assertEquals(node.get("imageResource").get("module").textValue(), "sage_survey");
-        assertEquals(node.get("imageResource").get("labels").get(0).get("lang").textValue(), LABELS.get(0).getLang());
-        assertEquals(node.get("imageResource").get("labels").get(0).get("value").textValue(), LABELS.get(0).getValue());
+        assertEquals(node.get("imageResource").get("labels").get(0).get("lang").textValue(), LABELS.getFirst().getLang());
+        assertEquals(node.get("imageResource").get("labels").get(0).get("value").textValue(), LABELS.getFirst().getValue());
         assertEquals(node.get("imageResource").get("labels").get(1).get("lang").textValue(), LABELS.get(1).getLang());
         assertEquals(node.get("imageResource").get("labels").get(1).get("value").textValue(), LABELS.get(1).getValue());
         assertEquals(node.get("imageResource").get("type").textValue(), "ImageResource");
@@ -210,8 +210,8 @@ public class AssessmentTest {
         assertEquals(assessment.getNormingStatus(), "normingStatus");
         assertEquals(assessment.getTags(), ImmutableSet.of("tag1", "tag2"));
         assertEquals(assessment.getCustomizationFields(), CUSTOMIZATION_FIELDS);
-        assertEquals(assessment.getLabels().get(0).getLang(), LABELS.get(0).getLang());
-        assertEquals(assessment.getLabels().get(0).getValue(), LABELS.get(0).getValue());
+        assertEquals(assessment.getLabels().getFirst().getLang(), LABELS.getFirst().getLang());
+        assertEquals(assessment.getLabels().getFirst().getValue(), LABELS.getFirst().getValue());
         assertEquals(assessment.getLabels().get(1).getLang(), LABELS.get(1).getLang());
         assertEquals(assessment.getLabels().get(1).getValue(), LABELS.get(1).getValue());
         assertEquals(assessment.getColorScheme().getBackground(), COLOR_SCHEME.getBackground());
@@ -224,8 +224,8 @@ public class AssessmentTest {
         assertEquals(assessment.getVersion(), 8L);
         assertEquals(assessment.getImageResource().getName(), "default");
         assertEquals(assessment.getImageResource().getModule(), "sage_survey");
-        assertEquals(assessment.getImageResource().getLabels().get(0).getLang(), LABELS.get(0).getLang());
-        assertEquals(assessment.getImageResource().getLabels().get(0).getValue(), LABELS.get(0).getValue());
+        assertEquals(assessment.getImageResource().getLabels().getFirst().getLang(), LABELS.getFirst().getLang());
+        assertEquals(assessment.getImageResource().getLabels().getFirst().getValue(), LABELS.getFirst().getValue());
         assertEquals(assessment.getImageResource().getLabels().get(1).getLang(), LABELS.get(1).getLang());
         assertEquals(assessment.getImageResource().getLabels().get(1).getValue(), LABELS.get(1).getValue());
         assertEquals(assessment.getFrameworkIdentifier(), FRAMEWORK_IDENTIFIER);

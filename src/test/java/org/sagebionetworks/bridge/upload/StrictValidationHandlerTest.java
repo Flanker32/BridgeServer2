@@ -83,9 +83,11 @@ public class StrictValidationHandlerTest {
         handler.setAppService(mockAppService);
 
         // set up JSON data
-        String jsonDataString = "{\n" +
-                "   \"string\":\"This is a string\"\n" +
-                "}";
+        String jsonDataString = """
+                {
+                   "string":"This is a string"
+                }\
+                """;
         ObjectNode jsonDataNode = (ObjectNode) BridgeObjectMapper.get().readTree(jsonDataString);
         if (additionalJsonNode != null) {
             ObjectNode additionalObjectNode = (ObjectNode) additionalJsonNode;
@@ -202,20 +204,22 @@ public class StrictValidationHandlerTest {
                 "present optional attachment", DUMMY_ATTACHMENT);
 
         // additional JSON data
-        String additionalJsonText = "{\n" +
-                "   \"boolean\":true,\n" +
-                "   \"calendar date\":\"2015-07-24\",\n" +
-                "   \"float\":3.14,\n" +
-                "   \"float with int value\":13,\n" +
-                "   \"inline json blob\":[\"inline\", \"json\", \"blob\"],\n" +
-                "   \"int\":42,\n" +
-                "   \"int with float value\":2.78,\n" +
-                "   \"multi-choice\":[\"foo\", \"bar\", \"baz\"],\n" +
-                "   \"delicious\":[\"Yes\", \"Maybe\"],\n" +
-                "   \"string timestamp\":\"2015-07-24T18:49:54-07:00\",\n" +
-                "   \"long timestamp\":1437787098066,\n" +
-                "   \"present optional json\":\"optional, but present\"\n" +
-                "}";
+        String additionalJsonText = """
+                {
+                   "boolean":true,
+                   "calendar date":"2015-07-24",
+                   "float":3.14,
+                   "float with int value":13,
+                   "inline json blob":["inline", "json", "blob"],
+                   "int":42,
+                   "int with float value":2.78,
+                   "multi-choice":["foo", "bar", "baz"],
+                   "delicious":["Yes", "Maybe"],
+                   "string timestamp":"2015-07-24T18:49:54-07:00",
+                   "long timestamp":1437787098066,
+                   "present optional json":"optional, but present"
+                }\
+                """;
         JsonNode additionalJsonNode = BridgeObjectMapper.get().readTree(additionalJsonText);
 
         // execute and validate
@@ -231,9 +235,11 @@ public class StrictValidationHandlerTest {
                         .build());
 
         // additional JSON data
-        String additionalJsonText = "{\n" +
-                "   \"canonicalized int\":\"23\"\n" +
-                "}";
+        String additionalJsonText = """
+                {
+                   "canonicalized int":"23"
+                }\
+                """;
         JsonNode additionalJsonNode = BridgeObjectMapper.get().readTree(additionalJsonText);
 
         // execute and validate
@@ -254,9 +260,11 @@ public class StrictValidationHandlerTest {
                         .build());
 
         // additional JSON data
-        String additionalJsonText = "{\n" +
-                "   \"invalid int\":\"ninety-nine\"\n" +
-                "}";
+        String additionalJsonText = """
+                {
+                   "invalid int":"ninety-nine"
+                }\
+                """;
         JsonNode additionalJsonNode = BridgeObjectMapper.get().readTree(additionalJsonText);
 
         // expected errors
@@ -274,9 +282,11 @@ public class StrictValidationHandlerTest {
                         .withType(UploadFieldType.MULTI_CHOICE).withMultiChoiceAnswerList("good1", "good2").build());
 
         // additional JSON data
-        String additionalJsonText = "{\n" +
-                "   \"invalid multi-choice\":[\"bad1\", \"good2\", \"bad2\"]\n" +
-                "}";
+        String additionalJsonText = """
+                {
+                   "invalid multi-choice":["bad1", "good2", "bad2"]
+                }\
+                """;
         JsonNode additionalJsonNode = BridgeObjectMapper.get().readTree(additionalJsonText);
 
         // expected errors
@@ -324,9 +334,11 @@ public class StrictValidationHandlerTest {
                         .withType(UploadFieldType.INT).withRequired(false).build());
 
         // additional JSON data
-        String additionalJsonText = "{\n" +
-                "   \"optional int\":false\n" +
-                "}";
+        String additionalJsonText = """
+                {
+                   "optional int":false
+                }\
+                """;
         JsonNode additionalJsonNode = BridgeObjectMapper.get().readTree(additionalJsonText);
 
         // expected errors
@@ -344,9 +356,11 @@ public class StrictValidationHandlerTest {
                         .withType(UploadFieldType.INLINE_JSON_BLOB).build());
 
         // additional JSON data
-        String additionalJsonText = "{\n" +
-                "   \"null required field\":null\n" +
-                "}";
+        String additionalJsonText = """
+                {
+                   "null required field":null
+                }\
+                """;
         JsonNode additionalJsonNode = BridgeObjectMapper.get().readTree(additionalJsonText);
 
         // expected errors
@@ -366,9 +380,11 @@ public class StrictValidationHandlerTest {
                         .withType(UploadFieldType.INT).build());
 
         // additional JSON data
-        String additionalJsonText = "{\n" +
-                "   \"invalid int\":\"Math.PI\"\n" +
-                "}";
+        String additionalJsonText = """
+                {
+                   "invalid int":"Math.PI"
+                }\
+                """;
         JsonNode additionalJsonNode = BridgeObjectMapper.get().readTree(additionalJsonText);
 
         // expected errors

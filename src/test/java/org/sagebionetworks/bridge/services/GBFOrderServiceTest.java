@@ -24,9 +24,9 @@ import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.fasterxml.jackson.datatype.joda.JodaModule;
 import com.google.common.collect.Lists;
 import org.apache.commons.io.IOUtils;
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.StatusLine;
+import org.apache.hc.core5.http.HttpEntity;
+import org.apache.hc.core5.http.HttpResponse;
+import org.apache.hc.core5.http.message.StatusLine;
 import org.joda.time.LocalDate;
 import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
@@ -119,7 +119,7 @@ public class GBFOrderServiceTest {
         doReturn(200).when(mockStatusLine).getStatusCode();
     
         HttpResponse mockResponse = mock(HttpResponse.class);
-        doReturn(mockStatusLine).when(mockResponse).getStatusLine();
+        new StatusLine(doReturn(mockStatusLine).when(mockResponse));
         doReturn(mockEntity).when(mockResponse).getEntity();
         
         return mockResponse;
@@ -140,7 +140,7 @@ public class GBFOrderServiceTest {
         doReturn(200).when(mockStatusLine).getStatusCode();
     
         HttpResponse mockResponse = mock(HttpResponse.class);
-        doReturn(mockStatusLine).when(mockResponse).getStatusLine();
+        new StatusLine(doReturn(mockStatusLine).when(mockResponse));
         doReturn(mockEntity).when(mockResponse).getEntity();
     
         ArgumentCaptor<CheckOrderStatusRequest> captor = ArgumentCaptor.forClass(CheckOrderStatusRequest.class);
@@ -162,7 +162,7 @@ public class GBFOrderServiceTest {
         when(entity.getContent()).thenReturn(IOUtils.toInputStream("Message", UTF_8));
         
         HttpResponse httpResponse = mock(HttpResponse.class);
-        when(httpResponse.getStatusLine()).thenReturn(statusLine);
+        when(new StatusLine(httpResponse)).thenReturn(statusLine);
         when(httpResponse.getEntity()).thenReturn(entity);
         
         service.handleGbfHttpStatusErrors(httpResponse);
@@ -177,7 +177,7 @@ public class GBFOrderServiceTest {
         when(entity.getContent()).thenReturn(IOUtils.toInputStream("Message", UTF_8));
         
         HttpResponse httpResponse = mock(HttpResponse.class);
-        when(httpResponse.getStatusLine()).thenReturn(statusLine);
+        when(new StatusLine(httpResponse)).thenReturn(statusLine);
         when(httpResponse.getEntity()).thenReturn(entity);
         
         service.handleGbfHttpStatusErrors(httpResponse);
@@ -212,7 +212,7 @@ public class GBFOrderServiceTest {
         doReturn(200).when(mockStatusLine).getStatusCode();
 
         HttpResponse mockResponse = mock(HttpResponse.class);
-        doReturn(mockStatusLine).when(mockResponse).getStatusLine();
+        new StatusLine(doReturn(mockStatusLine).when(mockResponse));
         doReturn(mockEntity).when(mockResponse).getEntity();
 
         ArgumentCaptor<ConfirmShippingRequest> confirmShippingRequestArgumentCaptor =
@@ -225,7 +225,7 @@ public class GBFOrderServiceTest {
         LocalDate endDate = LocalDate.now().plusDays(3);
         ShippingConfirmations shippingConfirmationsResult = service.requestShippingConfirmations(
                 startDate, endDate);
-        assertEquals(shippingConfirmation1, shippingConfirmationsResult.shippingConfirmation.get(0));
+        assertEquals(shippingConfirmation1, shippingConfirmationsResult.shippingConfirmation.getFirst());
         assertEquals(shippingConfirmation2, shippingConfirmationsResult.shippingConfirmation.get(1));
         
         ConfirmShippingRequest confirmShippingRequest = confirmShippingRequestArgumentCaptor.getValue();
@@ -253,7 +253,7 @@ public class GBFOrderServiceTest {
         doReturn(200).when(mockStatusLine).getStatusCode();
 
         HttpResponse mockResponse = mock(HttpResponse.class);
-        doReturn(mockStatusLine).when(mockResponse).getStatusLine();
+        new StatusLine(doReturn(mockStatusLine).when(mockResponse));
         doReturn(mockEntity).when(mockResponse).getEntity();
 
         doReturn(mockResponse).when(service).postJson(eq(CONFIRMATION_URL), any(), any());

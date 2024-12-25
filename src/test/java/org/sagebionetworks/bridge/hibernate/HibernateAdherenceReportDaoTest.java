@@ -144,7 +144,7 @@ public class HibernateAdherenceReportDaoTest extends Mockito {
         verify(mockHelper).queryGet(stringCaptor.capture(), paramsCaptor.capture(), eq(50), eq(100),
                 eq(WeeklyAdherenceReport.class));
         
-        assertEquals(stringCaptor.getAllValues().get(0), SELECT_COUNT + FULL_SQL);
+        assertEquals(stringCaptor.getAllValues().getFirst(), SELECT_COUNT + FULL_SQL);
         assertEquals(stringCaptor.getAllValues().get(1), SELECT_DISTINCT + FULL_SQL);
         assertEquals(paramsCaptor.getValue().get(LABEL_FILTER_FIELD+"0"), "%label%");
         assertEquals(paramsCaptor.getValue().get(ADHERENCE_MIN_FIELD), 0);
@@ -171,7 +171,7 @@ public class HibernateAdherenceReportDaoTest extends Mockito {
         verify(mockHelper).queryGet(stringCaptor.capture(), paramsCaptor.capture(), eq(0), eq(50),
                 eq(WeeklyAdherenceReport.class));
         
-        assertEquals(stringCaptor.getAllValues().get(0), SELECT_COUNT + TEST_ACCOUNTS_SQL);
+        assertEquals(stringCaptor.getAllValues().getFirst(), SELECT_COUNT + TEST_ACCOUNTS_SQL);
         assertEquals(stringCaptor.getAllValues().get(1), SELECT_DISTINCT + TEST_ACCOUNTS_SQL);
     }
     
@@ -194,7 +194,7 @@ public class HibernateAdherenceReportDaoTest extends Mockito {
         verify(mockHelper).queryGet(stringCaptor.capture(), paramsCaptor.capture(), eq(0), eq(50),
                 eq(WeeklyAdherenceReport.class));
         
-        assertEquals(stringCaptor.getAllValues().get(0), SELECT_COUNT + PROD_ACCOUNTS_SQL);
+        assertEquals(stringCaptor.getAllValues().getFirst(), SELECT_COUNT + PROD_ACCOUNTS_SQL);
         assertEquals(stringCaptor.getAllValues().get(1), SELECT_DISTINCT + PROD_ACCOUNTS_SQL);
     }
     
@@ -216,7 +216,7 @@ public class HibernateAdherenceReportDaoTest extends Mockito {
         verify(mockHelper).queryGet(stringCaptor.capture(), paramsCaptor.capture(), eq(0), eq(50),
                 eq(WeeklyAdherenceReport.class));
         
-        assertEquals(stringCaptor.getAllValues().get(0), SELECT_COUNT + LABELS_SQL);
+        assertEquals(stringCaptor.getAllValues().getFirst(), SELECT_COUNT + LABELS_SQL);
         assertEquals(stringCaptor.getAllValues().get(1), SELECT_DISTINCT + LABELS_SQL);
         assertEquals(paramsCaptor.getValue().get(LABEL_FILTER_FIELD+"0"), "%A%");
         assertEquals(paramsCaptor.getValue().get(LABEL_FILTER_FIELD+"1"), "%B%");
@@ -240,7 +240,7 @@ public class HibernateAdherenceReportDaoTest extends Mockito {
         verify(mockHelper).queryGet(stringCaptor.capture(), paramsCaptor.capture(), eq(0), eq(50),
                 eq(WeeklyAdherenceReport.class));
         
-        assertEquals(stringCaptor.getAllValues().get(0), SELECT_COUNT + NO_LABELS_SQL);
+        assertEquals(stringCaptor.getAllValues().getFirst(), SELECT_COUNT + NO_LABELS_SQL);
         assertEquals(stringCaptor.getAllValues().get(1), SELECT_DISTINCT + NO_LABELS_SQL);
     }
 
@@ -255,7 +255,7 @@ public class HibernateAdherenceReportDaoTest extends Mockito {
         verify(mockHelper).queryGet(stringCaptor.capture(), paramsCaptor.capture(), eq(0), eq(API_DEFAULT_PAGE_SIZE),
                 eq(WeeklyAdherenceReport.class));
         
-        assertEquals(stringCaptor.getAllValues().get(0), SELECT_COUNT + MIN_NO_MAX_SQL);
+        assertEquals(stringCaptor.getAllValues().getFirst(), SELECT_COUNT + MIN_NO_MAX_SQL);
         assertEquals(stringCaptor.getAllValues().get(1), SELECT_DISTINCT + MIN_NO_MAX_SQL);
         assertEquals(paramsCaptor.getValue().get(ADHERENCE_MIN_FIELD), 10);
     }
@@ -271,7 +271,7 @@ public class HibernateAdherenceReportDaoTest extends Mockito {
         verify(mockHelper).queryGet(stringCaptor.capture(), paramsCaptor.capture(), eq(0), eq(API_DEFAULT_PAGE_SIZE),
                 eq(WeeklyAdherenceReport.class));
         
-        assertEquals(stringCaptor.getAllValues().get(0), SELECT_COUNT + MAX_NO_MIN_SQL);
+        assertEquals(stringCaptor.getAllValues().getFirst(), SELECT_COUNT + MAX_NO_MIN_SQL);
         assertEquals(stringCaptor.getAllValues().get(1), SELECT_DISTINCT +  MAX_NO_MIN_SQL);
         assertEquals(paramsCaptor.getValue().get(ADHERENCE_MAX_FIELD), 90);
     }
@@ -287,7 +287,7 @@ public class HibernateAdherenceReportDaoTest extends Mockito {
         verify(mockHelper).queryGet(stringCaptor.capture(), paramsCaptor.capture(), eq(0), eq(API_DEFAULT_PAGE_SIZE),
                 eq(WeeklyAdherenceReport.class));
         
-        assertEquals(stringCaptor.getAllValues().get(0), SELECT_COUNT + ID_FILTER);
+        assertEquals(stringCaptor.getAllValues().getFirst(), SELECT_COUNT + ID_FILTER);
         assertEquals(stringCaptor.getAllValues().get(1), SELECT_DISTINCT + ID_FILTER);
         assertEquals(paramsCaptor.getValue().get(ID_FILTER_FIELD), "%anId%");
     }
@@ -304,7 +304,7 @@ public class HibernateAdherenceReportDaoTest extends Mockito {
         verify(mockHelper).queryGet(stringCaptor.capture(), paramsCaptor.capture(), eq(0), eq(API_DEFAULT_PAGE_SIZE),
                 eq(WeeklyAdherenceReport.class));
         
-        assertEquals(stringCaptor.getAllValues().get(0), SELECT_COUNT + PROGRESSION_FILTER);
+        assertEquals(stringCaptor.getAllValues().getFirst(), SELECT_COUNT + PROGRESSION_FILTER);
         assertEquals(stringCaptor.getAllValues().get(1), SELECT_DISTINCT + PROGRESSION_FILTER);
         assertEquals(paramsCaptor.getValue().get(PROGRESSION_FILTER_FIELD), progressStates);
     }
@@ -339,7 +339,7 @@ public class HibernateAdherenceReportDaoTest extends Mockito {
         AdherenceStatistics stats = dao.getAdherenceStatistics(TEST_APP_ID, TEST_STUDY_ID, 22);
         assertEquals(stats.getAdherenceThresholdPercentage(), Integer.valueOf(22));
         assertEquals(stats.getEntries().size(), 1);
-        AdherenceStatisticsEntry entry = stats.getEntries().get(0);
+        AdherenceStatisticsEntry entry = stats.getEntries().getFirst();
         assertEquals(entry.getLabel(), "Session #2 / Week 10");
         assertEquals(entry.getSearchableLabel(), ":label1:");
         assertEquals(entry.getSessionName(), "Session #2");

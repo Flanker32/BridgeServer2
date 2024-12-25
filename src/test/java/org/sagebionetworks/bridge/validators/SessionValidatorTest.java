@@ -276,35 +276,35 @@ public class SessionValidatorTest extends Mockito {
     @Test
     public void timeWindowGuidBlank() {
         Session session = createValidSession();
-        session.getTimeWindows().get(0).setGuid("\t");
+        session.getTimeWindows().getFirst().setGuid("\t");
         assertValidatorMessage(INSTANCE, session, TIME_WINDOWS_FIELD+"[0].guid", CANNOT_BE_BLANK);
     }
 
     @Test
     public void timeWindowGuidNull() {
         Session session = createValidSession();
-        session.getTimeWindows().get(0).setGuid(null);
+        session.getTimeWindows().getFirst().setGuid(null);
         assertValidatorMessage(INSTANCE, session, TIME_WINDOWS_FIELD+"[0].guid", CANNOT_BE_BLANK);
     }
 
     @Test
     public void timeWindowStartTimeNull() {
         Session session = createValidSession();
-        session.getTimeWindows().get(0).setStartTime(null);
+        session.getTimeWindows().getFirst().setStartTime(null);
         assertValidatorMessage(INSTANCE, session, TIME_WINDOWS_FIELD+"[0].startTime", CANNOT_BE_NULL);
     }
     
     @Test
     public void timeWindowStartTimeSpecifiesSeconds() { 
         Session session = createValidSession();
-        session.getTimeWindows().get(0).setStartTime(LocalTime.parse("10:00:03"));
+        session.getTimeWindows().getFirst().setStartTime(LocalTime.parse("10:00:03"));
         assertValidatorMessage(INSTANCE, session, TIME_WINDOWS_FIELD+"[0].startTime", "cannot specify seconds");
     }
     
     @Test
     public void timeWindowStartTimeSpecifiesMilliseconds() { 
         Session session = createValidSession();
-        session.getTimeWindows().get(0).setStartTime(LocalTime.parse("10:00:00.123"));
+        session.getTimeWindows().getFirst().setStartTime(LocalTime.parse("10:00:00.123"));
         assertValidatorMessage(INSTANCE, session, TIME_WINDOWS_FIELD+"[0].startTime", "cannot specify milliseconds");
         
     }
@@ -312,7 +312,7 @@ public class SessionValidatorTest extends Mockito {
     @Test
     public void timeWindowExpirationPeriodInvalid( ) {
         Session session = createValidSession();
-        session.getTimeWindows().get(0).setExpiration(Period.parse("P3M"));
+        session.getTimeWindows().getFirst().setExpiration(Period.parse("P3M"));
         assertValidatorMessage(INSTANCE, session, TIME_WINDOWS_FIELD+"[0].expiration", WRONG_PERIOD);
     }
     
@@ -321,7 +321,7 @@ public class SessionValidatorTest extends Mockito {
         Session session = createValidSession();
         session.setOccurrences(null);
         session.setInterval(null);
-        session.getTimeWindows().get(0).setExpiration(null);
+        session.getTimeWindows().getFirst().setExpiration(null);
         Validate.entityThrowingException(INSTANCE, session);
     }
     
@@ -329,7 +329,7 @@ public class SessionValidatorTest extends Mockito {
     public void timeWindowExpirationEmptyInvalidForOccurrencesSchedule() {
         Session session = createValidSession();
         session.setInterval(null);
-        session.getTimeWindows().get(0).setExpiration(null);
+        session.getTimeWindows().getFirst().setExpiration(null);
         
         assertValidatorMessage(INSTANCE, session, TIME_WINDOWS_FIELD+"[0].expiration",
                 EXPIRATION_REQUIRED_FOR_OCCURRENCES_ERROR);
@@ -339,7 +339,7 @@ public class SessionValidatorTest extends Mockito {
     public void timeWindowExpirationEmptyInvalidForIntervalSchedule() {
         Session session = createValidSession();
         session.setOccurrences(null);
-        session.getTimeWindows().get(0).setExpiration(null);
+        session.getTimeWindows().getFirst().setExpiration(null);
         
         assertValidatorMessage(INSTANCE, session, TIME_WINDOWS_FIELD+"[0].expiration",
                 EXPIRATION_REQUIRED_FOR_INTERVAL_ERROR);
@@ -348,7 +348,7 @@ public class SessionValidatorTest extends Mockito {
     @Test
     public void timeWindowExpirationDurationTooLong() {
         Session session = createValidSession();
-        session.getTimeWindows().get(0).setExpiration(Period.parse("P7DT1H"));
+        session.getTimeWindows().getFirst().setExpiration(Period.parse("P7DT1H"));
         assertValidatorMessage(INSTANCE, session, TIME_WINDOWS_FIELD+"[0].expiration",
                 EXPIRATION_LONGER_THAN_INTERVAL_ERROR);
     }
@@ -424,42 +424,42 @@ public class SessionValidatorTest extends Mockito {
     @Test
     public void assessmentRefGuidNull() {
         Session session = createValidSession();
-        session.getAssessments().get(0).setGuid(null);
+        session.getAssessments().getFirst().setGuid(null);
         assertValidatorMessage(INSTANCE, session, ASSESSMENTS_FIELD+"[0].guid", CANNOT_BE_BLANK);
     }
     
     @Test
     public void assessmentRefGuidEmpty() {
         Session session = createValidSession();
-        session.getAssessments().get(0).setGuid("");
+        session.getAssessments().getFirst().setGuid("");
         assertValidatorMessage(INSTANCE, session, ASSESSMENTS_FIELD+"[0].guid", CANNOT_BE_BLANK);
     }
 
     @Test
     public void assessmentRefIdentifierNull() {
         Session session = createValidSession();
-        session.getAssessments().get(0).setIdentifier(null);
+        session.getAssessments().getFirst().setIdentifier(null);
         assertValidatorMessage(INSTANCE, session, ASSESSMENTS_FIELD+"[0].identifier", CANNOT_BE_BLANK);
     }
     
     @Test
     public void assessmentRefIdentifierEmpty() {
         Session session = createValidSession();
-        session.getAssessments().get(0).setIdentifier("");
+        session.getAssessments().getFirst().setIdentifier("");
         assertValidatorMessage(INSTANCE, session, ASSESSMENTS_FIELD+"[0].identifier", CANNOT_BE_BLANK);
     }
     
     @Test
     public void assessmentRefAppIdNull() {
         Session session = createValidSession();
-        session.getAssessments().get(0).setAppId(null);
+        session.getAssessments().getFirst().setAppId(null);
         assertValidatorMessage(INSTANCE, session, ASSESSMENTS_FIELD+"[0].appId", CANNOT_BE_BLANK);
     }
     
     @Test
     public void assessmentRefAssessmentAppIdEmpty() {
         Session session = createValidSession();
-        session.getAssessments().get(0).setAppId("\t");
+        session.getAssessments().getFirst().setAppId("\t");
         assertValidatorMessage(INSTANCE, session, ASSESSMENTS_FIELD+"[0].appId", CANNOT_BE_BLANK);
     }
     
@@ -470,7 +470,7 @@ public class SessionValidatorTest extends Mockito {
         List<TimeWindow> windows = Lists.newArrayList(session.getTimeWindows());
         windows.sort(START_TIME_COMPARATOR);
         
-        assertEquals(windows.get(0).getStartTime(), LocalTime.parse("08:02"));
+        assertEquals(windows.getFirst().getStartTime(), LocalTime.parse("08:02"));
         assertEquals(windows.get(1).getStartTime(), LocalTime.parse("08:13"));
         assertEquals(windows.get(2).getStartTime(), LocalTime.parse("09:01"));
     }
@@ -483,7 +483,7 @@ public class SessionValidatorTest extends Mockito {
         List<TimeWindow> windows = Lists.newArrayList(session.getTimeWindows());
         windows.sort(START_TIME_COMPARATOR);
         
-        assertEquals(windows.get(0).getStartTime(), LocalTime.parse("08:13"));
+        assertEquals(windows.getFirst().getStartTime(), LocalTime.parse("08:13"));
         assertEquals(windows.get(1).getStartTime(), LocalTime.parse("09:01"));
         assertNull(windows.get(2).getStartTime());
     }
@@ -491,7 +491,7 @@ public class SessionValidatorTest extends Mockito {
     @Test
     public void notificationNotifyAtNull() {
         Session session = createValidSession();
-        session.getNotifications().get(0).setNotifyAt(null);
+        session.getNotifications().getFirst().setNotifyAt(null);
         
         assertValidatorMessage(INSTANCE, session, NOTIFICATIONS_FIELD+"[0].notifyAt", CANNOT_BE_NULL);
     }
@@ -499,7 +499,7 @@ public class SessionValidatorTest extends Mockito {
     @Test
     public void notificationOffsetLongerThanSessionWindow() {
         Session session = makeWindows("08:00", "PT2H", "14:00", "PT6H", "20:00", "PT6H");
-        session.getNotifications().get(0).setOffset(Period.parse("PT2H1M"));
+        session.getNotifications().getFirst().setOffset(Period.parse("PT2H1M"));
         
         assertValidatorMessage(INSTANCE, session, NOTIFICATIONS_FIELD+"[0].offset", 
                 LONGER_THAN_WINDOW_EXPIRATION_ERROR);
@@ -508,9 +508,9 @@ public class SessionValidatorTest extends Mockito {
     @Test
     public void notificationIntervalLongerThanWindowExpiration() {
         Session session = SessionTest.createValidSession();
-        session.getTimeWindows().get(0).setStartTime(LocalTime.parse("20:00"));
-        session.getTimeWindows().get(0).setExpiration(Period.parse("P1D"));
-        session.getNotifications().get(0).setInterval(Period.parse("P1DT1M"));
+        session.getTimeWindows().getFirst().setStartTime(LocalTime.parse("20:00"));
+        session.getTimeWindows().getFirst().setExpiration(Period.parse("P1D"));
+        session.getNotifications().getFirst().setInterval(Period.parse("P1DT1M"));
         
         assertValidatorMessage(INSTANCE, session, NOTIFICATIONS_FIELD+"[0].interval", 
                 LONGER_THAN_WINDOW_EXPIRATION_ERROR);
@@ -519,8 +519,8 @@ public class SessionValidatorTest extends Mockito {
     @Test
     public void notificationIntervalOnWindowsShorterThanDay() {
         Session session = makeWindows("08:00", "PT6H", "14:00", "PT6H", "20:00", "PT6H");
-        session.getNotifications().get(0).setOffset(Period.parse("PT2H"));
-        session.getNotifications().get(0).setInterval(Period.parse("P1D"));
+        session.getNotifications().getFirst().setOffset(Period.parse("PT2H"));
+        session.getNotifications().getFirst().setInterval(Period.parse("P1D"));
         
         assertValidatorMessage(INSTANCE, session, NOTIFICATIONS_FIELD+"[0].interval", 
                 WINDOW_SHORTER_THAN_DAY_ERROR);
@@ -530,11 +530,11 @@ public class SessionValidatorTest extends Mockito {
     public void notificationWithInterval() {
         // Time window of 6 days starting at 8am, so a 2 day interval is fine
         Session session = SessionTest.createValidSession();
-        session.getTimeWindows().get(0).setExpiration(Period.parse("P6D"));
+        session.getTimeWindows().getFirst().setExpiration(Period.parse("P6D"));
         // notify first @ 10am on day 2
-        session.getNotifications().get(0).setOffset(Period.parse("PT26H"));
+        session.getNotifications().getFirst().setOffset(Period.parse("PT26H"));
         // then 10am on day 4 and day 6
-        session.getNotifications().get(0).setInterval(Period.parse("P2D"));
+        session.getNotifications().getFirst().setInterval(Period.parse("P2D"));
         
         Validate.entityThrowingException(INSTANCE, session);
     }
@@ -542,7 +542,7 @@ public class SessionValidatorTest extends Mockito {
     @Test
     public void notificationMessagesNull() {
         Session session = SessionTest.createValidSession();
-        session.getNotifications().get(0).setMessages(null);
+        session.getNotifications().getFirst().setMessages(null);
         
         assertValidatorMessage(INSTANCE, session, NOTIFICATIONS_FIELD+"[0].messages", CANNOT_BE_NULL_OR_EMPTY);
     }
@@ -550,7 +550,7 @@ public class SessionValidatorTest extends Mockito {
     @Test
     public void notificationMessagesEmpty() {
         Session session = SessionTest.createValidSession();
-        session.getNotifications().get(0).setMessages(ImmutableList.of());
+        session.getNotifications().getFirst().setMessages(ImmutableList.of());
         
         assertValidatorMessage(INSTANCE, session, NOTIFICATIONS_FIELD+"[0].messages", CANNOT_BE_NULL_OR_EMPTY);
     }
@@ -584,14 +584,14 @@ public class SessionValidatorTest extends Mockito {
     @Test
     public void stringLengthValidation_assessmentIdentifier() {
         Session session = createValidSession();
-        session.getAssessments().get(0).setIdentifier(generateStringOfLength(256));
+        session.getAssessments().getFirst().setIdentifier(generateStringOfLength(256));
         assertValidatorMessage(INSTANCE, session, ASSESSMENTS_FIELD+"[0].identifier", getInvalidStringLengthMessage(255));
     }
     
     @Test
     public void stringLengthValidation_assessmentTitle() {
         Session session = createValidSession();
-        session.getAssessments().get(0).setTitle(generateStringOfLength(256));
+        session.getAssessments().getFirst().setTitle(generateStringOfLength(256));
         assertValidatorMessage(INSTANCE, session, ASSESSMENTS_FIELD+"[0].title", getInvalidStringLengthMessage(255));
     }
     
@@ -607,7 +607,7 @@ public class SessionValidatorTest extends Mockito {
         Session session = SessionTest.createValidSession();
         NotificationMessage notificationMessage = new NotificationMessage.Builder()
                 .withMessage(generateStringOfLength(TEXT_SIZE)).build();
-        session.getNotifications().get(0).setMessages(ImmutableList.of(notificationMessage));
+        session.getNotifications().getFirst().setMessages(ImmutableList.of(notificationMessage));
     
         assertValidatorMessage(INSTANCE, session, NOTIFICATIONS_FIELD+"[0].messages", getInvalidStringLengthMessage(TEXT_SIZE));
     }
@@ -615,7 +615,7 @@ public class SessionValidatorTest extends Mockito {
     @Test
     public void jsonLengthValidation_assessmentLabels() {
         Session session = createValidSession();
-        session.getAssessments().get(0).setLabels(ImmutableList.of(new Label("en", generateStringOfLength(TEXT_SIZE))));
+        session.getAssessments().getFirst().setLabels(ImmutableList.of(new Label("en", generateStringOfLength(TEXT_SIZE))));
         assertValidatorMessage(INSTANCE, session, ASSESSMENTS_FIELD+"[0]."+LABELS_FIELD, getInvalidStringLengthMessage(TEXT_SIZE));
     }
     
@@ -685,7 +685,7 @@ public class SessionValidatorTest extends Mockito {
         Session session = createValidSession();
         session.setOccurrences(10);
         session.setInterval(null);
-        session.getTimeWindows().get(0).setExpiration(null);
+        session.getTimeWindows().getFirst().setExpiration(null);
 
         assertValidatorMessage(INSTANCE, session, OCCURRENCES_FIELD, REQUIRES_INTERVAL);
     }
@@ -695,7 +695,7 @@ public class SessionValidatorTest extends Mockito {
         Session session = createValidSession();
         session.setOccurrences(1);
         session.setInterval(null);
-        session.getTimeWindows().get(0).setExpiration(null);
+        session.getTimeWindows().getFirst().setExpiration(null);
         
         Validate.entityThrowingException(INSTANCE, session);
     }
@@ -706,7 +706,7 @@ public class SessionValidatorTest extends Mockito {
         Session session = createValidSession();
         ImageResource imageResource = new ImageResource();
         imageResource.setName(null);
-        session.getAssessments().get(0).setImageResource(imageResource);
+        session.getAssessments().getFirst().setImageResource(imageResource);
         // check there's an error with the correct field name
         assertValidatorMessage(INSTANCE, session, ASSESSMENTS_FIELD + "[0].imageResource.name", CANNOT_BE_BLANK);
     }

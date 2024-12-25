@@ -170,7 +170,7 @@ public class HibernateStudyTest {
         assertEquals(deser.getIrbProtocolName(), "anIrbName");
         assertEquals(deser.getScheduleGuid(), "aScheduleGuid");
         assertEquals(deser.getContacts().size(), 2);
-        assertEquals(deser.getContacts().get(0).getName(), "Name1");
+        assertEquals(deser.getContacts().getFirst().getName(), "Name1");
         assertEquals(deser.getContacts().get(1).getName(), "Name2");
         assertEquals(deser.getPhase(), ANALYSIS);
         assertEquals(deser.getStudyLogoUrl(), TEST_LINK);
@@ -182,8 +182,8 @@ public class HibernateStudyTest {
         assertEquals(deser.getStudyTimeZone(), "America/Los_Angeles");
         assertEquals(deser.getAdherenceThresholdPercentage(), Integer.valueOf(80));
         assertEquals(deser.getVersion(), 3L);
-        assertEquals(deser.getCustomEvents().get(0).getEventId(), "event1");
-        assertEquals(deser.getCustomEvents().get(0).getUpdateType(), IMMUTABLE);
+        assertEquals(deser.getCustomEvents().getFirst().getEventId(), "event1");
+        assertEquals(deser.getCustomEvents().getFirst().getUpdateType(), IMMUTABLE);
         
         JsonNode deserClientData = deser.getClientData();
         assertTrue(deserClientData.get("booleanFlag").booleanValue());

@@ -67,8 +67,8 @@ public final class SurveyQuestionOption {
 
     @Override
     public String toString() {
-        return String.format("SurveyQuestionOption [label=%s, detail=%s, value=%s, image=%s, exclusive=%s]", 
-            label, detail, value, image, exclusive);
+        return "SurveyQuestionOption [label=%s, detail=%s, value=%s, image=%s, exclusive=%s]".formatted(
+                label, detail, value, image, exclusive);
     }
     
 }

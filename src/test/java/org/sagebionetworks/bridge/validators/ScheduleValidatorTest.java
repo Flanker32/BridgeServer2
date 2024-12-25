@@ -174,7 +174,7 @@ public class ScheduleValidatorTest {
         schedule.setStartsOn(now);
         schedule.setEndsOn(now.plusHours(1));
         
-        assertEquals(schedule.getActivities().get(0).getActivityType(), ActivityType.TASK);
+        assertEquals(schedule.getActivities().getFirst().getActivityType(), ActivityType.TASK);
     }
     
     @Test

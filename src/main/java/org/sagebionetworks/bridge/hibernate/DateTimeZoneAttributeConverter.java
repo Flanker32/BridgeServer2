@@ -1,7 +1,7 @@
 package org.sagebionetworks.bridge.hibernate;
 
-import javax.persistence.AttributeConverter;
-import javax.persistence.Converter;
+import jakarta.persistence.AttributeConverter;
+import jakarta.persistence.Converter;
 
 import org.joda.time.DateTimeZone;
 import org.sagebionetworks.bridge.time.DateUtils;

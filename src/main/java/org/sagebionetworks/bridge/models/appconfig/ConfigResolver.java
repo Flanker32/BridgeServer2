@@ -39,6 +39,6 @@ public class ConfigResolver {
         Environment env = config.getEnvironment();
         String baseUrl = config.getHostnameWithPostfix(subdomain);
         String protocol = (env == LOCAL) ? "http" : "https";
-        return String.format("%s://%s%s", protocol, baseUrl, path);
+        return "%s://%s%s".formatted(protocol, baseUrl, path);
     }
 }

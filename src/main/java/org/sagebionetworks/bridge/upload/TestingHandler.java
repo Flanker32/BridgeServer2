@@ -1,6 +1,6 @@
 package org.sagebionetworks.bridge.upload;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -54,8 +54,8 @@ public class TestingHandler implements UploadValidationHandler {
         try {
             testHandler.handle(testContext);
         } catch (RuntimeException | UploadValidationException ex) {
-            logger.warn(String.format(
-                    "Test handler %s failed for app %s, upload %s, filename %s: %s",
+            logger.warn(
+                    "Test handler %s failed for app %s, upload %s, filename %s: %s".formatted(
                     testHandler.getClass().getName(), productionContext.getAppId(),
                     productionContext.getUpload().getUploadId(), productionContext.getUpload().getFilename(),
                     ex.getMessage()), ex);
@@ -66,8 +66,8 @@ public class TestingHandler implements UploadValidationHandler {
         try {
             contextValidator.validate(productionContext, testContext);
         } catch (RuntimeException | UploadValidationException ex) {
-            logger.warn(String.format(
-                    "Test validation failed for validator %s, app %s, upload %s, filename %s: %s",
+            logger.warn(
+                    "Test validation failed for validator %s, app %s, upload %s, filename %s: %s".formatted(
                     contextValidator.getClass().getName(), productionContext.getAppId(),
                     productionContext.getUpload().getUploadId(), productionContext.getUpload().getFilename(),
                     ex.getMessage()), ex);

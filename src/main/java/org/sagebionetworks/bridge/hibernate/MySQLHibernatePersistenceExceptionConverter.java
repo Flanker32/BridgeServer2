@@ -5,8 +5,8 @@ import static org.sagebionetworks.bridge.BridgeUtils.getTypeName;
 import java.io.Serializable;
 import java.util.Map;
 
-import javax.persistence.OptimisticLockException;
-import javax.persistence.PersistenceException;
+import jakarta.persistence.OptimisticLockException;
+import jakarta.persistence.PersistenceException;
 
 import com.amazonaws.util.Throwables;
 import com.google.common.collect.ImmutableMap;
@@ -83,12 +83,12 @@ public class MySQLHibernatePersistenceExceptionConverter implements PersistenceE
         String name = (entity == null) ? "item" : getTypeName(entity.getClass());
         
         if (exception instanceof OptimisticLockException) {
-            return new ConcurrentModificationException(String.format(WRONG_VERSION_MSG, name));
+            return new ConcurrentModificationException(WRONG_VERSION_MSG.formatted(name));
         }
-        if (exception instanceof NonUniqueObjectException) {
-            Serializable identifier = ((NonUniqueObjectException)exception).getIdentifier();
+        if (exception instanceof NonUniqueObjectException objectException) {
+            Serializable identifier = objectException.getIdentifier();
             return new ConstraintViolationException.Builder()
-                    .withMessage(String.format(NON_UNIQUE_MSG, name.toLowerCase(), identifier)).build();
+                    .withMessage(NON_UNIQUE_MSG.formatted(name.toLowerCase(), identifier)).build();
         }
 
         Throwable throwable = Throwables.getRootCause(exception);
@@ -119,7 +119,7 @@ public class MySQLHibernatePersistenceExceptionConverter implements PersistenceE
             String key = entry.getKey();
             String value = entry.getValue();
             if (rawMessage.contains(key)) {
-                return String.format(message, name.toLowerCase(), value); 
+                return message.formatted(name.toLowerCase(), value); 
             }
         }
         return defaultMessage;

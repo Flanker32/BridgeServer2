@@ -123,22 +123,22 @@ public class DynamoSurveyTest {
         DateConstraints dc = (DateConstraints)convertedDateQuestion.getConstraints();
         assertNotNull(dc.getEarliestValue(), "Earliest date exists");
         assertNotNull(dc.getLatestValue(), "Latest date exists");
-        assertEquals(convertedDateQuestion.getAfterRules().get(0), rule);
+        assertEquals(convertedDateQuestion.getAfterRules().getFirst(), rule);
 
         DateTimeConstraints dtc = (DateTimeConstraints) TestSurvey.selectBy(convertedSurvey, DataType.DATETIME).getConstraints();
         assertNotNull(dtc.getEarliestValue(), "Earliest date exists");
         assertNotNull(dtc.getLatestValue(), "Latest date exists");
         
         IntegerConstraints ic = (IntegerConstraints) TestSurvey.selectBy(convertedSurvey, DataType.INTEGER).getConstraints();
-        assertEquals(ic.getRules().get(0).getOperator(), SurveyRule.Operator.LE);
-        assertEquals(ic.getRules().get(0).getValue(), 2);
-        assertEquals(ic.getRules().get(0).getSkipToTarget(), "name");
+        assertEquals(ic.getRules().getFirst().getOperator(), SurveyRule.Operator.LE);
+        assertEquals(ic.getRules().getFirst().getValue(), 2);
+        assertEquals(ic.getRules().getFirst().getSkipToTarget(), "name");
         
         assertEquals(ic.getRules().get(1).getOperator(), SurveyRule.Operator.DE);
         assertEquals(ic.getRules().get(1).getSkipToTarget(), "name");
         
         SurveyInfoScreen retrievedScreen = (SurveyInfoScreen)convertedSurvey.getElements().get(convertedSurvey.getElements().size()-1);
-        assertEquals(retrievedScreen.getAfterRules().get(0), rule);
+        assertEquals(retrievedScreen.getAfterRules().getFirst(), rule);
         
         MultiValueConstraints mvc = (MultiValueConstraints)((SurveyQuestion)convertedSurvey.getElements().get(7)).getConstraints();
         assertFalse(mvc.getEnumeration().get(3).isExclusive());

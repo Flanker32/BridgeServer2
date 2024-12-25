@@ -137,7 +137,7 @@ public class S3InitializerTest extends Mockito {
         BucketWebsiteConfiguration config = websiteConfigCaptor.getValue();
         assertEquals(config.getIndexDocumentSuffix(), "index.html");
         
-        CORSRule rule = corsConfigCaptor.getValue().getRules().get(0);
+        CORSRule rule = corsConfigCaptor.getValue().getRules().getFirst();
         assertEquals(rule.getAllowedHeaders(), ImmutableList.of("*"));
         assertEquals(rule.getAllowedOrigins(), ImmutableList.of("*"));
         assertEquals(rule.getAllowedMethods(), ImmutableList.of(AllowedMethods.PUT));
@@ -204,7 +204,7 @@ public class S3InitializerTest extends Mockito {
     }
 
     private static void assertCorsConfig(BucketCrossOriginConfiguration corsConfig) {
-        CORSRule rule = corsConfig.getRules().get(0);
+        CORSRule rule = corsConfig.getRules().getFirst();
         assertEquals(rule.getAllowedHeaders(), ImmutableList.of("*"));
         assertEquals(rule.getAllowedOrigins(), ImmutableList.of("*"));
         assertEquals(rule.getAllowedMethods(), ImmutableList.of(AllowedMethods.PUT));

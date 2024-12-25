@@ -78,7 +78,7 @@ public class ReportDataKeyValidatorTest {
         try {
             runnable.run();
         } catch(InvalidEntityException e) {
-            String message = e.getErrors().get(fieldName).get(0);
+            String message = e.getErrors().get(fieldName).getFirst();
             assertEquals(message, fieldName + " " + error);
         }
     }

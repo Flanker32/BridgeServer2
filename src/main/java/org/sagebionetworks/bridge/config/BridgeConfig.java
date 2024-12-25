@@ -5,7 +5,6 @@ import static com.google.common.base.Preconditions.checkNotNull;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
 
 public class BridgeConfig implements Config {
@@ -31,8 +30,8 @@ public class BridgeConfig implements Config {
 
     BridgeConfig() {
         String defaultConfig = getClass().getClassLoader().getResource(DEFAULT_CONFIG_FILE).getPath();
-        Path defaultConfigPath = Paths.get(defaultConfig);
-        Path localConfigPath = Paths.get(USER_CONFIG_FILE);
+        Path defaultConfigPath = Path.of(defaultConfig);
+        Path localConfigPath = Path.of(USER_CONFIG_FILE);
 
         try {
             if (Files.exists(localConfigPath)) {
