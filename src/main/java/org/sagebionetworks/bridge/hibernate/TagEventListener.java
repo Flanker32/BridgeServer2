@@ -4,10 +4,13 @@ import java.util.Map;
 import java.util.Set;
 
 import org.hibernate.HibernateException;
+import org.hibernate.event.spi.DeleteContext;
 import org.hibernate.event.spi.DeleteEvent;
 import org.hibernate.event.spi.DeleteEventListener;
+import org.hibernate.event.spi.MergeContext;
 import org.hibernate.event.spi.MergeEvent;
 import org.hibernate.event.spi.MergeEventListener;
+import org.hibernate.event.spi.PersistContext;
 import org.hibernate.event.spi.PersistEvent;
 import org.hibernate.event.spi.PersistEventListener;
 import org.hibernate.event.spi.SaveOrUpdateEvent;
@@ -48,7 +51,7 @@ public class TagEventListener implements DeleteEventListener, SaveOrUpdateEventL
 
     @SuppressWarnings("rawtypes")
     @Override
-    public void onDelete(DeleteEvent event, Set transientEntities) throws HibernateException {
+    public void onDelete(DeleteEvent event, DeleteContext transientEntities) throws HibernateException {
         clearProvider(event.getObject());
     }
 
@@ -64,7 +67,7 @@ public class TagEventListener implements DeleteEventListener, SaveOrUpdateEventL
 
     @SuppressWarnings("rawtypes")
     @Override
-    public void onPersist(PersistEvent event, Map createdAlready) throws HibernateException {
+    public void onPersist(PersistEvent event, PersistContext createdAlready) throws HibernateException {
         clearProvider(event.getObject());
     }
 
@@ -75,7 +78,7 @@ public class TagEventListener implements DeleteEventListener, SaveOrUpdateEventL
 
     @SuppressWarnings("rawtypes")
     @Override
-    public void onMerge(MergeEvent event, Map copiedAlready) throws HibernateException {
+    public void onMerge(MergeEvent event, MergeContext copiedAlready) throws HibernateException {
         clearProvider(event.getEntity());
     }
     
@@ -89,4 +92,5 @@ public class TagEventListener implements DeleteEventListener, SaveOrUpdateEventL
             }
         }
     }
+
 }

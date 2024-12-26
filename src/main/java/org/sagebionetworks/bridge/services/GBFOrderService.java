@@ -11,9 +11,15 @@ import com.google.common.annotations.Beta;
 import com.google.common.collect.Lists;
 import org.apache.commons.io.IOUtils;
 import org.apache.hc.core5.http.HttpEntity;
+import org.apache.hc.core5.http.HttpEntityContainer;
+import org.apache.hc.core5.http.HttpRequest;
 import org.apache.hc.core5.http.HttpResponse;
-import org.apache.hc.core5.http.client.fluent.Executor;
-import org.apache.hc.core5.http.client.fluent.Request;
+import org.apache.hc.core5.http.protocol.HttpContext;
+import org.apache.hc.core5.util.TimeValue;
+import org.apache.hc.client5.http.HttpRequestRetryStrategy;
+import org.apache.hc.client5.http.fluent.Executor;
+import org.apache.hc.client5.http.fluent.Request;
+import org.apache.hc.client5.http.impl.DefaultHttpRequestRetryStrategy;
 import org.apache.hc.client5.http.impl.classic.HttpClients;
 import org.joda.time.LocalDate;
 
@@ -28,49 +34,58 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.SocketException;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
+import java.util.Optional;
 
 import static org.apache.hc.core5.http.ContentType.APPLICATION_JSON;
 
 @Component
 public class GBFOrderService {
     private static Logger LOG = LoggerFactory.getLogger(GBFOrderService.class);
-    
+
     public static final String GBF_API_KEY = "gbf.api.key";
     public static final String GBF_PLACE_ORDER_URL = "gbf.order.place.url";
     public static final String GBF_ORDER_STATUS_URL = "gbf.order.status.url";
     public static final String GBF_CONFIRMATION_URL = "gbf.ship.confirmation.url";
-    
+
     public static final String GBF_SHIPPING_ERROR_KEY = "Error";
     public static final String GBF_SERVICE_ERROR_MESSAGE = "Error calling order service";
-    
+
     public static final int GBF_HTTP_POST_RETRY_COUNT = 3;
     // default retry strategy excludes POST requests
     private static final Executor GBF_HTTP_POST_RETRY_EXECUTOR = Executor.newInstance(HttpClients.custom()
-            .setRetryHandler((e, executionCount, httpContext) -> {
-                if ((e instanceof SocketException) && (executionCount < GBF_HTTP_POST_RETRY_COUNT)) {
-                    LOG.warn("Encountered SocketException, retrying count " + executionCount, e);
-                    return true;
-                } else {
-                    LOG.warn("Encountered SocketException, no more retries", e);
-                    return false;
+            .setRetryStrategy(new DefaultHttpRequestRetryStrategy() {
+
+                @Override
+                public boolean retryRequest(HttpRequest request, IOException exception, int execCount,
+                        HttpContext context) {
+                    // TODO Auto-generated method stub
+                    if ((exception instanceof SocketException) && (execCount < GBF_HTTP_POST_RETRY_COUNT)) {
+                        LOG.warn("Encountered SocketException, retrying count " + execCount, exception);
+                        return true;
+                    } else {
+                        LOG.warn("Encountered SocketException, no more retries", exception);
+                        return false;
+                    }
                 }
             })
             .build());
-    
+
     private String gbfOrderUrl;
     private String getGbfOrderStatusUrl;
     private String gbfConfirmationUrl;
     private String gbfApiKey;
-    
+
     private ObjectMapper jsonMapper = new ObjectMapper()
             .registerModule(new JodaModule())
             .configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false)
             .disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
 
-    public static final ObjectMapper XML_MAPPER = new XmlMapper().disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
+    public static final ObjectMapper XML_MAPPER = new XmlMapper()
+            .disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
 
     @Autowired
     final void setBridgeConfig(BridgeConfig config) {
@@ -92,21 +107,21 @@ public class GBFOrderService {
         HttpResponse httpResponse = postJson(gbfOrderUrl, gbfApiKey, new PlaceOrderRequest(orderXml, isTest));
 
         handleGbfHttpStatusErrors(httpResponse);
-        
+
         PlaceOrderResponse response;
-        
+
         try {
-            response = jsonMapper.readValue(httpResponse.getEntity().getContent(), PlaceOrderResponse.class);
+            response = jsonMapper.readValue(getEntity(httpResponse).getContent(), PlaceOrderResponse.class);
         } catch (IOException e) {
             LOG.error("placeOrder failed to read contents of HttpResponse", e);
             throw new BridgeServiceException(GBF_SERVICE_ERROR_MESSAGE);
         }
-    
+
         if (!response.success) {
             LOG.warn("placeOrder received error from remote service: {}", response.message);
             throw new BridgeServiceException(GBF_SERVICE_ERROR_MESSAGE);
         }
-    
+
     }
 
     @Beta
@@ -114,41 +129,41 @@ public class GBFOrderService {
         CheckOrderStatusRequest request = new CheckOrderStatusRequest(Arrays.asList(orderIds));
 
         HttpResponse httpResponse = postJson(getGbfOrderStatusUrl, gbfApiKey, request);
-    
+
         handleGbfHttpStatusErrors(httpResponse);
-    
+
         try {
-            return jsonMapper.readValue(httpResponse.getEntity().getContent(), CheckOrderStatusResponse.class);
+            return jsonMapper.readValue(getEntity(httpResponse).getContent(), CheckOrderStatusResponse.class);
         } catch (IOException e) {
             LOG.error("checkOrderStatus could not parse response Json", e);
             throw new BridgeServiceException(GBF_SERVICE_ERROR_MESSAGE);
         }
     }
-    
+
     @Beta
     public ShippingConfirmations requestShippingConfirmations(LocalDate startDate, LocalDate endDate) {
         ConfirmShippingRequest requestBody = new ConfirmShippingRequest(startDate, endDate);
 
         HttpResponse response = postJson(gbfConfirmationUrl, gbfApiKey, requestBody);
-    
+
         handleGbfHttpStatusErrors(response);
 
         return parseShippingConfirmations(response);
     }
-    
+
     void handleGbfHttpStatusErrors(HttpResponse httpResponse) {
         int statusCode = httpResponse.getCode();
-        
+
         if (statusCode >= 400 && statusCode < 500) {
-            logGbfHttpStatusError(statusCode, httpResponse.getEntity());
+            logGbfHttpStatusError(statusCode, getEntity(httpResponse));
             throw new BadRequestException(GBF_SERVICE_ERROR_MESSAGE);
         }
-        if (statusCode >=500) {
-            logGbfHttpStatusError(statusCode, httpResponse.getEntity());
+        if (statusCode >= 500) {
+            logGbfHttpStatusError(statusCode, getEntity(httpResponse));
             throw new BridgeServiceException(GBF_SERVICE_ERROR_MESSAGE);
         }
     }
-    
+
     private void logGbfHttpStatusError(int statusCode, HttpEntity entity) {
         try {
             LOG.warn("GBF Api responded with error code {} error with contents: {}", statusCode,
@@ -161,7 +176,8 @@ public class GBFOrderService {
     ShippingConfirmations parseShippingConfirmations(HttpResponse response) {
         String responseXml;
         try {
-            ConfirmShippingResponse responseObj = jsonMapper.readValue(response.getEntity().getContent(), ConfirmShippingResponse.class);
+            ConfirmShippingResponse responseObj = jsonMapper.readValue(getEntity(response).getContent(),
+                    ConfirmShippingResponse.class);
             responseXml = responseObj.XML;
         } catch (IOException e) {
             LOG.error("parseShippingConfirmations failed to read Json from remote response", e);
@@ -170,7 +186,8 @@ public class GBFOrderService {
         return parseShippingConfirmations(responseXml);
     }
 
-    // handles XML conforming to either <Response><Error>... or <ShippingConfirmations>
+    // handles XML conforming to either <Response><Error>... or
+    // <ShippingConfirmations>
     ShippingConfirmations parseShippingConfirmations(String responseXml) {
         LOG.debug("responseXml: " + responseXml);
         try {
@@ -191,11 +208,10 @@ public class GBFOrderService {
         }
     }
 
-
     HttpResponse postJson(String url, String bearerToken, Object jsonObj) {
         Request request = null;
         try {
-            request = Request.Post(url)
+            request = Request.post(url)
                     .bodyString(jsonMapper.writeValueAsString(jsonObj), APPLICATION_JSON);
         } catch (JsonProcessingException e) {
             LOG.error("Error writing to Json when calling url: {}", url, e);
@@ -210,5 +226,12 @@ public class GBFOrderService {
             throw new BridgeServiceException(GBF_SERVICE_ERROR_MESSAGE);
         }
     }
-}
 
+    HttpEntity getEntity(HttpResponse httpResponse) {
+        return Optional.of(httpResponse)
+                .filter(r -> (r instanceof HttpEntityContainer))
+                .map(r -> (HttpEntityContainer) r)
+                .map(HttpEntityContainer::getEntity)
+                .orElse(null);
+    }
+}

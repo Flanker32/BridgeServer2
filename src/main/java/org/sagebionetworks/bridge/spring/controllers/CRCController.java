@@ -28,6 +28,7 @@ import java.util.Base64;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -42,9 +43,11 @@ import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
 import com.google.common.net.HttpHeaders;
 import org.apache.commons.io.IOUtils;
+import org.apache.hc.client5.http.fluent.Request;
 import org.apache.hc.core5.http.Header;
+import org.apache.hc.core5.http.HttpEntity;
+import org.apache.hc.core5.http.HttpEntityContainer;
 import org.apache.hc.core5.http.HttpResponse;
-import org.apache.hc.core5.http.client.fluent.Request;
 import org.apache.hc.core5.http.message.BasicHeader;
 import org.apache.hc.core5.http.message.StatusLine;
 import org.hl7.fhir.dstu3.model.Address;
@@ -111,9 +114,9 @@ import org.sagebionetworks.bridge.upload.UploadValidationException;
 import ca.uhn.fhir.context.FhirContext;
 import ca.uhn.fhir.parser.IParser;
 
-
 /**
- * NOTE: There are references to some properties in the config file that can be removed now
+ * NOTE: There are references to some properties in the config file that can be
+ * removed now
  * that we are not calling Columbia's servers. These should also be removed.
  */
 @CrossOrigin
@@ -138,7 +141,8 @@ public class CRCController extends BaseController {
     static final String TEST_TAG = BridgeConstants.TEST_USER_GROUP;
     static final String UPDATE_MSG = "Participant updated.";
     static final String UPDATE_FOR_TEST_ACCOUNT_MSG = "Participant updated (although eligible, a lab order was not placed for this test account).";
-    // This is thread-safe and it's recommended to reuse an instance because it's expensive to create;
+    // This is thread-safe and it's recommended to reuse an instance because it's
+    // expensive to create;
     static final FhirContext FHIR_CONTEXT = FhirContext.forDstu3();
     static final LocalDate JAN1 = LocalDate.parse("1970-01-01");
     static final LocalDate JAN2 = LocalDate.parse("1970-01-02");
@@ -194,7 +198,7 @@ public class CRCController extends BaseController {
     final void setGbfOrderService(GBFOrderService GBFOrderService) {
         this.gbfOrderService = GBFOrderService;
     }
-    
+
     DateTime getTimestamp() {
         return DateTime.now().withZone(DateTimeZone.UTC);
     }
@@ -209,7 +213,7 @@ public class CRCController extends BaseController {
         // caller enrolled studies
         UserSession session = getAuthenticatedSession();
         App app = appService.getApp(session.getAppId());
-    
+
         AccountId accountId = parseAccountId(app.getIdentifier(), session.getId());
         return internalLabShipmentRequest(app, accountId);
     }
@@ -217,13 +221,14 @@ public class CRCController extends BaseController {
     @PostMapping("v1/cuimc/participants/{userId}/labshipments/request")
     public ResponseEntity<StatusMessage> postLabShipmentRequest(@PathVariable String userId) {
         App app = httpBasicAuthentication();
-    
-        // Participants will not have OrgSponsoredStudies which is used by writeReportAndUpdateState to set studies on
+
+        // Participants will not have OrgSponsoredStudies which is used by
+        // writeReportAndUpdateState to set studies on
         // ReportData. Remove studies
         RequestContext requestContextWithoutOrgSponsoredStudies = RequestContext.get()
                 .toBuilder().withOrgSponsoredStudies(ImmutableSet.of()).build();
         RequestContext.set(requestContextWithoutOrgSponsoredStudies);
-    
+
         AccountId accountId = parseAccountId(app.getIdentifier(), userId);
         return internalLabShipmentRequest(app, accountId);
     }
@@ -231,7 +236,7 @@ public class CRCController extends BaseController {
     ResponseEntity<StatusMessage> internalLabShipmentRequest(App app, AccountId accountId) {
         Account account = accountService.getAccount(accountId)
                 .orElseThrow(() -> new EntityNotFoundException(Account.class));
-        
+
         if (account.getDataGroups().contains(SHIP_TESTS_REQUESTED.name().toLowerCase())) {
             throw new LimitExceededException("Limited to one active shipment request.");
         }
@@ -244,12 +249,14 @@ public class CRCController extends BaseController {
         String orderNumber = account.getId() + "_" + date;
 
         Order o = new Order(isTestUser, orderNumber, account.getId(), date,
-                new Order.ShippingInfo(address, GBF_TEST_KIT_SHIP_METHOD), new Order.LineItem(GBF_TEST_KIT_PART_NUMBER, 1));
+                new Order.ShippingInfo(address, GBF_TEST_KIT_SHIP_METHOD),
+                new Order.LineItem(GBF_TEST_KIT_PART_NUMBER, 1));
         gbfOrderService.placeOrder(o, isTestUser);
 
         JsonNode node = JsonNodeFactory.instance.objectNode().put(SHIPMENT_REPORT_KEY_ORDER_ID, orderNumber);
-        
-        // participants will not have Org Sponsored Studies in RequestContext, so for lab shipment reports, don't set study IDs
+
+        // participants will not have Org Sponsored Studies in RequestContext, so for
+        // lab shipment reports, don't set study IDs
         writeReportAndUpdateState(app, account.getId(), node, SHIPMENT_REPORT, SHIP_TESTS_REQUESTED, false);
 
         return ResponseEntity.accepted()
@@ -267,13 +274,13 @@ public class CRCController extends BaseController {
         String recipientName = account.getFirstName() + " " + account.getLastName();
 
         Map<String, String> atts = account.getAttributes();
-        
+
         // required for shipping
-        requiredAttributesHelper(atts,"address1", "shipping address");
-        requiredAttributesHelper(atts,"city", "shipping city");
-        requiredAttributesHelper(atts,"state", "shipping state");
-        requiredAttributesHelper(atts,"zip_code", "shipping zip code");
-        
+        requiredAttributesHelper(atts, "address1", "shipping address");
+        requiredAttributesHelper(atts, "city", "shipping city");
+        requiredAttributesHelper(atts, "state", "shipping state");
+        requiredAttributesHelper(atts, "zip_code", "shipping zip code");
+
         return new Order.ShippingInfo.Address(
                 recipientName,
                 atts.get("address1"),
@@ -282,33 +289,32 @@ public class CRCController extends BaseController {
                 atts.get("state"),
                 atts.get("zip_code"),
                 "United States",
-                null
-        );
+                null);
     }
-    
-    private void requiredAttributesHelper(Map<String,String> attributes, String attributeKey, String attributeName) {
-        if(Strings.isNullOrEmpty(attributes.get(attributeKey))) {
+
+    private void requiredAttributesHelper(Map<String, String> attributes, String attributeKey, String attributeName) {
+        if (Strings.isNullOrEmpty(attributes.get(attributeKey))) {
             throw new BadRequestException("Missing " + attributeName);
         }
     }
 
     // Waiting for integration workflow to be finalized
-    //@GetMapping(path = "v1/cuimc/labshipments/{orderId}/status")
+    // @GetMapping(path = "v1/cuimc/labshipments/{orderId}/status")
     public CheckOrderStatusResponse getLabShipmentStatus(@PathVariable String orderId) throws JsonProcessingException {
         httpBasicAuthentication();
         CheckOrderStatusResponse response = gbfOrderService.checkOrderStatus(orderId);
         return response;
     }
-    
+
     // Waiting for integration workflow to be finalized
-    //@GetMapping(path = "v1/cuimc/participants/labshipments/confirmations")
+    // @GetMapping(path = "v1/cuimc/participants/labshipments/confirmations")
     public ShippingConfirmations getLabShipmentConfirmations(@RequestParam String startDate,
             @RequestParam String endDate) throws JsonProcessingException {
         httpBasicAuthentication();
-        
+
         LocalDate startDateObj = getLocalDateOrDefault(startDate, null);
         LocalDate endDateObj = getLocalDateOrDefault(endDate, null);
-        
+
         ShippingConfirmations shippingConfirmations = gbfOrderService.requestShippingConfirmations(startDateObj,
                 endDateObj);
         return shippingConfirmations;
@@ -340,8 +346,9 @@ public class CRCController extends BaseController {
         Appointment appointment = parser.parseResource(Appointment.class, data.toString());
 
         String userId = findUserId(appointment);
-        
-        // They send appointment when it is booked, cancelled, or (rarely) enteredinerror.
+
+        // They send appointment when it is booked, cancelled, or (rarely)
+        // enteredinerror.
         AccountStates state = TESTS_SCHEDULED;
         String apptStatus = data.get("status").asText();
         if ("entered-in-error".equals(apptStatus)) {
@@ -350,7 +357,7 @@ public class CRCController extends BaseController {
         } else if ("cancelled".equals(apptStatus)) {
             state = TESTS_CANCELLED;
         }
-        
+
         // Columbia wants us to call back to them to get information about the location.
         // And UI team wants geocoding of location to render a map.
         String locationString = findLocation(appointment);
@@ -358,10 +365,10 @@ public class CRCController extends BaseController {
             AccountId accountId = parseAccountId(app.getIdentifier(), userId);
             Account account = accountService.getAccount(accountId)
                     .orElseThrow(() -> new EntityNotFoundException(Account.class));
-                    
+
             addLocation(data, account, locationString);
         }
-        
+
         int status = writeReportAndUpdateState(app, userId, data, APPOINTMENT_REPORT, state, true);
         if (status == 200) {
             return ResponseEntity.ok(new StatusMessage("Appointment updated (status = " + apptStatus + ")."));
@@ -369,7 +376,7 @@ public class CRCController extends BaseController {
         return ResponseEntity.created(URI.create("/v1/cuimc/appointments/" + userId))
                 .body(new StatusMessage("Appointment created (status = " + apptStatus + ")."));
     }
-    
+
     @PutMapping("/v1/cuimc/procedurerequests")
     public ResponseEntity<StatusMessage> postProcedureRequest() {
         App app = httpBasicAuthentication();
@@ -380,7 +387,8 @@ public class CRCController extends BaseController {
 
         String userId = findUserId(procedure.getSubject());
 
-        int status = writeReportAndUpdateState(app, userId, data, PROCEDURE_REPORT, AccountStates.TESTS_COLLECTED, true);
+        int status = writeReportAndUpdateState(app, userId, data, PROCEDURE_REPORT, AccountStates.TESTS_COLLECTED,
+                true);
         if (status == 200) {
             return ResponseEntity.ok(new StatusMessage("ProcedureRequest updated."));
         }
@@ -395,14 +403,17 @@ public class CRCController extends BaseController {
         IParser parser = FHIR_CONTEXT.newJsonParser();
         JsonNode data = parseJson(JsonNode.class);
         Observation observation = parser.parseResource(Observation.class, data.toString());
-        
+
         AccountStates state = TESTS_AVAILABLE;
-        // There are two conditions under which the type of report is considered to be unknown. Either the code 
-        // is for a test other than the serum test, or the result value is not recognized by our client application,
+        // There are two conditions under which the type of report is considered to be
+        // unknown. Either the code
+        // is for a test other than the serum test, or the result value is not
+        // recognized by our client application,
         // and that's also treated as an unknown type of report.
         String code = getObservationCoding(observation);
         String valueString = getObservationValue(observation);
-        if (code == null || valueString == null || !SERUM_TEST_CODES.contains(code) || !SERUM_TEST_STATES.contains(valueString)) {
+        if (code == null || valueString == null || !SERUM_TEST_CODES.contains(code)
+                || !SERUM_TEST_STATES.contains(valueString)) {
             state = TESTS_AVAILABLE_TYPE_UNKNOWN;
             LOG.warn("CRC observation in unknown format: code=" + code + ", valueString=" + valueString);
         }
@@ -416,7 +427,7 @@ public class CRCController extends BaseController {
         return ResponseEntity.created(URI.create("/v1/cuimc/observations/" + userId))
                 .body(new StatusMessage("Observation created."));
     }
-    
+
     String getObservationCoding(Observation observation) {
         CodeableConcept code = observation.getCode();
         if (code != null) {
@@ -430,7 +441,7 @@ public class CRCController extends BaseController {
         }
         return null;
     }
-    
+
     String getObservationValue(Observation observation) {
         Range range = observation.getValueRange();
         if (range != null) {
@@ -447,8 +458,10 @@ public class CRCController extends BaseController {
     }
 
     /**
-     * This is a nice-to-have addition of address information for the location given by an
-     * ID in the appointment record. Do not fail the request if this fails, but log enough
+     * This is a nice-to-have addition of address information for the location given
+     * by an
+     * ID in the appointment record. Do not fail the request if this fails, but log
+     * enough
      * to troubleshoot if the issue is on our side.
      */
     void addLocation(JsonNode node, Account account, String locationId) {
@@ -459,15 +472,15 @@ public class CRCController extends BaseController {
 
         try {
             HttpResponse response = post(url, account, reqBody);
-            String resBody = IOUtils.toString(response.getEntity().getContent(), StandardCharsets.UTF_8.name());
-            
+            String resBody = IOUtils.toString(getEntity(response).getContent(), StandardCharsets.UTF_8.name());
+
             int statusCode = response.getCode();
             if (statusCode != 200 && statusCode != 201) {
                 logWarningMessage(locationId, statusCode, resBody);
                 return;
             }
             JsonNode bundleJson = BridgeObjectMapper.get().readTree(resBody);
-            if (!bundleJson.has("entry") || ((ArrayNode)bundleJson.get("entry")).size() == 0) {
+            if (!bundleJson.has("entry") || ((ArrayNode) bundleJson.get("entry")).size() == 0) {
                 logWarningMessage(locationId, statusCode, resBody);
                 return;
             }
@@ -478,12 +491,12 @@ public class CRCController extends BaseController {
             }
             JsonNode telecom = resJson.get("telecom");
             JsonNode address = resJson.get("address");
-            
-            ArrayNode participants = (ArrayNode)node.get("participant");
+
+            ArrayNode participants = (ArrayNode) node.get("participant");
             if (participants != null) {
-                for (int i=0 ; i < participants.size(); i++) {
+                for (int i = 0; i < participants.size(); i++) {
                     JsonNode child = participants.get(i);
-                    ObjectNode actor = (ObjectNode)child.get("actor");
+                    ObjectNode actor = (ObjectNode) child.get("actor");
                     if (actor != null && actor.has("reference")) {
                         String ref = actor.get("reference").textValue();
                         if (ref.startsWith("Location")) {
@@ -492,7 +505,7 @@ public class CRCController extends BaseController {
                             }
                             if (address != null) {
                                 actor.set("address", address);
-                                //addGeocodingInformation(actor);                            
+                                // addGeocodingInformation(actor);
                             }
                             break;
                         }
@@ -523,9 +536,9 @@ public class CRCController extends BaseController {
                     LOG.error("HTTP error response when geocoding address", new StatusLine(response).toString());
                     return;
                 }
-                String body = IOUtils.toString(response.getEntity().getContent(), StandardCharsets.UTF_8.name());
+                String body = IOUtils.toString(getEntity(response).getContent(), StandardCharsets.UTF_8.name());
                 JsonNode payload = BridgeObjectMapper.get().readTree(body);
-                
+
                 if (payload.has("results") && payload.get("results").size() > 0
                         && payload.get("results").get(0).has("geometry")) {
                     JsonNode geometry = payload.get("results").get(0).get("geometry");
@@ -544,8 +557,8 @@ public class CRCController extends BaseController {
             List<String> elements = Lists.newArrayList();
             JsonNode address = actor.get("address");
             if (address.has("line")) {
-                ArrayNode lines = (ArrayNode)address.get("line");
-                for (int i=0; i < lines.size(); i++) {
+                ArrayNode lines = (ArrayNode) address.get("line");
+                for (int i = 0; i < lines.size(); i++) {
                     String line = lines.get(i).textValue();
                     elements.add(line);
                 }
@@ -565,23 +578,23 @@ public class CRCController extends BaseController {
     }
 
     HttpResponse put(String url, String bodyJson, Account account) throws IOException {
-        Request request = Request.Put(url).bodyString(bodyJson, APPLICATION_JSON);
+        Request request = Request.put(url).bodyString(bodyJson, APPLICATION_JSON);
         request = addAuthorizationHeader(request, account);
         return request.execute().returnResponse();
     }
-    
+
     HttpResponse get(String url) throws IOException {
-        return Request.Get(url).execute().returnResponse();
+        return Request.get(url).execute().returnResponse();
     }
 
-//    HttpResponse get(String url, Account account) throws IOException {
-//        Request request = Request.Get(url);
-//        request = addAuthorizationHeader(request, account);
-//        return request.execute().returnResponse();
-//    }
-    
+    // HttpResponse get(String url, Account account) throws IOException {
+    // Request request = Request.Get(url);
+    // request = addAuthorizationHeader(request, account);
+    // return request.execute().returnResponse();
+    // }
+
     HttpResponse post(String url, Account account, String body) throws IOException {
-        Request request = Request.Post(url).bodyString(body, APPLICATION_FORM_URLENCODED);
+        Request request = Request.post(url).bodyString(body, APPLICATION_FORM_URLENCODED);
         request = addAuthorizationHeader(request, account);
         return request.execute().returnResponse();
     }
@@ -592,7 +605,7 @@ public class CRCController extends BaseController {
         String cuimcPassword = "cuimc." + cuimcEnv + ".password";
         String username = bridgeConfig.get(cuimcUsername);
         String password = bridgeConfig.get(cuimcPassword);
-        
+
         if (isNotBlank(username) && isNotBlank(password)) {
             String credentials = username + ":" + password;
             String hash = new String(Base64.getEncoder().encode(credentials.getBytes(Charset.defaultCharset())),
@@ -617,7 +630,7 @@ public class CRCController extends BaseController {
         }
         return null;
     }
-    
+
     private String findUserId(Appointment appt) {
         if (appt != null && appt.getParticipant() != null) {
             for (AppointmentParticipantComponent component : appt.getParticipant()) {
@@ -670,7 +683,8 @@ public class CRCController extends BaseController {
             throw new BridgeServiceException(e);
         }
 
-        Set<String> callerStudyIds = useCallerStudyIds ? RequestContext.get().getOrgSponsoredStudies() : ImmutableSet.of();
+        Set<String> callerStudyIds = useCallerStudyIds ? RequestContext.get().getOrgSponsoredStudies()
+                : ImmutableSet.of();
         ReportData report = ReportData.create();
         report.setDate(JAN1.toString());
         report.setData(data);
@@ -683,7 +697,7 @@ public class CRCController extends BaseController {
         reportService.saveParticipantReport(appId, userId, reportName, account.getHealthCode(), report);
         return status;
     }
-    
+
     private int deleteReportAndUpdateState(App app, String userId) {
         String appId = RequestContext.get().getCallerAppId();
         AccountId accountId = AccountId.forId(appId, userId);
@@ -709,8 +723,10 @@ public class CRCController extends BaseController {
     }
 
     /**
-     * This is bound to specific “machine” accounts that are enumerated in the controller. Authentication is
-     * session-less. The account itself has no administrative roles, so it can only execute these endpoints that
+     * This is bound to specific “machine” accounts that are enumerated in the
+     * controller. Authentication is
+     * session-less. The account itself has no administrative roles, so it can only
+     * execute these endpoints that
      * specifically allows it, in the app to which it is bound.
      */
     App httpBasicAuthentication() {
@@ -756,7 +772,7 @@ public class CRCController extends BaseController {
         RequestContext.set(builder.build());
         return app;
     }
-    
+
     Patient createPatient(Account account) {
         Patient patient = new Patient();
         patient.setActive(true);
@@ -766,11 +782,11 @@ public class CRCController extends BaseController {
         identifier.setValue(account.getId());
         identifier.setSystem(USER_ID_VALUE_NS);
         patient.addIdentifier(identifier);
-        
+
         Coding coding = new Coding();
         coding.setSystem("source");
         coding.setCode("sage");
-        
+
         Meta meta = new Meta();
         meta.setTag(ImmutableList.of(coding));
         patient.setMeta(meta);
@@ -840,13 +856,21 @@ public class CRCController extends BaseController {
             contact.setValue(account.getEmail());
             patient.addTelecom(contact);
         }
-        
+
         Reference ref = new Reference("CUZUCK");
         ref.setDisplay("COVID Recovery Corps");
         ContactComponent contact = new ContactComponent();
         contact.setOrganization(ref);
         patient.addContact(contact);
-        
+
         return patient;
+    }
+
+    HttpEntity getEntity(HttpResponse httpResponse) {
+        return Optional.of(httpResponse)
+                .filter(r -> (r instanceof HttpEntityContainer))
+                .map(r -> (HttpEntityContainer) r)
+                .map(HttpEntityContainer::getEntity)
+                .orElse(null);
     }
 }

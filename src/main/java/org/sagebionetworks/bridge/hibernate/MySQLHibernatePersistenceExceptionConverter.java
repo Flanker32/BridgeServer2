@@ -86,7 +86,7 @@ public class MySQLHibernatePersistenceExceptionConverter implements PersistenceE
             return new ConcurrentModificationException(WRONG_VERSION_MSG.formatted(name));
         }
         if (exception instanceof NonUniqueObjectException objectException) {
-            Serializable identifier = objectException.getIdentifier();
+            Object identifier = objectException.getIdentifier();
             return new ConstraintViolationException.Builder()
                     .withMessage(NON_UNIQUE_MSG.formatted(name.toLowerCase(), identifier)).build();
         }

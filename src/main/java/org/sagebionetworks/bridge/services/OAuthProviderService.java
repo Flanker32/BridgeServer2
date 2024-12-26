@@ -501,10 +501,6 @@ class OAuthProviderService {
      * default system encoding.
      */
     private UrlEncodedFormEntity formEntity(List<NameValuePair> pairs) {
-        try {
-            return new UrlEncodedFormEntity(pairs);
-        } catch (UnsupportedEncodingException e) {
-            throw new BridgeServiceException(e);
-        }
+        return new UrlEncodedFormEntity(pairs);
     }
 }

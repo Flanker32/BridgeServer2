@@ -7,11 +7,11 @@ import java.util.function.Function;
 import jakarta.persistence.PersistenceException;
 
 import org.apache.commons.lang3.StringUtils;
+import org.hibernate.QueryException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.exception.ConstraintViolationException;
-import org.hibernate.hql.internal.ast.QuerySyntaxException;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -125,7 +125,7 @@ public class HibernateSharedModuleMetadataDao implements SharedModuleMetadataDao
         } catch (IllegalArgumentException ex) {
             // Similarly, an invalid query will result in an IllegalArgumentException which wraps a
             // QuerySyntaxException.
-            if (ex.getCause() instanceof QuerySyntaxException) {
+            if (ex.getCause() instanceof QueryException) {
                 throw new BadRequestException(ex);
             } else {
                 throw ex;

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.sagebionetworks</groupId>
@@ -11,7 +12,7 @@
     <properties>
         <apache.http.version>4.5.13</apache.http.version>
         <aws.version>1.12.261</aws.version>
-        <hibernate.version>5.4.27.Final</hibernate.version>
+        <hibernate.version>6.6.4.Final</hibernate.version>
         <jackson.version>2.12.6</jackson.version>
         <java.version>21</java.version>
         <logback.version>1.2.11</logback.version>
@@ -20,7 +21,7 @@
         <spring.version>5.1.8.RELEASE</spring.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
-        
+
         <!-- Elastic Beanstalk instances are currently on 9.0.87. -->
         <tomcat.version>9.0.87</tomcat.version>
     </properties>
@@ -42,6 +43,16 @@
 
     <dependencies>
         <dependency>
+            <groupId>jakarta.servlet</groupId>
+            <artifactId>jakarta.servlet-api</artifactId>
+            <version>5.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.mail</groupId>
+            <artifactId>jakarta.mail</artifactId>
+            <version>2.0.1</version>
+        </dependency>
+        <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId><!--$NO-MVN-MAN-VER$-->
         </dependency>
@@ -54,6 +65,13 @@
             <groupId>org.apache.httpcomponents.client5</groupId>
             <artifactId>httpclient5</artifactId><!--$NO-MVN-MAN-VER$-->
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.apache.httpcomponents.client5/httpclient5-fluent -->
+        <dependency>
+            <groupId>org.apache.httpcomponents.client5</groupId>
+            <artifactId>httpclient5-fluent</artifactId>
+            <version>5.4.1</version>
+        </dependency>
+
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>fluent-hc</artifactId><!--$NO-MVN-MAN-VER$-->
@@ -86,7 +104,7 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-validation</artifactId>
-        </dependency>        
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-logging</artifactId>
@@ -94,7 +112,7 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-aop</artifactId>
-        </dependency>        
+        </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-jdbc</artifactId><!--$NO-MVN-MAN-VER$-->
@@ -193,8 +211,8 @@
             <artifactId>hibernate-core</artifactId><!--$NO-MVN-MAN-VER$-->
         </dependency>
         <dependency>
-           <groupId>org.liquibase</groupId>
-           <artifactId>liquibase-core</artifactId><!--$NO-MVN-MAN-VER$-->
+            <groupId>org.liquibase</groupId>
+            <artifactId>liquibase-core</artifactId><!--$NO-MVN-MAN-VER$-->
         </dependency>
         <dependency>
             <groupId>org.jsoup</groupId>
@@ -315,7 +333,7 @@
             <name>sagebionetworks-releases-local</name>
             <url>https://sagebionetworks.jfrog.io/sagebionetworks/libs-releases-local
             </url>
-        </repository>    
+        </repository>
         <repository>
             <id>org-sagebridge-repo-maven-releases</id>
             <name>org-sagebridge-repo-maven-releases</name>
@@ -361,7 +379,8 @@
                         <!-- config is inherently not testable -->
                         <exclude>org/sagebionetworks/bridge/config/*</exclude>
 
-                        <!-- no point in testing exceptions, since they are entirely boilerplate code -->
+                        <!-- no point in testing exceptions, since they are entirely boilerplate
+                        code -->
                         <exclude>org/sagebionetworks/bridge/exceptions/*</exclude>
 
                         <!-- Test controllers don't need tests -->
